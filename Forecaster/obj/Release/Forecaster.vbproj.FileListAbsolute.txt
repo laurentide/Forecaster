@@ -1,0 +1,10 @@
+C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.dll
+C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.pdb
+C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.xml
+C:\Data\Projects\Forecaster\Forecaster\bin\Microsoft.ReportViewer.Common.dll
+C:\Data\Projects\Forecaster\Forecaster\bin\Microsoft.ReportViewer.WebForms.xml
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.Resources.resources
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.vbproj.GenerateResource.Cache
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.dll
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.xml
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.pdb

@@ -203,6 +203,15 @@ Partial Public Class Funnel
     Protected WithEvents lbIndustryCodes As Global.System.Web.UI.WebControls.ListBox
 
     '''<summary>
+    '''ddlExecSponsors control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ddlExecSponsors As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''ddlSalesmen control.
     '''</summary>
     '''<remarks>
@@ -219,6 +228,15 @@ Partial Public Class Funnel
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtCustomerFilter As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtEPCFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtEPCFilter As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''ClosingStartDateTextBox control.
@@ -651,6 +669,15 @@ Partial Public Class Funnel
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsIndustryCodes As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsExecSponsor control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsExecSponsor As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
     '''sdsGetOpportunities control.

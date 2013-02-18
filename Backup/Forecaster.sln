@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Forecaster", "Forecaster\Forecaster.vbproj", "{6E40092A-C230-47B3-8B2E-10FDA5618E59}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FunnelTest", "FunnelTest\FunnelTest.vbproj", "{0A01C664-B04F-4A7A-A2AA-2BE2289FBA85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F36BBF18-D803-4DA7-96F0-0CD3C260FD8F}"
+	ProjectSection(SolutionItems) = preProject
+		Forecaster.vsmdi = Forecaster.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Forecaster.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E40092A-C230-47B3-8B2E-10FDA5618E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E40092A-C230-47B3-8B2E-10FDA5618E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E40092A-C230-47B3-8B2E-10FDA5618E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E40092A-C230-47B3-8B2E-10FDA5618E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A01C664-B04F-4A7A-A2AA-2BE2289FBA85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A01C664-B04F-4A7A-A2AA-2BE2289FBA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A01C664-B04F-4A7A-A2AA-2BE2289FBA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A01C664-B04F-4A7A-A2AA-2BE2289FBA85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

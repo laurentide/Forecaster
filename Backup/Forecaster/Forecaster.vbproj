@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{6E40092A-C230-47B3-8B2E-10FDA5618E59}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Forecaster</RootNamespace>
+    <AssemblyName>Forecaster</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>Forecaster.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="Deploy" Order="1">
+          <Destination Path="Data Source=lcl-sql2k5-s%3bInitial Catalog=Forecaster%3bPersist Security Info=True%3bUser ID=sa%3bPassword=456asd%2a%2a%2a" />
+          <Object Type="dbFullSql" Enabled="True">
+            <PreSource Path="Data Source=lcl-sql2k5-s%3bInitial Catalog=Forecaster%3bIntegrated Security=True" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Debug\AutoScripts\Deploy_SchemaAndData.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <PublishDatabases>false</PublishDatabases>
+    <DeployIisAppPath>Default Web Site/Forecaster</DeployIisAppPath>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>Forecaster.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=4.1.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ExportToExcel, Version=1.0.2959.21952, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Telerik.Web.UI, Version=2011.3.1115.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\AjaxControlToolkit.dll" />
+    <Content Include="bin\Forecaster.dll" />
+    <Content Include="bin\Forecaster.pdb" />
+    <Content Include="bin\Forecaster.xml" />
+    <Content Include="bin\Microsoft.ReportViewer.Common.dll" />
+    <Content Include="bin\Microsoft.ReportViewer.WebForms.dll" />
+    <Content Include="bin\Microsoft.ReportViewer.WebForms.xml" />
+    <Content Include="bin\Microsoft.ReportViewer.WinForms.dll" />
+    <Content Include="bin\Microsoft.ReportViewer.WinForms.xml" />
+    <Content Include="bin\RSClientPrint-ia64.cab" />
+    <Content Include="bin\RSClientPrint-x64.cab" />
+    <Content Include="bin\RSClientPrint-x86.cab" />
+    <Content Include="bin\Telerik.Web.UI.Skins.dll" />
+    <Content Include="Content\images\LAURENTIDE_logo.jpg" />
+    <Content Include="Credit\AROutstanding.aspx" />
+    <Content Include="Expense\Expense.aspx" />
+    <Content Include="Forecast\Forecasts.aspx" />
+    <Content Include="Funnel\Funnel.aspx" />
+    <Content Include="Funnel\Funnel_Old.aspx" />
+    <Content Include="Forecast\ProductCode.aspx" />
+    <Content Include="Inventory\InventorySearch.aspx" />
+    <Content Include="Managers\Mg_FunnelManagement.aspx" />
+    <Content Include="Managers\Mg_Segments.aspx" />
+    <Content Include="Managers\Mg_Forecasts.aspx" />
+    <Content Include="Managers\Margins.aspx" />
+    <Content Include="Account\ChangePassword.aspx" />
+    <Content Include="Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="Managers\Mg_ProductCode.aspx" />
+    <Content Include="Receptionist\Admin.aspx" />
+    <Content Include="Receptionist\Receptionist.aspx" />
+    <Content Include="Scripts\toggleGroup.js" />
+    <Content Include="Specialists\Sp_ProductCode.aspx" />
+    <Content Include="Styles\Site.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="_assets\css\grid.css" />
+    <Content Include="_assets\img\asc.png" />
+    <Content Include="_assets\img\Calendar_scheduleHS.png" />
+    <Content Include="_assets\img\desc.png" />
+    <Content Include="_assets\img\first.gif" />
+    <Content Include="_assets\img\header-bg.gif" />
+    <Content Include="_assets\img\header_hoverBg.gif" />
+    <Content Include="_assets\img\last.gif" />
+    <Content Include="_assets\img\loading.gif" />
+    <Content Include="_assets\img\minus.png" />
+    <Content Include="_assets\img\next.gif" />
+    <Content Include="_assets\img\pager_bg.gif" />
+    <Content Include="_assets\img\plus.png" />
+    <Content Include="_assets\img\prev.gif" />
+    <Content Include="_assets\img\rminus.gif" />
+    <Content Include="_assets\img\rplus.gif" />
+    <Content Include="_assets\img\sort_asc.gif" />
+    <Content Include="_assets\img\sort_desc.gif" />
+    <Content Include="_assets\img\title-bg.gif" />
+    <Content Include="_assets\img\update_progress.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\getForecastByUser.Designer.vb">
+      <DependentUpon>getForecastByUser.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="App_Data\getTeams.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getTeams.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Credit\AROutstanding.aspx.designer.vb">
+      <DependentUpon>AROutstanding.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Credit\AROutstanding.aspx.vb">
+      <DependentUpon>AROutstanding.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DataClasses1.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Expense\Expense.aspx.designer.vb">
+      <DependentUpon>Expense.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Expense\Expense.aspx.vb">
+      <DependentUpon>Expense.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="FunnelSite.Master.designer.vb">
+      <DependentUpon>FunnelSite.Master</DependentUpon>
+    </Compile>
+    <Compile Include="FunnelSite.Master.vb">
+      <DependentUpon>FunnelSite.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forecast\Forecasts.aspx.designer.vb">
+      <DependentUpon>Forecasts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forecast\Forecasts.aspx.vb">
+      <DependentUpon>Forecasts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Funnel\Funnel.aspx.designer.vb">
+      <DependentUpon>Funnel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Funnel\Funnel.aspx.vb">
+      <DependentUpon>Funnel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Funnel\Funnel_Old.aspx.designer.vb">
+      <DependentUpon>Funnel_Old.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Funnel\Funnel_Old.aspx.vb">
+      <DependentUpon>Funnel_Old.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forecast\ProductCode.aspx.designer.vb">
+      <DependentUpon>ProductCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forecast\ProductCode.aspx.vb">
+      <DependentUpon>ProductCode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\getForecastByTCS.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getForecastByTCS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\getPCGroupingByEnterprise.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getPCGroupingByEnterprise.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\getForecastByTCS_Mng.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getForecastByTCS_Mng.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\getPCGroupingByEnterprise_Mng.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getPCGroupingByEnterprise_Mng.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\getOpportunities.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getOpportunities.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\getForecastByUser_Mg.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getForecastByUser_Mg.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="App_Data\getForecastBySegments_Mng.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>getForecastBySegments_Mng.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\InventorySearch.aspx.designer.vb">
+      <DependentUpon>InventorySearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\InventorySearch.aspx.vb">
+      <DependentUpon>InventorySearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Managers\Mg_FunnelManagement.aspx.designer.vb">
+      <DependentUpon>Mg_FunnelManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Mg_FunnelManagement.aspx.vb">
+      <DependentUpon>Mg_FunnelManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Managers\Mg_Segments.aspx.designer.vb">
+      <DependentUpon>Mg_Segments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Mg_Segments.aspx.vb">
+      <DependentUpon>Mg_Segments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Managers\Mg_Forecasts.aspx.designer.vb">
+      <DependentUpon>Mg_Forecasts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Mg_Forecasts.aspx.vb">
+      <DependentUpon>Mg_Forecasts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Managers\Margins.aspx.designer.vb">
+      <DependentUpon>Margins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Margins.aspx.vb">
+      <DependentUpon>Margins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ChangePassword.aspx.designer.vb">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\ChangePassword.aspx.vb">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Account\ChangePasswordSuccess.aspx.designer.vb">
+      <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\ChangePasswordSuccess.aspx.vb">
+      <DependentUpon>ChangePasswordSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Account\Login.aspx.designer.vb">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Login.aspx.vb">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.vb">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register.aspx.vb">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.vb">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Mg_ProductCode.aspx.designer.vb">
+      <DependentUpon>Mg_ProductCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Managers\Mg_ProductCode.aspx.vb">
+      <DependentUpon>Mg_ProductCode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWebExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.Web.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="App_Data\setMngrSpec.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>setMngrSpec.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Receptionist\Admin.aspx.designer.vb">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Receptionist\Admin.aspx.vb">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Receptionist\Receptionist.aspx.designer.vb">
+      <DependentUpon>Receptionist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Receptionist\Receptionist.aspx.vb">
+      <DependentUpon>Receptionist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.vb">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.vb">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Specialists\Sp_ProductCode.aspx.designer.vb">
+      <DependentUpon>Sp_ProductCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Specialists\Sp_ProductCode.aspx.vb">
+      <DependentUpon>Sp_ProductCode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataClasses1.dbml.layout">
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Web.config" />
+    <None Include="App_Data\getForecastByUser.xsc">
+      <DependentUpon>getForecastByUser.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByUser.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getForecastByUser.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getForecastByUser.xss">
+      <DependentUpon>getForecastByUser.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getTeams.xsc">
+      <DependentUpon>getTeams.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getTeams.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getTeams.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getTeams.xss">
+      <DependentUpon>getTeams.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByTCS.xsc">
+      <DependentUpon>getForecastByTCS.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByTCS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getForecastByTCS.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getForecastByTCS.xss">
+      <DependentUpon>getForecastByTCS.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getPCGroupingByEnterprise.xsc">
+      <DependentUpon>getPCGroupingByEnterprise.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getPCGroupingByEnterprise.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getPCGroupingByEnterprise.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getPCGroupingByEnterprise.xss">
+      <DependentUpon>getPCGroupingByEnterprise.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByTCS_Mng.xsc">
+      <DependentUpon>getForecastByTCS_Mng.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByTCS_Mng.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getForecastByTCS_Mng.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getForecastByTCS_Mng.xss">
+      <DependentUpon>getForecastByTCS_Mng.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getPCGroupingByEnterprise_Mng.xsc">
+      <DependentUpon>getPCGroupingByEnterprise_Mng.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getPCGroupingByEnterprise_Mng.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getPCGroupingByEnterprise_Mng.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getPCGroupingByEnterprise_Mng.xss">
+      <DependentUpon>getPCGroupingByEnterprise_Mng.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getOpportunities.xsc">
+      <DependentUpon>getOpportunities.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getOpportunities.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getOpportunities.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getOpportunities.xss">
+      <DependentUpon>getOpportunities.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByUser_Mg.xsc">
+      <DependentUpon>getForecastByUser_Mg.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastByUser_Mg.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getForecastByUser_Mg.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getForecastByUser_Mg.xss">
+      <DependentUpon>getForecastByUser_Mg.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastBySegments_Mng.xsc">
+      <DependentUpon>getForecastBySegments_Mng.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\getForecastBySegments_Mng.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>getForecastBySegments_Mng.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\getForecastBySegments_Mng.xss">
+      <DependentUpon>getForecastBySegments_Mng.xsd</DependentUpon>
+    </None>
+    <Content Include="FunnelSite.Master" />
+    <None Include="DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="Site.Master" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="App_Data\setMngrSpec.xsc">
+      <DependentUpon>setMngrSpec.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\setMngrSpec.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>setMngrSpec.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App_Data\setMngrSpec.xss">
+      <DependentUpon>setMngrSpec.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Code\" />
+    <Folder Include="bin\ar\" />
+    <Folder Include="bin\cs\" />
+    <Folder Include="bin\de\" />
+    <Folder Include="bin\es\" />
+    <Folder Include="bin\fr\" />
+    <Folder Include="bin\he\" />
+    <Folder Include="bin\hi\" />
+    <Folder Include="bin\it\" />
+    <Folder Include="bin\ja\" />
+    <Folder Include="bin\ko\" />
+    <Folder Include="bin\nl\" />
+    <Folder Include="bin\pt\" />
+    <Folder Include="bin\ru\" />
+    <Folder Include="bin\tr-TR\" />
+    <Folder Include="bin\zh-CHS\" />
+    <Folder Include="bin\zh-CHT\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52153</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

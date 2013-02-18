@@ -57,14 +57,16 @@
                                         <tr><td>Customer Location(*): </td><td><asp:TextBox ID="CustomerLocationTextBox" runat="server" Text='<%# Bind("CustomerLocation") %>' /></td><td><asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Insert" ErrorMessage="Customer Location required" ControlToValidate="CustomerLocationTextBox"  /></td></tr>
                                         <tr><td>Sales Lead(*): </td><td><asp:DropDownList ID="SalesmanIDDropDown" OnDataBound="SalesmanIDDropDown_OnDataBound" DataSourceID="sdsTeams" DataValueField="TeamID" DataTextField="TeamName" selectedvalue='<%# Bind("SalesmanID") %>' runat="server" /></td><td><asp:RequiredFieldValidator ID="rfvSalesmen"  InitialValue = "0" runat="server" ValidationGroup="Insert" ErrorMessage="Sales Lead required" ControlToValidate="SalesmanIDDropDown"  /></td></tr>
                                         <tr><td>EPC/Consultant: </td><td><asp:TextBox ID="EPCConsultantTextBox" runat="server" Text='<%# Bind("EPCConsultant") %>' /></td></tr>                                        
-                                        <tr><td>Closing Date: </td><td><asp:TextBox ID="ClosingDateTextBox" runat="server" Text='<%# Bind("ClosingDate") %>' /><asp:Image runat="server" id="Calendar_scheduleHS" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
-                                        <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="ClosingDateTextBox" PopupButtonID="Calendar_scheduleHS" />
-                                        <asp:maskededitextender id="meeStartDate" runat="server" masktype="Date" CultureName="en-US" mask="99/99/9999" targetcontrolid="ClosingDateTextBox" promptcharacter="_" />
-                                        <asp:maskededitvalidator ID="Maskededitvalidator1" runat="server" controltovalidate="ClosingDateTextBox" controlextender="meeStartDate" invalidvaluemessage="Date is Invalid" IsValidEmpty="True" />
+                                        <tr><td>Closing Date: </td><td><asp:TextBox ID="ClosingDateTextBox" runat="server" Text='<%# Bind("ClosingDate") %>' />
+                                            <asp:Image runat="server" id="Calendar_scheduleHS" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                                            <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="ClosingDateTextBox" PopupButtonID="Calendar_scheduleHS" />
+                                            <asp:maskededitextender id="meeStartDate" runat="server" masktype="Date" CultureName="en-US" mask="99/99/9999" targetcontrolid="ClosingDateTextBox" promptcharacter="_" />
+                                            <asp:maskededitvalidator ID="Maskededitvalidator1" runat="server" controltovalidate="ClosingDateTextBox" controlextender="meeStartDate" invalidvaluemessage="Date is Invalid" IsValidEmpty="True" />
                                         </td></tr>
                                         <%--<tr><td>Origin: </td><td><asp:TextBox ID="OriginTextBox" runat="server" Text='<%# Bind("Origin") %>' width="300"/></td></tr>--%>
                                         <tr><td>Funnel Position: </td><td><asp:DropDownList ID="FunnelPositionDropDown" runat="server" DatasourceID="sdsFunnelPositions" DataValueField="FunnelPositionID" DataTextField="FunnelPosition" SelectedValue='<%# Bind("FunnelPositionID") %>' /></td></tr>
                                         <tr><td>Industry Code: </td><td><asp:DropDownList ID="IndustryCodeDropDown" runat="server" DatasourceID="sdsIndustryCodes" DataValueField="IndustryCodeID" DataTextField="IndustryCode" SelectedValue='<%# Bind("IndustryCodeID") %>' /></td></tr>
+                                        <tr><td>Exec Sponsor: </td><td><asp:DropDownList ID="ExecSponsorDropDown" runat="server" DatasourceID="sdsExecSponsor" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" SelectedValue='<%# Bind("ExecSponsorID")%>' /></td></tr>
                                         <tr><td>PATTID: </td><td><asp:TextBox ID="PATTIDTextBox" runat="server" Text='<%# Bind("PATTID") %>' /></td></tr>
                                         <tr><td>Percentage of project happening: </td><td><asp:TextBox ID="PercentageTextBox" runat="server" Text='<%# Bind("Percentage") %>' /></td>
                                         <td><asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Number between 0 and 100" Type="Integer" MinimumValue="0" MaximumValue="100" ControlToValidate="PercentageTextBox" ValidationGroup="Insert"  /></td></tr>
@@ -348,8 +350,12 @@
         <tr><td>Products: </td><td><asp:Listbox ID="cblProducts" SelectionMode="Multiple" runat="server" Height="150" DataSourceID="sdsFunnelProducts" DataTextField="ProductCategory" DataValueField="FunnelProductID" font-size="10px" /></td>
             <td>Funnel Position:</td><td><asp:Listbox ID="cblFunnelPositions" SelectionMode="Multiple" runat="server" Height="150"  DataSourceID="sdsFunnelPositions" DataTextField="FunnelPosition" DataValueField="FunnelPositionID" font-size="10px" /></td></tr>
         <tr><td>Industry Codes: </td><td><asp:Listbox ID="lbIndustryCodes" SelectionMode="Multiple" runat="server" Height="150" DataSourceID="sdsIndustryCodes" DataTextField="IndustryCode" DataValueField="IndustryCodeID" font-size="10px" /></td></tr>
+        <tr><td>Exec Sponsors: </td><td> <asp:DropDownList ID="ddlExecSponsors" DataSourceID="sdsExecSponsor" AppendDataBoundItems="true" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" runat="server">
+            <asp:ListItem Text="--None--" Value="0" /> </asp:DropDownList></td><td></td><td></td></tr>        
         <tr><td>Team: </td><td> <asp:DropDownList ID="ddlSalesmen" DataSourceID="sdsTeamFilter" DataValueField="TeamID" DataTextField="TeamName" runat="server" /></td><td></td><td></td></tr>        
         <tr><td>Customer: </td><td> <asp:TextBox ID="txtCustomerFilter" runat="server" /></td><td></td><td></td></tr>        
+        <tr><td>EPC: </td><td> <asp:TextBox ID="txtEPCFilter" runat="server" /></td><td></td><td></td></tr>        
+
         <tr><td>Closing Date: </td>
                 <td>Start Date  </td><td><asp:TextBox ID="ClosingStartDateTextBox" runat="server" /><asp:Image runat="server" id="Calendar_scheduleHS" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
                                         <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="ClosingStartDateTextBox" PopupButtonID="Calendar_scheduleHS" />
@@ -528,6 +534,7 @@
                                         </td></tr>
                                         <tr><td>Funnel Position: </td><td><asp:DropDownList ID="FunnelPositionDropDown" runat="server" DatasourceID="sdsFunnelPositions" DataValueField="FunnelPositionID" DataTextField="FunnelPosition" SelectedValue='<%# Bind("FunnelPositionID") %>' /></td></tr>
                                         <tr><td>Industry Code: </td><td><asp:DropDownList ID="IndustryCodeDropDown" runat="server" DatasourceID="sdsIndustryCodes" DataValueField="IndustryCodeID" DataTextField="IndustryCode" SelectedValue='<%# Bind("IndustryCodeID")%>' /></td></tr>
+                                        <tr><td>Exec Sponsor: </td><td><asp:DropDownList ID="ExecSponsorDropDown" runat="server" DatasourceID="sdsExecSponsor" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" SelectedValue='<%# Bind("ExecSponsorID")%>' /></td></tr>
                                         <tr><td>PATTID: </td><td><asp:TextBox ID="PATTIDTextBox" runat="server" Text='<%# Bind("PATTID") %>' /></td></tr>
                                         <tr><td>Total k$: </td><td><asp:Label ID="TotalTextBox" runat="server" Text='<%# Bind("Total","{0:c0}k") %>' /></td></tr>
                                         <tr><td>Percentage: </td><td><asp:TextBox ID="PercentageTextBox" runat="server" Text='<%# Bind("Percentage") %>' /></td></tr>
@@ -852,6 +859,9 @@
     <asp:SqlDataSource ID="sdsIndustryCodes" runat="server"   
         ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
         SelectCommand="select industrycodeid,industrycode from tblFunnelIndustryCodes order by industrycode"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsExecSponsor" runat="server"   
+        ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
+        SelectCommand="select ExecSponsorID,ExecSponsor from tblExecSponsor union select 0,'(None)' order by ExecSponsor"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsGetOpportunities" runat="server" 
     ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
     SelectCommand="select a.OpportunityID,  
@@ -865,6 +875,7 @@
 	   a.Percentage/100 as [Prob happening], 
 	   PATTID, 
 	   a.Total as [factored_total],
+       i.ExecSponsor as [Exec Sponsor],
        sum(b.total) / case when count (distinct username) = 0 then 1 else count(distinct username) end  as [total]
 	    ,max(case when productcategory = 'AMS'                       and b.total &gt; 0  then 'X' else 'O' end ) as [AMS]
 	    ,max(case when productcategory = 'CSI'                       and b.total &gt; 0  then 'X' else 'O' end ) as [CSI]
@@ -895,6 +906,8 @@ inner join dbo.tblFunnelPositions f
 on a.FunnelPositionID = f.FunnelPositionID
 left join dbo.tblfunnelindustrycodes h
 on a.industrycodeid = h.industrycodeid
+left join dbo.tblExecSponsor i
+on a.ExecSponsorID = i.ExecSponsorID
 where a.opportunityid in (select distinct opportunityid
                             from tblopportunitydetails 
                            where (funnelproductid in (SELECT item from fnSplit(@funnelproductid,',')) and total &gt; 0) or @funnelproductid = '0')
@@ -917,7 +930,9 @@ and (createdate between @createdstartdate and @createdenddate or createdate is n
 and upper(Customer) like '%' + upper(@CustomerFilter) +'%'
 and (a.funnelpositionid &lt;&gt; 9 or a.funnelpositionid is null)
 and ((Top25 = 1 and @Top25Filter = 1) or @Top25Filter = 0)
-group by a.OpportunityID, Originator, Customer, CustomerLocation, EPCConsultant, TeamName, Name, CreateDate, LastModifiedDate, ClosingDate,f.FunnelPosition, a.Percentage, PATTID, a.Total, Description
+and (a.execsponsorid = @ExecSponsorID or @ExecSponsorID = 0)
+and upper(EPCConsultant) like '%' + upper(@EPCFilter) + '%'
+group by a.OpportunityID, Originator, Customer, CustomerLocation, EPCConsultant, TeamName, Name, CreateDate, LastModifiedDate, ClosingDate,f.FunnelPosition, a.Percentage, PATTID, a.Total, Description,i.ExecSponsor
 Order by a.OpportunityID desc">
         <SelectParameters>
             <asp:SessionParameter sessionfield="funnelproductid" Name="funnelproductid" DefaultValue="0" Type="String" />
@@ -934,10 +949,14 @@ Order by a.OpportunityID desc">
                 PropertyName="Text" />
             <asp:ControlParameter ControlID="txtCustomerFilter" Name="CustomerFilter" DefaultValue = "%"
                 PropertyName="Text" />            
+            <asp:ControlParameter ControlID="txtEPCFilter" Name="EPCFilter" DefaultValue = "%"
+                PropertyName="Text" />            
             <asp:SessionParameter Name="Username" SessionField="Username" />
             <asp:ControlParameter ControlID="chkTop25Filter" Name="Top25Filter" DefaultValue = "0"
                 PropertyName="Checked" />     
             <asp:SessionParameter SessionField="industrycodes" Name="industrycodes" DefaultValue="0" type="String" />                       
+            <asp:ControlParameter ControlID="ddlExecSponsors" Name="ExecSponsorID"  DefaultValue="0"
+                PropertyName="SelectedValue" />                  
         </SelectParameters>
 </asp:SqlDataSource>
 <asp:SqlDataSource ID="sdsOpportunityAssignments" runat="server" 

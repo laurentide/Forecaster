@@ -1,0 +1,151 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="FunnelSite.Master.vb" Inherits="Forecaster.FunnelSite" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        String.prototype.endsWith = function (str) {
+            var lastIndex = this.lastIndexOf(str);
+            return (lastIndex != -1) && (lastIndex + str.length == this.length);
+        }
+
+        function setVisibility(id, visibility) {
+            document.getElementById(id).style.display = visibility;
+        }
+
+        function toggleGroup(img) {
+            //  get a reference to the row and table
+            var tr = img.parentNode.parentNode;
+            var table = document.getElementById('segments');
+            var src = img.src;
+            var oRows = table.getElementsByTagName('tr');
+            var stopindex = oRows.length;
+
+            //  do some simple math to determine how many
+            //  rows we need to hide/show
+            var startIndex = tr.rowIndex + 1;
+            //var stopIndex = startIndex + parseInt(numberOfRows);
+
+            //  if the img src ends with plus, then we are expanding the
+            //  rows.  go ahead and remove the hidden class from the rows
+            //  and update the image src
+            if (src.endsWith('plus.png')) {
+                for (var i = startIndex; i < stopindex; i++) {
+                    if (Sys.UI.DomElement.containsCssClass(table.rows[i], 'hidden')  && Sys.UI.DomElement.containsCssClass(table.rows[i], 'ent')) {
+                        Sys.UI.DomElement.removeCssClass(table.rows[i], 'hidden');
+                    }
+                    else if (Sys.UI.DomElement.containsCssClass(table.rows[i], 'seg')) {
+                        break;
+                    }
+                }
+
+                src = src.replace('plus.png', 'minus.png');
+            }
+            else {
+                for (var i = startIndex; i < stopindex; i++) {
+                    if (!Sys.UI.DomElement.containsCssClass(table.rows[i], 'hidden') && (Sys.UI.DomElement.containsCssClass(table.rows[i], 'ent') || Sys.UI.DomElement.containsCssClass(table.rows[i], 'cust'))) {
+                        Sys.UI.DomElement.addCssClass(table.rows[i], 'hidden');
+                    }
+                    else if (Sys.UI.DomElement.containsCssClass(table.rows[i], 'seg')) {
+                        break;
+                    }
+                }
+
+                src = src.replace('minus.png', 'plus.png');
+            }
+
+            //  update the src with the new value
+        img.src = src;
+    }
+
+    function toggleGroupCust(img) {
+        //  get a reference to the row and table
+        var tr = img.parentNode.parentNode;
+        var table = document.getElementById('segments');
+        var src = img.src;
+        var oRows = table.getElementsByTagName('tr');
+        var stopindex = oRows.length;
+
+        //  do some simple math to determine how many
+        //  rows we need to hide/show
+        var startIndex = tr.rowIndex + 1;
+        //var stopIndex = startIndex + parseInt(numberOfRows);
+
+        //  if the img src ends with plus, then we are expanding the
+        //  rows.  go ahead and remove the hidden class from the rows
+        //  and update the image src
+        if (src.endsWith('plus.png')) {
+            for (var i = startIndex; i < stopindex; i++) {
+                if (Sys.UI.DomElement.containsCssClass(table.rows[i], 'hidden') && Sys.UI.DomElement.containsCssClass(table.rows[i], 'cust')) {
+                    Sys.UI.DomElement.removeCssClass(table.rows[i], 'hidden');
+                }
+                else if (Sys.UI.DomElement.containsCssClass(table.rows[i], 'ent')) {
+                    break;
+                }
+            }
+
+            src = src.replace('plus.png', 'minus.png');
+        }
+        else {
+            for (var i = startIndex; i < stopindex; i++) {
+                if (!Sys.UI.DomElement.containsCssClass(table.rows[i], 'hidden') && Sys.UI.DomElement.containsCssClass(table.rows[i], 'cust')) {
+                    Sys.UI.DomElement.addCssClass(table.rows[i], 'hidden');
+                }
+                else if (Sys.UI.DomElement.containsCssClass(table.rows[i], 'ent')) {
+                    break;
+                }
+            }
+
+            src = src.replace('minus.png', 'plus.png');
+        }
+
+        //  update the src with the new value
+        img.src = src;
+    }
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+    </head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    <img src="/Content/images/LAURENTIDE_logo.jpg" width="300px" height="62px" alt="Laurentide Logo" /> 
+                    Funnel tool</h1>
+            </div>
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" id="HeadLoginStatus" runat="server">Log In</a>
+                        ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>
+                        ! [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect"
+                        LogoutText="Log Out" LogoutPageUrl="~/" />]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:SiteMapDataSource runat="server" ID="siteMapDataSource" ShowStartingNode="false" />
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
+                    IncludeStyleBlock="false" Orientation="Horizontal" DataSourceID="siteMapDataSource" />
+            </div>
+        </div>
+        <div class="main">
+            <asp:SiteMapPath ID="SiteMapPath" runat="server" />
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+    </form>
+</body>
+</html>
