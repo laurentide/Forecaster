@@ -154,9 +154,10 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Managers\Mg_ProductCode.aspx" />
-    <Content Include="Purchase\PurchaseEntry.aspx" />
-    <Content Include="Managers\PurchaseManager.aspx" />
+    <Content Include="Purchase\PurchaseManager.aspx" />
+    <Content Include="Admin\PurchaseAdmin.aspx" />
     <Content Include="Purchase\Purchase.aspx" />
+    <Content Include="Purchase\PurchaseEntry.aspx" />
     <Content Include="Receptionist\Admin.aspx" />
     <Content Include="Receptionist\Receptionist.aspx" />
     <Content Include="Scripts\toggleGroup.js" />
@@ -401,18 +402,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>setMngrSpec.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Purchase\PurchaseEntry.aspx.designer.vb">
-      <DependentUpon>PurchaseEntry.aspx</DependentUpon>
+    <Compile Include="Purchase\PurchaseManager.aspx.designer.vb">
+      <DependentUpon>PurchaseManager.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Purchase\PurchaseEntry.aspx.vb">
-      <DependentUpon>PurchaseEntry.aspx</DependentUpon>
+    <Compile Include="Purchase\PurchaseManager.aspx.vb">
+      <DependentUpon>PurchaseManager.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Managers\PurchaseManager.aspx.designer.vb">
-      <DependentUpon>PurchaseManager.aspx</DependentUpon>
+    <Compile Include="Admin\PurchaseAdmin.aspx.designer.vb">
+      <DependentUpon>PurchaseAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Managers\PurchaseManager.aspx.vb">
-      <DependentUpon>PurchaseManager.aspx</DependentUpon>
+    <Compile Include="Admin\PurchaseAdmin.aspx.vb">
+      <DependentUpon>PurchaseAdmin.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Purchase\Purchase.aspx.designer.vb">
@@ -420,6 +421,13 @@
     </Compile>
     <Compile Include="Purchase\Purchase.aspx.vb">
       <DependentUpon>Purchase.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\PurchaseEntry.aspx.designer.vb">
+      <DependentUpon>PurchaseEntry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\PurchaseEntry.aspx.vb">
+      <DependentUpon>PurchaseEntry.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Receptionist\Admin.aspx.designer.vb">

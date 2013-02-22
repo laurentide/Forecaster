@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class PurchaseEntry
+Partial Public Class PurchaseAdmin
 
     '''<summary>
     '''ScriptManager control.
@@ -30,6 +30,15 @@ Partial Public Class PurchaseEntry
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents frmView As Global.System.Web.UI.WebControls.FormView
+
+    '''<summary>
+    '''SearchPO control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SearchPO As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''gvPurchaseRequests control.

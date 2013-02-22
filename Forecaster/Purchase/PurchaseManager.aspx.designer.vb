@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class PurchaseEntry
+Partial Public Class PurchaseManager
 
     '''<summary>
     '''ScriptManager control.
@@ -84,4 +84,22 @@ Partial Public Class PurchaseEntry
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsApprovalTypes As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsBuyers control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsBuyers As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsStatuses control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsStatuses As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

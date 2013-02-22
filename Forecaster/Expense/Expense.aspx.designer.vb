@@ -21,4 +21,40 @@ Partial Public Class Expense
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents frmExpense As Global.System.Web.UI.WebControls.FormView
+
+    '''<summary>
+    '''gvExpenseReports control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvExpenseReports As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
+    '''sdsForm control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsForm As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsDetailsGrid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsDetailsGrid As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsExpenseReportGrid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsExpenseReportGrid As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

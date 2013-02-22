@@ -115,8 +115,7 @@
         <div class="header">
             <div class="title">
                 <h1>
-                    <img src="/Content/images/LAURENTIDE_logo.jpg" width="300px" height="62px" alt="Laurentide Logo" /> 
-                    Funnel tool</h1>
+                    <img src="/Content/images/LAURENTIDE_logo.jpg" width="300px" height="62px" alt="Laurentide Logo" /> </h1>
             </div>
             <div class="loginDisplay">
                 <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">

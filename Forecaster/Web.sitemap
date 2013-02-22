@@ -7,7 +7,6 @@
 			<siteMapNode url="Managers/Mg_FunnelManagement.aspx" title="Funnel Management" description=""/>
 			<siteMapNode url="Managers/Mg_Segments.aspx" title="Total by Territory Codes" description=""/>
 			<siteMapNode url="Managers/Mg_ProductCode.aspx" title="Total by Product Codes" description=""/>
-			<siteMapNode url="Managers/PurchaseManager.aspx" title="Purchase Request Approval" description=""/>
 		</siteMapNode>
 		<siteMapNode title="Forecast" roles="*" description="">
 			<siteMapNode url="forecast/ProductCode.aspx" title="View Forecast By PC" description=""/>
@@ -24,8 +23,12 @@
 			<siteMapNode url="Receptionist/Admin.aspx" title="Admin" description=""/>
 		</siteMapNode>
 		<siteMapNode title="Purchase Request" roles="*" description="">
-			<siteMapNode url="Purchase/Purchase.aspx" title="Purchase Request" description=""/>
-			<siteMapNode url="Purchase/PurchaseEntry.aspx" title="Administration Order Entry" description=""/>
+			<siteMapNode url="Purchase/Purchase.aspx" title="Enter a new Purchase Request" description=""/>
+			<siteMapNode url="Purchase/PurchaseEntry.aspx" title="Purchase Request Nomis Order Entry" description=""/>
+			<siteMapNode url="Purchase/PurchaseManager.aspx" title="Purchase Request Approval" description=""/>
+		</siteMapNode>
+		<siteMapNode title="Administration" roles="*" description="">
+			<siteMapNode url="Admin/PurchaseAdmin.aspx" title="Purchase Requests/Purchase Order lookup" description=""/>
 		</siteMapNode>
 	</siteMapNode>
 </siteMap>
