@@ -143,6 +143,7 @@ Public Class Funnel
                                     "      ,[LaurentideSolution] = @LaurentideSolution           " & _
                                     "      ,[Top25] = @Top25           " & _
                                     "      ,[IndustryCodeID] = @IndustryCode           " & _
+                                    "      ,[ExecSponsorID] = @ExecSponsorID           " & _
                                     " WHERE Opportunityid = @OpportunityID         "
 
             SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmUpdate.FindControl("OriginatorTextBox"), Label).Text
@@ -166,6 +167,7 @@ Public Class Funnel
             SqlCommand.Parameters.Add("@LaurentideSolution", SqlDbType.VarChar, 255).Value = CType(Me.frmUpdate.FindControl("LaurentideSolutionTextbox"), TextBox).Text
             SqlCommand.Parameters.Add("@Top25", SqlDbType.Bit).Value = CType(Me.frmUpdate.FindControl("chkTop25"), CheckBox).Checked
             SqlCommand.Parameters.Add("@IndustryCode", SqlDbType.Int).Value = CType(Me.frmUpdate.FindControl("IndustryCodeDropDown"), DropDownList).Text
+            SqlCommand.Parameters.Add("@ExecSponsorID", SqlDbType.Int).Value = CType(Me.frmUpdate.FindControl("ExecSponsorDropDown"), DropDownList).Text
             SqlCommand.Parameters.Add("@OpportunityID", SqlDbType.Int).Value = Session("OpportunityID")
             SqlCommand.Connection = SqlConnection
 
@@ -503,10 +505,12 @@ Public Class Funnel
         Me.ClosingStartDateTextBox.Text = ""
         Me.txtCustomerFilter.Text = ""
         Me.lbIndustryCodes.ClearSelection()
+        Me.ddlExecSponsors.SelectedValue = 0
         Session("funnelpositionid") = 0
         Session("funnelproductid") = 0
         Session("industrycodes") = 0
-        Me.chkTop25Filter.Checked = False
+        'Me.chkTop25Filter.Checked = False
+        rblTop25Filter.SelectedValue = 3
         Me.CreatedEndDateTextBox.Text = ""
         Me.CreatedStartDateTextBox.Text = ""
         Gridview4.DataBind()
@@ -665,5 +669,20 @@ Public Class Funnel
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Protected Sub ibProductLead_Click(sender As Object, e As ImageClickEventArgs)
+        Dim strSalesLead As String
+        Dim row As GridViewRow
+        strSalesLead = CType(CType(CType(panEdit.FindControl("Accordion2"), Accordion).FindControl("frmUpdate"), FormView).FindControl("SalesmanIDDropDown"), DropDownList).SelectedItem.Text
+        If strSalesLead <> "" Then
+            For Each row In Me.GridView2.Rows
+                If row.RowType = DataControlRowType.DataRow Then
+                    If CType(row.FindControl("txtTotal"), TextBox).Text <> "0" Then
+                        CType(row.FindControl("ProductSalesLead"), TextBox).Text = strSalesLead
+                    End If
+                End If
+            Next
+        End If
     End Sub
 End Class

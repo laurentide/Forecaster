@@ -42,6 +42,7 @@ Public Class PurchaseEntry
         'mm.CC.Add("support@laurentide.com")
         Dim smtp As New SmtpClient("lcl-exc")
         smtp.Send(mm)
+        System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         'Refresh Gridview
         gvPurchaseRequests.DataBind()
     End Sub

@@ -28,7 +28,7 @@ Public Class PurchaseAdmin
         ''mm.CC.Add("support@laurentide.com")
         'Dim smtp As New SmtpClient("lcl-exc")
         'smtp.Send(mm)
-        ''Refresh Gridview
-        'gvPurchaseRequests.DataBind()
+        'Refresh Gridview
+        gvPurchaseRequests.DataBind()
     End Sub
 End Class

@@ -221,6 +221,15 @@ Partial Public Class Funnel
     Protected WithEvents ddlSalesmen As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''txtProductLead control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtProductLead As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''txtCustomerFilter control.
     '''</summary>
     '''<remarks>
@@ -237,6 +246,15 @@ Partial Public Class Funnel
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents txtEPCFilter As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''txtID control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents txtID As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
     '''ClosingStartDateTextBox control.
@@ -419,13 +437,13 @@ Partial Public Class Funnel
     Protected WithEvents Maskededitvalidator6 As Global.AjaxControlToolkit.MaskedEditValidator
 
     '''<summary>
-    '''chkTop25Filter control.
+    '''rblTop25Filter control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents chkTop25Filter As Global.System.Web.UI.WebControls.CheckBox
+    Protected WithEvents rblTop25Filter As Global.System.Web.UI.WebControls.RadioButtonList
 
     '''<summary>
     '''btnFilter control.

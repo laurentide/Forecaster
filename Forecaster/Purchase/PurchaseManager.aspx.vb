@@ -66,6 +66,7 @@ Public Class PurchaseManager
             End If
             mm.Body = body & vbCrLf & "Please go to this address: http://lcl-sql2k5-s:81/Purchase/PurchaseEntry.aspx to continue."
             smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         ElseIf CType(frmView.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Denied" Then
             'Find manager email
             Dim connectionString As String
@@ -93,8 +94,37 @@ Public Class PurchaseManager
             Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request Denied (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
             Dim smtp As New SmtpClient("lcl-exc")
             smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
+        Else
+            '            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertnotsent();", True)
         End If
         'Refresh Gridview
         gvPurchaseRequests.DataBind()
+    End Sub
+
+    Protected Sub ITReviewCheckBox_CheckedChanged(sender As Object, e As EventArgs)
+        Dim BuyerDropDown As DropDownList
+        BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
+        Dim ITReviewCheckBox As CheckBox = CType(frmView.FindControl("ITReviewCheckBox"), CheckBox)
+        If ITReviewCheckBox.checked Then
+            BuyerDropDown.SelectedValue = 38
+            BuyerDropDown.Enabled = False
+        Else
+            BuyerDropDown.Enabled = True
+        End If
+    End Sub
+
+    Protected Sub frmView_DataBound(sender As Object, e As EventArgs)
+        Dim BuyerDropDown As DropDownList
+        BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
+        Dim ITReviewCheckBox As CheckBox = CType(frmView.FindControl("ITReviewCheckBox"), CheckBox)
+        If Not ITReviewCheckBox Is Nothing Then
+            If ITReviewCheckBox.Checked Then
+                BuyerDropDown.SelectedValue = 38
+                BuyerDropDown.Enabled = False
+            Else
+                BuyerDropDown.Enabled = True
+            End If
+        End If
     End Sub
 End Class

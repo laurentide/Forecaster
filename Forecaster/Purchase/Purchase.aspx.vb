@@ -41,7 +41,7 @@ Public Class Purchase
         mm.CC.Add(mailaddress)
         Dim smtp As New SmtpClient("lcl-exc")
         smtp.Send(mm)
-
+        System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         'update gridview
         gvPurchaseRequests.DataBind()
     End Sub
@@ -79,6 +79,8 @@ Public Class Purchase
         mm.CC.Add(mailaddress)
         Dim smtp As New SmtpClient("lcl-exc")
         smtp.Send(mm)
+        'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
+        System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         'update gridview
         gvPurchaseRequests.DataBind()
     End Sub
@@ -93,4 +95,27 @@ Public Class Purchase
     End Sub
 
 
+    Protected Sub frmInsert_DataBound(sender As Object, e As EventArgs)
+        Try
+            If frmInsert.CurrentMode = FormViewMode.Insert Then
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+
+                Dim SqlConnection As New SqlConnection(connectionString)
+                Dim sc As New SqlCommand("select givenname + ' ' + sn as IssuedBy,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
+                SqlConnection.Open()
+
+                Dim reader As SqlDataReader = sc.ExecuteReader()
+                reader.Read()
+                Session("IssuedBy") = reader.GetString(0)
+                Session("Email") = reader.GetString(1)
+                reader.Close()
+
+                CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text = Session("IssuedBy")
+                CType(frmInsert.FindControl("RequesterEmailTextBox"), TextBox).Text = Session("Email")
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

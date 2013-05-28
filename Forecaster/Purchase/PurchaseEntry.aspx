@@ -70,6 +70,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Link:
+                    </td>
+                    <td>
+                        <asp:HyperLink ID="LinkTextbox"  NavigateUrl='<%# Bind("Link")%>' Width="500" runat="server" Text='<%# Bind("Link")%>' />
+                    </td>
+                </tr>
+
+                <tr>
                     <td>Reason:
                     </td>
                     <td>
@@ -129,14 +137,14 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Manager:
+                    <td>Approver:
                     </td>
                     <td>
                         <asp:Label ID="ManagerIDTextBox"  runat="server" Text='<%# Bind("ManagerName") %>' />
                     </td>
                 </tr>
                 <tr>
-                    <td>Manager Approved/Denied Date:
+                    <td>Approval/Denied Date:
                     </td>
                     <td>
                         <asp:Label ID="ManagerApprovalDateTextBox" runat="server" readonly="true" Text='<%# Bind("ManagerApprovalDate") %>' />
@@ -225,8 +233,8 @@
             <%--<asp:BoundField DataField="Reason" HeaderText="Reason" SortExpression="Reason" />--%>
             <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity" />
             <asp:BoundField DataField="TotalPrice" HeaderText="Total"  DataFormatString="{0:c2}" SortExpression="TotalPrice" />
-            <asp:BoundField DataField="ManagerName" HeaderText="Manager" SortExpression="ManagerName" />
-            <asp:BoundField DataField="ManagerApprovalDate" HeaderText="Manager Approved/Denied Date" SortExpression="ManagerApprovalDate" />
+            <asp:BoundField DataField="ManagerName" HeaderText="Approver" SortExpression="ManagerName" />
+            <asp:BoundField DataField="ManagerApprovalDate" HeaderText="Approval/Denied Date" SortExpression="ManagerApprovalDate" />
             <%--<asp:CheckBoxField DataField="Approved" HeaderText="Approved" SortExpression="Approved" />--%>
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
             <%--<asp:BoundField DataField="Approval" HeaderText="Approval Type" SortExpression="Approval" />--%>
@@ -290,7 +298,9 @@
                        on tblPurchaseRequests.buyerid = tblbuyers.buyerid
                        LEFT JOIN Tblstatuses
                        ON tblpurchaseRequests.statusid = tblstatuses.statusID
-                       where BuyerDomainUser=@Username 
+                       where (BuyerDomainUser=@Username or (BuyerDomainUser = 'LCLMTL\ServiceDisp' and 
+                                @Username in (select username from tblservicemembers))
+                              )                       
                        and visible = 1 
                        and tblstatuses.statusid = 2
                        Order by purchaserequestid desc">

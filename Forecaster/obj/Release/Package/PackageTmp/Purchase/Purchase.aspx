@@ -6,7 +6,7 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Purchase Request</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" DefaultMode="Insert" DataKeyNames="PurchaseRequestID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
+    <asp:FormView ID="frmInsert" ondatabound="frmInsert_DataBound" runat="server" DataSourceID="sdsInsert" DefaultMode="Insert" DataKeyNames="PurchaseRequestID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
         <EditItemTemplate>
             <table>
                 <tr>
@@ -30,7 +30,7 @@
                     <td>
                         <asp:TextBox ID="RequesterEmailTextBox" runat="server" Text='<%# Bind("RequesterEmail") %>' />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Email of requester required" ControlToValidate="RequesterEmailTextBox" />
-                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Enter a valid email" ControlToValidate="RequesterEmailTextBox" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a valid email" ControlToValidate="RequesterEmailTextBox" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />
                     </td>
                 </tr>
                 <tr>
@@ -38,18 +38,18 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
-                            <asp:ListItem Text="(Select your department)" Value="" />
+                            <asp:ListItem Text="(Select the department)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                         <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
                     </td>
                 </tr>
                 <tr>
-                    <td>Manager:
+                    <td>Approver:
                     </td>
                     <td>
                         <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
-                            <asp:ListItem Text="(Select your manager)" Value="" />
+                            <asp:ListItem Text="(Select the approver)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
                         <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Requester and manager can't be the same" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDown_CustomValidation" />
@@ -94,6 +94,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Link:
+                    </td>
+                    <td>
+                        <asp:TextBox ID="LinkTextbox" Width="500" runat="server" Text='<%# Bind("Link")%>' />
+                    </td>
+                </tr>
+                <tr>
                     <td>Reason:
                     </td>
                     <td>
@@ -107,6 +114,7 @@
                     <td>
                         <asp:TextBox ID="QuantityTextBox" runat="server" Text='<%# Bind("Quantity") %>' />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Quantity required" ControlToValidate="QuantityTextBox" />
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ForeColor="Red" ErrorMessage="Numbers only" Type="double" MinimumValue="0" MaximumValue="1000000" ControlToValidate="QuantityTextBox" ValidationGroup="Update" />
                     </td>
                 </tr>
                 <tr>
@@ -115,6 +123,7 @@
                     <td>
                         <asp:TextBox ID="TotalPriceTextBox" runat="server" Text='<%# Bind("TotalPrice") %>' />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Price required" ControlToValidate="TotalPriceTextBox" />
+                        <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="TotalPriceTextBox" ValidationGroup="Update" />
                     </td>
                 </tr>
                 <%--                <tr>
@@ -243,18 +252,18 @@
                     </td>
                     <td>
                         <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
-                            <asp:ListItem Text="(Select your department)" Value="" />
+                            <asp:ListItem Text="(Select the department)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                         <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
                     </td>
                 </tr>
                 <tr>
-                    <td>Manager:
+                    <td>Approver:
                     </td>
                     <td>
                         <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
-                            <asp:ListItem Text="(Select your manager)" Value="" />
+                            <asp:ListItem Text="(Select the approver)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
                         <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Requester and manager can't be the same" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDown_CustomValidation" />
@@ -299,6 +308,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Link:
+                    </td>
+                    <td>
+                        <asp:TextBox ID="LinkTextbox" Width="500" runat="server" Text='<%# Bind("Link") %>' />
+                    </td>
+                </tr>
+                <tr>
                     <td>Reason:
                     </td>
                     <td>
@@ -312,6 +328,7 @@
                     <td>
                         <asp:TextBox ID="QuantityTextBox" runat="server" Text='<%# Bind("Quantity") %>' />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ForeColor="Red" ValidationGroup="Insert" ErrorMessage="Quantity required" ControlToValidate="QuantityTextBox" />
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ForeColor="Red" ErrorMessage="Numbers only" Type="double" MinimumValue="0" MaximumValue="1000000" ControlToValidate="QuantityTextBox" ValidationGroup="Insert" />
                     </td>
                 </tr>
                 <tr>
@@ -347,8 +364,8 @@
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ForeColor="Red" ValidationGroup="Insert" ErrorMessage="Select the purpose of your purchase" ControlToValidate="ApprovalDropDown" />
                         <%--<asp:TextBox ID="ApprovalTypeTextBox" runat="server" Text='<%# Bind("ApprovalType") %>' />--%>
-                    </td>
-                </tr>
+                   <%-- </td>
+                </tr>--%>
                 <%--                <tr>
 
                     <td>Customer (resell):
@@ -428,7 +445,7 @@
                     <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this purchase request?');" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:CommandField ShowSelectButton="True" />
+            <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
             <asp:BoundField DataField="PurchaseRequestID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="PurchaseRequestID" />
             <asp:BoundField DataField="RequesterName" HeaderText="Requester Name" SortExpression="RequesterName" />
             <%--<asp:BoundField DataField="RequesterUsername" HeaderText="RequesterUsername" SortExpression="RequesterUsername" />--%>
@@ -441,8 +458,8 @@
             <%--<asp:BoundField DataField="Reason" HeaderText="Reason" SortExpression="Reason" />--%>
             <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity" />
             <asp:BoundField DataField="TotalPrice" HeaderText="Total Price" DataFormatString="{0:c2}" SortExpression="TotalPrice" />
-            <asp:BoundField DataField="ManagerName" HeaderText="Manager" SortExpression="ManagerName" />
-            <asp:BoundField DataField="ManagerApprovalDate" HeaderText="Manager Approved/Denied Date" SortExpression="ManagerApprovalDate" />
+            <asp:BoundField DataField="ManagerName" HeaderText="Approver" SortExpression="ManagerName" />
+            <asp:BoundField DataField="ManagerApprovalDate" HeaderText="Approved/Denied Date" SortExpression="ManagerApprovalDate" />
             <%--<asp:CheckBoxField DataField="Approved" HeaderText="Approved" SortExpression="Approved" />--%>
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
             <%--        <asp:BoundField DataField="ApprovalType" HeaderText="ApprovalType" SortExpression="ApprovalType" />
@@ -481,7 +498,6 @@
            ,[Reason]
            ,[Quantity]
            ,[ManagerID]
-           ,[ManagerApprovalDate]
            ,[TotalPrice]
            ,[ApprovalType]
            ,[PMInitials]
@@ -493,7 +509,8 @@
            ,[DateOrderEntry]
            ,[ITReview]
            ,[Visible]
-           ,[StatusID])
+           ,[StatusID]
+           ,[Link])
      VALUES
            (@RequesterName
            ,@RequesterUsername
@@ -506,7 +523,6 @@
            ,@Reason
            ,@Quantity
            ,@ManagerID
-           ,@ManagerApprovalDate
            ,@TotalPrice
            ,@ApprovalType
            ,@PMInitials
@@ -518,7 +534,8 @@
            ,@DateOrderEntry
            ,@ITReview
            ,@Visible
-           ,@StatusID)"
+           ,@StatusID
+           ,@Link)"
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
                    SET [RequesterName] = @RequesterName
                       ,[RequesterUsername] = @RequesterUsername
@@ -537,6 +554,9 @@
                       ,[ProjectCode] = @ProjectCode
                       ,[ChangeOrderNotice] = @ChangeOrderNotice
                       ,[StatusID] = @StatusID
+                      ,[Link] = @Link
+                      ,[ManagerID] = @ManagerID
+                      ,[ManagerApprovalDate]=null
                  WHERE PurchaseRequestID = @PurchaseRequestID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvPurchaseRequests" PropertyName="SelectedValue" />
@@ -555,7 +575,6 @@
             <asp:Parameter Name="Reason" />
             <asp:Parameter Name="Quantity" />
             <asp:Parameter Name="ManagerID" />
-            <asp:Parameter Name="ManagerApprovalDate" />
             <asp:Parameter Name="TotalPrice" />
             <asp:Parameter Name="ApprovalType" />
             <asp:Parameter Name="PMinitials" />
@@ -565,6 +584,7 @@
             <asp:Parameter Name="LCLPurchaseOrder" />
             <asp:Parameter Name="BuyerID" />
             <asp:Parameter Name="DateOrderEntry" />
+            <asp:Parameter Name="Link" />
             <asp:Parameter Name="ITReview" DefaultValue="false" />
             <asp:Parameter Name="Visible" DefaultValue="true" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
@@ -582,12 +602,15 @@
             <asp:Parameter Name="Description" />
             <asp:Parameter Name="Reason" />
             <asp:Parameter Name="Quantity" />
+            <asp:Parameter Name="ManagerID" />
+            <asp:Parameter Name="ManagerApprovalDate" DefaultValue="" />
             <asp:Parameter Name="TotalPrice" />
             <asp:Parameter Name="ApprovalType" />
             <asp:Parameter Name="PMinitials" />
             <asp:Parameter Name="Customer" />
             <asp:Parameter Name="ProjectCode" />
             <asp:Parameter Name="ChangeOrderNotice" />
+            <asp:Parameter Name="Link" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
         </UpdateParameters>
     </asp:SqlDataSource>

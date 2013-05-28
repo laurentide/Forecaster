@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class Expense
 
     '''<summary>
+    '''ScriptManager control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
+
+    '''<summary>
     '''frmExpense control.
     '''</summary>
     '''<remarks>
@@ -21,6 +30,51 @@ Partial Public Class Expense
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents frmExpense As Global.System.Web.UI.WebControls.FormView
+
+    '''<summary>
+    '''reportModalPopup control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents reportModalPopup As Global.AjaxControlToolkit.ModalPopupExtender
+
+    '''<summary>
+    '''panReport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents panReport As Global.System.Web.UI.WebControls.Panel
+
+    '''<summary>
+    '''btnCloseReport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnCloseReport As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ReportViewer1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ReportViewer1 As Global.Microsoft.Reporting.WebForms.ReportViewer
+
+    '''<summary>
+    '''ExpenseReport control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ExpenseReport As Global.System.Web.UI.WebControls.ObjectDataSource
 
     '''<summary>
     '''gvExpenseReports control.
@@ -50,6 +104,15 @@ Partial Public Class Expense
     Protected WithEvents sdsDetailsGrid As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
+    '''sdsStdDetails control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsStdDetails As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
     '''sdsExpenseReportGrid control.
     '''</summary>
     '''<remarks>
@@ -57,4 +120,67 @@ Partial Public Class Expense
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsExpenseReportGrid As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsDepartments control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsDepartments As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsExpenseCategories control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsExpenseCategories As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsExpenseTypes control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsExpenseTypes As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsProvinces control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsProvinces As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsPaymentTypes control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsPaymentTypes As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsManagers control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsManagers As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''FakeTarget control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents FakeTarget As Global.System.Web.UI.WebControls.Button
 End Class

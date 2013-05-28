@@ -351,10 +351,12 @@
             <td>Funnel Position:</td><td><asp:Listbox ID="cblFunnelPositions" SelectionMode="Multiple" runat="server" Height="150"  DataSourceID="sdsFunnelPositions" DataTextField="FunnelPosition" DataValueField="FunnelPositionID" font-size="10px" /></td></tr>
         <tr><td>Industry Codes: </td><td><asp:Listbox ID="lbIndustryCodes" SelectionMode="Multiple" runat="server" Height="150" DataSourceID="sdsIndustryCodes" DataTextField="IndustryCode" DataValueField="IndustryCodeID" font-size="10px" /></td></tr>
         <tr><td>Exec Sponsors: </td><td> <asp:DropDownList ID="ddlExecSponsors" DataSourceID="sdsExecSponsor" AppendDataBoundItems="true" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" runat="server">
-            <asp:ListItem Text="--None--" Value="0" /> </asp:DropDownList></td><td></td><td></td></tr>        
+            </asp:DropDownList></td><td></td><td></td></tr>        
         <tr><td>Team: </td><td> <asp:DropDownList ID="ddlSalesmen" DataSourceID="sdsTeamFilter" DataValueField="TeamID" DataTextField="TeamName" runat="server" /></td><td></td><td></td></tr>        
+        <tr><td>Product Lead: </td><td> <asp:textbox ID="txtProductLead" runat="server" /></td><td></td><td></td></tr>        
         <tr><td>Customer: </td><td> <asp:TextBox ID="txtCustomerFilter" runat="server" /></td><td></td><td></td></tr>        
         <tr><td>EPC: </td><td> <asp:TextBox ID="txtEPCFilter" runat="server" /></td><td></td><td></td></tr>        
+        <tr><td>ID: </td><td> <asp:TextBox ID="txtID" runat="server" /></td><td></td><td></td></tr>        
 
         <tr><td>Closing Date: </td>
                 <td>Start Date  </td><td><asp:TextBox ID="ClosingStartDateTextBox" runat="server" /><asp:Image runat="server" id="Calendar_scheduleHS" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
@@ -378,7 +380,12 @@
                                         <asp:maskededitvalidator ID="Maskededitvalidator6" runat="server" controltovalidate="CreatedEndDateTextBox" controlextender="meeStartDate" invalidvaluemessage="Date is Invalid" IsValidEmpty="True" /></td>
                 <td></td>
         </tr>
-        <tr><td>Top 25:</td><td><asp:CheckBox ID="chkTop25Filter" runat="server" /></td></tr>        
+        <tr><td>Top 25:</td><td><%--<asp:CheckBox ID="chkTop25Filter" runat="server" />--%>
+            <asp:RadioButtonList ID="rblTop25Filter" runat="server"  >
+                <asp:ListItem Value="1">Top 25 only</asp:ListItem>
+                <asp:ListItem Value="2">Exclude top 25</asp:ListItem>
+                <asp:ListItem Value="3" Selected="true">No filter</asp:ListItem>
+            </asp:RadioButtonList></td></tr>        
         <tr><td><asp:Button ID="btnFilter" runat="server" onclick="btnFilter_onClick" Text="Filter" /><asp:Button ID="btnClear" runat="server" onclick="btnClear_onClick" Text="Clear Filters" /></td><td></td><td></td><td></td></tr>
     </table>
     </asp:Panel>
@@ -415,6 +422,7 @@
                     <asp:BoundField DataField="Prob happening" DataFormatString="{0:P0}" HeaderText="Prob" ItemStyle-Width="35" SortExpression="Prob happening" />
                     <asp:BoundField DataField="factored_total" HeaderText="Fact. Total k$" DataFormatString="{0:0}" SortExpression="factored_total" ItemStyle-HorizontalAlign="Right" />
                     <asp:BoundField DataField="Total" HeaderText="Total k$" DataFormatString="{0:0}" SortExpression="Total" ItemStyle-HorizontalAlign="Right" />
+                    <asp:BoundField DataField="Exec Sponsor" HeaderText="Exec Sponsor" SortExpression="Exec Sponsor" />
                     <asp:BoundField DataField="AMS" HeaderText="AMS" ReadOnly="True" SortExpression="AMS"
                         ItemStyle-HorizontalAlign="Center" />
                     <asp:BoundField DataField="CSI" HeaderText="CSI" ReadOnly="True" SortExpression="CSI"
@@ -624,6 +632,14 @@
                                             <asp:ValidatorCalloutExtender runat="Server" ID="VCE2" TargetControlID="PercentValidator" Width="350px"  />
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Product Lead">
+                                        <HeaderTemplate>
+                                            Product Lead <asp:ImageButton ID="ibProductLead"  ToolTip="Set the product lead to the sales lead" AlternateText="Set the product lead to the sales lead" runat="server" ImageUrl="~/_assets/img/icon_update.png" OnClick="ibProductLead_Click" />
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="ProductSalesLead" runat="server" Text='<%# Eval("ProductSalesLead")%>' width="100"/>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Booking Date" HeaderStyle-Width="120">
                                         <HeaderTemplate>
                                             Booking Date <asp:ImageButton ID="ibClosingDate"  ToolTip="Set the date to the closing date" AlternateText="Set the date to the closing date" runat="server" ImageUrl="~/_assets/img/icon_update.png" OnClick="ibClosingDate_OnClick" />
@@ -654,7 +670,7 @@
                                                     <tr><td>Proposal Eng Lead</td><td><asp:TextBox ID="ProposalEngLead" Text='<%# DataBinder.Eval(Container.DataItem, "ProposalEngLead") %>' runat="server" /></td></tr>
                                                     <tr><td>Proposal Coordinator</td><td><asp:TextBox ID="ProposalCoordinator" Text='<%# DataBinder.Eval(Container.DataItem, "ProposalCoordinator") %>' runat="server" />  </td>  </tr>  
                                                     <tr><td>Exec Sponsor</td><td><asp:TextBox ID="ExecSponsor" Text='<%# DataBinder.Eval(Container.DataItem, "ExecSponsor") %>' runat="server" /></td></tr>
-                                                    <tr><td>Product Sales Lead/Sol'n Architect</td><td><asp:TextBox ID="ProductSalesLead" Text='<%# DataBinder.Eval(Container.DataItem, "ProductSalesLead") %>' runat="server" /></td></tr>
+                                                    <%--<tr><td>Product Sales Lead/Sol'n Architect</td><td><asp:TextBox ID="ProductSalesLead" Text='<%# DataBinder.Eval(Container.DataItem, "ProductSalesLead") %>' runat="server" /></td></tr>--%>
                                                 </table>        
                                             </asp:Panel>
                                             <asp:CollapsiblePanelExtender 
@@ -929,9 +945,13 @@ and (closingdate between @startdate and @enddate or closingdate is null)
 and (createdate between @createdstartdate and @createdenddate or createdate is null)
 and upper(Customer) like '%' + upper(@CustomerFilter) +'%'
 and (a.funnelpositionid &lt;&gt; 9 or a.funnelpositionid is null)
-and ((Top25 = 1 and @Top25Filter = 1) or @Top25Filter = 0)
+and ((Top25 = 1 and @Top25Filter = 1) or (Top25 = 0 and @Top25Filter = 2) or @Top25Filter = 3)
 and (a.execsponsorid = @ExecSponsorID or @ExecSponsorID = 0)
 and upper(EPCConsultant) like '%' + upper(@EPCFilter) + '%'
+and (a.opportunityID = @ID or @ID = 0)
+and (a.opportunityid in (select distinct opportunityid
+                              from tblopportunitydetails 
+                           where (productsaleslead like '%' + upper(@ProductLead) + '%')))
 group by a.OpportunityID, Originator, Customer, CustomerLocation, EPCConsultant, TeamName, Name, CreateDate, LastModifiedDate, ClosingDate,f.FunnelPosition, a.Percentage, PATTID, a.Total, Description,i.ExecSponsor
 Order by a.OpportunityID desc">
         <SelectParameters>
@@ -951,12 +971,16 @@ Order by a.OpportunityID desc">
                 PropertyName="Text" />            
             <asp:ControlParameter ControlID="txtEPCFilter" Name="EPCFilter" DefaultValue = "%"
                 PropertyName="Text" />            
+            <asp:ControlParameter ControlID="txtProductLead" Name="ProductLead" DefaultValue = "%"
+                PropertyName="Text" />            
             <asp:SessionParameter Name="Username" SessionField="Username" />
-            <asp:ControlParameter ControlID="chkTop25Filter" Name="Top25Filter" DefaultValue = "0"
-                PropertyName="Checked" />     
+            <%--<asp:ControlParameter ControlID="chkTop25Filter" Name="Top25Filter" DefaultValue = "0"
+                PropertyName="Checked" />     --%>
+            <asp:ControlParameter ControlID="rblTop25Filter" Name="Top25Filter" DefaultValue = "3"/> 
             <asp:SessionParameter SessionField="industrycodes" Name="industrycodes" DefaultValue="0" type="String" />                       
             <asp:ControlParameter ControlID="ddlExecSponsors" Name="ExecSponsorID"  DefaultValue="0"
                 PropertyName="SelectedValue" />                  
+            <asp:ControlParameter ControlID="txtID" Name="ID" DefaultValue="0" />           
         </SelectParameters>
 </asp:SqlDataSource>
 <asp:SqlDataSource ID="sdsOpportunityAssignments" runat="server" 

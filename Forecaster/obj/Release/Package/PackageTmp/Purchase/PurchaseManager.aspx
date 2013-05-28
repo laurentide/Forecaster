@@ -6,7 +6,7 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>Purchase Request Approval</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmView" runat="server" DataSourceID="sdsUpdate" DefaultMode="Edit" DataKeyNames="PurchaseRequestID" OnItemUpdated="frmView_ItemUpdated">
+    <asp:FormView ID="frmView" runat="server" DataSourceID="sdsUpdate" DefaultMode="Edit" DataKeyNames="PurchaseRequestID" OnItemUpdated="frmView_ItemUpdated" OnDataBound="frmView_DataBound">
         <EditItemTemplate>
             <table border="1px">
                 <tr>
@@ -71,6 +71,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Link:
+                    </td>
+                    <td>
+                        <asp:Hyperlink ID="LinkTextbox" Width="500" runat="server"  NavigateUrl='<%# Bind("Link")%>' Text='<%# Bind("Link")%>' />
+                    </td>
+                </tr>
+                <tr>
                     <td>Reason:
                     </td>
                     <td>
@@ -82,6 +89,8 @@
                     </td>
                     <td>
                         <asp:Textbox ID="QuantityTextBox" runat="server" Text='<%# Bind("Quantity") %>' />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ForeColor="Red" ValidationGroup="Update" ErrorMessage="Quantity required" ControlToValidate="QuantityTextBox" />
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ForeColor="Red" ErrorMessage="Numbers only" Type="double" MinimumValue="0" MaximumValue="1000000" ControlToValidate="QuantityTextBox" ValidationGroup="Update" />
                     </td>
                 </tr>
                 <tr>
@@ -89,6 +98,8 @@
                     </td>
                     <td>
                         <asp:Textbox ID="TotalPriceTextBox" runat="server"  Text='<%# Bind("TotalPrice")%>' />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ForeColor="Red" ValidationGroup="Update" ErrorMessage="Price required" ControlToValidate="TotalPriceTextBox" />
+                        <asp:RangeValidator ID="RangeValidator2" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar sign" Type="double" MinimumValue="0" MaximumValue="1000000" ControlToValidate="TotalPriceTextBox" ValidationGroup="Update" />
                     </td>
                 </tr>
 <%--                <tr>
@@ -130,14 +141,14 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Manager:
+                    <td>Approver:
                     </td>
                     <td>
                         <asp:Label ID="ManagerIDTextBox"  runat="server" Text='<%# Bind("ManagerName") %>' />
                     </td>
                 </tr>
                 <tr>
-                    <td>Manager Approval Date:
+                    <td>Approval Date:
                     </td>
                     <td>
                         <asp:Label ID="ManagerApprovalDateTextBox" runat="server" readonly="true" Text='<%# Bind("ManagerApprovalDate") %>' />
@@ -156,13 +167,14 @@
                     <td>
                         <asp:DropDownList ID="StatusDropDown" runat="server" DataSourceID="sdsStatuses" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" SelectedValue='<%# Bind("StatusID")%>'>
                         </asp:DropDownList>
+                        <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Please approve or deny this request" Type="Integer" MinimumValue="2" MaximumValue="3" ControlToValidate="StatusDropDown" ValidationGroup="Update" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Is this an IT item? <br /> (If yes, the buyer needs to be Johanne Legault)
+                    <td>Is this an IT item? <br /><span style="font-weight:bold">(If yes, the buyer needs to be Johanne Legault)</span> 
                     </td>
                     <td>
-                        <asp:CheckBox ID="ITReviewCheckBox" runat="server" Checked='<%# Bind("ITReview")%>' />
+                        <asp:CheckBox ID="ITReviewCheckBox" runat="server" Checked='<%# Bind("ITReview")%>' OnCheckedChanged="ITReviewCheckBox_CheckedChanged" AutoPostBack="true" />
                     </td>
                 </tr>
                 <tr>
@@ -208,7 +220,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" />
+                        <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" ValidationGroup="Update" CommandName="Update" Text="Update" />
                         <%--&nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
                     </td>
                 </tr>
@@ -272,6 +284,7 @@
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
                        SET [ManagerApprovalDate] = @ManagerApprovalDate
                           ,[ITReview] = @ITReview
+                          ,[ITMessage]=@ITMessage
                           ,[BuyerID] = @BuyerID
                           ,[Description] = @Description
                           ,[Reason] = @Reason
@@ -285,6 +298,7 @@
         <UpdateParameters>
             <asp:SessionParameter SessionField="DateApproved" Name="ManagerApprovalDate" />
             <asp:Parameter Name="ITReview" />
+            <asp:Parameter Name="ITMessage" />
             <asp:Parameter Name="BuyerID" />
             <asp:Parameter Name="Description" />
             <asp:Parameter Name="Reason" />

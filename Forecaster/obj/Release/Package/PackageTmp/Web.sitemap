@@ -8,10 +8,10 @@
 			<siteMapNode url="Managers/Mg_Segments.aspx" title="Total by Territory Codes" description=""/>
 			<siteMapNode url="Managers/Mg_ProductCode.aspx" title="Total by Product Codes" description=""/>
 		</siteMapNode>
-		<siteMapNode title="Forecast" roles="*" description="">
+		<!--<siteMapNode title="Forecast" roles="*" description="">
 			<siteMapNode url="forecast/ProductCode.aspx" title="View Forecast By PC" description=""/>
 			<siteMapNode url="Forecast/Forecasts.aspx" title="Forecast by Territory Code" description=""/>
-		</siteMapNode>
+		</siteMapNode>-->
 		<siteMapNode title="Funnel" roles="*" description="">
 			<siteMapNode url="Funnel/Funnel.aspx" title="Funnel Management" description=""/>
 		</siteMapNode>
@@ -20,14 +20,21 @@
 		</siteMapNode>
 		<siteMapNode title="Receptionist" roles="*" description="">
 			<siteMapNode url="Receptionist/Receptionist.aspx" title="Receptionist" description=""/>
-			<siteMapNode url="Receptionist/Admin.aspx" title="Admin" description=""/>
+			<siteMapNode url="Receptionist/Admin.aspx" title="Receptionist Admin" description=""/>
 		</siteMapNode>
 		<siteMapNode title="Purchase Request" roles="*" description="">
 			<siteMapNode url="Purchase/Purchase.aspx" title="Enter a new Purchase Request" description=""/>
 			<siteMapNode url="Purchase/PurchaseEntry.aspx" title="Purchase Request Nomis Order Entry" description=""/>
 			<siteMapNode url="Purchase/PurchaseManager.aspx" title="Purchase Request Approval" description=""/>
 		</siteMapNode>
-		<siteMapNode title="Administration" roles="*" description="">
+		<siteMapNode title="Safety Cases" roles="*" description="">
+			<siteMapNode url="SaLT/Safety.aspx" title="Enter a new Safety Case" description=""/>
+			<siteMapNode url="SaLT/SafetyMgmt.aspx" title="SaLT MgMT" description=""/>
+		</siteMapNode>
+		<siteMapNode title="Expense Reports" roles="*" description="">
+			<siteMapNode url="Expense/Expense.aspx" title="Enter a new Expense Report" description=""/>
+		</siteMapNode>
+		<siteMapNode title="Admin" roles="*" description="">
 			<siteMapNode url="Admin/PurchaseAdmin.aspx" title="Purchase Requests/Purchase Order lookup" description=""/>
 		</siteMapNode>
 	</siteMapNode>
