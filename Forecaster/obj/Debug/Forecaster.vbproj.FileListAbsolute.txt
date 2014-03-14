@@ -18,9 +18,14 @@ D:\Data\Projects\Forecaster\Forecaster\obj\Debug\GenerateResource.write.1.tlog
 D:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.dll
 D:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.xml
 D:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.pdb
+C:\Data\Projects\Forecaster\Forecaster\bin\Expense\ExpenseReport.rdlc
 C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.dll
 C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.pdb
 C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.xml
+C:\Data\Projects\Forecaster\Forecaster\bin\Microsoft.Web.Infrastructure.dll
+C:\Data\Projects\Forecaster\Forecaster\bin\System.Web.WebPages.Deployment.dll
+C:\Data\Projects\Forecaster\Forecaster\bin\Microsoft.Web.Infrastructure.xml
+C:\Data\Projects\Forecaster\Forecaster\bin\System.Web.WebPages.Deployment.xml
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.Resources.resources
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.vbproj.GenerateResource.Cache
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\RdlCompile.cache
@@ -28,4 +33,4 @@ C:\Data\Projects\Forecaster\Forecaster\obj\Debug\RdlCompile.compiled
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.dll
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.xml
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.pdb
-C:\Data\Projects\Forecaster\Forecaster\bin\Expense\ExpenseReport.rdlc
+C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.vbprojResolveAssemblyReference.cache

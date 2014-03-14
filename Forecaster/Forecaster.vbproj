@@ -22,8 +22,8 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -77,8 +77,12 @@
     <Reference Include="ExportToExcel, Version=1.0.2959.21952, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -87,6 +91,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -130,13 +137,16 @@
     <Content Include="bin\Forecaster.xml" />
     <Content Include="bin\Microsoft.ReportViewer.Common.dll" />
     <Content Include="bin\Microsoft.ReportViewer.WebForms.dll" />
-    <Content Include="bin\Microsoft.ReportViewer.WebForms.xml" />
     <Content Include="bin\Microsoft.ReportViewer.WinForms.dll" />
-    <Content Include="bin\Microsoft.ReportViewer.WinForms.xml" />
+    <Content Include="bin\Microsoft.ReportViewer.WinForms.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="bin\RSClientPrint-ia64.cab" />
     <Content Include="bin\RSClientPrint-x64.cab" />
     <Content Include="bin\RSClientPrint-x86.cab" />
     <Content Include="bin\Telerik.Web.UI.Skins.dll" />
+    <Content Include="Building\Building.aspx" />
+    <Content Include="Building\BuildingManager.aspx" />
     <Content Include="Content\images\background-page.jpg" />
     <Content Include="Content\images\bg_body_msdn.png" />
     <Content Include="Content\images\collapse.jpg" />
@@ -146,7 +156,6 @@
     <Content Include="Content\images\LAURENTIDE_logo.jpg" />
     <Content Include="Credit\AROutstanding.aspx" />
     <Content Include="Expense\Expense.aspx" />
-    <Content Include="Expense\Report.aspx" />
     <Content Include="Forecast\Forecasts.aspx" />
     <Content Include="Funnel\Funnel.aspx" />
     <Content Include="Funnel\Funnel_Old.aspx" />
@@ -161,14 +170,14 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Managers\Mg_ProductCode.aspx" />
-    <Content Include="Purchase\PurchaseManager.aspx" />
     <Content Include="Admin\PurchaseAdmin.aspx" />
     <Content Include="Purchase\Purchase.aspx" />
     <Content Include="Purchase\PurchaseEntry.aspx" />
+    <Content Include="Purchase\PurchaseManager.aspx" />
     <Content Include="Receptionist\Admin.aspx" />
     <Content Include="Receptionist\Receptionist.aspx" />
-    <Content Include="SaLT\SafetyMgmt.aspx" />
-    <Content Include="SaLT\Safety.aspx" />
+    <Content Include="Safety\SafetyMgmt.aspx" />
+    <Content Include="Safety\Safety.aspx" />
     <Content Include="Scripts\toggleGroup.js" />
     <Content Include="Specialists\Sp_ProductCode.aspx" />
     <Content Include="Styles\Site.css" />
@@ -218,6 +227,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>getTeams.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Building\Building.aspx.designer.vb">
+      <DependentUpon>Building.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Building\Building.aspx.vb">
+      <DependentUpon>Building.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Building\BuildingManager.aspx.designer.vb">
+      <DependentUpon>BuildingManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Building\BuildingManager.aspx.vb">
+      <DependentUpon>BuildingManager.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Credit\AROutstanding.aspx.designer.vb">
       <DependentUpon>AROutstanding.aspx</DependentUpon>
     </Compile>
@@ -225,23 +248,11 @@
       <DependentUpon>AROutstanding.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="App_Data\ExpenseReport.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExpenseReport.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Expense\Expense.aspx.designer.vb">
       <DependentUpon>Expense.aspx</DependentUpon>
     </Compile>
     <Compile Include="Expense\Expense.aspx.vb">
       <DependentUpon>Expense.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
-    <Compile Include="Expense\Report.aspx.designer.vb">
-      <DependentUpon>Report.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Expense\Report.aspx.vb">
-      <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="FunnelSite.Master.designer.vb">
@@ -418,13 +429,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>setMngrSpec.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Purchase\PurchaseManager.aspx.designer.vb">
-      <DependentUpon>PurchaseManager.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Purchase\PurchaseManager.aspx.vb">
-      <DependentUpon>PurchaseManager.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="Admin\PurchaseAdmin.aspx.designer.vb">
       <DependentUpon>PurchaseAdmin.aspx</DependentUpon>
     </Compile>
@@ -437,14 +441,21 @@
     </Compile>
     <Compile Include="Purchase\Purchase.aspx.vb">
       <DependentUpon>Purchase.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Purchase\PurchaseEntry.aspx.designer.vb">
       <DependentUpon>PurchaseEntry.aspx</DependentUpon>
     </Compile>
     <Compile Include="Purchase\PurchaseEntry.aspx.vb">
       <DependentUpon>PurchaseEntry.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchase\PurchaseManager.aspx.designer.vb">
+      <DependentUpon>PurchaseManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\PurchaseManager.aspx.vb">
+      <DependentUpon>PurchaseManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Receptionist\Admin.aspx.designer.vb">
       <DependentUpon>Admin.aspx</DependentUpon>
@@ -460,17 +471,17 @@
       <DependentUpon>Receptionist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SaLT\SafetyMgmt.aspx.designer.vb">
+    <Compile Include="Safety\SafetyMgmt.aspx.designer.vb">
       <DependentUpon>SafetyMgmt.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SaLT\SafetyMgmt.aspx.vb">
+    <Compile Include="Safety\SafetyMgmt.aspx.vb">
       <DependentUpon>SafetyMgmt.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="SaLT\Safety.aspx.designer.vb">
+    <Compile Include="Safety\Safety.aspx.designer.vb">
       <DependentUpon>Safety.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SaLT\Safety.aspx.vb">
+    <Compile Include="Safety\Safety.aspx.vb">
       <DependentUpon>Safety.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
@@ -502,6 +513,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
+    <Content Include="App_Code\ExpenseReport.xsc">
+      <DependentUpon>ExpenseReport.xsd</DependentUpon>
+    </Content>
+    <None Include="App_Code\ExpenseReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ExpenseReport.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="App_Code\ExpenseReport.xss">
+      <DependentUpon>ExpenseReport.xsd</DependentUpon>
+    </Content>
     <None Include="App_Data\getForecastByUser.xsc">
       <DependentUpon>getForecastByUser.xsd</DependentUpon>
     </None>
@@ -602,17 +624,7 @@
       <DependentUpon>getForecastBySegments_Mng.xsd</DependentUpon>
     </None>
     <Content Include="FunnelSite.Master" />
-    <Content Include="App_Data\ExpenseReport.xsc">
-      <DependentUpon>ExpenseReport.xsd</DependentUpon>
-    </Content>
-    <None Include="App_Data\ExpenseReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ExpenseReport.Designer.vb</LastGenOutput>
-    </None>
-    <Content Include="App_Data\ExpenseReport.xss">
-      <DependentUpon>ExpenseReport.xsd</DependentUpon>
-    </Content>
+    <Content Include="Content\Excel\Authorizationlist.xls" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -643,7 +655,6 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="bin\ar\" />
     <Folder Include="bin\cs\" />
     <Folder Include="bin\de\" />
@@ -660,6 +671,8 @@
     <Folder Include="bin\tr-TR\" />
     <Folder Include="bin\zh-CHS\" />
     <Folder Include="bin\zh-CHT\" />
+    <Folder Include="Purchase\New\" />
+    <Folder Include="Purchase\Old\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -674,7 +687,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>9525</DevelopmentServerPort>
+          <DevelopmentServerPort>11831</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

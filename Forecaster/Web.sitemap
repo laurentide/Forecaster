@@ -25,12 +25,16 @@
 			<siteMapNode url="Purchase/PurchaseManager.aspx" title="Purchase Request Approval" description=""/>
 		</siteMapNode>
 		<siteMapNode title="Safety Cases" roles="*" description="">
-			<siteMapNode url="SaLT/Safety.aspx" title="Enter a new Safety Case" description=""/>
-			<siteMapNode url="SaLT/SafetyMgmt.aspx" title="SaLT MgMT" description=""/>
+			<siteMapNode url="Safety/Safety.aspx" title="Enter a new Safety Case" description=""/>
+			<siteMapNode url="Safety/SafetyMgmt.aspx" title="Safety committee MgMT" description=""/>
 		</siteMapNode>
-		<siteMapNode title="Expense Reports" roles="*" description="">
+		<siteMapNode title="Building Requests" roles="*" description="">
+			<siteMapNode url="Building/Building.aspx" title="Enter a new building request" description=""/>
+			<siteMapNode url="Building/BuildingManager.aspx" title="Building committee MgMT" description=""/>
+		</siteMapNode>
+		<!--<siteMapNode title="Expense Reports" roles="*" description="">
 			<siteMapNode url="Expense/Expense.aspx" title="Enter a new Expense Report" description=""/>
-		</siteMapNode>
+		</siteMapNode>-->
 		<siteMapNode title="Admin" roles="*" description="">
 			<siteMapNode url="Admin/PurchaseAdmin.aspx" title="Purchase Requests/Purchase Order lookup" description=""/>
 		</siteMapNode>

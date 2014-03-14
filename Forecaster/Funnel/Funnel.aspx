@@ -67,12 +67,13 @@
                                         <tr><td>Funnel Position: </td><td><asp:DropDownList ID="FunnelPositionDropDown" runat="server" DatasourceID="sdsFunnelPositions" DataValueField="FunnelPositionID" DataTextField="FunnelPosition" SelectedValue='<%# Bind("FunnelPositionID") %>' /></td></tr>
                                         <tr><td>Industry Code: </td><td><asp:DropDownList ID="IndustryCodeDropDown" runat="server" DatasourceID="sdsIndustryCodes" DataValueField="IndustryCodeID" DataTextField="IndustryCode" SelectedValue='<%# Bind("IndustryCodeID") %>' /></td></tr>
                                         <tr><td>Exec Sponsor: </td><td><asp:DropDownList ID="ExecSponsorDropDown" runat="server" DatasourceID="sdsExecSponsor" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" SelectedValue='<%# Bind("ExecSponsorID")%>' /></td></tr>
+                                        <tr><td>Outage: </td><td><asp:Checkbox ID="OutageCheckBox" runat="server" Checked='<%# Bind("Outage")%>' /></td></tr>
                                         <tr><td>PATTID: </td><td><asp:TextBox ID="PATTIDTextBox" runat="server" Text='<%# Bind("PATTID") %>' /></td></tr>
                                         <tr><td>Percentage of project happening: </td><td><asp:TextBox ID="PercentageTextBox" runat="server" Text='<%# Bind("Percentage") %>' /></td>
                                         <td><asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Number between 0 and 100" Type="Integer" MinimumValue="0" MaximumValue="100" ControlToValidate="PercentageTextBox" ValidationGroup="Insert"  /></td></tr>
-                                        <% If (User.IsInRole("LCLMTL\LCL_Forecaster_SELT")) Then%>
+                                        <%--<% If (User.IsInRole("LCLMTL\LCL_SELT")) Then%>--%>
                                             <tr><td>Top 25:</td><td><asp:CheckBox ID="chkTop25" Checked='<%# Bind("Top25") %>' runat="server" /></td></tr>
-                                        <% End If%>
+                                        <%--<% End If%>--%>
                                         <tr><td>Opportunity/Cust Pain(*)</td><td><asp:TextBox ID="DescriptionTextbox" TextMode="MultiLine"  Height="100" Width="500" runat="server" Text='<%# Bind("Description") %>' /></td><td><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Insert" ErrorMessage="Description required" ControlToValidate="DescriptionTextbox"  /></td></tr>
                                         <tr><td>Solution/Action Plan</td><td><asp:TextBox ID="LaurentideSolutionTextbox" TextMode="MultiLine"  Height="100" Width="500" runat="server" Text='<%# Bind("LaurentideSolution") %>' /></td></tr>
                                         <tr><td>Other Salesmen/Teams</td>
@@ -352,6 +353,11 @@
         <tr><td>Industry Codes: </td><td><asp:Listbox ID="lbIndustryCodes" SelectionMode="Multiple" runat="server" Height="150" DataSourceID="sdsIndustryCodes" DataTextField="IndustryCode" DataValueField="IndustryCodeID" font-size="10px" /></td></tr>
         <tr><td>Exec Sponsors: </td><td> <asp:DropDownList ID="ddlExecSponsors" DataSourceID="sdsExecSponsor" AppendDataBoundItems="true" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" runat="server">
             </asp:DropDownList></td><td></td><td></td></tr>        
+        <tr><td>Outage </td><td><asp:DropDownList ID="ddlOutage" runat="server">
+            <asp:ListItem Value ="2" Text="Any"></asp:ListItem>    
+            <asp:ListItem Value ="0" Text="No"></asp:ListItem>
+            <asp:ListItem Value ="1" Text="Yes"></asp:ListItem>                  
+            </asp:DropDownList></td></tr> 
         <tr><td>Team: </td><td> <asp:DropDownList ID="ddlSalesmen" DataSourceID="sdsTeamFilter" DataValueField="TeamID" DataTextField="TeamName" runat="server" /></td><td></td><td></td></tr>        
         <tr><td>Product Lead: </td><td> <asp:textbox ID="txtProductLead" runat="server" /></td><td></td><td></td></tr>        
         <tr><td>Customer: </td><td> <asp:TextBox ID="txtCustomerFilter" runat="server" /></td><td></td><td></td></tr>        
@@ -419,12 +425,20 @@
                     <asp:BoundField DataField="Closing Date" HeaderText="Closing" dataformatstring="{0:MM/dd/yyyy}" SortExpression="Closing Date" />
                     <asp:BoundField DataField="Funnel Pos'n" HeaderText="Funnel Pos'n" SortExpression="Funnel Pos'n" />
                     <asp:BoundField DataField="PATTID" HeaderText="PATTID" SortExpression="PATTID"  />
-                    <asp:BoundField DataField="Prob happening" DataFormatString="{0:P0}" HeaderText="Prob" ItemStyle-Width="35" SortExpression="Prob happening" />
-                    <asp:BoundField DataField="factored_total" HeaderText="Fact. Total k$" DataFormatString="{0:0}" SortExpression="factored_total" ItemStyle-HorizontalAlign="Right" />
-                    <asp:BoundField DataField="Total" HeaderText="Total k$" DataFormatString="{0:0}" SortExpression="Total" ItemStyle-HorizontalAlign="Right" />
+                    <asp:BoundField DataField="Prob happening" DataFormatString="{0:P0}" HeaderText="Prob" ItemStyle-Width="35" SortExpression="Prob happening" >
+                    <ItemStyle Width="35px" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="factored_total" HeaderText="Fact. Total k$" DataFormatString="{0:0}" SortExpression="factored_total" ItemStyle-HorizontalAlign="Right" >
+                    <ItemStyle HorizontalAlign="Right" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="Total" HeaderText="Total k$" DataFormatString="{0:0}" SortExpression="Total" ItemStyle-HorizontalAlign="Right" >
+                    <ItemStyle HorizontalAlign="Right" />
+                    </asp:BoundField>
                     <asp:BoundField DataField="Exec Sponsor" HeaderText="Exec Sponsor" SortExpression="Exec Sponsor" />
-                    <asp:BoundField DataField="AMS" HeaderText="AMS" ReadOnly="True" SortExpression="AMS"
-                        ItemStyle-HorizontalAlign="Center" />
+                    <asp:BoundField DataField="Outage" HeaderText="Outage" SortExpression="Outage" />
+                    <asp:BoundField DataField="AMS" HeaderText="AMS" ItemStyle-HorizontalAlign="Center" ReadOnly="True" SortExpression="AMS">
+                    <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
                     <asp:BoundField DataField="CSI" HeaderText="CSI" ReadOnly="True" SortExpression="CSI"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
@@ -543,12 +557,13 @@
                                         <tr><td>Funnel Position: </td><td><asp:DropDownList ID="FunnelPositionDropDown" runat="server" DatasourceID="sdsFunnelPositions" DataValueField="FunnelPositionID" DataTextField="FunnelPosition" SelectedValue='<%# Bind("FunnelPositionID") %>' /></td></tr>
                                         <tr><td>Industry Code: </td><td><asp:DropDownList ID="IndustryCodeDropDown" runat="server" DatasourceID="sdsIndustryCodes" DataValueField="IndustryCodeID" DataTextField="IndustryCode" SelectedValue='<%# Bind("IndustryCodeID")%>' /></td></tr>
                                         <tr><td>Exec Sponsor: </td><td><asp:DropDownList ID="ExecSponsorDropDown" runat="server" DatasourceID="sdsExecSponsor" DataValueField="ExecSponsorID" DataTextField="ExecSponsor" SelectedValue='<%# Bind("ExecSponsorID")%>' /></td></tr>
+                                        <tr><td>Outage: </td><td><asp:Checkbox ID="OutageCheckBox" runat="server" Checked='<%# Bind("Outage")%>' /></td></tr>
                                         <tr><td>PATTID: </td><td><asp:TextBox ID="PATTIDTextBox" runat="server" Text='<%# Bind("PATTID") %>' /></td></tr>
                                         <tr><td>Total k$: </td><td><asp:Label ID="TotalTextBox" runat="server" Text='<%# Bind("Total","{0:c0}k") %>' /></td></tr>
                                         <tr><td>Percentage: </td><td><asp:TextBox ID="PercentageTextBox" runat="server" Text='<%# Bind("Percentage") %>' /></td></tr>
-                                        <% If (User.IsInRole("LCLMTL\LCL_Forecaster_SELT")) Then%>
+                                        <%--<% If (User.IsInRole("LCLMTL\LCL_SELT")) Then%>--%>
                                         <tr><td>Top 25:</td><td><asp:CheckBox ID="chkTop25" Checked='<%# Bind("Top25") %>' runat="server" /></td></tr>
-                                        <% End If%>
+                                        <%--<% End If%>--%>
                                         <tr><td>Opportunity/Cust Pain(*)</td><td><asp:TextBox ID="DescriptionTextbox" TextMode="MultiLine"  Height="100" Width="500" runat="server" Text='<%# Bind("Description") %>' /></td><td><asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ErrorMessage="Description required" ControlToValidate="DescriptionTextbox"  /></td></tr>
                                         <tr><td>Solution/Action Plan</td><td><asp:TextBox ID="LaurentideSolutionTextbox" TextMode="MultiLine"  Height="100" Width="500" runat="server" Text='<%# Bind("LaurentideSolution") %>' /></td></tr>
                                         <tr><td>Other Salesmen/Teams</td><td><asp:GridView ID="gvAssignments" runat="server"
@@ -892,6 +907,7 @@
 	   PATTID, 
 	   a.Total as [factored_total],
        i.ExecSponsor as [Exec Sponsor],
+       Outage,
        sum(b.total) / case when count (distinct username) = 0 then 1 else count(distinct username) end  as [total]
 	    ,max(case when productcategory = 'AMS'                       and b.total &gt; 0  then 'X' else 'O' end ) as [AMS]
 	    ,max(case when productcategory = 'CSI'                       and b.total &gt; 0  then 'X' else 'O' end ) as [CSI]
@@ -933,7 +949,7 @@ and a.opportunityid in (select opportunityid from tblopportunities where
 and a.opportunityid in (select opportunityid from tblopportunities where 
 								        (industrycodeid  in (SELECT item from fnSplit(@industrycodes,',')) or 
 								        @industrycodes = '0'))
-and (a.salesmanid in (@teamid) or @teamid = 0)
+and (a.salesmanid in (@teamid) or @teamid = 0 or a.opportunityid in (select distinct opportunityid from tblOpportunityAssignments OA where salesmanid = @teamid))
 and (upper(g.username) = upper(@username) or upper(@username) in (select upper(username) from tblfunneladmins) or
      a.opportunityid in (select opportunityid from tblopportunitydetails a inner join tblProductPermissions b
                           on a.funnelproductid = b.funnelproductid
@@ -952,7 +968,8 @@ and (a.opportunityID = @ID or @ID = 0)
 and (a.opportunityid in (select distinct opportunityid
                               from tblopportunitydetails 
                            where (productsaleslead like '%' + upper(@ProductLead) + '%')))
-group by a.OpportunityID, Originator, Customer, CustomerLocation, EPCConsultant, TeamName, Name, CreateDate, LastModifiedDate, ClosingDate,f.FunnelPosition, a.Percentage, PATTID, a.Total, Description,i.ExecSponsor
+and (outage = @Outage or @Outage = 2)
+group by a.OpportunityID, Originator, Customer, CustomerLocation, EPCConsultant, TeamName, Name, CreateDate, LastModifiedDate, ClosingDate,f.FunnelPosition, a.Percentage, PATTID, a.Total, Description,i.ExecSponsor,outage
 Order by a.OpportunityID desc">
         <SelectParameters>
             <asp:SessionParameter sessionfield="funnelproductid" Name="funnelproductid" DefaultValue="0" Type="String" />
@@ -981,6 +998,7 @@ Order by a.OpportunityID desc">
             <asp:ControlParameter ControlID="ddlExecSponsors" Name="ExecSponsorID"  DefaultValue="0"
                 PropertyName="SelectedValue" />                  
             <asp:ControlParameter ControlID="txtID" Name="ID" DefaultValue="0" />           
+            <asp:ControlParameter ControlID="ddlOutage" Name="Outage" DefaultValue="2" />           
         </SelectParameters>
 </asp:SqlDataSource>
 <asp:SqlDataSource ID="sdsOpportunityAssignments" runat="server" 

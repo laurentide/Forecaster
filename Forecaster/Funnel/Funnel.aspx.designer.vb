@@ -212,6 +212,15 @@ Partial Public Class Funnel
     Protected WithEvents ddlExecSponsors As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''ddlOutage control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ddlOutage As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''ddlSalesmen control.
     '''</summary>
     '''<remarks>

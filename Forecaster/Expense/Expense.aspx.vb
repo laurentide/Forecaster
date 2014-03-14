@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports Microsoft.Reporting.WebForms
+
 Public Class Expense
     Inherits System.Web.UI.Page
     Private total As Double
@@ -11,7 +13,7 @@ Public Class Expense
             dt.Columns.Add("ExpenseDetailID", GetType(Integer))
             dt.Columns.Add("ExpenseReportID", GetType(Integer))
             dt.Columns.Add("CategoryID", GetType(Integer))
-            dt.Columns.Add("ExpenseType", GetType(String))
+            dt.Columns.Add("ExpenseTypeID", GetType(String))
             dt.Columns.Add("ExpenseItemAmount", GetType(Double))
             dt.Columns.Add("ExpenseItemDescription", GetType(String))
             dt.Columns.Add("ExpenseDate", GetType(DateTime))
@@ -94,7 +96,7 @@ Public Class Expense
 
                 ddlExpenseTypes.DataSource = dtExpenseTypes
                 ddlExpenseTypes.DataTextField = "ExpenseType"
-                ddlExpenseTypes.DataValueField = "ExpenseType"
+                ddlExpenseTypes.DataValueField = "ExpenseTypeID"
                 ddlExpenseTypes.DataBind()
 
                 CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = False
@@ -170,7 +172,7 @@ Public Class Expense
 
         drow("CategoryID") = CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList).SelectedValue
         drow("ExpenseDate") = CType(frm.FindControl("ExpenseDateTextBox2"), TextBox).Text
-        drow("ExpenseType") = CType(frm.FindControl("ddlExpenseTypes"), DropDownList).SelectedItem.Text
+        drow("ExpenseTypeID") = CType(frm.FindControl("ddlExpenseTypes"), DropDownList).SelectedValue
         drow("ExpenseItemAmount") = IIf(CType(frm.FindControl("ExpenseItemAmountTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("ExpenseItemAmountTextBox"), TextBox).Text)
         drow("ExpenseItemDescription") = CType(frm.FindControl("ExpenseItemDescriptionTextBox"), TextBox).Text
         drow("ProvinceID") = CType(frm.FindControl("ProvinceDropDown"), DropDownList).SelectedValue
@@ -298,10 +300,30 @@ Public Class Expense
             Return ""
         End Try
     End Function
+    Function findType(ExpenseTypeID As Object) As String
+        Try
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
+
+            Dim SqlConnection As New SqlConnection(connectionString)
+            Dim sc As New SqlCommand("select ExpenseType from  dbo.tblExpenseTypes where ExpenseTypeID =" & ExpenseTypeID, SqlConnection)
+            SqlConnection.Open()
+
+            Dim reader As SqlDataReader = sc.ExecuteReader()
+            reader.Read()
+            findType = reader.GetString(0)
+            reader.Close()
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
 
     Protected Sub sdsForm_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
-        Dim ID As Integer = e.Command.Parameters("@ID").Value
-        Session("ID") = ID
+        try
+            Dim ID As Integer = e.Command.Parameters("@ID").Value
+            Session("ID") = ID
+        catch ex as exception
+        end try
     End Sub
 
     Protected Sub gvExpenseReports_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -377,7 +399,7 @@ Public Class Expense
     End Sub
 
     Protected Sub ddlExpenseTypes_SelectedIndexChanged(sender As Object, e As EventArgs)
-        if CType(sender,DropDownList).selectedvalue <> "Kilometers" then
+        if CType(sender,DropDownList).selecteditem.text <> "Kilometers" then
         'Remove KM and KM rate if not kilometers
             CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("panKM"), Panel).Visible = False
         Else
@@ -390,8 +412,37 @@ Public Class Expense
     End Sub
 
     Protected Sub gvExpenseReports_RowCommand(sender As Object, e As GridViewCommandEventArgs)
-        If e.CommandName = "ShowReport" Then
-            reportModalPopup.Show()
-        End If
+        Try
+            Dim Parameter = New Parameter()
+            If e.CommandName = "ShowReport" Then
+                rvExpenseReport.ProcessingMode = ProcessingMode.Local
+                rvExpenseReport.LocalReport.ReportPath = "Expense\ExpenseReport.rdlc"
+                'Dim ExpenseReportDatatable As 
+                'Dim ExpenseReportAdapter As ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter = New ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter
+                'ExpenseReportDatatable = ExpenseReportAdapter.GetData()
+                'Dim dt As DataTable = ExpenseReportDatatable.CopyToDataTable
+                'Dim ds As ReportDataSource = New ReportDataSource("ExpenseReport", ExpenseReportDatatable.CopyToDataTable)
+                'rvExpenseReport.LocalReport.DataSources.Clear()
+                'rvExpenseReport.LocalReport.DataSources.Add(ds)
+                Dim dsExpenseReport = New ReportDataSource()
+                Dim p1 As New ReportParameter("ExpenseReportID", Convert.ToInt32(e.CommandArgument))
+                rvExpenseReport.LocalReport.SetParameters(p1)
+                dsExpenseReport.Name = "ExpenseReport"
+                dsExpenseReport.Value = "ExpenseReport"
+                'rvExpenseReport.LocalReport.DataSources.Clear()
+                'rvExpenseReport.LocalReport.DataSources.Add(New ReportDataSource("ExpenseReport", dsExpenseReport))
+                rvExpenseReport.DataBind()
+                rvExpenseReport.LocalReport.Refresh()
+                reportModalPopup.Show()
+            End If
+        Catch ex As Exception
+            Debug.Print(ex.ToString)
+        End Try
     End Sub
+
+    Protected Sub dsExpenseReport_Selecting(sender As Object, e As ObjectDataSourceSelectingEventArgs)
+        e.InputParameters("ExpenseReportID") = 13
+    End Sub
+
+
 End Class

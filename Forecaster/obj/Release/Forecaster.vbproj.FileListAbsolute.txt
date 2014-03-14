@@ -7,3 +7,10 @@ C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.dll
 C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.xml
 C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.pdb
 C:\Data\Projects\Forecaster\Forecaster\obj\Release\Forecaster.vbprojResolveAssemblyReference.cache
+C:\Data\Projects\Forecaster\Forecaster\bin\Expense\ExpenseReport.rdlc
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\RdlCompile.cache
+C:\Data\Projects\Forecaster\Forecaster\obj\Release\RdlCompile.compiled
+C:\Data\Projects\Forecaster\Forecaster\bin\System.Web.WebPages.Deployment.dll
+C:\Data\Projects\Forecaster\Forecaster\bin\System.Web.WebPages.Deployment.xml
+C:\Data\Projects\Forecaster\Forecaster\bin\Microsoft.Web.Infrastructure.dll
+C:\Data\Projects\Forecaster\Forecaster\bin\Microsoft.Web.Infrastructure.xml

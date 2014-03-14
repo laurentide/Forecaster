@@ -59,22 +59,13 @@ Partial Public Class Expense
     Protected WithEvents btnCloseReport As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''ReportViewer1 control.
+    '''rvExpenseReport control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ReportViewer1 As Global.Microsoft.Reporting.WebForms.ReportViewer
-
-    '''<summary>
-    '''ExpenseReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents ExpenseReport As Global.System.Web.UI.WebControls.ObjectDataSource
+    Protected WithEvents rvExpenseReport As Global.Microsoft.Reporting.WebForms.ReportViewer
 
     '''<summary>
     '''gvExpenseReports control.

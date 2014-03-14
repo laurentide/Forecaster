@@ -2,6 +2,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head runat="server">
     <title></title>
@@ -20,12 +21,19 @@
             alert('Email Sent!')
         }
 
+        function alertemailnewcase() {
+            alert('Email sent! Le comité de sécurité fera un suivi de votre requête d’ici deux semaines.  S’il s’agit d’une urgence veuillez contacter votre supérieur immédiat / The safety committee will follow-up on your request within two weeks.  If this is an emergency, please contact your manager.')
+        }
+
         function alerterror() {
             alert('Error sending the notification email!')
         }
 
         function alertnotsent() {
             alert('Please approve or deny this request!')
+        }
+        function alertMessage(msg) {
+            alert(msg)
         }
 
         function toggleGroup(img) {

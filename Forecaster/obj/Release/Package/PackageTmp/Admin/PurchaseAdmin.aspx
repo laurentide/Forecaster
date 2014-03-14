@@ -6,6 +6,22 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>Purchase Request Data Entry</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <table>
+        <tr>
+            <td>Search for PO:</td>
+            <td><asp:TextBox ID="SearchPO" runat="server" /></td>
+        </tr>
+        <tr>
+            <td>Statuses:</td>
+            <td><asp:ListBox ID="lbStatus" SelectionMode="Multiple" runat="server" Height="150" DataSourceID="sdsStatus" DataTextField="Status" DataValueField="StatusID" /></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Button ID="btnFilter" runat="server" OnClick="btnFilter_Click" text="Filter" /></td>
+            <td><asp:Button ID="btnClear" runat="server" OnClick="btnClear_Click" text="Clear" /></td>
+        </tr>
+    </table>
+
     <asp:FormView ID="frmView" runat="server" DataSourceID="sdsUpdate" DefaultMode="Edit" DataKeyNames="PurchaseRequestID" OnItemUpdated="frmView_ItemUpdated">
         <EditItemTemplate>
             <table border="1px">
@@ -90,6 +106,16 @@
                         <asp:Label ID="TotalPriceTextBox" runat="server" ReadOnly="True" Text='<%# Bind("TotalPrice", "{0:c2}")%>' />
                     </td>
                 </tr>
+                <tr>
+                    <td>FileName:</td>
+                    <td>
+                        <asp:Label ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /></td>
+                </tr>
+                <tr>
+                    <td>Path:
+                    </td>
+                    <td><asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" /></td>
+                </tr
 <%--                <tr>
                     <td>Approval Type:
                     </td>
@@ -409,8 +435,7 @@
                 </tr>--%>
             </table>
         </ItemTemplate>
-    </asp:FormView>
-    <br />Search for PO:<asp:TextBox ID="SearchPO" runat="server" /> <br />
+    </asp:FormView>    
     <asp:GridView ID="gvPurchaseRequests" runat="server" AutoGenerateColumns="False" DataKeyNames="PurchaseRequestID" DataSourceID="sdsPurchaseRequestsGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
         RowStyle-CssClass="grid_RowStyle"
@@ -496,9 +521,15 @@
                        ON tblpurchaseRequests.statusid = tblstatuses.statusID                       
                        where visible = 1 
                        and (LCLPurchaseOrder like '%' + @SearchPO + '%' or purchaserequestid = convert(int,replace(@SearchPO,'%','')) or (LCLPurchaseOrder is null and @SearchPO = '%'))
-                       Order by purchaserequestid desc">
+                       and purchaserequestid in (select purchaserequestid from tblPurchaseRequests where 
+							(tblpurchaseRequests.statusid in  (SELECT item from fnSplit(@lbStatus,',')) or 
+							@lbStatus = '0'))
+                       Order by purchaserequestid desc"
+
+        >
         <SelectParameters>
             <asp:ControlParameter Name="SearchPO" ControlID="SearchPO" PropertyName="Text" DefaultValue="%" />
+            <asp:ControlParameter Name="lbStatus" ControlID="lbStatus" PropertyName="SelectedValue" DefaultValue="0" />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
@@ -507,4 +538,6 @@
         SelectCommand="select * from tblDepartments"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsApprovalTypes" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblApprovalTypes"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsStatus" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="select * from tblstatuses"></asp:SqlDataSource>
 </asp:Content>

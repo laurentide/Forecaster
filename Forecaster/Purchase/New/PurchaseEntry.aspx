@@ -1,0 +1,344 @@
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="PurchaseEntry.aspx.vb" Inherits="Forecaster.PurchaseEntry" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+</asp:Content>
+<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+    <h2>Purchase Request Data Entry</h2>
+    <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <asp:FormView ID="frmView" runat="server" DataSourceID="sdsUpdate" DefaultMode="Edit" DataKeyNames="PurchaseRequestID" OnItemUpdated="frmView_ItemUpdated">
+        <EditItemTemplate>
+            <table border="1px">
+                <tr>
+                    <td>ID:<br /><span style="font-weight:bold;">(Put this number in your PO blind notes)</span> </td>
+                    <td><asp:Label ID="PurchaseRequestIDLabel1" runat="server" ReadOnly="True" Text='<%# Eval("PurchaseRequestID") %>' /></td>
+                </tr>
+                <tr>
+                    <td>Requester Name:
+                    </td>
+                    <td>
+                        <asp:Label ID="RequesterNameTextBox" runat="server" ReadOnly="True" Text='<%# Bind("RequesterName") %>' />
+                    </td>
+                </tr>
+                <%--<tr>
+                    <td>RequesterUsername:
+                    </td>
+                    <td>
+                        <asp:TextBox ID="RequesterUsernameTextBox" runat="server" Text='<%# Bind("RequesterUsername") %>' />
+                    </td>
+                </tr>--%>
+                <tr>
+                    <td>Requester Email:
+                    </td>
+                    <td>
+                        <asp:Label ID="RequesterEmailTextBox" runat="server" Text='<%# Bind("RequesterEmail") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Department:
+                    </td>
+                    <td>
+                        <asp:Label ID="DepartmentIDTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DepartmentName")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date Requested:
+                    </td>
+                    <td>
+                        <asp:Label ID="DateRequestedTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequested", "{0:MM/dd/yyyy}")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date Required:
+                    </td>
+                    <td>
+                        <asp:Label ID="DateRequiredTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequired", "{0:MM/dd/yyyy}")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Item Name:
+                    </td>
+                    <td>
+                        <asp:Label ID="ItemNameTextBox" runat="server" ReadOnly="True" Text='<%# Bind("ItemName") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description:<br /><span style="font-weight:bold;">(Put a copy of this in your PO blind notes)</span>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="DescriptionTextBox" runat="server" ReadOnly="True" TextMode="MultiLine" Rows="5" Width="500" Text='<%# Bind("Description") %>' BorderStyle="None"  BorderWidth="0"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Link:
+                    </td>
+                    <td>
+                        <asp:HyperLink ID="LinkTextbox"  NavigateUrl='<%# Bind("Link")%>' Width="500" runat="server" Text='<%# Bind("Link")%>' />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Reason:
+                    </td>
+                    <td>
+                        <asp:TextBox ID="ReasonTextBox" runat="server" ReadOnly="True" TextMode="MultiLine" Rows="5" Width="500" Text='<%# Bind("Reason") %>' BorderStyle="None"  BorderWidth="0" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Quantity:
+                    </td>
+                    <td>
+                        <asp:Label ID="QuantityTextBox" runat="server" ReadOnly="True" Text='<%# Bind("Quantity") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total Price:  <br /> <span style="font-weight:bold;">(Total of your POs should not exceed this price)</span>
+                    </td>
+                    <td>
+                        <asp:Label ID="TotalPriceTextBox" runat="server" ReadOnly="True" Text='<%# Bind("TotalPrice", "{0:c2}")%>' />
+                    </td>
+                </tr>
+<%--                <tr>
+                    <td>Approval Type:
+                    </td>
+                    <td>
+<%--                        <asp:DropDownList ID="ApprovalDropDown" runat="server" DataSourceID="sdsApprovalTypes" AppendDataBoundItems="true" DataValueField="ApprovalTypeID" DataTextField="ApprovalType" SelectedValue='<%# Bind("ApprovalType")%>'>
+                            <asp:ListItem Text="(Select the purpose of the purchase)" Value="" />
+                        </asp:DropDownList>--%>
+<%--                        <asp:Label ID="ApprovalTypeTextBox" runat="server" Text='<%# Bind("Approval")%>' />
+                    </td>
+                </tr>--%>
+<%--                <tr>
+                    <td>Customer (If Resell):
+                    </td>
+                    <td>
+                        <asp:Label ID="CustomerTextBox" runat="server" Text='<%# Bind("Customer") %>' />
+                    </td>
+                </tr>--%>
+<%--                <tr>
+                    <td>Project Code (If Project):
+                    </td>
+                    <td>
+                        <asp:Label ID="ProjectCodeTextBox" runat="server" Text='<%# Bind("ProjectCode") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>PM Initials
+                    </td>
+                    <td>
+                        <asp:Label ID="PMInitialsTextBox" runat="server" Text='<%# Bind("PMInitials") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Change Order Notice:
+                    </td>
+                    <td>
+                        <asp:Label ID="ChangeOrderNoticeTextBox" runat="server" Text='<%# Bind("ChangeOrderNotice") %>' />
+                    </td>
+                </tr>--%>
+                <tr>
+                    <td>FileName:</td>
+                    <td>
+                        <asp:Label ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /></td>
+                </tr>
+                <tr>
+                    <td>Path:
+                    </td>
+                    <td><asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" /></td>
+                </tr
+                <tr>
+                    <td>Approver:
+                    </td>
+                    <td>
+                        <asp:Label ID="ManagerIDTextBox"  runat="server" Text='<%# Bind("ManagerName") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Approval/Denied Date:
+                    </td>
+                    <td>
+                        <asp:Label ID="ManagerApprovalDateTextBox" runat="server" readonly="true" Text='<%# Bind("ManagerApprovalDate") %>' />
+                    </td>
+                </tr>
+<%--                <tr>
+                    <td>Approved:
+                    </td>
+                    <td>
+                        <asp:CheckBox ID="ApprovedCheckBox" runat="server" Enabled="false" Checked='<%# Bind("Approved") %>' />
+                    </td>
+                </tr>--%>
+                <tr>
+                    <td>Status:
+                    </td>
+                    <td>
+                        <asp:Label ID="StatusTextbox" runat="server" readonly="true" Text='<%# Bind("Status")%>' />
+                    </td>
+                </tr>
+
+<%--                <tr>
+                    <td>ITReview:
+                    </td>
+                    <td>
+                        <asp:CheckBox ID="ITReviewCheckBox" runat="server" Checked='<%# Bind("ITReview")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Message to IT
+                    </td>
+                    <td>
+                        <asp:TextBox ID="ITMessageTextBox" runat="server" TextMode="MultiLine" Height="100" Width="500" Text='<%# Bind("ITMessage")%>' />
+                    </td>
+                </tr>--%>
+                <tr>
+                    <td>Order entry person:
+                    </td>
+                    <td>
+                        <%--<asp:DropDownList ID="BuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BuyerID")%>'>
+                            <asp:ListItem Text="(Select your buyer)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your buyer" ControlToValidate="BuyerDropDown" />--%>
+                        <asp:Label ID="BuyerNameTextBox" runat="server" Text='<%# Bind("BuyerName")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Backup Order entry person:
+                    </td>
+                    <td>
+                        <%--<asp:DropDownList ID="BuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BuyerID")%>'>
+                            <asp:ListItem Text="(Select your buyer)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your buyer" ControlToValidate="BuyerDropDown" />--%>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("BackupBuyerName")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#E6E6E6">LCL Purchase Orders (seperated by commas):
+                    </td>
+                    <td>
+                        <asp:TextBox ID="LCLPurchaseOrderTextBox" TextMode="MultiLine" Height="50" Width="500" runat="server" Text='<%# Bind("LCLPurchaseOrder") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date of the order entry:
+                    </td>
+                    <td>
+                        <asp:Label ID="DateOrderEntryTextBox" runat="server" Text='<%# Bind("DateOrderEntry") %>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" />
+                        <%--&nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
+                    </td>                    
+                </tr>
+            </table>
+        </EditItemTemplate>
+    </asp:FormView>
+    <asp:GridView ID="gvPurchaseRequests" runat="server" AutoGenerateColumns="False" DataKeyNames="PurchaseRequestID" DataSourceID="sdsPurchaseRequestsGrid" AllowPaging="True" AllowSorting="True"
+        HeaderStyle-CssClass="grid_Header"
+        RowStyle-CssClass="grid_RowStyle"
+        CellPadding="4" ForeColor="#333333"
+        Font-Size="10px" PageSize="50">
+        <Columns>
+            <asp:CommandField ShowSelectButton="True" />
+            <asp:BoundField DataField="PurchaseRequestID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="PurchaseRequestID" />
+            <asp:BoundField DataField="RequesterName" HeaderText="Requester" SortExpression="RequesterName" />
+            <%--<asp:BoundField DataField="RequesterUsername" HeaderText="RequesterUsername" SortExpression="RequesterUsername" />--%>
+            <%--<asp:BoundField DataField="RequesterEmail" HeaderText="Email" SortExpression="RequesterEmail" />--%>
+            <asp:BoundField DataField="DepartmentName" HeaderText="Department" SortExpression="DepartmentName" />
+            <asp:BoundField DataField="DateRequested" HeaderText="Date Requested" dataformatstring="{0:MM/dd/yyyy}" SortExpression="DateRequested" />
+            <asp:BoundField DataField="DateRequired" HeaderText="Date Required" dataformatstring="{0:MM/dd/yyyy}" SortExpression="DateRequired" />
+            <asp:BoundField DataField="ItemName" HeaderText="Item Name" SortExpression="ItemName" />
+            <%--<asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" />--%>
+            <%--<asp:BoundField DataField="Reason" HeaderText="Reason" SortExpression="Reason" />--%>
+            <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity" />
+            <asp:BoundField DataField="TotalPrice" HeaderText="Total"  DataFormatString="{0:c2}" SortExpression="TotalPrice" />
+            <asp:BoundField DataField="ManagerName" HeaderText="Approver" SortExpression="ManagerName" />
+            <asp:BoundField DataField="ManagerApprovalDate" HeaderText="Approval/Denied Date" SortExpression="ManagerApprovalDate" />
+            <%--<asp:CheckBoxField DataField="Approved" HeaderText="Approved" SortExpression="Approved" />--%>
+            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
+            <%--<asp:BoundField DataField="Approval" HeaderText="Approval Type" SortExpression="Approval" />--%>
+            <%--<asp:CheckBoxField DataField="ITReview" HeaderText="IT Review" SortExpression="ITReview" />--%>
+<%--        <asp:BoundField DataField="PMInitials" HeaderText="PMInitials" SortExpression="PMInitials" />
+            <asp:BoundField DataField="Customer" HeaderText="Customer" SortExpression="Customer" />
+            <asp:BoundField DataField="ProjectCode" HeaderText="ProjectCode" SortExpression="ProjectCode" />
+            <asp:BoundField DataField="ChangeOrderNotice" HeaderText="Change Order Notice" SortExpression="ChangeOrderNotice" />--%>
+            <asp:BoundField DataField="LCLPurchaseOrder" HeaderText="LCL PO" SortExpression="LCLPurchaseOrder" />
+            <asp:BoundField DataField="buyername" HeaderText="OE" SortExpression="buyername" />
+            <asp:BoundField DataField="backupbuyername" HeaderText="BackupOE" SortExpression="backupbuyername" />
+            <%--<asp:BoundField DataField="OrderEntryByID" HeaderText="OrderEntryByID" SortExpression="OrderEntryByID" />--%>
+            <asp:BoundField DataField="DateOrderEntry" HeaderText="Date Order Entry" SortExpression="DateOrderEntry" />
+        </Columns>
+        <EditRowStyle BackColor="#999999" />
+        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+        <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
+        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+        <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
+        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+        <SortedAscendingCellStyle BackColor="#E9E7E2" />
+        <SortedAscendingHeaderStyle BackColor="#506C8C" />
+        <SortedDescendingCellStyle BackColor="#FFFDF8" />
+        <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+    </asp:GridView>
+    <asp:SqlDataSource ID="sdsUpdate" runat="server"
+        ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="SELECT *,ManagerName, Status,tblbuyers.buyername,backupbuyers.buyername as backupbuyername
+                       FROM  [tblPurchaseRequests] a 
+                       INNER JOIN [tblDepartments] c
+                       ON a.DepartmentID = c.DepartmentID 
+                       INNER JOIN tblManagers 
+                       ON a.ManagerID = tblManagers.ManagerID
+                       LEFT JOIN tblbuyers 
+                       on a.buyerid = tblbuyers.buyerid
+                       LEFT JOIN tblbuyers as backupbuyers
+                       on a.backupbuyerid = backupbuyers.buyerid
+                       LEFT JOIN Tblstatuses
+                       ON a.statusid = tblstatuses.statusID
+                       WHERE PurchaseRequestID = @ID"
+        InsertCommand=""
+        UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
+                       SET [DateOrderEntry] = @DateOrderEntry
+                          ,[LCLPurchaseOrder] = @LCLPurchaseOrder
+                     WHERE PurchaseRequestID = @PurchaseRequestID">
+        <SelectParameters>
+            <asp:ControlParameter Name="ID" ControlID="gvPurchaseRequests" PropertyName="SelectedValue" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:SessionParameter SessionField="DateOrderEntry" Name="DateOrderEntry" />
+            <asp:Parameter Name="BuyerID" />
+            <asp:Parameter Name="LCLPurchaseOrder" />
+        </UpdateParameters>
+
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsPurchaseRequestsGrid" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName,tblbuyers.buyername, Status, backupbuyers.buyername as backupbuyername
+                       FROM       tblPurchaseRequests 
+                       INNER JOIN tblDepartments 
+                       ON tblPurchaseRequests.DepartmentID = tblDepartments.DepartmentID 
+                       INNER JOIN tblManagers 
+                       ON tblPurchaseRequests.ManagerID = tblManagers.ManagerID
+                       LEFT JOIN tblbuyers 
+                       on tblPurchaseRequests.buyerid = tblbuyers.buyerid
+                       LEFT JOIN tblbuyers as backupbuyers
+                       on tblPurchaseRequests.backupbuyerid = backupbuyers.buyerid
+                       LEFT JOIN Tblstatuses
+                       ON tblpurchaseRequests.statusid = tblstatuses.statusID
+                       where (tblBuyers.BuyerDomainUser=@Username 
+                          or (tblBuyers.BuyerDomainUser = 'LCLMTL\ServiceDisp' and @Username in (select username from tblservicemembers)) 
+                          or backupbuyers.BuyerDomainUser = @Username 
+                          or (backupbuyers.BuyerDomainUser = 'LCLMTL\ServiceDisp' and @Username in (select username from tblservicemembers)))                       
+                       and visible = 1 
+                       and tblstatuses.statusid in (2,5)
+                       Order by purchaserequestid desc">
+        <SelectParameters>
+            <asp:SessionParameter Name="Username" SessionField="Username" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="select * from tblManagers"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsDepartments" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="select * from tblDepartments"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsApprovalTypes" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="select * from tblApprovalTypes"></asp:SqlDataSource>
+</asp:Content>

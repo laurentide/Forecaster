@@ -29,6 +29,22 @@ Public Class PurchaseAdmin
         'Dim smtp As New SmtpClient("lcl-exc")
         'smtp.Send(mm)
         'Refresh Gridview
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        Dim sc As New SqlCommand("update tblpurchaserequests set statusid = 6 where purchaserequestID = " & e.Keys(0), SqlConnection)
+        SqlConnection.Open()
+        sc.ExecuteNonQuery()
+        SqlConnection.Close()
         gvPurchaseRequests.DataBind()
+    End Sub
+
+    Protected Sub btnFilter_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Protected Sub btnClear_Click(sender As Object, e As EventArgs)
+        lbStatus.ClearSelection()
+        SearchPO.Text = ""
     End Sub
 End Class

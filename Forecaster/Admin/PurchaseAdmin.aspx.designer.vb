@@ -23,15 +23,6 @@ Partial Public Class PurchaseAdmin
     Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
 
     '''<summary>
-    '''frmView control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents frmView As Global.System.Web.UI.WebControls.FormView
-
-    '''<summary>
     '''SearchPO control.
     '''</summary>
     '''<remarks>
@@ -39,6 +30,42 @@ Partial Public Class PurchaseAdmin
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents SearchPO As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''lbStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents lbStatus As Global.System.Web.UI.WebControls.ListBox
+
+    '''<summary>
+    '''btnFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnFilter As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''btnClear control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents btnClear As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''frmView control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents frmView As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
     '''gvPurchaseRequests control.
@@ -93,4 +120,13 @@ Partial Public Class PurchaseAdmin
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsApprovalTypes As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsStatus control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsStatus As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

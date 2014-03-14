@@ -6,553 +6,129 @@ Forecaster
 </name>
 </assembly>
 <members>
-<member name="T:Forecaster.ExpenseReport.vwExpenseReportPrintoutDataTable">
+<member name="F:Forecaster.BuildingManager.ScriptManager">
 	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.ExpenseReport.vwExpenseReportPrintoutRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.ExpenseReport.vwExpenseReportPrintoutRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.ExpenseReport">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.ExpenseReport,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.ExpenseReport,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.ExpenseReport,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.UpdateAll(Forecaster.ExpenseReport)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.ExpenseReportTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.ExpenseReportTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getTeams.getTeamsDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getTeams.getTeamsRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getTeams.getTeamsRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getTeams">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getTeamsTableAdapters.getTeamsTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getTeams,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getTeams,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getTeams,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getTeams)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getTeamsTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getTeamsTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_Mng.getForecastBySegments_MngDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_Mng.getForecastBySegments_MngRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_Mng.getForecastBySegments_MngRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_Mng">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.getForecastBySegments_MngTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastBySegments_Mng,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastBySegments_Mng,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastBySegments_Mng,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastBySegments_Mng)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_Mng.getforecastbyTCs_MngDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_Mng.getforecastbyTCs_MngRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_Mng.getforecastbyTCs_MngRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_Mng">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.getforecastbyTCs_MngTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastByTCS_Mng,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastByTCS_Mng,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastByTCS_Mng,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastByTCS_Mng)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_Mg">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.getForecastByUser_MgTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastByUser_Mg,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastByUser_Mg,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastByUser_Mg,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastByUser_Mg)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise.getPCGroupingByEnterpriseDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise.getPCGroupingByEnterpriseRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise.getPCGroupingByEnterpriseRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.getPCGroupingByEnterpriseTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getPCGroupingByEnterprise,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getPCGroupingByEnterprise,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getPCGroupingByEnterprise,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getPCGroupingByEnterprise)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.setMngrSpec">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.setMngrSpecTableAdapters.QueriesTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS.GetForecastByTCsDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS.GetForecastByTCsRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS.GetForecastByTCsRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getForecastByTCS">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCSTableAdapters.GetForecastByTCsTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastByTCS,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastByTCS,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastByTCS,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastByTCS)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng.getPCGroupingByEnterprise_MngDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng.getPCGroupingByEnterprise_MngRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng.getPCGroupingByEnterprise_MngRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.getPCGroupingByEnterprise_MngTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getPCGroupingByEnterprise_Mng,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getPCGroupingByEnterprise_Mng,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getPCGroupingByEnterprise_Mng,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getPCGroupingByEnterprise_Mng)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster._getForecastByUser.getForecastByUserDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster._getForecastByUser.getForecastByUserRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster._getForecastByUser.getForecastByUserRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster._getForecastByUser">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster._getForecastByUserTableAdapters.getForecastByUserTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster._getForecastByUser,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster._getForecastByUser,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster._getForecastByUser,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateAll(Forecaster._getForecastByUser)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster._getForecastByUserTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="T:Forecaster.getOpportunities.getOpportunitiesDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:Forecaster.getOpportunities.getOpportunitiesRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:Forecaster.getOpportunities.getOpportunitiesRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:Forecaster.getOpportunities">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:Forecaster.getOpportunitiesTableAdapters.getOpportunitiesTableAdapter">
-	<summary>
-Represents the connection and commands used to retrieve and save data.
-</summary>
-</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getOpportunities,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Update rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getOpportunities,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Insert rows in top-down order.
-</summary>
-</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getOpportunities,System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Delete rows in bottom-up order.
-</summary>
-</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
-	<summary>
-Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-</summary>
-</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getOpportunities)">
-	<summary>
-Update all changes to the dataset.
-</summary>
-</member><member name="T:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateOrderOption">
-	<summary>
-Update Order Option
-</summary>
-</member><member name="T:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.SelfReferenceComparer">
-	<summary>
-Used to sort self-referenced table's rows
-</summary>
-</member><member name="T:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager">
-	<summary>
-TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-</summary>
-</member><member name="F:Forecaster.Report.ScriptManager1">
-	<summary>
-ScriptManager1 control.
+ScriptManager control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Report.ReportViewer1">
+</member><member name="F:Forecaster.BuildingManager.frmInsert">
 	<summary>
-ReportViewer1 control.
+frmInsert control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Report.ExpenseReport">
+</member><member name="F:Forecaster.BuildingManager.gvBuidingRequests">
 	<summary>
-ExpenseReport control.
+gvBuidingRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsOfficeRequestsGrid">
+	<summary>
+sdsOfficeRequestsGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsBuildingOffices">
+	<summary>
+sdsBuildingOffices control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsAssignments">
+	<summary>
+sdsAssignments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsStatus">
+	<summary>
+sdsStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.gvBuidingRequests">
+	<summary>
+gvBuidingRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsOfficeRequestsGrid">
+	<summary>
+sdsOfficeRequestsGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsBuildingOffices">
+	<summary>
+sdsBuildingOffices control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsAssignments">
+	<summary>
+sdsAssignments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsStatus">
+	<summary>
+sdsStatus control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -622,6 +198,58 @@ sdsApprovalTypes control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="T:Forecaster.getTeams.getTeamsDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getTeams.getTeamsRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getTeams.getTeamsRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getTeams">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getTeamsTableAdapters.getTeamsTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getTeams,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getTeams,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getTeams,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getTeams)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getTeamsTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getTeamsTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getTeamsTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
 </member><member name="F:Forecaster.Funnel_Old.ScriptManager">
 	<summary>
 ScriptManager control.
@@ -974,6 +602,58 @@ sdsCustComments control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="T:Forecaster.getForecastBySegments_Mng.getForecastBySegments_MngDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_Mng.getForecastBySegments_MngRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_Mng.getForecastBySegments_MngRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_Mng">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.getForecastBySegments_MngTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastBySegments_Mng,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastBySegments_Mng,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastBySegments_Mng,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastBySegments_Mng)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getForecastBySegments_MngTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
 </member><member name="F:Forecaster.Mg_Forecasts.ScriptManager">
 	<summary>
 ScriptManager control.
@@ -1270,6 +950,86 @@ ExportToExcel1 control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.SafetyMgmt.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.gvSafetyCases">
+	<summary>
+gvSafetyCases control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsSafetyCasesGrid">
+	<summary>
+sdsSafetyCasesGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsSafetyCauses">
+	<summary>
+sdsSafetyCauses control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsStatus">
+	<summary>
+sdsStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsSafetyTypes">
+	<summary>
+sdsSafetyTypes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsManagers">
+	<summary>
+sdsManagers control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsSaLTMembers">
+	<summary>
+sdsSaLTMembers control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.Register.RegisterUser">
 	<summary>
 RegisterUser control.
@@ -1481,6 +1241,14 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.Funnel.ddlExecSponsors">
 	<summary>
 ddlExecSponsors control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel.ddlOutage">
+	<summary>
+ddlOutage control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -1950,6 +1718,242 @@ ExportToExcel1 control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="T:Forecaster.getForecastByTCS_Mng.getforecastbyTCs_MngDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_Mng.getforecastbyTCs_MngRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_Mng.getforecastbyTCs_MngRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_Mng">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.getforecastbyTCs_MngTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastByTCS_Mng,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastByTCS_Mng,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastByTCS_Mng,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastByTCS_Mng)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS_MngTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member><member name="F:Forecaster.Safety.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.gvSafetyCases">
+	<summary>
+gvSafetyCases control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsSafetyCasesGrid">
+	<summary>
+sdsSafetyCasesGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsSafetyCauses">
+	<summary>
+sdsSafetyCauses control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsStatus">
+	<summary>
+sdsStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsSafetyTypes">
+	<summary>
+sdsSafetyTypes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsManagers">
+	<summary>
+sdsManagers control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsSaLTMembers">
+	<summary>
+sdsSaLTMembers control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_Mg">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.getForecastByUser_MgTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastByUser_Mg,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastByUser_Mg,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastByUser_Mg,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastByUser_Mg)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getForecastByUser_MgTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise.getPCGroupingByEnterpriseDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise.getPCGroupingByEnterpriseRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise.getPCGroupingByEnterpriseRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.getPCGroupingByEnterpriseTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getPCGroupingByEnterprise,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getPCGroupingByEnterprise,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getPCGroupingByEnterprise,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getPCGroupingByEnterprise)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterpriseTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
 </member><member name="P:Forecaster.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
@@ -1962,6 +1966,14 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="T:Forecaster.My.Resources.Resources">
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="T:Forecaster.setMngrSpec">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.setMngrSpecTableAdapters.QueriesTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
 </summary>
 </member><member name="F:Forecaster.Expense.ScriptManager">
 	<summary>
@@ -2003,17 +2015,9 @@ btnCloseReport control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Expense.ReportViewer1">
+</member><member name="F:Forecaster.Expense.rvExpenseReport">
 	<summary>
-ReportViewer1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Expense.ExpenseReport">
-	<summary>
-ExpenseReport control.
+rvExpenseReport control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -2163,6 +2167,58 @@ MainContent control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="T:Forecaster.getForecastByTCS.GetForecastByTCsDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS.GetForecastByTCsRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS.GetForecastByTCsRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getForecastByTCS">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCSTableAdapters.GetForecastByTCsTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getForecastByTCS,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getForecastByTCS,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getForecastByTCS,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getForecastByTCS)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getForecastByTCSTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
 </member><member name="F:Forecaster.PurchaseAdmin.ScriptManager">
 	<summary>
 ScriptManager control.
@@ -2171,17 +2227,41 @@ ScriptManager control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.PurchaseAdmin.frmView">
+</member><member name="F:Forecaster.PurchaseAdmin.SearchPO">
 	<summary>
-frmView control.
+SearchPO control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.PurchaseAdmin.SearchPO">
+</member><member name="F:Forecaster.PurchaseAdmin.lbStatus">
 	<summary>
-SearchPO control.
+lbStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.PurchaseAdmin.btnFilter">
+	<summary>
+btnFilter control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.PurchaseAdmin.btnClear">
+	<summary>
+btnClear control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.PurchaseAdmin.frmView">
+	<summary>
+frmView control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -2235,81 +2315,9 @@ sdsApprovalTypes control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Safety.ScriptManager">
-	<summary>
-ScriptManager control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.frmInsert">
-	<summary>
-frmInsert control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.gvSafetyCases">
-	<summary>
-gvSafetyCases control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsInsert">
-	<summary>
-sdsInsert control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsSafetyCasesGrid">
-	<summary>
-sdsSafetyCasesGrid control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsSafetyCauses">
-	<summary>
-sdsSafetyCauses control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsStatus">
+</member><member name="F:Forecaster.PurchaseAdmin.sdsStatus">
 	<summary>
 sdsStatus control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsSafetyTypes">
-	<summary>
-sdsSafetyTypes control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsManagers">
-	<summary>
-sdsManagers control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Safety.sdsSaLTMembers">
-	<summary>
-sdsSaLTMembers control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -2596,6 +2604,162 @@ odsProducts control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng.getPCGroupingByEnterprise_MngDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng.getPCGroupingByEnterprise_MngRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng.getPCGroupingByEnterprise_MngRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_Mng">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.getPCGroupingByEnterprise_MngTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getPCGroupingByEnterprise_Mng,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getPCGroupingByEnterprise_Mng,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getPCGroupingByEnterprise_Mng,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getPCGroupingByEnterprise_Mng)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getPCGroupingByEnterprise_MngTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member><member name="T:Forecaster._getForecastByUser.getForecastByUserDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster._getForecastByUser.getForecastByUserRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster._getForecastByUser.getForecastByUserRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster._getForecastByUser">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster._getForecastByUserTableAdapters.getForecastByUserTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster._getForecastByUser,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster._getForecastByUser,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster._getForecastByUser,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateAll(Forecaster._getForecastByUser)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster._getForecastByUserTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster._getForecastByUserTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member><member name="T:Forecaster.getOpportunities.getOpportunitiesDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:Forecaster.getOpportunities.getOpportunitiesRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:Forecaster.getOpportunities.getOpportunitiesRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:Forecaster.getOpportunities">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:Forecaster.getOpportunitiesTableAdapters.getOpportunitiesTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateUpdatedRows(Forecaster.getOpportunities,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateInsertedRows(Forecaster.getOpportunities,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateDeletedRows(Forecaster.getOpportunities,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateAll(Forecaster.getOpportunities)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:Forecaster.getOpportunitiesTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
 </member><member name="F:Forecaster.InventorySearch.ScriptManager">
 	<summary>
 ScriptManager control.
@@ -2959,86 +3123,6 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.ProductCode.odsgetForecastByUser">
 	<summary>
 odsgetForecastByUser control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.ScriptManager">
-	<summary>
-ScriptManager control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.frmInsert">
-	<summary>
-frmInsert control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.gvSafetyCases">
-	<summary>
-gvSafetyCases control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsInsert">
-	<summary>
-sdsInsert control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsSafetyCasesGrid">
-	<summary>
-sdsSafetyCasesGrid control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsSafetyCauses">
-	<summary>
-sdsSafetyCauses control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsStatus">
-	<summary>
-sdsStatus control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsSafetyTypes">
-	<summary>
-sdsSafetyTypes control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsManagers">
-	<summary>
-sdsManagers control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.SafetyMgmt.sdsSaLTMembers">
-	<summary>
-sdsSaLTMembers control.
 </summary>
 	<remarks>
 Auto-generated field.

@@ -1,12 +1,19 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="Expense.aspx.vb" Inherits="Forecaster.Expense" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>New Expense Report</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView runat="server" ID="frmExpense" DefaultMode="Insert" DataKeyNames="ExpenseReportID" DataSourceID="sdsForm" OnItemInserted="frmExpense_ItemInserted" OnDataBound="frmExpense_DataBound" OnItemUpdated="frmExpense_ItemUpdated">
+    <asp:FormView runat="server" ID="frmExpense" DefaultMode="Insert" DataKeyNames="ExpenseReportID" DataSourceID="sdsForm" 
+        OnItemInserted="frmExpense_ItemInserted" 
+        OnDataBound="frmExpense_DataBound" 
+        OnItemUpdated="frmExpense_ItemUpdated"
+        OnItemInserting="frmExpense_ItemInserting"
+        OnItemUpdating="frmExpense_ItemUpdating">
         <EditItemTemplate>
             <table>
                 <tr>
@@ -40,11 +47,11 @@
                     <td>Department:
                     </td>
                     <td>
-                        <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
                         <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
                             <asp:ListItem Text="(Select your department)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
+                        <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
                     </td>
                 </tr>
                 <tr>
@@ -58,7 +65,7 @@
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
                     </td>
                 </tr>
-                <tr>
+<%--                <tr>
                     <td>Payment Type:
                     </td>
                     <td>
@@ -66,9 +73,9 @@
                             <asp:ListItem Text="(Select your payment type)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="update" ForeColor="Red" ErrorMessage="Select your Payment Type" ControlToValidate="ddlPaymentTypes" />
-                        <%--<asp:TextBox ID="PaymentTypeIDTextBox" runat="server" Text='<%# Bind("PaymentTypeID") %>' />--%>
+                        <%--<asp:TextBox ID="PaymentTypeIDTextBox" runat="server" Text='<%# Bind("PaymentTypeID") %>' />
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>Expense Report Date:
                     </td>
@@ -99,23 +106,23 @@
                         (If expenses were incurred in the US):
                     </td>
                     <td>
-                        <asp:TextBox ID="ExchangeRateTextBox" runat="server" Text='<%# Bind("ExchangeRate") %>' /><asp:HyperLink ID="HyperLink1" runat="server" Text="Intranet Link" Target="_blank" NavigateUrl="http://lcl-intra/En/ExchangeRate/ExchangeRate.aspx" />
+                        <asp:TextBox ID="ExchangeRateTextBox" runat="server" Text='<%# Bind("ExchangeRate") %>' /><asp:HyperLink ID="HyperLink1" runat="server" Text="Intranet Link" Target="_blank" NavigateUrl="http://lcl-adimp/_layouts/15/start.aspx#/SitePages/Kilometer%20Rate.aspx" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Enter an expense
+                    <td style="font-weight:bold;">Enter an expense
                     </td>
                     <td>
-                        <asp:DropDownList ID="ddlExpenseCategories" runat="server" AutoPostBack="True" DataSourceID="sdsExpenseCategories" DataValueField="CategoryID" AppendDataBoundItems="true" DataTextField="label" OnSelectedIndexChanged="ddlExpenseTypes_SelectedIndexChanged">
+                        <asp:DropDownList ID="ddlExpenseCategories" runat="server" AutoPostBack="True" DataSourceID="sdsExpenseCategories" DataValueField="CategoryID" AppendDataBoundItems="true" DataTextField="label" OnSelectedIndexChanged="ddlExpenseCategories_SelectedIndexChanged">
                             <asp:ListItem Text="(Choose an expense category)" Value="" />
                         </asp:DropDownList>
                     </td>
                 </tr>
                 <tr>
-                    <td>Expense details:</td>
+                    <td style="font-weight:bold;">Expense details:</td>
                     <td>
                         <asp:Panel ID="panStd" runat="server" Visible="false">
-                            <asp:FormView runat="server" ID="frmStdExpenseDetails" DefaultMode="Insert" OnItemInserting="frmStdExpenseDetails_ItemInserting">
+                            <asp:FormView runat="server" ID="frmStdExpenseDetails" DefaultMode="Insert" OnItemInserting="frmStdExpenseDetails_ItemInserting" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px">
                                 <InsertItemTemplate>
                                     <table>
                                         <tr>
@@ -133,11 +140,26 @@
                                             <td>Type:
                                             </td>
                                             <td>
-                                                <asp:DropDownList ID="ddlExpenseTypes" runat="server" AppendDataBoundItems="false">
+                                                <asp:DropDownList ID="ddlExpenseTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlExpenseTypes_SelectedIndexChanged">
                                                 </asp:DropDownList>
                                                 <%--<asp:TextBox Text='<%# Bind("ExpenseType") %>' runat="server" ID="ExpenseTypeTextBox" />--%>
                                             </td>
                                         </tr>
+                                        <asp:Panel ID="panKM" runat="server">
+                                            <tr>
+                                                <td>Km:
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Km") %>' runat="server" ID="KmTextBox" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Km Rate:
+                                                        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="http://lcl-adimp/_layouts/15/start.aspx#/SitePages/Kilometer%20Rate.aspx" Text="Intranet link" Target="_blank"></asp:HyperLink>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /><asp:Button runat="server" ID="btnCalculate" OnClick="btnCalculate_Click" Text="Calculate Total" /></td>
+                                            </tr>
+                                        </asp:Panel>
                                         <tr>
                                             <td>Total Amount (incl. tax/tip):
                                             </td>
@@ -158,15 +180,6 @@
                                                     <asp:TextBox Text='<%# Bind("NonTaxableExtras")%>' runat="server" ID="Non_TaxableExtrasTextBox" /></td>
                                             </tr>
                                         </asp:Panel>
-                                        <tr>
-                                            <td>Province:
-                                            </td>
-                                            <td>
-                                                <asp:DropDownList ID="ProvinceDropDown" runat="server" DataSourceID="sdsProvinces" AppendDataBoundItems="true" DataValueField="ProvinceID" DataTextField="Province" SelectedValue='<%# Bind("ProvinceID")%>'>
-                                                    <asp:ListItem Text="(Select your province)" Value="" />
-                                                </asp:DropDownList>
-                                                <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
-                                        </tr>
                                         <%-- %><tr>
                                             <td>TaxCategory:
                                             </td>
@@ -204,21 +217,15 @@
                                                     <asp:TextBox Text='<%# Bind("AQST") %>' runat="server" ID="AQSTTextBox" /></td>
                                             </tr>
                                         </asp:Panel>
-                                        <asp:Panel ID="panKM" runat="server">
-                                            <tr>
-                                                <td>Km:
-                                                </td>
-                                                <td>
-                                                    <asp:TextBox Text='<%# Bind("Km") %>' runat="server" ID="KmTextBox" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Km Rate:
-                                                        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="http://lcl-intra/En/KilometerRate/KilometerRate.aspx" Text="Intranet link" Target="_blank"></asp:HyperLink>
-                                                </td>
-                                                <td>
-                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /></td>
-                                            </tr>
-                                        </asp:Panel>
+                                       <tr>
+                                            <td>Province:
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ProvinceDropDown" runat="server" DataSourceID="sdsProvinces" AppendDataBoundItems="true" DataValueField="ProvinceID" DataTextField="Province" SelectedValue='<%# Bind("ProvinceID")%>'>
+                                                    <asp:ListItem Text="(Select your province)" Value="" />
+                                                </asp:DropDownList>
+                                                <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
+                                        </tr>
                                         <tr>
                                             <td>Type of transaction:
                                             </td>
@@ -241,6 +248,17 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Department:
+                                            </td>
+                                            <td>
+                                                <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
+                                                <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
+                                                    <asp:ListItem Text="(Select your department)" Value="" />
+                                                </asp:DropDownList>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <asp:LinkButton runat="server" Text="Add" CommandName="Insert" ID="InsertButton" CausesValidation="True" />
                                                 <%--&nbsp;<asp:LinkButton runat="server" Text="Cancel" CommandName="Cancel" ID="InsertCancelButton" CausesValidation="False" />--%>
@@ -254,7 +272,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Expenses List</td>
+                    <td style="font-weight:bold;">Expenses List</td>
                     <td>
                         <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting" >
                             <Columns>
@@ -262,7 +280,7 @@
                                 <%--<asp:BoundField DataField="ExpenseReportID" HeaderText="ExpenseReportID" SortExpression="ExpenseReportID" />--%>
                                 <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this Expense report?');" />
+                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this expense?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Category" SortExpression="CategoryID">
@@ -270,7 +288,12 @@
                                         <asp:Label ID="CategoryLabel" runat="server" Text='<%# FindCategory(Eval("CategoryID")) %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="ExpenseType" HeaderText="ExpenseType" SortExpression="ExpenseType" />
+                                <asp:TemplateField HeaderText="Type" SortExpression="ExpenseTypeID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="TypeLabel" runat="server" Text='<%# FindType(Eval("ExpenseTypeID"))%>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <%--<asp:BoundField DataField="ExpenseType" HeaderText="ExpenseType" SortExpression="ExpenseType" />--%>
                                 <asp:BoundField DataField="ExpenseItemDescription" HeaderText="Description" SortExpression="ExpenseItemDescription" />
                                 <asp:BoundField DataField="ExpenseDate" HeaderText="Date" SortExpression="ExpenseDate" DataFormatString="{0:d}" />
                                 <%--<asp:BoundField DataField="Tip" HeaderText="Tip" SortExpression="Tip" />
@@ -371,7 +394,7 @@
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
                     </td>
                 </tr>
-                <tr>
+<%--                <tr>
                     <td>Payment Type:
                     </td>
                     <td>
@@ -379,9 +402,9 @@
                             <asp:ListItem Text="(Select your payment type)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your Payment Type" ControlToValidate="ddlPaymentTypes" />
-                        <%--<asp:TextBox ID="PaymentTypeIDTextBox" runat="server" Text='<%# Bind("PaymentTypeID") %>' />--%>
+                        <%--<asp:TextBox ID="PaymentTypeIDTextBox" runat="server" Text='<%# Bind("PaymentTypeID") %>' />
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>Expense Report Date:
                     </td>
@@ -416,19 +439,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Enter an expense
+                    <td style="font-weight:bold">Enter an expense
                     </td>
                     <td>
-                        <asp:DropDownList ID="ddlExpenseCategories" runat="server" AutoPostBack="True" DataSourceID="sdsExpenseCategories" DataValueField="CategoryID" AppendDataBoundItems="true" DataTextField="label" OnSelectedIndexChanged="ddlExpenseTypes_SelectedIndexChanged">
+                        <asp:DropDownList ID="ddlExpenseCategories" runat="server" AutoPostBack="True" DataSourceID="sdsExpenseCategories" DataValueField="CategoryID" AppendDataBoundItems="true" DataTextField="label" OnSelectedIndexChanged="ddlExpenseCategories_SelectedIndexChanged">
                             <asp:ListItem Text="(Choose an expense category)" Value="" />
                         </asp:DropDownList>
                     </td>
                 </tr>
                 <tr>
-                    <td>Expense details:</td>
+                    <td  style="font-weight:bold">Expense details:</td>
                     <td>
                         <asp:Panel ID="panStd" runat="server" Visible="false">
-                            <asp:FormView runat="server" ID="frmStdExpenseDetails" DefaultMode="Insert" OnItemInserting="frmStdExpenseDetails_ItemInserting">
+                            <asp:FormView runat="server" ID="frmStdExpenseDetails" DefaultMode="Insert" OnItemInserting="frmStdExpenseDetails_ItemInserting" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px">
                                 <InsertItemTemplate>
                                     <table>
                                         <tr>
@@ -446,11 +469,26 @@
                                             <td>Type:
                                             </td>
                                             <td>
-                                                <asp:DropDownList ID="ddlExpenseTypes" runat="server" AppendDataBoundItems="false">
+                                                <asp:DropDownList ID="ddlExpenseTypes" runat="server" AppendDataBoundItems="false" AutoPostBack="true" OnSelectedIndexChanged="ddlExpenseTypes_SelectedIndexChanged">
                                                 </asp:DropDownList>
                                                 <%--<asp:TextBox Text='<%# Bind("ExpenseType") %>' runat="server" ID="ExpenseTypeTextBox" />--%>
                                             </td>
                                         </tr>
+                                        <asp:Panel ID="panKM" runat="server">
+                                            <tr>
+                                                <td>Km:
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Km") %>' runat="server" ID="KmTextBox" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Km Rate:
+                                                        <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="http://lcl-intra/En/KilometerRate/KilometerRate.aspx" Text="Intranet link" Target="_blank"></asp:HyperLink>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /><asp:Button runat="server" id="btnCalculate" OnClick="btnCalculate_Click" Text="Calculate Total" /></td>
+                                            </tr>
+                                        </asp:Panel>
                                         <tr>
                                             <td>Total Amount (incl. tax/tip):
                                             </td>
@@ -471,15 +509,7 @@
                                                     <asp:TextBox Text='<%# Bind("NonTaxableExtras")%>' runat="server" ID="Non_TaxableExtrasTextBox" /></td>
                                             </tr>
                                         </asp:Panel>
-                                        <tr>
-                                            <td>Province:
-                                            </td>
-                                            <td>
-                                                <asp:DropDownList ID="ProvinceDropDown" runat="server" DataSourceID="sdsProvinces" AppendDataBoundItems="true" DataValueField="ProvinceID" DataTextField="Province" SelectedValue='<%# Bind("ProvinceID")%>'>
-                                                    <asp:ListItem Text="(Select your province)" Value="" />
-                                                </asp:DropDownList>
-                                                <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
-                                        </tr>
+                                        
                                         <%-- %><tr>
                                             <td>TaxCategory:
                                             </td>
@@ -517,21 +547,15 @@
                                                     <asp:TextBox Text='<%# Bind("AQST") %>' runat="server" ID="AQSTTextBox" /></td>
                                             </tr>
                                         </asp:Panel>
-                                        <asp:Panel ID="panKM" runat="server">
-                                            <tr>
-                                                <td>Km:
-                                                </td>
-                                                <td>
-                                                    <asp:TextBox Text='<%# Bind("Km") %>' runat="server" ID="KmTextBox" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Km Rate:
-                                                        <asp:HyperLink runat="server" NavigateUrl="http://lcl-intra/En/KilometerRate/KilometerRate.aspx" Text="Intranet link" Target="_blank"></asp:HyperLink>
-                                                </td>
-                                                <td>
-                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /></td>
-                                            </tr>
-                                        </asp:Panel>
+                                        <tr>
+                                            <td>Province:
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ProvinceDropDown" runat="server" DataSourceID="sdsProvinces" AppendDataBoundItems="true" DataValueField="ProvinceID" DataTextField="Province" SelectedValue='<%# Bind("ProvinceID")%>'>
+                                                    <asp:ListItem Text="(Select your province)" Value="" />
+                                                </asp:DropDownList>
+                                                <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
+                                        </tr>
                                         <tr>
                                             <td>Type of transaction:
                                             </td>
@@ -554,6 +578,17 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Department:
+                                            </td>
+                                            <td>
+                                                <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
+                                                <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
+                                                    <asp:ListItem Text="(Select your department)" Value="" />
+                                                </asp:DropDownList>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                                 <asp:LinkButton runat="server" Text="Add" CommandName="Insert" ID="InsertButton" CausesValidation="True" />
                                                 <%--&nbsp;<asp:LinkButton runat="server" Text="Cancel" CommandName="Cancel" ID="InsertCancelButton" CausesValidation="False" />--%>
@@ -567,7 +602,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Expenses List</td>
+                    <td style="font-weight:bold;">Expenses List</td>
                     <td>
                         <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting">
                             <Columns>
@@ -575,7 +610,7 @@
                                 <%--<asp:BoundField DataField="ExpenseReportID" HeaderText="ExpenseReportID" SortExpression="ExpenseReportID" />--%>
                                 <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this Expense report?');" />
+                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this expense?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Category" SortExpression="CategoryID">
@@ -583,7 +618,12 @@
                                         <asp:Label ID="CategoryLabel" runat="server" Text='<%# FindCategory(Eval("CategoryID")) %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="ExpenseType" HeaderText="ExpenseType" SortExpression="ExpenseType" />
+                                <asp:TemplateField HeaderText="Type" SortExpression="ExpenseTypeID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="TypeLabel" runat="server" Text='<%# FindType(Eval("ExpenseTypeID"))%>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <%--<asp:BoundField DataField="ExpenseTypeID" HeaderText="Expense Type" SortExpression="ExpenseTypeID" />--%>
                                 <asp:BoundField DataField="ExpenseItemDescription" HeaderText="Description" SortExpression="ExpenseItemDescription" />
                                 <asp:BoundField DataField="ExpenseDate" HeaderText="Date" SortExpression="ExpenseDate" />
                                 <%--<asp:BoundField DataField="Tip" HeaderText="Tip" SortExpression="Tip" />
@@ -638,12 +678,29 @@
             </table>
         </InsertItemTemplate>
     </asp:FormView>
-
+    <asp:ModalPopupExtender ID="reportModalPopup" runat="server" TargetControlID="FakeTarget" 
+                            PopupControlID="panReport" PopupDragHandleControlID="panReport" BackgroundCssClass="modalBackground" />
+    <asp:Panel ID="panReport" runat="server" CssClass="ModalWindow">
+        <asp:Button runat="server" Text="Close Window" OnClick="btnCloseReport_Click" ID="btnCloseReport" />
+        <rsweb:ReportViewer ID="rvExpenseReport" runat ="server" Font-Names="Verdana" Font-Size="8pt" WaitMessageFont-Names="Verdana" WaitMessageFont-Size="14pt" Width="900px" ProcessingMode="Local" Height="1000px">
+<%--            <LocalReport ReportPath="Expense\ExpenseReport.rdlc">
+                <DataSources>
+                    <rsweb:ReportDataSource DataSourceId="dsExpenseReport" Name="ExpenseReport" />
+                </DataSources>
+            </LocalReport>
+        </rsweb:ReportViewer>
+        <asp:ObjectDataSource  OnSelecting="dsExpenseReport_Selecting" ID ="dsExpenseReport" runat="server" OldValuesParameterFormatString="{0}" SelectMethod="GetData" TypeName="Forecaster.ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter">
+            <SelectParameters>
+                <asp:Parameter Name="ExpenseReportID" />
+            </SelectParameters>
+        </asp:ObjectDataSource>--%>
+        </rsweb:ReportViewer>
+    </asp:Panel>
     <asp:GridView ID="gvExpenseReports" runat="server" AutoGenerateColumns="False" DataKeyNames="ExpenseReportID" DataSourceID="sdsExpenseReportGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
         RowStyle-CssClass="grid_RowStyle"
         CellPadding="4" ForeColor="#333333"
-        Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvExpenseReports_SelectedIndexChanged">
+        Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvExpenseReports_SelectedIndexChanged" OnRowCommand="gvExpenseReports_RowCommand">
         <Columns>
             <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
@@ -651,6 +708,12 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
+            <asp:TemplateField ShowHeader="false" >
+                <ItemTemplate>
+                    <asp:LinkButton ID="btnAddToCard" runat="server" CausesValidation="false" Text="Show Report" ForeColor="Black"
+                        CommandName="ShowReport" CommandArgument='<%# Eval("ExpenseReportID") %>' />
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:BoundField DataField="ExpenseReportID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ExpenseReportID" />
             <asp:BoundField DataField="ManagerName" HeaderText="Manager" SortExpression="ManagerName" />
             <asp:BoundField DataField="ExpenseDate" HeaderText="Expense Date" SortExpression="ExpenseDate" DataFormatString="{0:d}" />
@@ -659,7 +722,7 @@
             <asp:BoundField DataField="EmployeeDomainUser" HeaderText="EmployeeDomainUser" SortExpression="EmployeeDomainUser" />
             <asp:BoundField DataField="EmployeeEmail" HeaderText="Employee Email" SortExpression="EmployeeEmail" />--%>
             <%--<asp:BoundField DataField="AdvanceAmount" HeaderText="Advance Amount" SortExpression="AdvanceAmount" />--%>
-            <asp:BoundField DataField="PaymentType" HeaderText="Payment Type" SortExpression="PaymentType" />
+            <%--<asp:BoundField DataField="PaymentType" HeaderText="Payment Type" SortExpression="PaymentType" />--%>
             <asp:BoundField DataField="Total" HeaderText="Total" SortExpression="Total" DataFormatString="{0:c}" />
             <%--<asp:BoundField DataField="ExchangeRate" HeaderText="Exchange Rate" SortExpression="ExchangeRate" />--%>
             <asp:CheckBoxField DataField="Paid" HeaderText="Paid" SortExpression="Paid" />
@@ -684,7 +747,6 @@
            ,[EmployeeName]
            ,[EmployeeDomainUser]
            ,[EmployeeEmail]
-           ,[PaymentTypeID]
            ,[ExpenseDate]
            ,[AdvanceAmount]
            ,[BusinessPurpose]
@@ -696,7 +758,6 @@
            ,@EmployeeName
            ,@EmployeeDomainUser
            ,@EmployeeEmail
-           ,@PaymentTypeID
            ,@ExpenseDate
            ,@AdvanceAmount
            ,@BusinessPurpose
@@ -708,7 +769,6 @@
    SET [DepartmentID] = @DepartmentID
       ,[EmployeeName] = @EmployeeName
       ,[EmployeeEmail] = @EmployeeEmail
-      ,[PaymentTypeID] = @PaymentTypeID
       ,[ExpenseDate] = @ExpenseDate
       ,[AdvanceAmount] = @AdvanceAmount
       ,[BusinessPurpose] = @BusinessPurpose
@@ -724,7 +784,7 @@
             <asp:Parameter Name="EmployeeName" />
             <asp:SessionParameter Name="EmployeeDomainUser" SessionField="Username" />
             <asp:Parameter Name="EmployeeEmail" />
-            <asp:Parameter Name="PaymentTypeID" />
+            <%--<asp:Parameter Name="PaymentTypeID" />--%>
             <asp:Parameter Name="ExpenseDate" />
             <asp:Parameter Name="AdvanceAmount" DefaultValue="0" />
             <asp:Parameter Name="BusinessPurpose" />
@@ -737,7 +797,7 @@
             <asp:Parameter Name="DepartmentID" />
             <asp:Parameter Name="EmployeeName" />
             <asp:Parameter Name="EmployeeEmail" />
-            <asp:Parameter Name="PaymentTypeID" />
+            <%--<asp:Parameter Name="PaymentTypeID" />--%>
             <asp:Parameter Name="ExpenseDate" />
             <asp:Parameter Name="AdvanceAmount" DefaultValue="0" />
             <asp:Parameter Name="BusinessPurpose" />
@@ -759,8 +819,6 @@
                     FROM tblExpenseReports 
                left join (select expensereportid, sum(ExpenseItemAmount) as total from  tblExpenseDetails group by expensereportid) as a
                       on tblExpenseReports.expensereportid = a.expensereportid
-               left join tblPaymentTypes 
-                      on tblPaymentTypes.paymenttypeid = tblExpenseReports.paymenttypeid
                left join tblManagers
                       on tblExpenseReports.managerid = tblManagers.managerid
               where visible = 1
@@ -783,4 +841,5 @@
         SelectCommand="select * from tblPaymentTypes order by PaymentType"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
+    <asp:Button ID="FakeTarget" runat="server" Style="display: none;" />
 </asp:Content>

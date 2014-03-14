@@ -16,6 +16,7 @@ Public Class Funnel
 
     Private Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
+        Debug.Print(User.IsInRole("LCLMTL\LCL_SELT"))
     End Sub
 
     Private Sub GridView1_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles GridView1.RowDataBound
@@ -142,8 +143,8 @@ Public Class Funnel
                                     "      ,[Description] = @Description           " & _
                                     "      ,[LaurentideSolution] = @LaurentideSolution           " & _
                                     "      ,[Top25] = @Top25           " & _
-                                    "      ,[IndustryCodeID] = @IndustryCode           " & _
                                     "      ,[ExecSponsorID] = @ExecSponsorID           " & _
+                                    "      ,[Outage] = @Outage           " & _
                                     " WHERE Opportunityid = @OpportunityID         "
 
             SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmUpdate.FindControl("OriginatorTextBox"), Label).Text
@@ -168,6 +169,7 @@ Public Class Funnel
             SqlCommand.Parameters.Add("@Top25", SqlDbType.Bit).Value = CType(Me.frmUpdate.FindControl("chkTop25"), CheckBox).Checked
             SqlCommand.Parameters.Add("@IndustryCode", SqlDbType.Int).Value = CType(Me.frmUpdate.FindControl("IndustryCodeDropDown"), DropDownList).Text
             SqlCommand.Parameters.Add("@ExecSponsorID", SqlDbType.Int).Value = CType(Me.frmUpdate.FindControl("ExecSponsorDropDown"), DropDownList).Text
+            SqlCommand.Parameters.Add("@Outage", SqlDbType.Bit).Value = CType(Me.frmUpdate.FindControl("OutageCheckbox"), CheckBox).Checked
             SqlCommand.Parameters.Add("@OpportunityID", SqlDbType.Int).Value = Session("OpportunityID")
             SqlCommand.Connection = SqlConnection
 
@@ -270,7 +272,7 @@ Public Class Funnel
 
             Dim SqlCommand As SqlCommand = New SqlCommand
             SqlCommand.CommandText = "INSERT INTO [Forecaster].[dbo].[tblOpportunities]  " & _
-                                    "([Originator],[Customer],[CustomerLocation],[EPCConsultant],[SalesmanID],[Name],[CreateDate],[LastModifiedDate],[LastModifiedBy],[ClosingDate],[FunnelPositionID],[Percentage],[PATTID],[Description],[LaurentideSolution],[Top25],[IndustryCodeID])" & _
+                                    "([Originator],[Customer],[CustomerLocation],[EPCConsultant],[SalesmanID],[Name],[CreateDate],[LastModifiedDate],[LastModifiedBy],[ClosingDate],[FunnelPositionID],[Percentage],[PATTID],[Description],[LaurentideSolution],[Top25],[IndustryCodeID],[Outage])" & _
                                     "   VALUES (@Originator             " & _
                                     "      ,@Customer             " & _
                                     "      ,@CustomerLocation " & _
@@ -287,7 +289,8 @@ Public Class Funnel
                                     "      ,@Description	                   " & _
                                     "      ,@LaurentideSolution           " & _
                                     "      ,@Top25           " & _
-                                    "      ,@IndustryCode)           "
+                                    "      ,@IndustryCode" & _
+                                    "      ,@Outage)           "
             SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmInsert.FindControl("OriginatorTextBox"), Label).Text
             'SqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CType(Me.frmInsert.FindControl("CustomerIDDropDown"), DropDownList).Text
             SqlCommand.Parameters.Add("@Customer", SqlDbType.VarChar, 100).Value = CType(Me.frmInsert.FindControl("CustomerTextBox"), TextBox).Text
@@ -309,6 +312,7 @@ Public Class Funnel
             SqlCommand.Parameters.Add("@LaurentideSolution", SqlDbType.VarChar, 255).Value = CType(Me.frmInsert.FindControl("LaurentideSolutionTextbox"), TextBox).Text
             SqlCommand.Parameters.Add("@Top25", SqlDbType.Bit).Value = CType(Me.frmInsert.FindControl("chkTop25"), CheckBox).Checked
             SqlCommand.Parameters.Add("@IndustryCode", SqlDbType.Int).Value = CType(Me.frmInsert.FindControl("IndustryCodeDropDown"), DropDownList).Text
+            SqlCommand.Parameters.Add("@Outage", SqlDbType.Int).Value = CType(Me.frmInsert.FindControl("OutageCheckbox"), CheckBox).Checked
             'SqlCommand.Parameters.Add("@OpportunityID", SqlDbType.Int).Value = Session("OpportunityID")
             SqlCommand.Connection = SqlConnection
 

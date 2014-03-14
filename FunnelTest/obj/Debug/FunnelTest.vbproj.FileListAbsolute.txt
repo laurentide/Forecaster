@@ -11,3 +11,4 @@ C:\Data\Projects\Forecaster\FunnelTest\bin\Debug\FunnelTest.xml
 C:\Data\Projects\Forecaster\FunnelTest\obj\Debug\FunnelTest.dll
 C:\Data\Projects\Forecaster\FunnelTest\obj\Debug\FunnelTest.xml
 C:\Data\Projects\Forecaster\FunnelTest\obj\Debug\FunnelTest.pdb
+C:\Data\Projects\Forecaster\FunnelTest\obj\Debug\FunnelTest.vbprojResolveAssemblyReference.cache
