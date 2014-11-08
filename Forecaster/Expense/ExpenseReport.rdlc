@@ -1777,13 +1777,13 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Category">
-          <DataField>Category</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="ExpenseReportID">
           <DataField>ExpenseReportID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ExpenseReportDept">
+          <DataField>ExpenseReportDept</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="EmployeeName">
           <DataField>EmployeeName</DataField>
@@ -1817,17 +1817,9 @@
           <DataField>ManagerName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Province">
-          <DataField>Province</DataField>
+        <Field Name="Category">
+          <DataField>Category</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="GST">
-          <DataField>GST</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="PST">
-          <DataField>PST</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="ExpenseType">
           <DataField>ExpenseType</DataField>
@@ -1841,17 +1833,33 @@
           <DataField>ExpenseItemDescription</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Lodging_Taxes">
-          <DataField>Lodging_Taxes</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="ExpenseDetailsDate">
+          <DataField>ExpenseDetailsDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="Tip">
           <DataField>Tip</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Lodging_Taxes">
+          <DataField>Lodging_Taxes</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="NonTaxableExtras">
           <DataField>NonTaxableExtras</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Province">
+          <DataField>Province</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GST">
+          <DataField>GST</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="PST">
+          <DataField>PST</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="TaxCategory">
           <DataField>TaxCategory</DataField>
@@ -1881,14 +1889,6 @@
           <DataField>Km_Rate</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
         </Field>
-        <Field Name="ExpenseReportDept">
-          <DataField>ExpenseReportDept</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ExpenseDetailsDate">
-          <DataField>ExpenseDetailsDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
         <Field Name="ExpenseDetailsDept">
           <DataField>ExpenseDetailsDept</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1896,7 +1896,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>ExpenseReport</rd:DataSetName>
-        <rd:SchemaPath>C:\Data\Projects\Forecaster\Forecaster\App_Data\ExpenseReport.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Data\Projects\Forecaster\Forecaster\App_Code\ExpenseReport.xsd</rd:SchemaPath>
         <rd:TableName>vwExpenseReportPrintout</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

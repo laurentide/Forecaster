@@ -6,7 +6,7 @@ Forecaster
 </name>
 </assembly>
 <members>
-<member name="F:Forecaster.BuildingManager.ScriptManager">
+<member name="F:Forecaster.Funnel_PSS.ScriptManager">
 	<summary>
 ScriptManager control.
 </summary>
@@ -14,7 +14,63 @@ ScriptManager control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.frmInsert">
+</member><member name="F:Forecaster.Funnel_PSS.CollapsiblePanelExtender10">
+	<summary>
+CollapsiblePanelExtender10 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.insertHeadPane">
+	<summary>
+insertHeadPane control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Image1">
+	<summary>
+Image1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Label1">
+	<summary>
+Label1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.insertPane">
+	<summary>
+insertPane control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Accordion3">
+	<summary>
+Accordion3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Pane3">
+	<summary>
+Pane3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.frmInsert">
 	<summary>
 frmInsert control.
 </summary>
@@ -22,15 +78,471 @@ frmInsert control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.gvBuidingRequests">
+</member><member name="F:Forecaster.Funnel_PSS.Pane4">
 	<summary>
-gvBuidingRequests control.
+Pane4 control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.sdsInsert">
+</member><member name="F:Forecaster.Funnel_PSS.UpdatePanel2">
+	<summary>
+UpdatePanel2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnInsert">
+	<summary>
+btnInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.InsertValidationSummary">
+	<summary>
+InsertValidationSummary control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CollapsiblePanelExtender11">
+	<summary>
+CollapsiblePanelExtender11 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.PanHeadFilters">
+	<summary>
+PanHeadFilters control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Image12">
+	<summary>
+Image12 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Label12">
+	<summary>
+Label12 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.PanFilters">
+	<summary>
+PanFilters control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.cblProducts">
+	<summary>
+cblProducts control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.cblFunnelPositions">
+	<summary>
+cblFunnelPositions control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.lbIndustryCodes">
+	<summary>
+lbIndustryCodes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ddlExecSponsors">
+	<summary>
+ddlExecSponsors control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ddlOutage">
+	<summary>
+ddlOutage control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ddlSalesmen">
+	<summary>
+ddlSalesmen control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.txtProductLead">
+	<summary>
+txtProductLead control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.txtCustomerFilter">
+	<summary>
+txtCustomerFilter control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.txtEPCFilter">
+	<summary>
+txtEPCFilter control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.txtID">
+	<summary>
+txtID control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ClosingStartDateTextBox">
+	<summary>
+ClosingStartDateTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Calendar_scheduleHS">
+	<summary>
+Calendar_scheduleHS control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CalendarExtender1">
+	<summary>
+CalendarExtender1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.meeStartDate">
+	<summary>
+meeStartDate control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitvalidator1">
+	<summary>
+Maskededitvalidator1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ClosingEndDateTextBox">
+	<summary>
+ClosingEndDateTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Image13">
+	<summary>
+Image13 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CalendarExtender2">
+	<summary>
+CalendarExtender2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitextender1">
+	<summary>
+Maskededitextender1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitvalidator4">
+	<summary>
+Maskededitvalidator4 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CreatedStartDateTextBox">
+	<summary>
+CreatedStartDateTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Image14">
+	<summary>
+Image14 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CalendarExtender3">
+	<summary>
+CalendarExtender3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitextender2">
+	<summary>
+Maskededitextender2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitvalidator5">
+	<summary>
+Maskededitvalidator5 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CreatedEndDateTextBox">
+	<summary>
+CreatedEndDateTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Image15">
+	<summary>
+Image15 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.CalendarExtender4">
+	<summary>
+CalendarExtender4 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitextender3">
+	<summary>
+Maskededitextender3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Maskededitvalidator6">
+	<summary>
+Maskededitvalidator6 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.rblTop25Filter">
+	<summary>
+rblTop25Filter control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnFilter">
+	<summary>
+btnFilter control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnClear">
+	<summary>
+btnClear control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.updGrid">
+	<summary>
+updGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Gridview4">
+	<summary>
+Gridview4 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.modalpopupextender1">
+	<summary>
+modalpopupextender1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.panEdit">
+	<summary>
+panEdit control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.UpdatePanel1">
+	<summary>
+UpdatePanel1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Accordion2">
+	<summary>
+Accordion2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Pane1">
+	<summary>
+Pane1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.frmUpdate">
+	<summary>
+frmUpdate control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.Pane2">
+	<summary>
+Pane2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnUpdate">
+	<summary>
+btnUpdate control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnDone">
+	<summary>
+btnDone control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnCancel">
+	<summary>
+btnCancel control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.btnDelete">
+	<summary>
+btnDelete control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.lblnotification">
+	<summary>
+lblnotification control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ValidationSummary1">
+	<summary>
+ValidationSummary1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.odsGetOpportunities">
+	<summary>
+odsGetOpportunities control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.sdsInsert">
 	<summary>
 sdsInsert control.
 </summary>
@@ -38,97 +550,105 @@ sdsInsert control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.sdsOfficeRequestsGrid">
+</member><member name="F:Forecaster.Funnel_PSS.sdsUpdate">
 	<summary>
-sdsOfficeRequestsGrid control.
+sdsUpdate control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.sdsBuildingOffices">
+</member><member name="F:Forecaster.Funnel_PSS.sdsTeams">
 	<summary>
-sdsBuildingOffices control.
+sdsTeams control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.sdsAssignments">
+</member><member name="F:Forecaster.Funnel_PSS.sdsCustomers">
 	<summary>
-sdsAssignments control.
+sdsCustomers control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.BuildingManager.sdsStatus">
+</member><member name="F:Forecaster.Funnel_PSS.sdsFunnelPositions">
 	<summary>
-sdsStatus control.
+sdsFunnelPositions control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.ScriptManager">
+</member><member name="F:Forecaster.Funnel_PSS.sdsEmptyOpportunityDetails">
 	<summary>
-ScriptManager control.
+sdsEmptyOpportunityDetails control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.frmInsert">
+</member><member name="F:Forecaster.Funnel_PSS.sdsFunnelProducts">
 	<summary>
-frmInsert control.
+sdsFunnelProducts control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.gvBuidingRequests">
+</member><member name="F:Forecaster.Funnel_PSS.sdsTeamFilter">
 	<summary>
-gvBuidingRequests control.
+sdsTeamFilter control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.sdsInsert">
+</member><member name="F:Forecaster.Funnel_PSS.sdsIndustryCodes">
 	<summary>
-sdsInsert control.
+sdsIndustryCodes control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.sdsOfficeRequestsGrid">
+</member><member name="F:Forecaster.Funnel_PSS.sdsExecSponsor">
 	<summary>
-sdsOfficeRequestsGrid control.
+sdsExecSponsor control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.sdsBuildingOffices">
+</member><member name="F:Forecaster.Funnel_PSS.sdsGetOpportunities">
 	<summary>
-sdsBuildingOffices control.
+sdsGetOpportunities control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.sdsAssignments">
+</member><member name="F:Forecaster.Funnel_PSS.sdsOpportunityAssignments">
 	<summary>
-sdsAssignments control.
+sdsOpportunityAssignments control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Building.sdsStatus">
+</member><member name="F:Forecaster.Funnel_PSS.FakeTarget">
 	<summary>
-sdsStatus control.
+FakeTarget control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Funnel_PSS.ExportToExcel1">
+	<summary>
+ExportToExcel1 control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -250,126 +770,6 @@ Used to sort self-referenced table's rows
 	<summary>
 TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
 </summary>
-</member><member name="F:Forecaster.Funnel_Old.ScriptManager">
-	<summary>
-ScriptManager control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.CollapsiblePanelExtender10">
-	<summary>
-CollapsiblePanelExtender10 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.insertHeadPane">
-	<summary>
-insertHeadPane control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.Image1">
-	<summary>
-Image1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.Label1">
-	<summary>
-Label1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.insertPane">
-	<summary>
-insertPane control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.Accordion3">
-	<summary>
-Accordion3 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.Pane3">
-	<summary>
-Pane3 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.FormView2">
-	<summary>
-FormView2 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.Pane4">
-	<summary>
-Pane4 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.upd">
-	<summary>
-upd control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.Accordion1">
-	<summary>
-Accordion1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.ObjectDataSource1">
-	<summary>
-ObjectDataSource1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.SqlDataSource1">
-	<summary>
-SqlDataSource1 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Funnel_Old.SqlDataSource2">
-	<summary>
-SqlDataSource2 control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
 </member><member name="F:Forecaster.ChangePassword.ChangeUserPassword">
 	<summary>
 ChangeUserPassword control.
@@ -958,6 +1358,30 @@ ScriptManager control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.SafetyMgmt.lbStatus">
+	<summary>
+lbStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.btnFilter">
+	<summary>
+btnFilter control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.btnClear">
+	<summary>
+btnClear control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.SafetyMgmt.frmInsert">
 	<summary>
 frmInsert control.
@@ -1030,6 +1454,182 @@ sdsSaLTMembers control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsProvinces">
+	<summary>
+sdsProvinces control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsLesions">
+	<summary>
+sdsLesions control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsTreatments">
+	<summary>
+sdsTreatments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.SafetyMgmt.sdsDepartments">
+	<summary>
+sdsDepartments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.frmExpense">
+	<summary>
+frmExpense control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.gvExpenseReports">
+	<summary>
+gvExpenseReports control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.Panel2">
+	<summary>
+Panel2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.FormView2">
+	<summary>
+FormView2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsForm">
+	<summary>
+sdsForm control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsDetailsGrid">
+	<summary>
+sdsDetailsGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsStdDetails">
+	<summary>
+sdsStdDetails control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsExpenseReportGrid">
+	<summary>
+sdsExpenseReportGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsDepartments">
+	<summary>
+sdsDepartments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsExpenseCategories">
+	<summary>
+sdsExpenseCategories control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsExpenseTypes">
+	<summary>
+sdsExpenseTypes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsProvinces">
+	<summary>
+sdsProvinces control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsPaymentTypes">
+	<summary>
+sdsPaymentTypes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsManagers">
+	<summary>
+sdsManagers control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsPayDates">
+	<summary>
+sdsPayDates control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.sdsExchangeRate">
+	<summary>
+sdsExchangeRate control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ExpenseAdmin.FakeTarget">
+	<summary>
+FakeTarget control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.Register.RegisterUser">
 	<summary>
 RegisterUser control.
@@ -1041,6 +1641,70 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.Register.RegisterUserWizardStep">
 	<summary>
 RegisterUserWizardStep control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.gvBuidingRequests">
+	<summary>
+gvBuidingRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsOfficeRequestsGrid">
+	<summary>
+sdsOfficeRequestsGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsBuildingOffices">
+	<summary>
+sdsBuildingOffices control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsAssignments">
+	<summary>
+sdsAssignments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Building.sdsStatus">
+	<summary>
+sdsStatus control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -1850,6 +2514,38 @@ sdsSaLTMembers control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.Safety.sdsProvinces">
+	<summary>
+sdsProvinces control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsLesions">
+	<summary>
+sdsLesions control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsTreatments">
+	<summary>
+sdsTreatments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Safety.sdsDepartments">
+	<summary>
+sdsDepartments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="T:Forecaster.getForecastByUser_Mg.getForecastByUser_MgDataTable">
 	<summary>
 Represents the strongly named DataTable class.
@@ -1991,38 +2687,6 @@ frmExpense control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.Expense.reportModalPopup">
-	<summary>
-reportModalPopup control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Expense.panReport">
-	<summary>
-panReport control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Expense.btnCloseReport">
-	<summary>
-btnCloseReport control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Expense.rvExpenseReport">
-	<summary>
-rvExpenseReport control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
 </member><member name="F:Forecaster.Expense.gvExpenseReports">
 	<summary>
 gvExpenseReports control.
@@ -2106,14 +2770,6 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.Expense.sdsManagers">
 	<summary>
 sdsManagers control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Expense.FakeTarget">
-	<summary>
-FakeTarget control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -2588,6 +3244,118 @@ To modify move field declaration from designer file to code-behind file.
  Module used to define the properties that are available in the My Namespace for Web projects.
  </summary>
 	<remarks></remarks>
+</member><member name="F:Forecaster.NERManager.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.gvNewEmployeeRequests">
+	<summary>
+gvNewEmployeeRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.sdsNewEmployeeRequests">
+	<summary>
+sdsNewEmployeeRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.sdsStatus">
+	<summary>
+sdsStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.sdsEmployeeTypes">
+	<summary>
+sdsEmployeeTypes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.sdsSources">
+	<summary>
+sdsSources control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NERManager.sdsManagers">
+	<summary>
+sdsManagers control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Customer_Management.gvQB">
+	<summary>
+gvQB control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Customer_Management.sdsQuotebuilder">
+	<summary>
+sdsQuotebuilder control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Customer_Management.sdsAE">
+	<summary>
+sdsAE control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Customer_Management.sdsCSR">
+	<summary>
+sdsCSR control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.Customer_Management.sdsOS">
+	<summary>
+sdsOS control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.SP_ProductCode.ListView1">
 	<summary>
 ListView1 control.
@@ -2708,6 +3476,70 @@ Used to sort self-referenced table's rows
 	<summary>
 TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
 </summary>
+</member><member name="F:Forecaster.BuildingManager.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.gvBuidingRequests">
+	<summary>
+gvBuidingRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsOfficeRequestsGrid">
+	<summary>
+sdsOfficeRequestsGrid control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsBuildingOffices">
+	<summary>
+sdsBuildingOffices control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsAssignments">
+	<summary>
+sdsAssignments control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.BuildingManager.sdsStatus">
+	<summary>
+sdsStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="T:Forecaster.getOpportunities.getOpportunitiesDataTable">
 	<summary>
 Represents the strongly named DataTable class.
@@ -3056,9 +3888,97 @@ sdsInstrumentAE control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.Admin.sdsVADAE">
+	<summary>
+sdsVADAE control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.Admin.sdsCSR">
 	<summary>
 sdsCSR control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.frmInsert">
+	<summary>
+frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.gvNewEmployeeRequests">
+	<summary>
+gvNewEmployeeRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsNewEmployeeRequests">
+	<summary>
+sdsNewEmployeeRequests control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsStatus">
+	<summary>
+sdsStatus control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsEmployeeTypes">
+	<summary>
+sdsEmployeeTypes control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsEmploymentForms">
+	<summary>
+sdsEmploymentForms control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsSources">
+	<summary>
+sdsSources control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NER.sdsManagers">
+	<summary>
+sdsManagers control.
 </summary>
 	<remarks>
 Auto-generated field.

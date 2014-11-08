@@ -19,11 +19,20 @@ Public Class Safety
             'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
             Dim connectionString As String
             connectionString = "Server=lcl-sql2k5-s;Database=Safety;Trusted_Connection=true"
-
             Dim SqlConnection As New SqlConnection(connectionString)
-            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
             SqlConnection.Open()
 
+            'Copy the files
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\Safety Cases\" & Session("ID") & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblSafetyCases set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where SafetyCaseID = " & Session("ID"), SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+
+            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
             Dim reader As SqlDataReader = sc.ExecuteReader()
             reader.Read()
             Dim managerEmail As String = reader.GetString(0)
@@ -36,7 +45,7 @@ Public Class Safety
                                  "Witness: " & CType(frmInsert.FindControl("WitnessTextBox"), TextBox).Text & vbCrLf & _
                                  "Suspected Root Cause: " & CType(frmInsert.FindControl("SuspectedRootCauseTextbox"), TextBox).Text & vbCrLf & _
                                  "Please go to this address: http://lcl-sql2k5-s:81/Safety/SafetyMgmt.aspx to see it!"
-            Dim mm As New MailMessage("Safety@Laurentide.com", "Safety@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "New Safety case issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+            Dim mm As New MailMessage("Safety@Laurentide.com", "Safety@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "New Safety case #:" & Session("ID") & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             'If CType(frmInsert.FindControl("NotificationTextBox"), TextBox).Text <> "" Then
             '    Dim notifyaswell As New MailAddress(CType(frmInsert.FindControl("NotificationTextBox"), TextBox).Text)
@@ -45,8 +54,8 @@ Public Class Safety
             mm.CC.Add(managerEmail)
             mm.CC.Add(mailaddress)
             mm.CC.Add("salt@laurentide.com")
-            Dim smtp As New SmtpClient("lcl-exc")
-            'smtp.Send(mm)
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+            smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewcase();", True)
             'update gridview
             Me.gvSafetyCases.DataBind()
@@ -62,11 +71,19 @@ Public Class Safety
         Try
             Dim connectionString As String
             connectionString = "Server=lcl-sql2k5-s;Database=Safety;Trusted_Connection=true"
-
             Dim SqlConnection As New SqlConnection(connectionString)
-            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
             SqlConnection.Open()
 
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\Safety Cases\" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblSafetyCases set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where SafetyCaseID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+
+            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
             Dim reader As SqlDataReader = sc.ExecuteReader()
             reader.Read()
             Dim managerEmail As String = reader.GetString(0)
@@ -79,7 +96,7 @@ Public Class Safety
                                  "Witness: " & CType(frmInsert.FindControl("WitnessTextBox"), TextBox).Text & vbCrLf & _
                                  "Suspected Root Cause: " & CType(frmInsert.FindControl("SuspectedRootCauseTextbox"), TextBox).Text & vbCrLf & _
                                  "Please go to this address: http://lcl-sql2k5-s:81/Safety/SafetyMgmt.aspx to see it!"
-            Dim mm As New MailMessage(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text, "SafetyCommittee@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "New Safety case issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+            Dim mm As New MailMessage(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text, "SafetyCommittee@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "Updated Safety case issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             'Dim strNotify As String
             'strNotify = CType(frmInsert.FindControl("NotificationTextBox"), TextBox).Text
@@ -90,8 +107,8 @@ Public Class Safety
             mm.CC.Add(managerEmail)
             mm.CC.Add(mailaddress)
 
-            Dim smtp As New SmtpClient("lcl-exc")
-            'smtp.Send(mm)
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+            smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
             'update gridview
             Me.gvSafetyCases.DataBind()

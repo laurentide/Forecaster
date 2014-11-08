@@ -7,6 +7,21 @@ Public Class Expense
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
         Session("Current_Date") = Now()
+
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        SqlConnection.Open()
+
+        Dim sc As New SqlCommand("select exchangerate from tblDefaultExchangeRAte", SqlConnection)
+        Dim reader As SqlDataReader = sc.ExecuteReader()
+        reader.Read()
+        Dim exchangeRate As Double = reader.GetDouble(0)
+        reader.Close()
+        SqlConnection.Close()
+
+        CType(frmExpense.FindControl("ExchangeRateTextBox"), TextBox).Text = exchangeRate.ToString
+
         'Create datable that is like the ExpenseDetails table for temporary storage until the user commits the whole expense
         If ViewState("datatable") Is Nothing Then
             Dim dt As DataTable = New DataTable
@@ -49,7 +64,7 @@ Public Class Expense
 
         If CType(frmExpense.FindControl("DepartmentDropdown"), DropDownList).SelectedValue = "" Then
             Page.ClientScript.RegisterStartupScript(Me.GetType(), "PopupScript", "alert('Please choose a department first');", True)
-            ddlExpenseCategories.selectedvalue=""
+            ddlExpenseCategories.SelectedValue = ""
         Else
 
             'Default date in expense details
@@ -159,6 +174,7 @@ Public Class Expense
                     Debug.Print(ex.Message)
                 End Try
             End Using
+            destinationConnection.Close()
         End Using
         gvExpenseReports.DataBind()
     End Sub
@@ -177,7 +193,7 @@ Public Class Expense
         drow("ExpenseItemDescription") = CType(frm.FindControl("ExpenseItemDescriptionTextBox"), TextBox).Text
         drow("ProvinceID") = CType(frm.FindControl("ProvinceDropDown"), DropDownList).SelectedValue
         drow("Currency") = CType(frm.FindControl("CurrencyDropDown"), DropDownList).SelectedValue
-        drow("Transaction") = CType(frm.FindControl("TransactionDropDown"), DropDownList).SelectedValue
+        drow("Transaction") = ""
         drow("DepartmentID") = CType(frm.FindControl("DepartmentDropdown"), DropDownList).SelectedValue
 
         'Meals and Entertainment & Hotel only
@@ -199,7 +215,7 @@ Public Class Expense
         drow("Km") = IIf(CType(frm.FindControl("KmTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("KmTextBox"), TextBox).Text)
         drow("Km_Rate") = IIf(CType(frm.FindControl("Km_RateTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("Km_RateTextBox"), TextBox).Text)
 
-        
+
 
         If frmExpense.CurrentMode = FormViewMode.Edit Then
             drow("ExpenseReportID") = CType(frmExpense.FindControl("ExpenseReportIDLabel"), Label).Text
@@ -217,7 +233,7 @@ Public Class Expense
                 connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
 
                 Dim SqlConnection As New SqlConnection(connectionString)
-                Dim sc As New SqlCommand("select givenname + ' ' + sn as EmployeeName,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
+                Dim sc As New SqlCommand("select sn + ' ' + givenname as EmployeeName,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
                 SqlConnection.Open()
 
                 Dim reader As SqlDataReader = sc.ExecuteReader()
@@ -225,12 +241,13 @@ Public Class Expense
                 Session("EmployeeName") = reader.GetString(0)
                 Session("Email") = reader.GetString(1)
                 reader.Close()
+                SqlConnection.Close()
 
                 'Insert Defaults here
                 CType(frmExpense.FindControl("EmployeeNameTextBox"), TextBox).Text = Session("EmployeeName")
                 CType(frmExpense.FindControl("EmployeeEmailTextBox"), TextBox).Text = Session("Email")
                 CType(frmExpense.FindControl("AdvanceAmountTextBox"), TextBox).Text = 0
-                CType(frmExpense.FindControl("ExpenseDateTextbox"), TextBox).Text = today()
+                CType(frmExpense.FindControl("ExpenseDateTextbox"), TextBox).Text = Today()
             ElseIf frmExpense.CurrentMode = FormViewMode.Edit Then
                 Dim dt As New DataTable
                 Dim connectionString As String
@@ -278,6 +295,7 @@ Public Class Expense
             reader.Read()
             findCategory = reader.GetString(0)
             reader.Close()
+            SqlConnection.Close()
         Catch ex As Exception
             Return ""
         End Try
@@ -296,6 +314,7 @@ Public Class Expense
             reader.Read()
             findProvince = reader.GetString(0)
             reader.Close()
+            SqlConnection.Close()
         Catch ex As Exception
             Return ""
         End Try
@@ -313,30 +332,34 @@ Public Class Expense
             reader.Read()
             findType = reader.GetString(0)
             reader.Close()
+            SqlConnection.Close()
         Catch ex As Exception
             Return ""
         End Try
     End Function
 
     Protected Sub sdsForm_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
-        try
+        Try
             Dim ID As Integer = e.Command.Parameters("@ID").Value
             Session("ID") = ID
-        catch ex as exception
-        end try
+        Catch ex As Exception
+        End Try
     End Sub
 
     Protected Sub gvExpenseReports_SelectedIndexChanged(sender As Object, e As EventArgs)
-        frmExpense.ChangeMode(FormViewMode.Edit)        
+
+        frmExpense.ChangeMode(FormViewMode.Edit)
+
+
     End Sub
 
     Protected Sub gvExpenseDetails_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
         Dim dt As DataTable
-        dt = CType(viewstate("datatable"),DataTable)
+        dt = CType(viewstate("datatable"), DataTable)
         dt.Rows(e.rowindex).Delete()
         viewstate("datatable") = dt
-        ctype(sender,gridview).datasource = dt
-        ctype(sender,gridview).databind
+        CType(sender, gridview).datasource = dt
+        CType(sender, gridview).databind()
     End Sub
 
     Protected Sub frmExpense_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
@@ -351,9 +374,9 @@ Public Class Expense
             destinationConnection.Open()
             Try
 
-                dim sqlcommand as new sqlcommand("Delete from tblExpenseDetails where expenseReportid = " & dt.rows(0)("ExpenseReportID"))
+                Dim sqlcommand As New SqlCommand("Delete from tblExpenseDetails where expenseReportid = " & CType(Me.frmExpense.FindControl("ExpenseReportIDLabel"), Label).Text)
                 sqlcommand.connection = destinationConnection
-                sqlcommand.executenonquery
+                sqlcommand.executenonquery()
                 Using bulkCopy As SqlBulkCopy = _
                   New SqlBulkCopy(destinationConnection)
                     bulkCopy.DestinationTableName = _
@@ -369,6 +392,7 @@ Public Class Expense
 
 
             End Try
+            destinationConnection.Close()
         End Using
         gvExpenseReports.DataBind()
     End Sub
@@ -394,55 +418,34 @@ Public Class Expense
             CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("ExpenseItemAmountTextBox"), Textbox).text = _
             CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("KmTextBox"), Textbox).text * _
             CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("Km_RateTextBox"), TextBox).text
-        catch ex as exception
-        end try
+        Catch ex As exception
+        End Try
     End Sub
 
     Protected Sub ddlExpenseTypes_SelectedIndexChanged(sender As Object, e As EventArgs)
-        if CType(sender,DropDownList).selecteditem.text <> "Kilometers" then
-        'Remove KM and KM rate if not kilometers
+        If CType(sender, DropDownList).selecteditem.text <> "Kilometers" Then
+            'Remove KM and KM rate if not kilometers
             CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("panKM"), Panel).Visible = False
         Else
             CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("panKM"), Panel).Visible = True
-        end if
-    End Sub
-
-    Protected Sub btnCloseReport_Click(sender As Object, e As EventArgs)
-        reportModalPopup.hide
+        End If
     End Sub
 
     Protected Sub gvExpenseReports_RowCommand(sender As Object, e As GridViewCommandEventArgs)
         Try
-            Dim Parameter = New Parameter()
             If e.CommandName = "ShowReport" Then
-                rvExpenseReport.ProcessingMode = ProcessingMode.Local
-                rvExpenseReport.LocalReport.ReportPath = "Expense\ExpenseReport.rdlc"
-                'Dim ExpenseReportDatatable As 
-                'Dim ExpenseReportAdapter As ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter = New ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter
-                'ExpenseReportDatatable = ExpenseReportAdapter.GetData()
-                'Dim dt As DataTable = ExpenseReportDatatable.CopyToDataTable
-                'Dim ds As ReportDataSource = New ReportDataSource("ExpenseReport", ExpenseReportDatatable.CopyToDataTable)
-                'rvExpenseReport.LocalReport.DataSources.Clear()
-                'rvExpenseReport.LocalReport.DataSources.Add(ds)
-                Dim dsExpenseReport = New ReportDataSource()
-                Dim p1 As New ReportParameter("ExpenseReportID", Convert.ToInt32(e.CommandArgument))
-                rvExpenseReport.LocalReport.SetParameters(p1)
-                dsExpenseReport.Name = "ExpenseReport"
-                dsExpenseReport.Value = "ExpenseReport"
-                'rvExpenseReport.LocalReport.DataSources.Clear()
-                'rvExpenseReport.LocalReport.DataSources.Add(New ReportDataSource("ExpenseReport", dsExpenseReport))
-                rvExpenseReport.DataBind()
-                rvExpenseReport.LocalReport.Refresh()
-                reportModalPopup.Show()
+                Response.Redirect("http://lcl-sql2k5-s/reportserver?%2fExpenseReports%2fExpenseReport&ExpenseReportID=" & e.CommandArgument & "&rs%3aParameterLanguage=en-US")
             End If
         Catch ex As Exception
             Debug.Print(ex.ToString)
         End Try
     End Sub
 
-    Protected Sub dsExpenseReport_Selecting(sender As Object, e As ObjectDataSourceSelectingEventArgs)
-        e.InputParameters("ExpenseReportID") = 13
+    Protected Sub gvExpenseReports_SelectedIndexChanging(sender As Object, e As GridViewSelectEventArgs)
+        Dim row As GridViewRow = gvExpenseReports.Rows(e.NewSelectedIndex)
+        If row.Cells(9).Text <> "&nbsp;" Then
+            e.Cancel = true
+            Page.ClientScript.RegisterStartupScript(Me.GetType(), "PopupScript", "alert('Can not modify a expense report scheduled to be paid or already paid');", True)
+        end if
     End Sub
-
-
 End Class

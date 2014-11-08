@@ -18,6 +18,21 @@ Public Class BuildingManager
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
         'Todo: Fill in assign to username and email
         Try
+
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=Building;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
+
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\Building Requests\" & CType(frmInsert.FindControl("RequestIDLabel1"), Label).Text & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblBuildingRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where RequestID = " & CType(frmInsert.FindControl("RequestIDLabel1"), Label).Text, SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
                                  "Additional Info: " & CType(frmInsert.FindControl("AdditionalInfoTextBox"), TextBox).Text & vbCrLf & _
@@ -26,12 +41,12 @@ Public Class BuildingManager
                                  "Corrective Action: " & CType(frmInsert.FindControl("CorrectiveActionTextbox"), TextBox).Text & vbCrLf & _
                                  "Assigned To: " & CType(frmInsert.FindControl("ddlAssignments"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Please go to this address: http://lcl-sql2k5-s:81/Building/BuildingManager.aspx to see it!"
-            Dim mm As New MailMessage("Concierge@Laurentide.com", "Concierge@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "Updated building request issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+            Dim mm As New MailMessage("Concierge@Laurentide.com", "Concierge@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "Updated building request ID:" & CType(frmInsert.FindControl("RequestIDLabel1"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             Dim assignedaddress As New MailAddress(CType(frmInsert.FindControl("AssignToEmailTextbox"), TextBox).Text)
             mm.CC.Add(mailaddress)
             mm.CC.Add(assignedaddress)
-            Dim smtp As New SmtpClient("lcl-exc")
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
 

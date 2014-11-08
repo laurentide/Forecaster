@@ -122,6 +122,15 @@ Partial Public Class Admin
     Protected WithEvents sdsInstrumentAE As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
+    '''sdsVADAE control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsVADAE As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
     '''sdsCSR control.
     '''</summary>
     '''<remarks>

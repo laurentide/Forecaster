@@ -102,6 +102,13 @@
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar sign" Type="double" MinimumValue="0" MaximumValue="1000000" ControlToValidate="TotalPriceTextBox" ValidationGroup="Update" />
                     </td>
                 </tr>
+                <tr><td>Attachment</td>
+                    <td>
+                        <%--<asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/>  --%>
+                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
+                    </td>
+                </tr>
 <%--                <tr>
                     <td>Approval Type:
                     </td>

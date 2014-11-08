@@ -26,7 +26,7 @@ Public Class PurchaseAdmin
 
         'Dim mm As New MailMessage("ddnguyen@laurentide.com", CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Order Entered (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
         ''mm.CC.Add("support@laurentide.com")
-        'Dim smtp As New SmtpClient("lcl-exc")
+        'Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
         'smtp.Send(mm)
         'Refresh Gridview
         Dim connectionString As String

@@ -6,9 +6,16 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Purchase Request</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmInsert" ondatabound="frmInsert_DataBound" runat="server" DataSourceID="sdsInsert" DefaultMode="Insert" DataKeyNames="PurchaseRequestID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
+    <asp:FormView ID="frmInsert" OnDataBound="frmInsert_DataBound" runat="server" DataSourceID="sdsInsert" DefaultMode="Insert" DataKeyNames="PurchaseRequestID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
         <EditItemTemplate>
             <table>
+                <tr>
+                    <td>ID:
+                    </td>
+                    <td>
+                        <asp:Label ID="IDLabel" runat="server" Text='<%# Bind("PurchaseRequestID") %>' />
+                    </td>
+                </tr>
                 <tr>
                     <td>Requester Name:
                     </td>
@@ -211,14 +218,22 @@
                     </td>
                 </tr>
                 --%>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
-                            &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
-                        </td>
+                <tr>
+                    <td>Attachment</td>
+                    <td>
+                        <asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true" /><br />
+                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /><br />
+                        Path:<asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
+                        &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+                    </td>
 
-                    </tr>
+                </tr>
             </table>
         </EditItemTemplate>
         <InsertItemTemplate>
@@ -355,7 +370,7 @@
                     </td>
                 </tr>--%>
 
- <%--               <tr>
+                <%--               <tr>
                     <td>Purpose:
                     </td>
                     <td>
@@ -364,7 +379,7 @@
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ForeColor="Red" ValidationGroup="Insert" ErrorMessage="Select the purpose of your purchase" ControlToValidate="ApprovalDropDown" />
                         <%--<asp:TextBox ID="ApprovalTypeTextBox" runat="server" Text='<%# Bind("ApprovalType") %>' />--%>
-                   <%-- </td>
+                <%-- </td>
                 </tr>--%>
                 <%--                <tr>
 
@@ -374,7 +389,7 @@
                         <asp:TextBox ID="CustomerTextBox" runat="server" Text='<%# Bind("Customer") %>' />
                     </td>
                 </tr>--%>
-  <%--              <tr>
+                <%--              <tr>
                     <td>Project Code (project):
                     </td>
                     <td>
@@ -396,7 +411,7 @@
                     </td>
                 </tr>
                 <tr>--%>
-                    <%--
+                <%--
                     <td>LCL Purchase Order:
                     </td>
                     <td>
@@ -424,13 +439,22 @@
                         <asp:TextBox ID="DateOrderEntryTextBox" runat="server" Text='<%# Bind("DateOrderEntry") %>' />
                     </td>
                 </tr>--%>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
-                            <%--&nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
+                <tr>
+                    <td>Attachment</td>
+                    <td>
+                        <asp:FileUpload ID="fuDialog" runat="server" /> <br />
+                        <%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("Path")%>' Text='<%# Eval("Path") %>' ></asp:Hyperlink>--%>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
+                        <%--&nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
                         </td>
-                    </tr>
+                </tr>
             </table>
         </InsertItemTemplate>
     </asp:FormView>
@@ -484,7 +508,7 @@
         <SortedDescendingCellStyle BackColor="#FFFDF8" />
         <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
     </asp:GridView>
-    <asp:SqlDataSource ID="sdsInsert" runat="server"
+    <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="SELECT * FROM [tblPurchaseRequests] where purchaserequestid=@ID" InsertCommand="INSERT INTO [PurchaseRequest].[dbo].[tblPurchaseRequests]
            ([RequesterName]
@@ -535,7 +559,8 @@
            ,@ITReview
            ,@Visible
            ,@StatusID
-           ,@Link)"
+           ,@Link);
+        select @ID = @@IDENTITY"
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
                    SET [RequesterName] = @RequesterName
                       ,[RequesterUsername] = @RequesterUsername
@@ -588,6 +613,7 @@
             <asp:Parameter Name="ITReview" DefaultValue="false" />
             <asp:Parameter Name="Visible" DefaultValue="true" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
+            <asp:Parameter Name="ID"  Direction="Output" Type="Int32" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="RequesterName" />

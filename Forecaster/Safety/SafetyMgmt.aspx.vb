@@ -21,11 +21,19 @@ Public Class SafetyMgmt
         'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
         Dim connectionString As String
         connectionString = "Server=lcl-sql2k5-s;Database=Safety;Trusted_Connection=true"
-
         Dim SqlConnection As New SqlConnection(connectionString)
-        Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
         SqlConnection.Open()
 
+        Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\Safety Cases\" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & "\"
+        System.IO.Directory.CreateDirectory(savePath)
+
+        If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+            CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+            Dim updatecommand As New SqlCommand("update tblSafetyCases set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where SafetyCaseID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, SqlConnection)
+            updatecommand.ExecuteNonQuery()
+        End If
+
+        Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
         Dim reader As SqlDataReader = sc.ExecuteReader()
         reader.Read()
         Dim managerEmail As String = reader.GetString(0)
@@ -45,8 +53,8 @@ Public Class SafetyMgmt
         Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
         mm.CC.Add(managerEmail)
         mm.CC.Add(mailaddress)
-        Dim smtp As New SmtpClient("lcl-exc")
-        'smtp.Send(mm)
+        Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+        smtp.Send(mm)
         System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         'update gridview
         Me.gvSafetyCases.DataBind()
@@ -78,5 +86,12 @@ Public Class SafetyMgmt
         Catch ex As Exception
             Debug.Print(ex.ToString)
         End Try
+    End Sub
+    Protected Sub btnFilter_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Protected Sub btnClear_Click(sender As Object, e As EventArgs)
+        lbStatus.ClearSelection()
     End Sub
 End Class

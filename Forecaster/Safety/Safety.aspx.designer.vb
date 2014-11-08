@@ -102,4 +102,40 @@ Partial Public Class Safety
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsSaLTMembers As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsProvinces control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsProvinces As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsLesions control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsLesions As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsTreatments control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsTreatments As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsDepartments control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsDepartments As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

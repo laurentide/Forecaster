@@ -39,7 +39,7 @@
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
     DataSourceID="SqlDataSource1" CellPadding="4" ForeColor="#333333" 
     AllowPaging="True" PageSize="50" AllowSorting="True" 
-    Font-Size="8pt">
+    Font-Size="7pt">
 <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
 <Columns>
 <asp:BoundField DataField="Cust #" HeaderText="Cust #" 
@@ -57,12 +57,20 @@
 <asp:BoundField DataField="Valve AE Ext" HeaderText="Valve AE Ext" SortExpression="Valve AE Ext" />
 <asp:BoundField DataField="InstrumentAE" HeaderText="InstrumentAE" SortExpression="InstrumentAE" />
 <asp:BoundField DataField="Instrument AE Ext" HeaderText="Instrument AE Ext" SortExpression="Instrument AE Ext" />
+
+<asp:BoundField DataField="VAD AE" HeaderText="VAD AE" SortExpression="VAD AE" />
+<asp:BoundField DataField="VAD AE Ext" HeaderText="VAD AE Ext" SortExpression="VAD AE Ext" />
+
 <asp:BoundField DataField="CSR" HeaderText="CSR" SortExpression="CSR" />
 <asp:BoundField DataField="CSR Ext" HeaderText="CSR Ext" SortExpression="CSR Ext" />
 <asp:BoundField DataField="Valve AE Backup" HeaderText="Valve AE Backup" SortExpression="Valve AE Backup" />
 <asp:BoundField DataField="Valve AE Bak Ext" HeaderText="Valve AE Bak Ext" SortExpression="Valve AE Bak Ext" />
 <asp:BoundField DataField="Instrument AE Backup" HeaderText="Instrument AE Backup" SortExpression="Instrument AE Backup" />
 <asp:BoundField DataField="Instr Bak Ext" HeaderText="Instr Bak Ext" SortExpression="Instr Bak Ext" />
+
+<asp:BoundField DataField="VAD AE Backup" HeaderText="VAD AE Backup" SortExpression="VAD AE Backup" />
+<asp:BoundField DataField="VAD AE Bak Ext" HeaderText="VAD AE Bak Ext" SortExpression="VAD AE Bak Ext" />
+
 <asp:BoundField DataField="CSR Backup" HeaderText="CSR Backup" SortExpression="CSR Backup" />
 <asp:BoundField DataField="CSR Bak Ext" HeaderText="CSR Bak Ext" SortExpression="CSR Bak Ext" />
 </Columns>
@@ -92,12 +100,20 @@
 	   case when ex.ValveAE is null         then A.Extension        else g.Extension        end as [Valve AE Ext],
 	   case when ex.InstrumentAE is null    then os.InstrumentAE    else ex.InstrumentAE    end as [InstrumentAE], 
 	   case when ex.InstrumentAE is null    then B.Extension        else h.Extension        end as [Instrument AE Ext],
+
+       case when ex.VADAE is null           then os.VADAE           else ex.VADAE           end as [VAD AE], 
+	   case when ex.VADAE is null           then m.Extension        else o.Extension        end as [VAD AE Ext],
+
 	   case when ex.CSR is null             then os.CSR             else ex.CSR             end as [CSR],
 	   case when ex.CSR is null             then E.Extension        else k.Extension        end as [CSR Ext],
 	   case when ex.ValveAEBAK is null      then os.ValveAEBAK      else ex.ValveAEBAK      end as [Valve AE Backup], 
 	   case when ex.ValveAEBAK is null      then C.Extension        else i.Extension        end as [Valve AE Bak Ext],
 	   case when ex.InstrumentAEBAK is null then os.InstrumentAEBAK else ex.InstrumentAEBAK end as [Instrument AE Backup], 
 	   case when ex.InstrumentAEBAK is null then D.Extension        else J.Extension        end as [Instr Bak Ext],
+
+       case when ex.VADAEBAK is null        then os.VADAEBAK        else ex.VADAEBAK        end as [VAD AE Backup], 
+	   case when ex.VADAEBAK is null        then n.Extension        else p.Extension        end as [VAD AE Bak Ext],
+
 	   case when ex.CSRBAK is null          then os.CSRBAK          else ex.CSRBAK          end as [CSR Backup],
 	   case when ex.CSRBAK is null          then F.Extension        else l.Extension        end as [CSR Bak Ext]
 from Nomis.S1018252.NOMDBF95.CUSPHY01 inner join
@@ -113,7 +129,11 @@ from Nomis.S1018252.NOMDBF95.CUSPHY01 inner join
 		left join Receptionist_web.dbo.tblemployee e
 		on os.CSR = e.employeename
 		left join Receptionist_web.dbo.tblemployee f
-		on os.CSRBAK = f.employeename)
+		on os.CSRBAK = f.employeename
+        left join Receptionist_web.dbo.tblemployee m
+		on os.VADAE = m.employeename
+        left join Receptionist_web.dbo.tblemployee n
+		on os.VADAEBAK = n.employeename)
 	on cardcd = osno 
 	left join
 		(Receptionist_web.dbo.tblExceptions ex
@@ -128,7 +148,11 @@ from Nomis.S1018252.NOMDBF95.CUSPHY01 inner join
 		left join Receptionist_web.dbo.tblemployee k
 		on ex.CSR = k.employeename
 		left join Receptionist_web.dbo.tblemployee l
-		on ex.CSRBAK = l.employeename)
+		on ex.CSRBAK = l.employeename
+    	left join Receptionist_web.dbo.tblemployee o
+		on ex.VADAE = o.employeename
+		left join Receptionist_web.dbo.tblemployee p
+		on ex.VADAEBAK = p.employeename)
 	on cazxnb = customerno
 where cafesu = 'A'
 and cacstx like '%' + upper(@Search) +'%'

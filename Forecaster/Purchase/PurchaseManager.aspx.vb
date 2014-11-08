@@ -44,7 +44,7 @@ Public Class PurchaseManager
                 mm.Body = body & vbCrLf & "Message to IT: " & CType(frmView.FindControl("ITMessageTextBox"), TextBox).Text
                 mm.CC.Add("support@laurentide.com")
             End If
-            Dim smtp As New SmtpClient("lcl-exc")
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
 
             '---------------------------------------------------------------
@@ -92,7 +92,7 @@ Public Class PurchaseManager
                                  "Cost not to exceed: " & CType(frmView.FindControl("TotalPriceTextBox"), TextBox).Text & vbCrLf & _
                                  "Your request was denied! Please see with your manager for more information."
             Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request Denied (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
-            Dim smtp As New SmtpClient("lcl-exc")
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         Else

@@ -32,42 +32,6 @@ Partial Public Class Expense
     Protected WithEvents frmExpense As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
-    '''reportModalPopup control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents reportModalPopup As Global.AjaxControlToolkit.ModalPopupExtender
-
-    '''<summary>
-    '''panReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents panReport As Global.System.Web.UI.WebControls.Panel
-
-    '''<summary>
-    '''btnCloseReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents btnCloseReport As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
-    '''rvExpenseReport control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents rvExpenseReport As Global.Microsoft.Reporting.WebForms.ReportViewer
-
-    '''<summary>
     '''gvExpenseReports control.
     '''</summary>
     '''<remarks>
@@ -165,13 +129,4 @@ Partial Public Class Expense
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsManagers As Global.System.Web.UI.WebControls.SqlDataSource
-
-    '''<summary>
-    '''FakeTarget control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents FakeTarget As Global.System.Web.UI.WebControls.Button
 End Class

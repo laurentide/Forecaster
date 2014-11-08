@@ -7,6 +7,7 @@ Public Class Admin
 
     Private Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
+        Session("LastModified") = Now()
         '    Dim trigger As New AsyncPostBackTrigger
         '    trigger.ControlID = "ddlProductCodeFamily"
         '    trigger.EventName = "SelectedIndexChanged"

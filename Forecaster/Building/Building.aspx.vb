@@ -39,21 +39,36 @@ Public Class Building
     End Sub
 
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
-       Try
+        Try
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=Building;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
+
+            'Copy the files
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\Building Requests\" & Session("ID") & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblBuildingRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where RequestID = " & Session("ID"), SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
                                  "Additional Info: " & CType(frmInsert.FindControl("AdditionalInfoTextBox"), TextBox).Text & vbCrLf & _
                                  "Office: " & CType(frmInsert.FindControl("OfficeDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Please go to this address: http://lcl-sql2k5-s:81/Building/BuildingManager.aspx to see it!"
-            Dim mm As New MailMessage("Concierge@Laurentide.com", "Concierge@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "New Building request issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+            Dim mm As New MailMessage("Concierge@Laurentide.com", "Concierge@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "New Building request: " & Session("ID") & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             mm.CC.Add(mailaddress)
-            Dim smtp As New SmtpClient("lcl-exc")
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
 
             'update gridview
-             Me.gvBuidingRequests.DataBind
+            Me.gvBuidingRequests.DataBind()
         Catch ex As Exception
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alerterror();", True)
         End Try
@@ -61,15 +76,29 @@ Public Class Building
 
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
         Try
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=Building;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
+
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\Building Requests\" & CType(frmInsert.FindControl("RequestIDLabel1"), Label).Text & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblBuildingRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where RequestID = " & CType(frmInsert.FindControl("RequestIDLabel1"), Label).Text, SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
                                  "Additional Info: " & CType(frmInsert.FindControl("AdditionalInfoTextBox"), TextBox).Text & vbCrLf & _
                                  "Office: " & CType(frmInsert.FindControl("OfficeDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Please go to this address: http://lcl-sql2k5-s:81/Building/BuildingManager.aspx to see it!"
-            Dim mm As New MailMessage("Concierge@Laurentide.com", "Concierge@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "Updated building request issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+            Dim mm As New MailMessage("Concierge@Laurentide.com", "Concierge@laurentide.com", IIf(CType(frmInsert.FindControl("UrgentCheckbox"), CheckBox).Checked, "Urgent: ", "") & "Updated building request: " & CType(frmInsert.FindControl("RequestIDLabel1"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             mm.CC.Add(mailaddress)
-            Dim smtp As New SmtpClient("lcl-exc")
+            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
 
@@ -81,6 +110,7 @@ Public Class Building
     End Sub
 
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
-
+        Dim ID As Integer = e.Command.Parameters("@ID").Value
+        Session("ID") = ID
     End Sub
 End Class

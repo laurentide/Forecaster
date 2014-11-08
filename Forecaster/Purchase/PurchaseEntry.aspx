@@ -98,6 +98,13 @@
                         <asp:Label ID="TotalPriceTextBox" runat="server" ReadOnly="True" Text='<%# Bind("TotalPrice", "{0:c2}")%>' />
                     </td>
                 </tr>
+                <tr><td>Attachment</td>
+                    <td>
+                        <%--<asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/>  --%>
+                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
+                    </td>
+                </tr>
 <%--                <tr>
                     <td>Approval Type:
                     </td>

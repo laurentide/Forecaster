@@ -155,11 +155,13 @@
     <Content Include="Content\images\expand_blue.jpg" />
     <Content Include="Content\images\LAURENTIDE_logo.jpg" />
     <Content Include="Credit\AROutstanding.aspx" />
+    <Content Include="Expense\ExpenseAdmin.aspx" />
     <Content Include="Expense\Expense.aspx" />
     <Content Include="Forecast\Forecasts.aspx" />
+    <Content Include="Funnel\Funnel_PSS.aspx" />
     <Content Include="Funnel\Funnel.aspx" />
-    <Content Include="Funnel\Funnel_Old.aspx" />
     <Content Include="Forecast\ProductCode.aspx" />
+    <Content Include="Error.html" />
     <Content Include="Inventory\InventorySearch.aspx" />
     <Content Include="Managers\Mg_FunnelManagement.aspx" />
     <Content Include="Managers\Mg_Segments.aspx" />
@@ -171,9 +173,12 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Managers\Mg_ProductCode.aspx" />
     <Content Include="Admin\PurchaseAdmin.aspx" />
+    <Content Include="NER\NERManager.aspx" />
+    <Content Include="NER\NER.aspx" />
     <Content Include="Purchase\Purchase.aspx" />
     <Content Include="Purchase\PurchaseEntry.aspx" />
     <Content Include="Purchase\PurchaseManager.aspx" />
+    <Content Include="Quotebuilder\Customer Management.aspx" />
     <Content Include="Receptionist\Admin.aspx" />
     <Content Include="Receptionist\Receptionist.aspx" />
     <Content Include="Safety\SafetyMgmt.aspx" />
@@ -248,6 +253,13 @@
       <DependentUpon>AROutstanding.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Expense\ExpenseAdmin.aspx.designer.vb">
+      <DependentUpon>ExpenseAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Expense\ExpenseAdmin.aspx.vb">
+      <DependentUpon>ExpenseAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Expense\Expense.aspx.designer.vb">
       <DependentUpon>Expense.aspx</DependentUpon>
     </Compile>
@@ -269,18 +281,18 @@
       <DependentUpon>Forecasts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Funnel\Funnel_PSS.aspx.designer.vb">
+      <DependentUpon>Funnel_PSS.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Funnel\Funnel_PSS.aspx.vb">
+      <DependentUpon>Funnel_PSS.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Funnel\Funnel.aspx.designer.vb">
       <DependentUpon>Funnel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Funnel\Funnel.aspx.vb">
       <DependentUpon>Funnel.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Funnel\Funnel_Old.aspx.designer.vb">
-      <DependentUpon>Funnel_Old.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Funnel\Funnel_Old.aspx.vb">
-      <DependentUpon>Funnel_Old.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Forecast\ProductCode.aspx.designer.vb">
@@ -436,6 +448,20 @@
       <DependentUpon>PurchaseAdmin.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="NER\NERManager.aspx.designer.vb">
+      <DependentUpon>NERManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NER\NERManager.aspx.vb">
+      <DependentUpon>NERManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NER\NER.aspx.designer.vb">
+      <DependentUpon>NER.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NER\NER.aspx.vb">
+      <DependentUpon>NER.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Purchase\Purchase.aspx.designer.vb">
       <DependentUpon>Purchase.aspx</DependentUpon>
     </Compile>
@@ -456,6 +482,13 @@
     <Compile Include="Purchase\PurchaseManager.aspx.vb">
       <DependentUpon>PurchaseManager.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Quotebuilder\Customer Management.aspx.designer.vb">
+      <DependentUpon>Customer Management.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Quotebuilder\Customer Management.aspx.vb">
+      <DependentUpon>Customer Management.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Receptionist\Admin.aspx.designer.vb">
       <DependentUpon>Admin.aspx</DependentUpon>
@@ -513,17 +546,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
-    <Content Include="App_Code\ExpenseReport.xsc">
-      <DependentUpon>ExpenseReport.xsd</DependentUpon>
-    </Content>
-    <None Include="App_Code\ExpenseReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ExpenseReport.Designer.vb</LastGenOutput>
-    </None>
-    <Content Include="App_Code\ExpenseReport.xss">
-      <DependentUpon>ExpenseReport.xsd</DependentUpon>
-    </Content>
     <None Include="App_Data\getForecastByUser.xsc">
       <DependentUpon>getForecastByUser.xsd</DependentUpon>
     </None>
@@ -655,6 +677,7 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="bin\ar\" />
     <Folder Include="bin\cs\" />
     <Folder Include="bin\de\" />

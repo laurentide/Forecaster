@@ -8,10 +8,6 @@
     <h2>
         Welcome to The New Forecast Tool 
     </h2>
-    <p>
-        This program has been designed to help you forecast your sales for the new 
-        fiscal year 2011.
-    </p>
 
 <%--    <h2>
         Summary of your sales results

@@ -6,6 +6,17 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>Safety Mgmt page</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <table>
+        <tr>
+            <td>Statuses:</td>
+            <td><asp:ListBox ID="lbStatus" SelectionMode="Multiple" runat="server" Height="150" DataSourceID="sdsStatus" DataTextField="Status" DataValueField="StatusID" /></td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Button ID="btnFilter" runat="server" OnClick="btnFilter_Click" text="Filter" /></td>
+            <td><asp:Button ID="btnClear" runat="server" OnClick="btnClear_Click" text="Clear" /></td>
+        </tr>
+    </table>
     <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" DefaultMode="Edit" DataKeyNames="SafetyCaseID" OnItemUpdated="frmInsert_ItemUpdated">
         <EditItemTemplate>
             <table>
@@ -55,10 +66,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Date de l'incident/Incident date:
+                    </td>
+                    <td>
+                        <asp:TextBox ID="IncidentDateTextbox" runat="server" Text='<%# Bind("IncidentDate")%>' Width="250" />
+                        <asp:Image runat="server" ID="Image1" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                        <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="IncidentDateTextbox" PopupButtonID="Calendar_scheduleDR" />
+                        <asp:MaskedEditExtender ID="MaskedEditExtender1" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="IncidentDateTextbox" PromptCharacter="_" />
+                        <asp:MaskedEditValidator ID="Maskededitvalidator1" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="IncidentDateTextbox" ControlExtender="meeDateRequired" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Incident date required" ControlToValidate="IncidentDateTextbox" />
+                    </td>
+                </tr>
+                <tr>
                     <td>Issued Date:
                     </td>
                     <td>
-                        <asp:Label ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate")%>'/>
+                        <asp:Label ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate")%>' />
                     </td>
                 </tr>
                 <tr>
@@ -103,6 +126,17 @@
                         <asp:TextBox ID="VictimTextBox" runat="server" Text='<%# Bind("Victim") %>' Width="250" />
                     </td>
                 </tr>
+               <tr>
+                    <td>Departement de la victime/Victim's department:
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="Department" SelectedValue='<%# Bind("DepartmentID")%>'>
+                            <asp:ListItem Text="(Select the department of the victim)" Value="" />
+                        </asp:DropDownList>
+                        <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the department of the victim" ControlToValidate="DepartmentDropDown" />--%>
+                        <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
+                    </td>
+                </tr>
                 <%--                <tr>
                     <td>Notify as well (Emails seperated by semi-colon):
                     </td>
@@ -111,30 +145,98 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Circonstances/Circumstances:
+                    <td>Province de l'incident/Province where the incident occured
                     </td>
+                    <td>
+                        <asp:DropDownList ID="ProvinceDropDown" runat="server" DataSourceID="sdsProvinces" AppendDataBoundItems="true" DataValueField="ProvinceID" DataTextField="Province" SelectedValue='<%# Bind("ProvinceID")%>'>
+                            <asp:ListItem Text="(Select a province)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select a province" ControlToValidate="ProvinceDropDown" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Circonstances/Circumstances (Lieu de l'évènement/Description exacte/À quelle heure/Conséquences)|(Where/Description/Exact time/Consequences):</td>
+                </tr>
+                <tr>
+                    <td></td>
                     <td>
                         <asp:TextBox ID="CircumstancesTextBox" runat="server" Text='<%# Bind("Circumstances")%>' TextMode="MultiLine" Rows="5" Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Circumstances required" ControlToValidate="CircumstancesTextBox" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Circumstances required" ControlToValidate="CircumstancesTextBox" />
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold;">Urgent?</td>
+                    <td style="font-weight: bold;">Urgent?</td>
                     <td>
-                        <asp:Checkbox ID="UrgentCheckbox" runat="server" Checked='<%# Bind("Urgent")%>' />
+                        <asp:CheckBox ID="UrgentCheckbox" runat="server" Checked='<%# Bind("Urgent")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Attachment</td>
+                    <td>
+                        <asp:FileUpload ID="fuDialog" runat="server" />
+                        <br />
+                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /><br />
+                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h2>Impact</h2>
+                        <h2>Dommage sur la personne/Damage on a person</h2>
                     </td>
                 </tr>
                 <tr>
+                    <td>Blessure et traitement requis/Wound and required treatment
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="TreatmentDropDown" runat="server" DataSourceID="sdsTreatments" AppendDataBoundItems="true" DataValueField="TreatmentID" DataTextField="Treatment" SelectedValue='<%# Bind("TreatmentID")%>'>
+                            <asp:ListItem Text="(Select a injury/treatment)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select a injury/treatment" ControlToValidate="TreatmentDropDown" />
+                    </td>
+                </tr>
+                <%--<tr>
                     <td>Problème de Santé ou blessure/Health Care or Injury:
                     </td>
                     <td>
                         <asp:CheckBox ID="HealthCareCheckbox" runat="server" Checked='<%# Bind("HealthCarechk")%>' />
-                        <%--<asp:TextBox ID="HealthCareTextbox" runat="server" Text='<%# Bind("HealthCare")%>' />--%>
+                        Endroit de la blessure/Location of the injury:<asp:TextBox ID="LesionLocationTextbox" runat="server" Text='<%# Bind("Lesionlocation")%>' />
+
+                    </td>
+                </tr>--%>
+                <tr>
+                    <td>Endroit de la blessure/Location of the injury:</td>
+                    <td>
+                        <asp:DropDownList ID="LesionDropdown" runat="server" DataSourceID="sdsLesions" AppendDataBoundItems="true" DataValueField="LesionID" DataTextField="Lesion" SelectedValue='<%# Bind("LesionID")%>'>
+                            <asp:ListItem Text="(Select the location of your lesion )" Value="" />
+                        </asp:DropDownList>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nombre de journées manqués/Number of missed Days:
+                    </td>
+                    <td>
+                        <asp:TextBox ID="MissedDaysTextbox" runat="server" Text='<%# Bind("MissedDays")%>' />
+                    </td>
+                </tr>
+                <%--                <tr>
+                    <td>Temps perdu/Lost time:
+                    </td>
+                    <td>
+                        <asp:CheckBox ID="LostTimeCheckbox" runat="server" Checked='<%# Bind("LostTimechk")%>' />
+                    </td>
+                </tr>--%>
+                <tr>
+                    <td>Assignation temporaire/Temporary Assignment
+                    </td>
+                    <td>
+                        <asp:CheckBox ID="TemporaryAssignmentCheckbox" runat="server" Checked='<%# Bind("TemporaryAssignment")%>' />
+                        <%--<asp:TextBox ID="FirstAidsTextbox" runat="server" Text='<%# Bind("FirstAids")%>' />--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>Autre Dommage/Other damage</h2>
                     </td>
                 </tr>
                 <tr>
@@ -157,25 +259,25 @@
                     </td>
                     <td>
                         <asp:CheckBox ID="EnvironmentalReleaseCheckbox" runat="server" Checked='<%# Bind("EnvironmentalReleasechk")%>' />
-                        <%--<asp:TextBox ID="EnvironmentalReleaseTextbox" runat="server" Text='<%# Bind("EnvironmentalRelease")%>' />--%>
                     </td>
                 </tr>
-                <tr>
-                    <td>Temps perdu/Lost time:
-                    </td>
-                    <td>
-                        <asp:CheckBox ID="LostTimeCheckbox" runat="server" Checked='<%# Bind("LostTimechk")%>' />
-                        <%--<asp:TextBox ID="LostTimeTextbox" runat="server" Text='<%# Bind("LostTime")%>' />--%>
-                    </td>
-                </tr>
-                <tr>
+
+                <%--                <tr>
                     <td>Premiers Soins/First Aid:
                     </td>
                     <td>
                         <asp:CheckBox ID="FirstAidsCheckbox" runat="server" Checked='<%# Bind("FirstAidschk")%>' />
-                        <%--<asp:TextBox ID="FirstAidsTextbox" runat="server" Text='<%# Bind("FirstAids")%>' />--%>
+                        
                     </td>
                 </tr>
+                <tr>
+                    <td>Visite au doctor/Doctor Visit
+                    </td>
+                    <td>
+                        <asp:CheckBox ID="DoctorVisitCheckBox" runat="server" Checked='<%# Bind("DoctorVisit")%>' />
+                        
+                    </td>
+                </tr>--%>
                 <tr>
                     <td colspan="2">Selon vous, quels sont les causes de cet incident ou potentiel incident (erreur humaine, problème d'équipement, mauvais matériels, facteurs environnementales, erreur dans un procédé)?<br />
                         In your opinion, what are the root causes of this incident or potential incident (Human error, equipement defect, wrong materials, environment factors, error(s) in a process)?</td>
@@ -187,6 +289,7 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Suspected root cause required" ControlToValidate="SuspectedRootCauseTextbox" />
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         <h5>Safety committee team</h5>
@@ -207,10 +310,10 @@
                     <td>Assign to (Safety committee member):
                     </td>
                     <td>
-                        <asp:DropDownList ID="SaLtMemberDropDown" runat="server" DataSourceID="sdsSaLTMembers"   AppendDataBoundItems="true" DataValueField="SaLTMemberID" DataTextField="SaLTMember" SelectedValue='<%# Bind("SaLTMemberID")%>' OnDataBinding="SaLtMemberDropDown_DataBinding">
+                        <asp:DropDownList ID="SaLtMemberDropDown" runat="server" DataSourceID="sdsSaLTMembers" AppendDataBoundItems="true" DataValueField="SaLTMemberID" DataTextField="SaLTMember" SelectedValue='<%# Bind("SaLTMemberID")%>' OnDataBinding="SaLtMemberDropDown_DataBinding">
                             <asp:ListItem Text="(Select the SaLT member)" Value="" />
                         </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the SaLT member" ControlToValidate="SaLtMemberDropDown"  />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the SaLT member" ControlToValidate="SaLtMemberDropDown" />
                         <%--<asp:TextBox ID="StatusIDTextBox" runat="server" Text='<%# Bind("StatusID") %>' /> --%>
                     </td>
                 </tr>
@@ -229,14 +332,14 @@
                     </td>
                 </tr>
                 <div id="RootCause" runat="server" visible="false">
-                <tr>
-                    <td>1. Why did the accident or incident occur?
-                    </td>
-                    <td>
-                        <asp:TextBox ID="RootCauseReasonTextbox" runat="server" Text='<%# Bind("RootCauseReason")%>' TextMode="MultiLine" Rows="5" Width="500" />
-                    </td>
-                </tr>
-                
+                    <tr>
+                        <td>1. Why did the accident or incident occur?
+                        </td>
+                        <td>
+                            <asp:TextBox ID="RootCauseReasonTextbox" runat="server" Text='<%# Bind("RootCauseReason")%>' TextMode="MultiLine" Rows="5" Width="500" />
+                        </td>
+                    </tr>
+
                     <tr>
                         <td>2. Why did number 1 occur?
                         </td>
@@ -245,14 +348,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>3. Why did number 1 occur?
+                        <td>3. Why did number 2 occur?
                         </td>
                         <td>
                             <asp:TextBox ID="RootCauseReason3Textbox" runat="server" Text='<%# Bind("RootCauseReason3")%>' TextMode="MultiLine" Rows="5" Width="500" />
                         </td>
                     </tr>
                     <tr>
-                        <td>4. Why did number 1 occur?
+                        <td>4. Why did number 3 occur?
                         </td>
                         <td>
                             <asp:TextBox ID="RootCauseReason4Textbox" runat="server" Text='<%# Bind("RootCauseReason4")%>' TextMode="MultiLine" Rows="5" Width="500" />
@@ -298,19 +401,19 @@
                         <asp:TextBox ID="FollowUpCommentsTextBox" runat="server" Text='<%# Bind("FollowUpComments") %>' TextMode="MultiLine" Rows="5" Width="500" />
                     </td>
                 </tr>
-                <tr>
+<%--                <tr>
                     <td>SALT Review?
                     </td>
                     <td>
-                        <asp:CheckBox ID="SALTReviewCheckbox" runat="server"  Checked='<%# Bind("SALTReview")%>' />
+                        <asp:CheckBox ID="SALTReviewCheckbox" runat="server" Checked='<%# Bind("SALTReview")%>' />
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <tr>
                         <td></td>
                         <td>
                             <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
-             <%--               &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
+                            <%--               &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
                         </td>
 
                     </tr>
@@ -353,7 +456,7 @@
             <asp:BoundField DataField="FollowupDate" HeaderText="Followup Date" SortExpression="FollowupDate" />
             <asp:BoundField DataField="RevisedDate" HeaderText="Revised Date" SortExpression="RevisedDate" />
             <asp:BoundField DataField="Urgent" HeaderText="Urgent" SortExpression="Urgent" />
-            <asp:BoundField DataField="SALTReview" HeaderText="SALT Review" SortExpression="SALTReview" />
+            <%--<asp:BoundField DataField="SALTReview" HeaderText="SALT Review" SortExpression="SALTReview" />--%>
             <%--<asp:BoundField DataField="People" HeaderText="People" SortExpression="People" />
             <asp:BoundField DataField="Equipment" HeaderText="Equipment" SortExpression="Equipment" />
             <asp:BoundField DataField="Materials" HeaderText="Materials" SortExpression="Materials" />
@@ -396,9 +499,6 @@
                           ,[PropertyDamageChk] = @PropertyDamageChk
                           ,[FireChk] = @FireChk
                           ,[EnvironmentalReleaseChk] = @EnvironmentalReleaseChk
-                          ,[LostTimeChk] = @LostTimeChk
-                          ,[HealthCareChk] = @HealthCareChk
-                          ,[FirstAidsChk] = @FirstAidsChk
                           ,[ManagerID] = @ManagerID
                           ,[SuspectedRootCause] = @SuspectedRootCause
                           ,[AdditionalImpact] = @AdditionalImpact
@@ -413,7 +513,13 @@
                           ,[RootCauseReason5] = @RootCauseReason5
                           ,[RootCauseConclusion] = @RootCauseConclusion
                           ,[Urgent] = @Urgent
-                          ,[SALTReview] = @SALTReview
+                          ,[MissedDays] = @MissedDays
+                          ,[TemporaryAssignment] = @TemporaryAssignment
+                          ,[LesionLocation] = @LesionLocation
+                          ,[ProvinceID] = @ProvinceID
+                          ,[TreatmentID] = @TreatmentID
+                          ,[LesionID] = @LesionID
+                          ,[DepartmentID] = @DepartmentID
                      WHERE SafetyCaseID = @SafetyCaseID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvSafetyCases" PropertyName="SelectedValue" />
@@ -422,7 +528,7 @@
             <asp:Parameter Name="SafetyCauseID" />
             <asp:Parameter Name="SafetyTypeID" />
             <asp:Parameter Name="Description" />
-<%--            <asp:Parameter Name="IssuedBy" />
+            <%--            <asp:Parameter Name="IssuedBy" />
             <asp:Parameter Name="IssuedByEmail" />--%>
             <asp:Parameter Name="ManagerID" />
             <%--<asp:Parameter Name="IssuedByUsername" />--%>
@@ -453,7 +559,13 @@
             <asp:Parameter Name="RootCauseReason4" />
             <asp:Parameter Name="RootCauseReason5" />
             <asp:Parameter Name="Urgent" />
-            <asp:Parameter Name="SALTReview" />
+            <asp:Parameter Name="MissedDays" />
+            <asp:Parameter Name="TemporaryAssignment" />
+            <asp:Parameter Name="LesionLocation" />
+            <asp:Parameter Name="ProvinceID" />
+            <asp:Parameter Name="TreatmentID" />
+            <asp:Parameter Name="LesionID" />
+            <asp:Parameter Name="DepartmentID" />
         </UpdateParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsSafetyCasesGrid" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
@@ -471,10 +583,14 @@
                             on tblSafetyCases.ManagerID = tblManagers.ManagerID
                        where visible = 1 and 
                    (@Username in (select SaLTUsername from tblSALTMembers) or @Username = ManagerDomainUser) 
+                               and safetycaseid in (select safetycaseid from tblsafetycases where 
+							(tblsafetycases.statusid in  (SELECT item from fnSplit(@lbStatus,',')) or 
+							@lbStatus = '0'))
                         order by issueddate desc"
         DeleteCommand="Update tblSafetyCases set visible = 0 where SafetyCaseID = @SafetyCaseID">
         <SelectParameters>
             <asp:SessionParameter SessionField="Username" Name="Username" />
+            <asp:ControlParameter Name="lbStatus" ControlID="lbStatus" PropertyName="SelectedValue" DefaultValue="0" />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsSafetyCauses" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
@@ -487,4 +603,12 @@
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsSaLTMembers" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
         SelectCommand="select * from tblSaLtMembers where active = 1 order by SaLtMember"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsProvinces" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
+        SelectCommand="select * from tblSafetyProvinces order by Province"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsLesions" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
+        SelectCommand="select * from tblSafetyLesions order by Lesion"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsTreatments" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
+        SelectCommand="select * from tblSafetyTreatments order by Treatment"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsDepartments" runat="server" ConnectionString="<%$ ConnectionStrings:SafetyConnectionString %>"
+        SelectCommand="select * from tblSafetyDepartments order by Department"></asp:SqlDataSource>
 </asp:Content>
