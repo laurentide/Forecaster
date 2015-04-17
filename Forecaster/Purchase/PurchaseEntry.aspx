@@ -10,7 +10,7 @@
         <EditItemTemplate>
             <table border="1px">
                 <tr>
-                    <td>ID:<br />(Put this number in your PO blind notes) </td>
+                    <td>ID:<br /><span style="font-weight:bold;">(Put this number in your PO blind notes)</span> </td>
                     <td><asp:Label ID="PurchaseRequestIDLabel1" runat="server" ReadOnly="True" Text='<%# Eval("PurchaseRequestID") %>' /></td>
                 </tr>
                 <tr>
@@ -45,14 +45,14 @@
                     <td>Date Requested:
                     </td>
                     <td>
-                        <asp:Label ID="DateRequestedTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequested") %>' />
+                        <asp:Label ID="DateRequestedTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequested", "{0:MM/dd/yyyy}")%>' />
                     </td>
                 </tr>
                 <tr>
                     <td>Date Required:
                     </td>
                     <td>
-                        <asp:Label ID="DateRequiredTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequired") %>' />
+                        <asp:Label ID="DateRequiredTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequired", "{0:MM/dd/yyyy}")%>' />
                     </td>
                 </tr>
                 <tr>
@@ -63,7 +63,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Description:<br />(Put a copy of this in your PO blind notes)
+                    <td>Description:<br /><span style="font-weight:bold;">(Put a copy of this in your PO blind notes)</span>
                     </td>
                     <td>
                         <asp:TextBox ID="DescriptionTextBox" runat="server" ReadOnly="True" TextMode="MultiLine" Rows="5" Width="500" Text='<%# Bind("Description") %>' BorderStyle="None"  BorderWidth="0"  />
@@ -92,17 +92,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Total Price:  <br /> (Total of your POs should not exceed this price)
+                    <td>Total Price:  <br /> <span style="font-weight:bold;">(Total of your POs should not exceed this price)</span>
                     </td>
                     <td>
                         <asp:Label ID="TotalPriceTextBox" runat="server" ReadOnly="True" Text='<%# Bind("TotalPrice", "{0:c2}")%>' />
-                    </td>
-                </tr>
-                <tr><td>Attachment</td>
-                    <td>
-                        <%--<asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/>  --%>
-                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
-                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
                     </td>
                 </tr>
 <%--                <tr>
@@ -143,6 +136,16 @@
                         <asp:Label ID="ChangeOrderNoticeTextBox" runat="server" Text='<%# Bind("ChangeOrderNotice") %>' />
                     </td>
                 </tr>--%>
+                <tr>
+                    <td>FileName:</td>
+                    <td>
+                        <asp:Label ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /></td>
+                </tr>
+                <tr>
+                    <td>Path:
+                    </td>
+                    <td><asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" /></td>
+                </tr
                 <tr>
                     <td>Approver:
                     </td>
@@ -187,7 +190,7 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Buyer:
+                    <td>Order entry person:
                     </td>
                     <td>
                         <%--<asp:DropDownList ID="BuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BuyerID")%>'>
@@ -198,7 +201,18 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>LCL Purchase Orders (seperated by commas):
+                    <td>Backup Order entry person:
+                    </td>
+                    <td>
+                        <%--<asp:DropDownList ID="BuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BuyerID")%>'>
+                            <asp:ListItem Text="(Select your buyer)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your buyer" ControlToValidate="BuyerDropDown" />--%>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("BackupBuyerName")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#E6E6E6">LCL Purchase Orders (seperated by commas):
                     </td>
                     <td>
                         <asp:TextBox ID="LCLPurchaseOrderTextBox" TextMode="MultiLine" Height="50" Width="500" runat="server" Text='<%# Bind("LCLPurchaseOrder") %>' />
@@ -251,7 +265,8 @@
             <asp:BoundField DataField="ProjectCode" HeaderText="ProjectCode" SortExpression="ProjectCode" />
             <asp:BoundField DataField="ChangeOrderNotice" HeaderText="Change Order Notice" SortExpression="ChangeOrderNotice" />--%>
             <asp:BoundField DataField="LCLPurchaseOrder" HeaderText="LCL PO" SortExpression="LCLPurchaseOrder" />
-            <%--<asp:BoundField DataField="buyername" HeaderText="Buyer" SortExpression="buyername" />--%>
+            <asp:BoundField DataField="buyername" HeaderText="OE" SortExpression="buyername" />
+            <asp:BoundField DataField="backupbuyername" HeaderText="BackupOE" SortExpression="backupbuyername" />
             <%--<asp:BoundField DataField="OrderEntryByID" HeaderText="OrderEntryByID" SortExpression="OrderEntryByID" />--%>
             <asp:BoundField DataField="DateOrderEntry" HeaderText="Date Order Entry" SortExpression="DateOrderEntry" />
         </Columns>
@@ -268,7 +283,7 @@
     </asp:GridView>
     <asp:SqlDataSource ID="sdsUpdate" runat="server"
         ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="SELECT *,ManagerName, Status
+        SelectCommand="SELECT *,ManagerName, Status,tblbuyers.buyername,backupbuyers.buyername as backupbuyername
                        FROM  [tblPurchaseRequests] a 
                        INNER JOIN [tblDepartments] c
                        ON a.DepartmentID = c.DepartmentID 
@@ -276,6 +291,8 @@
                        ON a.ManagerID = tblManagers.ManagerID
                        LEFT JOIN tblbuyers 
                        on a.buyerid = tblbuyers.buyerid
+                       LEFT JOIN tblbuyers as backupbuyers
+                       on a.backupbuyerid = backupbuyers.buyerid
                        LEFT JOIN Tblstatuses
                        ON a.statusid = tblstatuses.statusID
                        WHERE PurchaseRequestID = @ID"
@@ -295,7 +312,7 @@
 
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsPurchaseRequestsGrid" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName,buyername, Status
+        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName,tblbuyers.buyername, Status, backupbuyers.buyername as backupbuyername
                        FROM       tblPurchaseRequests 
                        INNER JOIN tblDepartments 
                        ON tblPurchaseRequests.DepartmentID = tblDepartments.DepartmentID 
@@ -303,13 +320,16 @@
                        ON tblPurchaseRequests.ManagerID = tblManagers.ManagerID
                        LEFT JOIN tblbuyers 
                        on tblPurchaseRequests.buyerid = tblbuyers.buyerid
+                       LEFT JOIN tblbuyers as backupbuyers
+                       on tblPurchaseRequests.backupbuyerid = backupbuyers.buyerid
                        LEFT JOIN Tblstatuses
                        ON tblpurchaseRequests.statusid = tblstatuses.statusID
-                       where (BuyerDomainUser=@Username or (BuyerDomainUser = 'LCLMTL\ServiceDisp' and 
-                                @Username in (select username from tblservicemembers))
-                              )                       
+                       where (tblBuyers.BuyerDomainUser=@Username 
+                          or (tblBuyers.BuyerDomainUser = 'LCLMTL\ServiceDisp' and @Username in (select username from tblservicemembers)) 
+                          or backupbuyers.BuyerDomainUser = @Username 
+                          or (backupbuyers.BuyerDomainUser = 'LCLMTL\ServiceDisp' and @Username in (select username from tblservicemembers)))                       
                        and visible = 1 
-                       and tblstatuses.statusid = 2
+                       and tblstatuses.statusid in (2,5)
                        Order by purchaserequestid desc">
         <SelectParameters>
             <asp:SessionParameter Name="Username" SessionField="Username" />

@@ -98,7 +98,7 @@
                     <td>Business Purpose:
                     </td>
                     <td>
-                        <asp:TextBox ID="BusinessPurposeTextBox" runat="server" Text='<%# Bind("BusinessPurpose") %>' TextMode="MultiLine" Rows="5" Width="500" />
+                        <asp:TextBox ID="BusinessPurposeTextBox" runat="server" Text='<%# Bind("BusinessPurpose") %>' Width="500" />
                     </td>
                 </tr>
                 <tr>
@@ -201,6 +201,14 @@
                                                     <asp:TextBox Text='<%# Bind("Tip") %>' runat="server" ID="TipTextBox" /></td>
                                             </tr>
                                         </asp:Panel>
+										<asp:Panel ID="panGuests" runat="server" Visible="false">
+                                            <tr>
+                                                <td>List of guests <br />(specify name, company and remarks):
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Guests")%>' runat="server" ID="GuestsTextbox" textmode="MultiLine" Rows="5" width="500"/></td>
+                                            </tr>
+                                        </asp:Panel>
                                         <asp:Panel ID="panLodging" runat="server">
                                             <tr>
                                                 <td>Lodging Taxes:
@@ -278,7 +286,9 @@
                 <tr>
                     <td style="font-weight:bold;">Expenses List</td>
                     <td>
-                        <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting" >
+                        <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" RowStyle-CssClass="grid_RowStyle"
+                            CellPadding="4" ForeColor="#333333"
+                            Font-Size="10px" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting" OnSelectedIndexChanged="gvExpenseDetails_SelectedIndexChanged"  >
                             <Columns>
                                 <%--<asp:BoundField DataField="ExpenseDetailID" HeaderText="ExpenseDetailID" InsertVisible="False" ReadOnly="True" SortExpression="ExpenseDetailID" />--%>
                                 <%--<asp:BoundField DataField="ExpenseReportID" HeaderText="ExpenseReportID" SortExpression="ExpenseReportID" />--%>
@@ -287,6 +297,7 @@
                                         <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this expense?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:TemplateField HeaderText="Category" SortExpression="CategoryID">
                                     <ItemTemplate>
                                         <asp:Label ID="CategoryLabel" runat="server" Text='<%# FindCategory(Eval("CategoryID")) %>' />
@@ -331,7 +342,7 @@
                                 No expense entered yet!
                             </EmptyDataTemplate>
                             <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" Font-Size="8px" />
-                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
+                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
                             <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
                             <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
                             <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
@@ -384,7 +395,7 @@
             <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
             <asp:TemplateField ShowHeader="false" >
                 <ItemTemplate>
-                    <asp:LinkButton ID="btnAddToCard" runat="server" CausesValidation="false" Text="Show Report" ForeColor="Black"
+                    <asp:LinkButton ID="btnAddToCard" runat="server" CausesValidation="false" Text="Show & Print Report" ForeColor="Black"
                         CommandName="ShowReport" CommandArgument='<%# Eval("ExpenseReportID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
@@ -541,7 +552,7 @@
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsPayDates" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"
-        SelectCommand="select * from tblPayDates order by paiddateid"></asp:SqlDataSource>
+        SelectCommand="select * from tblPayDates where paiddate >= getdate() order by paiddateid"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsExchangeRate" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"
     SelectCommand="select * from tblDefaultExchangeRate" UpdateCommand="update tbldefaultexchangerate set exchangerate = @ExchangeRate">
         <UpdateParameters>

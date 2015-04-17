@@ -8,6 +8,11 @@ Public Class NER
         Session("Username") = Me.User.Identity.Name.ToString
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
+
+        If Not User.IsInRole("LCLMTL\LCL_manager_folder_access") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" Then
+            'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
+            Response.Redirect("~/NER/AccessDenied.aspx")
+        End If
     End Sub
 
     Protected Sub gvNewEmployeeRequests_OnSelectedIndexChanged(sender As Object, e As EventArgs)
@@ -33,11 +38,22 @@ Public Class NER
             'CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
             'CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
             'End If
+
+
+            If frmInsert.CurrentMode = FormViewMode.Edit Then
+                If CType(frmInsert.FindControl("chkReplacement"), CheckBox).Checked = True Then
+                    CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = True
+                    CType(frmInsert.FindControl("lblReplacement"), Label).Visible = True
+                Else
+                    CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = False
+                    CType(frmInsert.FindControl("lblReplacement"), Label).Visible = False
+                End If
+                UpdatePanel1.Update()
+            End If
         Catch ex As Exception
 
         End Try
     End Sub
-
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
         Try
             Dim connectionString As String
@@ -52,7 +68,7 @@ Public Class NER
             reader.Close()
 
             'Copy the files
-            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\NewEmployeeRequest\Ner" & Session("ID") & "\"
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & Session("ID") & "\"
             System.IO.Directory.CreateDirectory(savePath)
 
             If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
@@ -70,8 +86,8 @@ Public Class NER
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
-            'smtp.Send(mm)
-            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
+            smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
 
             'update gridview
             Me.gvNewEmployeeRequests.DataBind()
@@ -93,7 +109,7 @@ Public Class NER
             Dim managerEmail As String = reader.GetString(0)
             reader.Close()
 
-            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\NewEmployeeRequest\Ner" & Session("ID") & "\"
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & "\"
             System.IO.Directory.CreateDirectory(savePath)
 
             If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
@@ -111,8 +127,8 @@ Public Class NER
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
-            'smtp.Send(mm)
-            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
+            smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
 
             'update gridview
             Me.gvNewEmployeeRequests.DataBind()
@@ -124,5 +140,15 @@ Public Class NER
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
         Dim ID As Integer = e.Command.Parameters("@ID").Value
         Session("ID") = ID
+    End Sub
+
+    Protected Sub chkReplacement_CheckedChanged(sender As Object, e As EventArgs)
+        If CType(frmInsert.FindControl("chkReplacement"), CheckBox).Checked = True Then
+            CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = True
+            CType(frmInsert.FindControl("lblReplacement"), Label).Visible = True
+        Else
+            CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = False
+            CType(frmInsert.FindControl("lblReplacement"), Label).Visible = False
+        End If
     End Sub
 End Class

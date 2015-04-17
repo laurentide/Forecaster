@@ -7,6 +7,7 @@ Public Class Purchase
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
         Session("DateRequested") = Now()
+
     End Sub
 
     ' Date: 2/18/2013
@@ -16,7 +17,7 @@ Public Class Purchase
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
         Dim connectionString As String
         connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
-        Dim SqlConnection As New SqlConnection(connectionString)        
+        Dim SqlConnection As New SqlConnection(connectionString)
         SqlConnection.Open()
 
         'Copy the files
@@ -25,16 +26,14 @@ Public Class Purchase
 
         If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
             CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
-            dim updatecommand as new sqlcommand("update tblPurchaseRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savepath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where PurchaseRequestID = " & session("ID"),sqlconnection)
-            updatecommand.executenonquery
+            Dim updatecommand As New SqlCommand("update tblPurchaseRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where PurchaseRequestID = " & Session("ID"), SqlConnection)
+            updatecommand.ExecuteNonQuery()
         End If
-
-
-        'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
         Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
         Dim reader As SqlDataReader = sc.ExecuteReader()
         reader.Read()
         Dim managerEmail As String = reader.GetString(0)
+        reader.Close()
 
         Dim body As String = "Requested By: " & CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text & vbCrLf & _
                              "Item: " & CType(frmInsert.FindControl("ItemNameTextbox"), TextBox).Text & vbCrLf & _
@@ -44,23 +43,19 @@ Public Class Purchase
                              "Cost not to exceed: " & CType(frmInsert.FindControl("TotalPriceTextBox"), TextBox).Text & vbCrLf & _
                              "Date Required: " & CType(frmInsert.FindControl("DateRequiredTextBox"), TextBox).Text & vbCrLf & _
                              "Please go to this address: http://lcl-sql2k5-s:81/Purchase/PurchaseManager.aspx to approve it!"
-        Dim mm As New MailMessage(CType(frmInsert.FindControl("RequesterEmailTextbox"), TextBox).Text, managerEmail, "New Purchase Request #" & Session("ID") & " by " & CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text, body)
+        Dim mm As New MailMessage(CType(frmInsert.FindControl("RequesterEmailTextbox"), TextBox).Text, managerEmail, "New Purchase Request by " & CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text, body)
         Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("RequesterEmailTextBox"), TextBox).Text)
         mm.CC.Add(mailaddress)
-        try
-            mm.attachments.add(new attachment(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName))
-        catch ex as exception
-        end try
-        Dim smtp As New SmtpClient("lcl-exc")
+        Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
         smtp.Send(mm)
         System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         'update gridview
         gvPurchaseRequests.DataBind()
     End Sub
-        
-    
+    '
+    'When selecting in gridview, put formview to edit
+    '
     Protected Sub gvPurchaseRequests_SelectedIndexChanged1(sender As Object, e As EventArgs)
-        'When selecting in gridview, put formview to edit
         frmInsert.ChangeMode(FormViewMode.Edit)
     End Sub
 
@@ -68,7 +63,7 @@ Public Class Purchase
         'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
         Dim connectionString As String
         connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
-        Dim SqlConnection As New SqlConnection(connectionString)        
+        Dim SqlConnection As New SqlConnection(connectionString)
         SqlConnection.Open()
 
         'Copy the files
@@ -78,7 +73,7 @@ Public Class Purchase
         If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
             CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
             Dim updatecommand As New SqlCommand("update tblPurchaseRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where PurchaseRequestID = " & CType(frmInsert.FindControl("IDLabel"), Label).Text, SqlConnection)
-            updatecommand.executenonquery
+            updatecommand.ExecuteNonQuery()
         End If
 
         Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
@@ -98,16 +93,16 @@ Public Class Purchase
         Dim mm As New MailMessage(CType(frmInsert.FindControl("RequesterEmailTextbox"), TextBox).Text, managerEmail, "Purchase Request updated by " & CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text, body)
         Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("RequesterEmailTextBox"), TextBox).Text)
         mm.CC.Add(mailaddress)
-        try
-            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) 
-                mm.attachments.add(new attachment(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName))
-            else
-                mm.attachments.add(new attachment(CType(frmInsert.FindControl("PathTextbox"), Hyperlink).text))
-            end if
-        catch ex as exception
-        end try
-        Dim smtp As New SmtpClient("lcl-exc")
-        'smtp.Send(mm)
+        Try
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                mm.Attachments.Add(New Attachment(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName))
+            Else
+                mm.Attachments.Add(New Attachment(CType(frmInsert.FindControl("PathTextbox"), HyperLink).Text))
+            End If
+        Catch ex As Exception
+        End Try
+        Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+        smtp.Send(mm)
         'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         'update gridview
@@ -147,7 +142,6 @@ Public Class Purchase
 
         End Try
     End Sub
-
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
         Dim ID As Integer = e.Command.Parameters("@ID").Value
         Session("ID") = ID

@@ -46,14 +46,14 @@
                     <td>Date Requested:
                     </td>
                     <td>
-                        <asp:Label ID="DateRequestedTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequested") %>' />
+                        <asp:Label ID="DateRequestedTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequested", "{0:MM/dd/yyyy}")%>' />
                     </td>
                 </tr>
                 <tr>
                     <td>Date Required:
                     </td>
                     <td>
-                        <asp:Label ID="DateRequiredTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequired") %>' />
+                        <asp:Label ID="DateRequiredTextBox" runat="server" ReadOnly="True" Text='<%# Bind("DateRequired", "{0:MM/dd/yyyy}")%>' />
                     </td>
                 </tr>
                 <tr>
@@ -64,7 +64,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Description:
+                    <td style="background-color:#E6E6E6">Description:
                     </td>
                     <td>
                         <asp:TextBox ID="DescriptionTextBox" runat="server"  TextMode="MultiLine" Rows="5" Width="500" Text='<%# Bind("Description") %>' />
@@ -78,14 +78,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Reason:
+                    <td style="background-color:#E6E6E6">Reason:
                     </td>
                     <td>
                         <asp:TextBox ID="ReasonTextBox" runat="server"  TextMode="MultiLine" Rows="5" Width="500" Text='<%# Bind("Reason") %>'  />
                     </td>
                 </tr>
                 <tr>
-                    <td>Quantity:
+                    <td style="background-color:#E6E6E6">Quantity:
                     </td>
                     <td>
                         <asp:Textbox ID="QuantityTextBox" runat="server" Text='<%# Bind("Quantity") %>' />
@@ -94,19 +94,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Total Price:
+                    <td style="background-color:#E6E6E6">Total Price:
                     </td>
                     <td>
                         <asp:Textbox ID="TotalPriceTextBox" runat="server"  Text='<%# Bind("TotalPrice")%>' />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ForeColor="Red" ValidationGroup="Update" ErrorMessage="Price required" ControlToValidate="TotalPriceTextBox" />
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar sign" Type="double" MinimumValue="0" MaximumValue="1000000" ControlToValidate="TotalPriceTextBox" ValidationGroup="Update" />
-                    </td>
-                </tr>
-                <tr><td>Attachment</td>
-                    <td>
-                        <%--<asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/>  --%>
-                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
-                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
                     </td>
                 </tr>
 <%--                <tr>
@@ -148,12 +141,27 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Approver:
+                    <td>FileName:</td>
+                    <td>
+                        <asp:Label ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /></td>
+                </tr>
+                <tr>
+                    <td>Path:
+                    </td>
+                    <td><asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" /></td>
+                </tr>
+                <td style="background-color:#E6E6E6">Approver:
                     </td>
                     <td>
-                        <asp:Label ID="ManagerIDTextBox"  runat="server" Text='<%# Bind("ManagerName") %>' />
-                    </td>
+                        <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
+                            <asp:ListItem Text="(Select the approver)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your approver" ControlToValidate="ManagerDropDown" />
+                        <asp:CustomValidator ID="ManagerDropDownCustomValidator" Forecolor="Red" validationgroup="Update" runat="server" ErrorMessage="The approver chosen has not a limit high enough to approve this request, please choose another approver" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDownCustomValidator_ServerValidate"></asp:CustomValidator>
+                        <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
+                    </td>                
                 </tr>
+                <%--<tr><td>Approval limit sheet:</td><td><a href="../Content/Excel/Authorizationlist.xls" target="_blank" title="Excel Test">Limit Sheet</a></td></tr>--%>
                 <tr>
                     <td>Approval Date:
                     </td>
@@ -169,23 +177,47 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Status:
+                    <td style="background-color:#E6E6E6">Status:
                     </td>
                     <td>
                         <asp:DropDownList ID="StatusDropDown" runat="server" DataSourceID="sdsStatuses" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" SelectedValue='<%# Bind("StatusID")%>'>
                         </asp:DropDownList>
-                        <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Please approve or deny this request" Type="Integer" MinimumValue="2" MaximumValue="3" ControlToValidate="StatusDropDown" ValidationGroup="Update" />
+                        <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Please approve or deny this request" Type="Integer" MinimumValue="2" MaximumValue="4" ControlToValidate="StatusDropDown" ValidationGroup="Update" />
                     </td>
                 </tr>
                 <tr>
+                    <td style="background-color:#E6E6E6">Purchase Category:
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="PurchaseCategoryDropDown" runat="server" DataSourceID="sdsPurchaseCategories"  AppendDataBoundItems="true" DataValueField="PurchaseCategoryID" DataTextField="DescString" SelectedValue='<%# Bind("PurchaseCategoryID")%>' >
+                            <asp:ListItem Text="(Select the purchasing category)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select a category" ControlToValidate="PurchaseCategoryDropDown" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#E6E6E6">BOLT Sponsor:
+                    </td>
+                    <td>
+                        <asp:Label ID="BoltSponsorLabel" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#E6E6E6">Purchasing Agent:
+                    </td>
+                    <td>
+                        <asp:Label ID="PurchaseAgentLabel" runat="server" />
+                    </td>
+                </tr>
+<%--                <tr>
                     <td>Is this an IT item? <br /><span style="font-weight:bold">(If yes, the buyer needs to be Johanne Legault)</span> 
                     </td>
                     <td>
                         <asp:CheckBox ID="ITReviewCheckBox" runat="server" Checked='<%# Bind("ITReview")%>' OnCheckedChanged="ITReviewCheckBox_CheckedChanged" AutoPostBack="true" />
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
-                    <td>Message to IT
+                    <td style="background-color:#E6E6E6">Message to purchase agent
                     </td>
                     <td>
                         <asp:TextBox ID="ITMessageTextBox" runat="server" TextMode="MultiLine" Height="100" Width="500" Text='<%# Bind("ITMessage")%>' />
@@ -200,13 +232,23 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Buyer:
+                    <td style="background-color:#E6E6E6">Order Entry:
                     </td>
                     <td>
                         <asp:DropDownList ID="BuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BuyerID")%>'>
-                            <asp:ListItem Text="(Select your buyer)" Value="" />
+                            <asp:ListItem Text="(Select your order entry person)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your buyer" ControlToValidate="BuyerDropDown" />
+                        <%--<asp:TextBox ID="BuyerIDTextBox" runat="server" Text='<%# Bind("BuyerID") %>' />--%>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#E6E6E6">Backup Order Entry:
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="BackupBuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BackupBuyerID")%>'>
+                            <asp:ListItem Text="(Select your backup order entry person)" Value="" />
+                        </asp:DropDownList>
                         <%--<asp:TextBox ID="BuyerIDTextBox" runat="server" Text='<%# Bind("BuyerID") %>' />--%>
                     </td>
                 </tr>
@@ -258,13 +300,16 @@
             <%--<asp:CheckBoxField DataField="Approved" HeaderText="Approved" SortExpression="Approved" />--%>
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
             <%--<asp:BoundField DataField="Approval" HeaderText="Approval Type" SortExpression="Approval" />--%>
-            <asp:CheckBoxField DataField="ITReview" HeaderText="IT Review" SortExpression="ITReview" />
+            <%--<asp:CheckBoxField DataField="ITReview" HeaderText="IT Review" SortExpression="ITReview" />--%>
 <%--        <asp:BoundField DataField="PMInitials" HeaderText="PMInitials" SortExpression="PMInitials" />
             <asp:BoundField DataField="Customer" HeaderText="Customer" SortExpression="Customer" />
             <asp:BoundField DataField="ProjectCode" HeaderText="ProjectCode" SortExpression="ProjectCode" />
             <asp:BoundField DataField="ChangeOrderNotice" HeaderText="Change Order Notice" SortExpression="ChangeOrderNotice" />--%>
             <%--<asp:BoundField DataField="LCLPurchaseOrder" HeaderText="LCLPurchaseOrder" SortExpression="LCLPurchaseOrder" />--%>
-            <asp:BoundField DataField="BuyerName" HeaderText="Buyer" SortExpression="BuyerName" />
+            <asp:BoundField DataField="PurchaseCategory" HeaderText="Category" SortExpression="PurchaseCategory" />
+            <asp:BoundField DataField="PurchasingAgent" HeaderText="Purchasing Agent" SortExpression="PurchasingAgent" />
+            <asp:BoundField DataField="BuyerName" HeaderText="OE" SortExpression="BuyerName" />
+            <asp:BoundField DataField="BackupBuyerName" HeaderText="BckOE" SortExpression="BackupBuyerName" />
             <%--<asp:BoundField DataField="OrderEntryByID" HeaderText="OrderEntryByID" SortExpression="OrderEntryByID" />
             <asp:BoundField DataField="DateOrderEntry" HeaderText="DateOrderEntry" SortExpression="DateOrderEntry" />--%>
         </Columns>
@@ -290,14 +335,16 @@
         InsertCommand=""
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
                        SET [ManagerApprovalDate] = @ManagerApprovalDate
-                          ,[ITReview] = @ITReview
                           ,[ITMessage]=@ITMessage
                           ,[BuyerID] = @BuyerID
+                          ,[BackupBuyerID] = @BackupBuyerID
                           ,[Description] = @Description
+                          ,[PurchaseCategoryID] = @PurchaseCategoryID
                           ,[Reason] = @Reason
                           ,[Quantity] = @Quantity
                           ,[TotalPrice] = @TotalPrice
                           ,[StatusID] = @StatusID
+                          ,[ManagerID] = @ManagerID
                      WHERE PurchaseRequestID = @PurchaseRequestID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvPurchaseRequests" PropertyName="SelectedValue" />
@@ -312,11 +359,13 @@
             <asp:Parameter Name="Quantity" />
             <asp:Parameter Name="TotalPrice" />
             <asp:Parameter Name="StatusID" />
+            <asp:Parameter Name="ManagerID" />
+            <asp:Parameter Name="PurchaseCategoryID" />
         </UpdateParameters>
 
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsPurchaseRequestsGrid" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName,BuyerName, Status
+        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName,tblbuyers.BuyerName, Status, tblpurchasingagents.purchasingAgent,tblpurchaseCategories.PurchaseCategory,backupbuyer.buyername as backupbuyername
                        FROM       tblPurchaseRequests 
                        INNER JOIN tblDepartments 
                        ON tblPurchaseRequests.DepartmentID = tblDepartments.DepartmentID 
@@ -324,8 +373,14 @@
                        ON tblPurchaseRequests.ManagerID = tblManagers.ManagerID
                        LEFT JOIN tblbuyers 
                        on tblPurchaseRequests.buyerid = tblbuyers.buyerid
+                       LEFT JOIN tblbuyers backupbuyer
+                       on tblPurchaseRequests.backupbuyerid = backupbuyer.buyerid
                        LEFT JOIN tblStatuses
                        on tblPurchaseRequests.statusid = tblstatuses.statusid
+                       LEFT JOIN tblPurchaseCategories
+                       on tblpurchaserequests.PurchaseCategoryID = tblpurchasecategories.PurchaseCategoryID
+                       LEFT JOIN tblPurchasingAgents
+                       on tblpurchasecategories.PurchasingAgentid = tblPurchasingAgents.PurchasingAgentid
                        where managerDomainUser=@Username 
                        and visible = 1 
                        Order by purchaserequestid desc">
@@ -340,7 +395,9 @@
     <asp:SqlDataSource ID="sdsApprovalTypes" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblApprovalTypes"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsBuyers" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="select * from tblBuyers order by buyername"></asp:SqlDataSource>
+        SelectCommand="select * from tblBuyers where buyerid <> 40 order by buyername"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsStatuses" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblStatuses order by StatusID"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsPurchaseCategories" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="select *,left(purchaseCategory + replicate(' ',30),30) + ' | ' + Examples as DescString from tblPurchaseCategories order by PurchaseCategory"></asp:SqlDataSource>
 </asp:Content>

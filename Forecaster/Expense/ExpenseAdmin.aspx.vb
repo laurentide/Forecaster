@@ -29,6 +29,7 @@ Public Class ExpenseAdmin
             dt.Columns.Add("Km", GetType(Double))
             dt.Columns.Add("Km_Rate", GetType(Double))
             dt.Columns.Add("DepartmentID", GetType(Integer))
+            dt.Columns.Add("Guests", GetType(String))
             ViewState("datatable") = dt
         End If
 
@@ -40,6 +41,10 @@ Public Class ExpenseAdmin
         Dim panStd As Panel
         Dim frmStdExpenseDetails As FormView
         Dim descriptionLabel As Label
+
+        'Remove row selected from the gridview to put the formview in "Add Mode"
+        CType(frmExpense.FindControl("gvExpenseDetails"), GridView).SelectedIndex = -1
+        CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("InsertButton"), Button).Text = "Add expense line"
 
         ddlExpenseTypes = CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("ddlExpenseTypes"), DropDownList)
         ddlExpenseCategories = CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList)
@@ -100,6 +105,7 @@ Public Class ExpenseAdmin
                 ddlExpenseTypes.DataBind()
                 SqlConnection.Close()
                 CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = False
+                CType(frmStdExpenseDetails.FindControl("panGuests"), Panel).Visible = False
                 CType(frmStdExpenseDetails.FindControl("panLodging"), Panel).Visible = False
                 CType(frmStdExpenseDetails.FindControl("panExtras"), Panel).Visible = False
                 CType(frmStdExpenseDetails.FindControl("panAir"), Panel).Visible = False
@@ -111,7 +117,12 @@ Public Class ExpenseAdmin
                         CType(frmStdExpenseDetails.FindControl("panLodging"), Panel).Visible = True
                     Case 11 'Meals and entertainment
                         CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = True
+                        CType(frmStdExpenseDetails.FindControl("panGuests"), Panel).Visible = True
                         descriptionLabel.Text = "Restaurant/Payee"
+                    Case 1 'Meals Employee
+                        CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = True
+                        descriptionLabel.Text = "Restaurant/Payee"
+                        CType(frmStdExpenseDetails.FindControl("panGuests"), Panel).Visible = True
                     Case 7, 16 'Subscription Membership & Telephone and Cell
                         CType(frmStdExpenseDetails.FindControl("panExtras"), Panel).Visible = True
                     Case 4 'Air Fare
@@ -162,30 +173,46 @@ Public Class ExpenseAdmin
             destinationConnection.Close()
         End Using
         gvExpenseReports.DataBind()
+        dt.Clear()
+        ViewState("datatable") = dt
     End Sub
 
     Protected Sub frmStdExpenseDetails_ItemInserting(sender As Object, e As FormViewInsertEventArgs)
 
         Dim dt As New DataTable
         dt = CType(ViewState("datatable"), DataTable)
-        Dim drow As DataRow = dt.NewRow()
+        Dim drow As DataRow
         Dim frm = CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView)
+        Dim srow As GridViewRow = CType(frmExpense.FindControl("gvExpensedetails"), GridView).SelectedRow 'Current selected row if any
+        Dim gvExpensedetails As GridView = CType(frmExpense.FindControl("gvExpensedetails"), GridView) 'The Details grid
 
-        drow("CategoryID") = CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList).SelectedValue
+        If (CType(frmExpense.FindControl("gvExpenseDetails"), GridView).SelectedIndex = -1) Then
+            'Add mode
+            drow = dt.NewRow() 'New row to add
+            drow("CategoryID") = CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList).SelectedValue
+        Else
+            'if edit mode, delete existing line but get value from the datatable beforehand for the categoryid from the datatable.
+            drow = dt.Rows(srow.RowIndex)
+            drow("CategoryID") = dt.Rows(srow.RowIndex).Item(2).ToString
+            'dt.Rows(srow.RowIndex).Delete()
+
+        End If
+
         drow("ExpenseDate") = CType(frm.FindControl("ExpenseDateTextBox2"), TextBox).Text
         drow("ExpenseTypeID") = CType(frm.FindControl("ddlExpenseTypes"), DropDownList).SelectedValue
         drow("ExpenseItemAmount") = IIf(CType(frm.FindControl("ExpenseItemAmountTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("ExpenseItemAmountTextBox"), TextBox).Text)
         drow("ExpenseItemDescription") = CType(frm.FindControl("ExpenseItemDescriptionTextBox"), TextBox).Text
         drow("ProvinceID") = CType(frm.FindControl("ProvinceDropDown"), DropDownList).SelectedValue
         drow("Currency") = CType(frm.FindControl("CurrencyDropDown"), DropDownList).SelectedValue
-        'drow("Transaction") = CType(frm.FindControl("TransactionDropDown"), DropDownList).SelectedValue
+        drow("Transaction") = ""
         drow("DepartmentID") = CType(frm.FindControl("DepartmentDropdown"), DropDownList).SelectedValue
+        drow("Guests") = CType(frm.FindControl("GuestsTextbox"), TextBox).Text
 
         'Meals and Entertainment & Hotel only
         drow("Tip") = IIf(CType(frm.FindControl("TipTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("TipTextBox"), TextBox).Text)
 
         'Hotels only
-        drow("Lodging_Taxes") = IIf(CType(frm.FindControl("Lodging_TaxesTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("TipTextBox"), TextBox).Text)
+        drow("Lodging_Taxes") = IIf(CType(frm.FindControl("Lodging_TaxesTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("Lodging_TaxesTextBox"), TextBox).Text)
 
         'Subscription Membership & Telephone and Cell
         drow("NonTaxableExtras") = IIf(CType(frm.FindControl("Non_TaxableExtrasTextBox"), TextBox).Text = "", 0, CType(frm.FindControl("Non_TaxableExtrasTextBox"), TextBox).Text)
@@ -205,10 +232,21 @@ Public Class ExpenseAdmin
         If frmExpense.CurrentMode = FormViewMode.Edit Then
             drow("ExpenseReportID") = CType(frmExpense.FindControl("ExpenseReportIDLabel"), Label).Text
         End If
-        dt.Rows.Add(drow)
+
+        If (CType(frmExpense.FindControl("gvExpenseDetails"), GridView).SelectedIndex = -1) Then
+            'Add mode
+            dt.Rows.Add(drow)
+        Else
+            'Edit Mode
+            CType(frmExpense.FindControl("gvExpenseDetails"), GridView).SelectedIndex = -1 'Remove the Selectio
+        End If
+        dt.DefaultView.Sort = "ExpenseDate asc"
         ViewState("datatable") = dt
         CType(frmExpense.FindControl("gvExpenseDetails"), GridView).DataSource = dt
         CType(frmExpense.FindControl("gvExpenseDetails"), GridView).DataBind()
+        CType(frmExpense.FindControl("panStd"), Panel).Visible = False
+        'Reset drop down
+        CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList).SelectedIndex = -1
     End Sub
 
     Protected Sub frmExpense_DataBound(sender As Object, e As EventArgs)
@@ -218,7 +256,7 @@ Public Class ExpenseAdmin
                 connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
 
                 Dim SqlConnection As New SqlConnection(connectionString)
-                Dim sc As New SqlCommand("select givenname + ' ' + sn as EmployeeName,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
+                Dim sc As New SqlCommand("select sn + ' ' + givenname as EmployeeName,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
                 SqlConnection.Open()
 
                 Dim reader As SqlDataReader = sc.ExecuteReader()
@@ -378,6 +416,8 @@ Public Class ExpenseAdmin
             destinationConnection.Close()
         End Using
         gvExpenseReports.DataBind()
+        dt.Clear()
+        ViewState("datatable") = dt
     End Sub
 
     Protected Sub frmExpense_ItemInserting(sender As Object, e As FormViewInsertEventArgs)
@@ -414,65 +454,104 @@ Public Class ExpenseAdmin
         End If
     End Sub
 
-    Protected Sub btnCloseReport_Click(sender As Object, e As EventArgs)
-        'reportModalPopup.hide
-    End Sub
-
     Protected Sub gvExpenseReports_RowCommand(sender As Object, e As GridViewCommandEventArgs)
-        Dim connectionString As String
-        Dim dtb As New DataTable
-
-        connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
         Try
-            Dim Parameter = New Parameter()
             If e.CommandName = "ShowReport" Then
                 Response.Redirect("http://lcl-sql2k5-s/reportserver?%2fExpenseReports%2fExpenseReport&ExpenseReportID=" & e.CommandArgument & "&rs%3aParameterLanguage=en-US")
-
-
-                'rvExpenseReport.ProcessingMode = ProcessingMode.Local
-                'rvExpenseReport.LocalReport.ReportPath = "Expense\ExpenseReport.rdlc"
-                'Dim ExpenseReportDatatable As DataTable
-                'Dim ExpenseReportAdapter As vwExpenseReportPrintoutTableAdapter = New ExpenseReportTableAdapters.vwExpenseReportPrintoutTableAdapter
-                'ExpenseReportDatatable = ExpenseReportAdapter.GetData()
-                'Dim dt As DataTable = ExpenseReportDatatable.CopyToDataTable
-                'Dim ds As ReportDataSource = New ReportDataSource("ExpenseReport", ExpenseReportDatatable.CopyToDataTable)
-                'rvExpenseReport.LocalReport.DataSources.Clear()
-                'rvExpenseReport.LocalReport.DataSources.Add(ds)
-
-                'Dim dsExpenseReport = New ReportDataSource()
-                'Dim p1 As New ReportParameter("ExpenseReportID", Convert.ToInt32(e.CommandArgument))
-                'rvExpenseReport.LocalReport.SetParameters(p1)
-                'dsExpenseReport.Name = "ExpenseReport"
-                'dsExpenseReport.Value = "ExpenseReport"
-                'rvExpenseReport.LocalReport.DataSources.Clear()
-                'rvExpenseReport.LocalReport.DataSources.Add(New ReportDataSource("ExpenseReport", dsExpenseReport))
-                'rvExpenseReport.DataBind()
-                'rvExpenseReport.LocalReport.Refresh()
-
-
-
-                'Dim strSql As String = "select * from vwExpenseReportPrintout where expensereportID = " & Convert.ToInt32(e.CommandArgument)
-                'Using cnn As New SqlConnection(connectionString)
-                '    cnn.Open()
-                '    Using dad As New SqlDataAdapter(strSql, cnn)
-                '        dad.Fill(dtb)
-                '    End Using
-                '    cnn.Close()
-                'End Using
-                'rvExpenseReport.LocalReport.DataSources.Clear()
-                'rvExpenseReport.LocalReport.DataSources.Add(New ReportDataSource("ExpenseReport", dtb))
-                'rvExpenseReport.DataBind()
-                'rvExpenseReport.LocalReport.Refresh()
-                'reportModalPopup.Show()
             End If
         Catch ex As Exception
             Debug.Print(ex.ToString)
         End Try
     End Sub
 
-    Protected Sub dsExpenseReport_Selecting(sender As Object, e As ObjectDataSourceSelectingEventArgs)
-        e.InputParameters("ExpenseReportID") = 13
+    Protected Sub gvExpenseDetails_SelectedIndexChanged(sender As Object, e As EventArgs)
+        'Vars
+        Dim ddlExpenseTypes As DropDownList
+        Dim ddlExpenseCategories As DropDownList
+        Dim panStd As Panel
+        Dim frmStdExpenseDetails As FormView
+        Dim descriptionLabel As Label
+
+        'Need to extract the line data, go throught the dropbox selecting, and reinput the information
+        'Put the button text to "edit"
+        CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("InsertButton"), Button).Text = "Update expense line"
+
+        'Download the current viewstate into a datatable
+        Dim dt As DataTable = New DataTable
+        dt = ViewState("datatable")
+
+        'Get the index that was clicked by the user
+        Dim dtrow As DataRow = dt.Rows(CType(frmExpense.FindControl("gvExpenseDetails"), GridView).SelectedRow.RowIndex)
+        ddlExpenseTypes = CType(CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView).FindControl("ddlExpenseTypes"), DropDownList)
+        ddlExpenseCategories = CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList)
+        panStd = CType(frmExpense.FindControl("panStd"), Panel)
+        frmStdExpenseDetails = CType(frmExpense.FindControl("frmStdExpenseDetails"), FormView)
+        descriptionLabel = CType(frmStdExpenseDetails.FindControl("descriptionLabel"), Label)
+
+
+        'Populate from datarow
+        CType(frmStdExpenseDetails.FindControl("ExpenseDateTextBox2"), TextBox).Text = dtrow("ExpenseDate")
+        CType(frmStdExpenseDetails.FindControl("ProvinceDropdown"), DropDownList).SelectedValue = dtrow("ProvinceID")
+        CType(frmStdExpenseDetails.FindControl("DepartmentDropdown"), DropDownList).SelectedValue = dtrow("DepartmentID")
+        CType(frmStdExpenseDetails.FindControl("GuestsTextbox"), TextBox).Text = dtrow("Guests")
+        CType(frmStdExpenseDetails.FindControl("TipTextBox"), TextBox).Text = Format(dtrow("Tip"), "f")
+        CType(frmStdExpenseDetails.FindControl("ExpenseItemAmountTextBox"), TextBox).Text = Format(dtrow("ExpenseItemAmount"), "f")
+        CType(frmStdExpenseDetails.FindControl("ExpenseItemDescriptionTextBox"), TextBox).Text = dtrow("ExpenseItemDescription")
+        CType(frmStdExpenseDetails.FindControl("Lodging_TaxesTextBox"), TextBox).Text = Format(dtrow("Lodging_Taxes"), "f")
+        CType(frmStdExpenseDetails.FindControl("Non_TaxableExtrasTextBox"), TextBox).Text = Format(dtrow("NonTaxableExtras"), "f")
+        CType(frmStdExpenseDetails.FindControl("AGSTTextBox"), TextBox).Text = Format(dtrow("AGST"), "f")
+        CType(frmStdExpenseDetails.FindControl("AQSTTextBox"), TextBox).Text = Format(dtrow("AQST"), "f")
+        CType(frmStdExpenseDetails.FindControl("KmTextBox"), TextBox).Text = dtrow("Km")
+        CType(frmStdExpenseDetails.FindControl("Km_RateTextBox"), TextBox).Text = Format(dtrow("Km_Rate"), "f")
+
+        panStd.Visible = True
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
+
+        Dim SqlConnection As New SqlConnection(connectionString)
+        Dim sc As New SqlCommand("select * from tblExpenseTypes where CategoryID = " & dtrow("CategoryID"), SqlConnection)
+        SqlConnection.Open()
+
+        Dim dtExpenseTypes As New DataTable
+        Dim da As SqlDataAdapter = New SqlDataAdapter
+        da.SelectCommand = sc
+        da.Fill(dtExpenseTypes)
+
+        ddlExpenseTypes.DataSource = dtExpenseTypes
+        ddlExpenseTypes.DataTextField = "ExpenseType"
+        ddlExpenseTypes.DataValueField = "ExpenseTypeID"
+        ddlExpenseTypes.DataBind()
+
+        ddlExpenseTypes.SelectedValue = dtrow("ExpenseTypeID")
+
+        CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = False
+        CType(frmStdExpenseDetails.FindControl("panGuests"), Panel).Visible = False
+        CType(frmStdExpenseDetails.FindControl("panLodging"), Panel).Visible = False
+        CType(frmStdExpenseDetails.FindControl("panExtras"), Panel).Visible = False
+        CType(frmStdExpenseDetails.FindControl("panAir"), Panel).Visible = False
+        CType(frmStdExpenseDetails.FindControl("panKM"), Panel).Visible = False
+        descriptionLabel.Text = "Description"
+        Select Case dtrow("CategoryID")
+            Case 2 'Hotel
+                CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = True
+                CType(frmStdExpenseDetails.FindControl("panLodging"), Panel).Visible = True
+            Case 11 'Meals and entertainment
+                CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = True
+                descriptionLabel.Text = "Restaurant/Payee"
+                CType(frmStdExpenseDetails.FindControl("panGuests"), Panel).Visible = True
+            Case 1 'Meals Employee
+                CType(frmStdExpenseDetails.FindControl("pantip"), Panel).Visible = True
+                descriptionLabel.Text = "Restaurant/Payee"
+                CType(frmStdExpenseDetails.FindControl("panGuests"), Panel).Visible = True
+            Case 7, 16 'Subscription Membership & Telephone and Cell
+                CType(frmStdExpenseDetails.FindControl("panExtras"), Panel).Visible = True
+            Case 4 'Air Fare
+                CType(frmStdExpenseDetails.FindControl("panAir"), Panel).Visible = True
+                descriptionLabel.Text = "Airline Company"
+            Case 3 'car expenses
+                CType(frmStdExpenseDetails.FindControl("panKM"), Panel).Visible = True
+            Case 5
+                descriptionLabel.Text = "Car Rental Company"
+        End Select
     End Sub
-
-
 End Class

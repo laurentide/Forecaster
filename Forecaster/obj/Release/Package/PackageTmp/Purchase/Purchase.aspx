@@ -59,7 +59,7 @@
                             <asp:ListItem Text="(Select the approver)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
-                        <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Requester and manager can't be the same" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDown_CustomValidation" />
+                        <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Price is over your self-approval limit" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDown_CustomValidation" />
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
                     </td>
                 </tr>
@@ -131,6 +131,16 @@
                         <asp:TextBox ID="TotalPriceTextBox" runat="server" Text='<%# Bind("TotalPrice") %>' />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Price required" ControlToValidate="TotalPriceTextBox" />
                         <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="TotalPriceTextBox" ValidationGroup="Update" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Purchase Category:
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="PurchaseCategoryDropDown" runat="server" DataSourceID="sdsPurchaseCategories"  AppendDataBoundItems="true" DataValueField="PurchaseCategoryID" DataTextField="DescString" SelectedValue='<%# Bind("PurchaseCategoryID")%>' >
+                            <asp:ListItem Text="(Select the purchasing category)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select a category" ControlToValidate="PurchaseCategoryDropDown" />
                     </td>
                 </tr>
                 <%--                <tr>
@@ -218,12 +228,11 @@
                     </td>
                 </tr>
                 --%>
-                <tr>
-                    <td>Attachment</td>
+                <tr><td>Attachment</td>
                     <td>
-                        <asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true" /><br />
-                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /><br />
-                        Path:<asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
+                        <asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/>  
+                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
                     </td>
                 </tr>
                 <tr>
@@ -281,7 +290,7 @@
                             <asp:ListItem Text="(Select the approver)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
-                        <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Requester and manager can't be the same" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDown_CustomValidation" />
+                        <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Price is over your self-approval limit" ControlToValidate="ManagerDropDown" OnServerValidate="ManagerDropDown_CustomValidation" />
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
                     </td>
                 </tr>
@@ -440,10 +449,18 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Attachment</td>
+                    <td>Purchase Category:
+                    </td>                   
                     <td>
-                        <asp:FileUpload ID="fuDialog" runat="server" /> <br />
-                        <%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        <asp:DropDownList ID="PurchaseCategoryDropDown" runat="server" DataSourceID="sdsPurchaseCategories"  AppendDataBoundItems="true" DataValueField="PurchaseCategoryID" DataTextField="DescString" SelectedValue='<%# Bind("PurchaseCategoryID")%>' >
+                            <asp:ListItem Text="(Select the purchasing category)" Value="" />
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select a category" ControlToValidate="PurchaseCategoryDropDown" />
+                    </td>
+                </tr>
+                <tr><td>Attachment</td>
+                    <td>
+                        <asp:FileUpload ID="fuDialog" runat="server"/>  <%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
                         Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("Path")%>' Text='<%# Eval("Path") %>' ></asp:Hyperlink>--%>
                     </td>
 
@@ -453,7 +470,7 @@
                     <td>
                         <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
                         <%--&nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
-                        </td>
+                    </td>
                 </tr>
             </table>
         </InsertItemTemplate>
@@ -510,7 +527,8 @@
     </asp:GridView>
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="SELECT * FROM [tblPurchaseRequests] where purchaserequestid=@ID" InsertCommand="INSERT INTO [PurchaseRequest].[dbo].[tblPurchaseRequests]
+        SelectCommand="SELECT * FROM [tblPurchaseRequests] where purchaserequestid=@ID" 
+        InsertCommand="INSERT INTO [PurchaseRequest].[dbo].[tblPurchaseRequests]
            ([RequesterName]
            ,[RequesterUsername]
            ,[RequesterEmail]
@@ -534,7 +552,8 @@
            ,[ITReview]
            ,[Visible]
            ,[StatusID]
-           ,[Link])
+           ,[Link]
+           ,[PurchaseCategoryID])
      VALUES
            (@RequesterName
            ,@RequesterUsername
@@ -559,7 +578,8 @@
            ,@ITReview
            ,@Visible
            ,@StatusID
-           ,@Link);
+           ,@Link
+           ,@PurchaseCategoryID);
         select @ID = @@IDENTITY"
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
                    SET [RequesterName] = @RequesterName
@@ -582,6 +602,7 @@
                       ,[Link] = @Link
                       ,[ManagerID] = @ManagerID
                       ,[ManagerApprovalDate]=null
+                      ,[PurchaseCategoryID] = @PurchaseCategoryID
                  WHERE PurchaseRequestID = @PurchaseRequestID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvPurchaseRequests" PropertyName="SelectedValue" />
@@ -613,7 +634,8 @@
             <asp:Parameter Name="ITReview" DefaultValue="false" />
             <asp:Parameter Name="Visible" DefaultValue="true" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
-            <asp:Parameter Name="ID"  Direction="Output" Type="Int32" />
+            <asp:Parameter Name="PurchaseCategoryID" />
+             <asp:Parameter Name="ID"  Direction="Output" Type="Int32" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="RequesterName" />
@@ -638,10 +660,11 @@
             <asp:Parameter Name="ChangeOrderNotice" />
             <asp:Parameter Name="Link" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
+            <asp:Parameter Name="PurchaseCategoryID" />
         </UpdateParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsPurchaseRequestsGrid" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName, BuyerName, Status
+        SelectCommand="SELECT     tblPurchaseRequests.*, tblManagers.ManagerName, tblDepartments.DepartmentName, BuyerName, Status, purchasecategory
                        FROM       tblPurchaseRequests 
                        INNER JOIN tblDepartments 
                        ON tblPurchaseRequests.DepartmentID = tblDepartments.DepartmentID 
@@ -651,6 +674,8 @@
                        ON tblpurchaseRequests.BuyerID = tblBuyers.BuyerID
                        LEFT JOIN Tblstatuses
                        ON tblpurchaseRequests.statusid = tblstatuses.statusID
+                       LEFT JOIN tblpurchasecategories
+                       on Tblpurchaserequests.purchasecategoryid = tblpurchasecategories.purchasecategoryid
                        where RequesterUsername = @RequesterUsername
                        and visible = 1
                        order by purchaseRequestID desc"
@@ -665,4 +690,6 @@
         SelectCommand="select * from tblDepartments order by departmentName"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsApprovalTypes" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblApprovalTypes"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsPurchaseCategories" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
+        SelectCommand="select *,left(purchaseCategory + replicate(' ',30),30) + ' | ' + Examples as DescString from tblPurchaseCategories order by PurchaseCategory"></asp:SqlDataSource>
 </asp:Content>

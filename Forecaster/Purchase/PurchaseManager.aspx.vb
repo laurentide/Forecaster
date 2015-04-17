@@ -10,20 +10,22 @@ Public Class PurchaseManager
     End Sub
 
     Protected Sub frmView_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
+        'Find manager email
+        Dim connectionString As String
+        Dim managerEmail As String
+
+        connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+
+        Dim SqlConnection As New SqlConnection(connectionString)
+        Dim sc As New SqlCommand("select managerEmail from tblManagers where managername = '" & CType(frmView.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text & "'", SqlConnection)
+        SqlConnection.Open()
+
+        Dim reader As SqlDataReader = sc.ExecuteReader()
+        reader.Read()
+        managerEmail = reader.GetString(0)
+        reader.Close()
+
         If CType(frmView.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Approved" Then
-            'Find manager email
-            Dim connectionString As String
-            connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
-
-            Dim SqlConnection As New SqlConnection(connectionString)
-            Dim sc As New SqlCommand("select managerEmail from tblManagers where managername = '" & CType(frmView.FindControl("ManagerIDTextBox"), Label).Text & "'", SqlConnection)
-            SqlConnection.Open()
-
-            Dim reader As SqlDataReader = sc.ExecuteReader()
-            reader.Read()
-            Dim managerEmail As String = reader.GetString(0)
-            reader.Close()
-
             '-----------------------------------------------------------------
             'Send Email back to user telling him that his request was approved
             '-----------------------------------------------------------------
@@ -35,22 +37,23 @@ Public Class PurchaseManager
                                  "Cost not to exceed: " & CType(frmView.FindControl("TotalPriceTextBox"), TextBox).Text & vbCrLf & _
                                  "Date Required: " & CType(frmView.FindControl("DateRequiredTextBox"), Label).Text & vbCrLf & _
                                  "Requested by: " & CType(frmView.FindControl("RequesterNameTextBox"), Label).Text & vbCrLf & _
-                                 "Approved by: " & CType(frmView.FindControl("ManagerIDTextBox"), Label).Text & vbCrLf & _
-                                 "Approved on: " & Session("DateApproved")
+                                 "Approved by: " & CType(frmView.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
+                                 "Approved on: " & Session("DateApproved") & vbCrLf & _
+                                 "Purchasing Agent" & CType(frmView.FindControl("PurchaseAgentLabel"), Label).Text & vbCrLf & _
+                                 "Message to purchase agent: " & CType(frmView.FindControl("ITMessageTextBox"), TextBox).Text & vbCrLf & _
+                                 "Bolt Sponsor" & CType(frmView.FindControl("BoltSponsorLabel"), Label).Text
 
             Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request Approved (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
-            If CType(frmView.FindControl("ITReviewCheckBox"), CheckBox).Checked Then
+            If CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue = 1 Or CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue = 2 Then
                 'CC IT if IT review was checked
-                mm.Body = body & vbCrLf & "Message to IT: " & CType(frmView.FindControl("ITMessageTextBox"), TextBox).Text
                 mm.CC.Add("support@laurentide.com")
             End If
-            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+            Dim smtp As New SmtpClient("lcl-exc")
             smtp.Send(mm)
 
             '---------------------------------------------------------------
             'send email to buyer to warn them about new action to execute on
             '---------------------------------------------------------------
-
             'Get Buyer's Email
             sc.CommandText = "select buyeremail from tblbuyers where buyerid = " & CType(frmView.FindControl("BuyerDropDown"), DropDownList).SelectedValue.ToString
             reader = sc.ExecuteReader()
@@ -68,19 +71,6 @@ Public Class PurchaseManager
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         ElseIf CType(frmView.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Denied" Then
-            'Find manager email
-            Dim connectionString As String
-            connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
-
-            Dim SqlConnection As New SqlConnection(connectionString)
-            Dim sc As New SqlCommand("select managerEmail from tblManagers where managername = '" & CType(frmView.FindControl("ManagerIDTextBox"), Label).Text & "'", SqlConnection)
-            SqlConnection.Open()
-
-            Dim reader As SqlDataReader = sc.ExecuteReader()
-            reader.Read()
-            Dim managerEmail As String = reader.GetString(0)
-            reader.Close()
-
             '-----------------------------------------------------------------
             'Send Email back to user telling him that his request was denied
             '-----------------------------------------------------------------
@@ -92,16 +82,34 @@ Public Class PurchaseManager
                                  "Cost not to exceed: " & CType(frmView.FindControl("TotalPriceTextBox"), TextBox).Text & vbCrLf & _
                                  "Your request was denied! Please see with your manager for more information."
             Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request Denied (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
-            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+            Dim smtp As New SmtpClient("lcl-exc")
+            smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
+        ElseIf CType(frmView.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Transferred to another approver" Then
+            '-----------------------------------------------------------------------------------------
+            'Send Email back to user telling him that his request was transferred to another approver
+            '-----------------------------------------------------------------------------------------
+            Dim body As String = "This Email was automatically generated by the purchase request tool!" & vbCrLf & _
+                                 "Item: " & CType(frmView.FindControl("ItemNameTextbox"), Label).Text & vbCrLf & _
+                                 "Description: " & CType(frmView.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
+                                 "Reason: " & CType(frmView.FindControl("ReasonTextBox"), TextBox).Text & vbCrLf & _
+                                 "Quantity: " & CType(frmView.FindControl("QuantityTextBox"), TextBox).Text & vbCrLf & _
+                                 "Cost not to exceed: " & CType(frmView.FindControl("TotalPriceTextBox"), TextBox).Text & vbCrLf & _
+                                 "This request was redirected to another manager!"
+            Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request transferred (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
+            Dim smtp As New SmtpClient("lcl-exc")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
         Else
-            '            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertnotsent();", True)
+            'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertnotsent();", True)
         End If
         'Refresh Gridview
         gvPurchaseRequests.DataBind()
     End Sub
 
+    '************
+    'Note: This sub is not used anymore 10-22-2013
+    '************
     Protected Sub ITReviewCheckBox_CheckedChanged(sender As Object, e As EventArgs)
         Dim BuyerDropDown As DropDownList
         BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
@@ -115,16 +123,83 @@ Public Class PurchaseManager
     End Sub
 
     Protected Sub frmView_DataBound(sender As Object, e As EventArgs)
-        Dim BuyerDropDown As DropDownList
-        BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
-        Dim ITReviewCheckBox As CheckBox = CType(frmView.FindControl("ITReviewCheckBox"), CheckBox)
-        If Not ITReviewCheckBox Is Nothing Then
-            If ITReviewCheckBox.Checked Then
-                BuyerDropDown.SelectedValue = 38
-                BuyerDropDown.Enabled = False
-            Else
-                BuyerDropDown.Enabled = True
-            End If
+        'Dim BuyerDropDown As DropDownList
+        'BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
+        'Dim ITReviewCheckBox As CheckBox = CType(frmView.FindControl("ITReviewCheckBox"), CheckBox)
+        'If Not ITReviewCheckBox Is Nothing Then
+        '    If ITReviewCheckBox.Checked Then
+        '        BuyerDropDown.SelectedValue = 38
+        '        BuyerDropDown.Enabled = False
+        '    Else
+        '        BuyerDropDown.Enabled = True
+        '    End If
+        'End If
+        'Dim ITReviewCheckBox As CheckBox = CType(frmView.FindControl("ITReviewCheckBox"), CheckBox)
+        Dim PurchaseCategoryDropdown As DropDownList
+        PurchaseCategoryDropdown = CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList)
+        If Not PurchaseCategoryDropdown Is Nothing Then
+            Call PurchaseCategoryDropDown_SelectedIndexChanged(Nothing, Nothing)
         End If
+    End Sub
+
+    Protected Sub PurchaseCategoryDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue <> "" Then
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
+
+            'Purchasing Agent
+            Dim sc As New SqlCommand("select tblPurchasingAgents.purchasingAgent from tblPurchasingAgents inner join tblpurchasecategories on tblpurchasecategories.PurchasingAgentid = tblPurchasingAgents.PurchasingAgentID where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue, SqlConnection)
+            Dim reader As SqlDataReader = sc.ExecuteReader()
+            reader.Read()
+            CType(frmView.FindControl("PurchaseAgentLabel"), Label).Text = reader.GetString(0)
+            reader.Close()
+
+            'Bolt sponsor
+            sc.CommandText = "Select tblBoltSponsors.Boltsponsor from tblBoltSponsors inner join  tblpurchasecategories on tblpurchasecategories.boltsponsorid = tblboltsponsors.boltsponsorid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue
+            reader = sc.ExecuteReader
+            reader.Read()
+            CType(frmView.FindControl("boltsponsorlabel"), Label).Text = reader.GetString(0)
+            reader.Close()
+
+            'Buyer
+            Dim BuyerDropDown As DropDownList
+            BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
+            sc.CommandText = "Select tblbuyers.buyerid from tblbuyers inner join  tblpurchasecategories on tblpurchasecategories.AdminOE = tblbuyers.buyerid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue
+            reader = sc.ExecuteReader
+            reader.Read()
+            BuyerDropDown.SelectedValue = reader.GetInt32(0)
+            reader.Close()
+
+            'Backup Buyer
+            Dim BackupBuyerDropDown As DropDownList
+            BackupBuyerDropDown = CType(frmView.FindControl("BackupBuyerDropDown"), DropDownList)
+            sc.CommandText = "Select tblbuyers.buyerid from tblbuyers inner join  tblpurchasecategories on tblpurchasecategories.BackupOE = tblbuyers.buyerid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue
+            reader = sc.ExecuteReader
+            reader.Read()
+            BackupBuyerDropDown.SelectedValue = reader.GetInt32(0)
+            reader.Close()
+            SqlConnection.Close()
+        End If
+    End Sub
+
+    Protected Sub ManagerDropDownCustomValidator_ServerValidate(source As Object, args As ServerValidateEventArgs)
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        SqlConnection.Open()
+
+        Dim sc As New SqlCommand("select ApprovalLimit from tblmanagers  where managerid = " & CType(frmView.FindControl("ManagerDropDown"), DropDownList).SelectedValue, SqlConnection)
+        Dim reader As SqlDataReader = sc.ExecuteReader()
+        reader.Read()
+        If reader.GetDouble(0) < CDbl(CType(frmView.FindControl("TotalPriceTextBox"), TextBox).Text) And _
+            Not CType(frmView.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Denied" Then
+            CType(frmView.FindControl("StatusDropDown"), DropDownList).SelectedValue = 4
+            args.IsValid = False
+        Else
+            args.IsValid = True
+        End If
+        reader.Close()
     End Sub
 End Class

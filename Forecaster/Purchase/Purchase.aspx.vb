@@ -7,7 +7,6 @@ Public Class Purchase
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
         Session("DateRequested") = Now()
-
     End Sub
 
     ' Date: 2/18/2013
@@ -52,10 +51,10 @@ Public Class Purchase
         'update gridview
         gvPurchaseRequests.DataBind()
     End Sub
-    '
-    'When selecting in gridview, put formview to edit
-    '
+        
+    
     Protected Sub gvPurchaseRequests_SelectedIndexChanged1(sender As Object, e As EventArgs)
+        'When selecting in gridview, put formview to edit
         frmInsert.ChangeMode(FormViewMode.Edit)
     End Sub
 
@@ -63,7 +62,7 @@ Public Class Purchase
         'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
         Dim connectionString As String
         connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
-        Dim SqlConnection As New SqlConnection(connectionString)
+        Dim SqlConnection As New SqlConnection(connectionString)        
         SqlConnection.Open()
 
         'Copy the files
@@ -73,7 +72,7 @@ Public Class Purchase
         If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
             CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
             Dim updatecommand As New SqlCommand("update tblPurchaseRequests set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where PurchaseRequestID = " & CType(frmInsert.FindControl("IDLabel"), Label).Text, SqlConnection)
-            updatecommand.ExecuteNonQuery()
+            updatecommand.executenonquery
         End If
 
         Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
@@ -99,7 +98,7 @@ Public Class Purchase
             Else
                 mm.Attachments.Add(New Attachment(CType(frmInsert.FindControl("PathTextbox"), HyperLink).Text))
             End If
-        Catch ex As Exception
+        Catch ex As exception
         End Try
         Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
         smtp.Send(mm)
@@ -111,7 +110,21 @@ Public Class Purchase
 
 
     Sub ManagerDropDown_CustomValidation(source As Object, args As ServerValidateEventArgs)
-        If CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text = CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text Then
+        Dim managerName As String
+        managerName = CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        SqlConnection.Open()
+
+        Dim sc As New SqlCommand("select approvallimit from tblManagers where managerName = '" & managerName & "'", SqlConnection)
+        Dim reader As SqlDataReader = sc.ExecuteReader()
+        reader.Read()
+        Dim approvalLimit As Double
+        approvalLimit = 0.1 * reader.GetDouble(0)
+
+        If CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text = CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text And approvalLimit <
+            CType(frmInsert.FindControl("TotalPriceTextBox"), TextBox).Text Then
             args.IsValid = False
         Else
             args.IsValid = True
@@ -142,6 +155,7 @@ Public Class Purchase
 
         End Try
     End Sub
+
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
         Dim ID As Integer = e.Command.Parameters("@ID").Value
         Session("ID") = ID

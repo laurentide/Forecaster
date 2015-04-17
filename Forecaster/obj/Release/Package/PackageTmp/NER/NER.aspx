@@ -7,179 +7,188 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Employee Request Tool</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Insert" DataKeyNames="NERID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
-        <EditItemTemplate>
-            <table>
-                <tr>
-                    <td>NERID:
-                    </td>
-                    <td>
-                        <asp:Label ID="NERIDLabel1" runat="server" Text='<%# Eval("NERID") %>' />
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+        <Triggers>
+           <asp:PostBackTrigger ControlID="frmInsert" />
+          </Triggers>
+        <ContentTemplate>
+            <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert"  OnDataBound="frmInsert_DataBound" DefaultMode="Insert" DataKeyNames="NERID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
+                <EditItemTemplate>
+                    <table>
+                        <tr>
+                            <td>NERID:
+                            </td>
+                            <td>
+                                <asp:Label ID="NERIDLabel1" runat="server" Text='<%# Eval("NERID") %>' />
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Manager:</td>
-                    <td>
-                        <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
-                        <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
-                            <asp:ListItem Text="(Select the manager)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
-                    </td>
-                </tr>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Manager:</td>
+                            <td>
+                                <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
+                                <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
+                                    <asp:ListItem Text="(Select the manager)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
+                            </td>
+                        </tr>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>StatusID:</td>
                     <td>
                         <asp:TextBox ID="StatusIDTextBox" runat="server" Text='<%# Bind("StatusID") %>' /></td>
                 </tr>--%>
 
-                <tr>
-                    <td>Employee Type:</td>
-                    <td>
-                        <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
-                        <asp:DropDownList ID="EmployeeTypeDropDown" runat="server" DataSourceID="sdsEmployeeTypes" AppendDataBoundItems="true" DataValueField="EmployeeTypeID" DataTextField="EmployeeType" SelectedValue='<%# Bind("EmployeeTypeID")%>'>
-                            <asp:ListItem Text="(Select the employee type)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Employment Form:</td>
-                    <td>
-                        <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
-                        <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
-                            <asp:ListItem Text="(Select the employment form)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
-                    </td>
-                </tr>
+                        <tr>
+                            <td>Employee Type:</td>
+                            <td>
+                                <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
+                                <asp:DropDownList ID="EmployeeTypeDropDown" runat="server" DataSourceID="sdsEmployeeTypes" AppendDataBoundItems="true" DataValueField="EmployeeTypeID" DataTextField="EmployeeType" SelectedValue='<%# Bind("EmployeeTypeID")%>'>
+                                    <asp:ListItem Text="(Select the employee type)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Employment Form:</td>
+                            <td>
+                                <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
+                                <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
+                                    <asp:ListItem Text="(Select the employment form)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
+                            </td>
+                        </tr>
 
-                <tr>
+                        <%--                <tr>
                     <td>Source:</td>
                     <td>
-                        <%--<asp:TextBox ID="SourceIDTextBox" runat="server" Text='<%# Bind("SourceID") %>' />--%>
                         <asp:DropDownList ID="SourceDropDown" runat="server" DataSourceID="sdsSources" AppendDataBoundItems="true" DataValueField="SourceID" DataTextField="Source" SelectedValue='<%# Bind("SourceID")%>'>
                             <asp:ListItem Text="(Select the source)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="SourceDropDown" />
 
                     </td>
-                </tr>
+                </tr>--%>
 
-                <tr>
-                    <td>Job Name:</td>
-                    <td>
-                        <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a job description" ControlToValidate="NameTextBox" />
-                    </td>
-                  
-                </tr>
+                        <tr>
+                            <td>Job Name:</td>
+                            <td>
+                                <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' Width="500" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a job description" ControlToValidate="NameTextBox" />
+                            </td>
 
-                <tr>
-                    <td>Position:</td>
-                    <td>
-                        <asp:TextBox ID="PositionTextBox" runat="server" Text='<%# Bind("Position") %>' /></td>
-                </tr>
+                        </tr>
 
-                <tr>
-                    <td>Budgeted:</td>
-                    <td>
-                        <asp:CheckBox ID="BudgetedCheckBox" runat="server" Checked='<%# Bind("Budgeted") %>' /></td>
-                </tr>
+                        <tr>
+                            <td>Description of position:</td>
+                            <td>
+                                <asp:TextBox ID="PositionTextBox" runat="server" Text='<%# Bind("Position") %>' TextMode="MultiLine" Rows="5" Width="500" /></td>
+                        </tr>
 
-                <tr>
-                    <td>Billable:</td>
-                    <td>
-                        <asp:CheckBox ID="BillableCheckBox" runat="server" Checked='<%# Bind("Billable") %>' /></td>
-                </tr>
 
-                <tr>
-                    <td>Replacement:</td>
-                    <td>
-                        <asp:TextBox ID="ReplacementTextBox" runat="server" Text='<%# Bind("Replacement") %>' /></td>
-                </tr>
-
-                <tr>
+                        <%--                <tr>
                     <td>Return:</td>
                     <td>
                         <asp:TextBox ID="ReturnTextBox" runat="server" Text='<%# Bind("Return") %>' /></td>
-                </tr>
+                </tr>--%>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>Date Created:</td>
                     <td>
                         <asp:TextBox ID="DateCreatedTextBox" runat="server" Text='<%# Bind("DateCreated") %>' /></td>
                 </tr>--%>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>Date Approved:</td>
                     <td>
                         <asp:TextBox ID="DateApprovedTextBox" runat="server" Text='<%# Bind("DateApproved") %>' /></td>
                 </tr>--%>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>Date Hired:</td>
                     <td>
                         <asp:TextBox ID="DateHiredTextBox" runat="server" Text='<%# Bind("DateHired") %>' /></td>
                 </tr>--%>
-                <tr>
-                    <td>Date Needed:</td>
-                    <td>
-                        <asp:TextBox ID="DateNeededTextbox" runat="server" Text='<%# Bind("DateNeeded")%>' />
-                        <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
-                        <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateNeededTextbox" PopupButtonID="Calendar_scheduleDR" />
-                        <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateNeededTextbox" PromptCharacter="_" />
-                        <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateNeededTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a date needed for" ControlToValidate="DateNeededTextbox" />
-                    </td>
-                </tr>
+                        <tr>
+                            <td>Date Needed:</td>
+                            <td>
+                                <asp:TextBox ID="DateNeededTextbox" runat="server" Text='<%# Bind("DateNeeded")%>' />
+                                <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                                <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateNeededTextbox" PopupButtonID="Calendar_scheduleDR" />
+                                <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateNeededTextbox" PromptCharacter="_" />
+                                <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateNeededTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a date needed for" ControlToValidate="DateNeededTextbox" />
+                            </td>
+                        </tr>
 
-                <tr>
+                        <%--                <tr>
                     <td>Cost Of Recruitment:</td>
                     <td>
                         <asp:TextBox ID="CostOfRecruitmentTextBox" runat="server" Text='<%# Bind("CostOfRecruitment") %>' /></td>
                     <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="CostOfRecruitmentTextBox" ValidationGroup="Update" />
-                </tr>
+                </tr>--%>
 
-                <tr>
-                    <td>Job Description Link:</td>
-                    <td>
-                        <asp:TextBox ID="JobDescriptionLinkTextBox" runat="server" Text='<%# Bind("JobDescriptionLink") %>' /></td>
-                </tr>
+                        <tr>
+                            <td>Job Description Link:</td>
+                            <td>
+                                <asp:TextBox ID="JobDescriptionLinkTextBox" runat="server" Text='<%# Bind("JobDescriptionLink") %>' Width="500" /></td>
+                        </tr>
 
-                <tr>
-                    <td>Leadership Team Review:</td>
-                    <td>
-                        <asp:CheckBox ID="LeadershipTeamReviewCheckBox" runat="server" Checked='<%# Bind("LeadershipTeamReview") %>' /></td>
-                </tr>
-               <tr>
-                    <td>Investment sheet</td>
-                    <td>
-                        <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx" >Investment decision analysis form</a><br />
-                        <asp:FileUpload ID="fuDialog" runat="server" /> <br />
-                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("AttachmentSheetLink")%>' Text='<%# Eval("AttachmentSheetLink")%>' ></asp:Hyperlink>
-                    </td>
+                        
+                        <tr>
+                            <td>Replacement</td>
+                            <td>
+                                <asp:CheckBox ID="chkReplacement" runat="server" Checked='<%# Bind("ReplacementCheck")%>' OnCheckedChanged="chkReplacement_CheckedChanged" AutoPostBack="true" /><asp:Label ID="lblReplacement" runat="server" Text="Replacement for who: " Visible="false" /><asp:TextBox ID="ReplacementTextBox" runat="server" Text='<%# Bind("Replacement") %>' Visible="false" /></td>
+                        </tr>
 
-                </tr>
+                        <tr>
+                            <td>Budgeted:</td>
+                            <td>
+                                <asp:CheckBox ID="BudgetedCheckBox" runat="server" Checked='<%# Bind("Budgeted") %>' /></td>
+                        </tr>
 
-                <%--                <tr>
+                        <tr>
+                            <td>Billable:</td>
+                            <td>
+                                <asp:CheckBox ID="BillableCheckBox" runat="server" Checked='<%# Bind("Billable") %>' /></td>
+                        </tr>
+
+
+
+<%--                        <tr>
+                            <td>Leadership Team Review:</td>
+                            <td>
+                                <asp:CheckBox ID="LeadershipTeamReviewCheckBox" runat="server" Checked='<%# Bind("LeadershipTeamReview") %>' /></td>
+                        </tr>--%>
+                        <tr>
+                            <td>Investment sheet</td>
+                            <td>
+                                <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx">Investment decision analysis form</a><br />
+                                <asp:FileUpload ID="fuDialog" runat="server" />
+                                <br />
+                                Path:<asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("AttachmentSheetLink")%>' Text='<%# Eval("AttachmentSheetLink")%>'></asp:HyperLink>
+                            </td>
+
+                        </tr>
+
+                        <%--                <tr>
                     <td>Visible:</td>
                     <td>
                         <asp:CheckBox ID="VisibleCheckBox" runat="server" Checked='<%# Bind("Visible") %>' /></td>
                 </tr>--%>
-                <tr>
-                    <td>
-                        <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
-                        &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
-                    </td>
-                </tr>
-            </table>
-        </EditItemTemplate>
-        <InsertItemTemplate>
-            <table>
-                <%--<tr>
+                        <tr>
+                            <td>
+                                <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
+                                &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+                            </td>
+                        </tr>
+                    </table>
+                </EditItemTemplate>
+                <InsertItemTemplate>
+                    <table>
+                        <%--<tr>
                     <td>NERID:
                     </td>
                     <td>
@@ -187,207 +196,212 @@
 
                     </td>
                 </tr>--%>
-                <tr>
-                    <td>Manager:</td>
-                    <td>
-                        <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
-                        <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
-                            <asp:ListItem Text="(Select the manager)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
-                    </td>
-                </tr>
+                        <tr>
+                            <td>Manager:</td>
+                            <td>
+                                <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
+                                <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
+                                    <asp:ListItem Text="(Select the manager)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
+                            </td>
+                        </tr>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>StatusID:</td>
                     <td>
                         <asp:TextBox ID="StatusIDTextBox" runat="server" Text='<%# Bind("StatusID") %>' /></td>
                 </tr>--%>
 
-                <tr>
-                    <td>Employee Type:</td>
-                    <td>
-                        <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
-                        <asp:DropDownList ID="EmployeeTypeDropDown" runat="server" DataSourceID="sdsEmployeeTypes" AppendDataBoundItems="true" DataValueField="EmployeeTypeID" DataTextField="EmployeeType" SelectedValue='<%# Bind("EmployeeTypeID")%>'>
-                            <asp:ListItem Text="(Select the employee type)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>Employment Form:</td>
-                    <td>
-                        <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
-                        <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
-                            <asp:ListItem Text="(Select the employment form)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
-                    </td>
-                </tr>
+                        <tr>
+                            <td>Employee Type:</td>
+                            <td>
+                                <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
+                                <asp:DropDownList ID="EmployeeTypeDropDown" runat="server" DataSourceID="sdsEmployeeTypes" AppendDataBoundItems="true" DataValueField="EmployeeTypeID" DataTextField="EmployeeType" SelectedValue='<%# Bind("EmployeeTypeID")%>'>
+                                    <asp:ListItem Text="(Select the employee type)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Employment Form:</td>
+                            <td>
+                                <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
+                                <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
+                                    <asp:ListItem Text="(Select the employment form)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
+                            </td>
+                        </tr>
 
-                <tr>
+                        <%--                <tr>
                     <td>Source:</td>
                     <td>
-                        <%--<asp:TextBox ID="SourceIDTextBox" runat="server" Text='<%# Bind("SourceID") %>' />--%>
                         <asp:DropDownList ID="SourceDropDown" runat="server" DataSourceID="sdsSources" AppendDataBoundItems="true" DataValueField="SourceID" DataTextField="Source" SelectedValue='<%# Bind("SourceID")%>'>
                             <asp:ListItem Text="(Select the source)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="SourceDropDown" />
 
                     </td>
-                </tr>
+                </tr>--%>
 
-                <tr>
-                    <td>Job Name:</td>
-                    <td>
-                        <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Please enter a job description" ControlToValidate="NameTextBox" />
-                     </td>
-                </tr>
+                        <tr>
+                            <td>Job Name:</td>
+                            <td>
+                                <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' Width="500" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Please enter a job description" ControlToValidate="NameTextBox" />
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td>Position:</td>
-                    <td>
-                        <asp:TextBox ID="PositionTextBox" runat="server" Text='<%# Bind("Position") %>' /></td>
-                </tr>
+                        <tr>
+                            <td>Description of position:</td>
+                            <td>
+                                <asp:TextBox ID="PositionTextBox" runat="server" Text='<%# Bind("Position") %>' TextMode="MultiLine" Rows="5" Width="500" /></td>
+                        </tr>
 
-                <tr>
-                    <td>Budgeted:</td>
-                    <td>
-                        <asp:CheckBox ID="BudgetedCheckBox" runat="server" Checked='<%# Bind("Budgeted") %>' /></td>
-                </tr>
 
-                <tr>
-                    <td>Billable:</td>
-                    <td>
-                        <asp:CheckBox ID="BillableCheckBox" runat="server" Checked='<%# Bind("Billable") %>' /></td>
-                </tr>
-
-                <tr>
-                    <td>Replacement:</td>
-                    <td>
-                        <asp:TextBox ID="ReplacementTextBox" runat="server" Text='<%# Bind("Replacement") %>' /></td>
-                </tr>
-
-                <tr>
+                        <%--                <tr>
                     <td>Return:</td>
                     <td>
                         <asp:TextBox ID="ReturnTextBox" runat="server" Text='<%# Bind("Return") %>' /></td>
-                </tr>
+                </tr>--%>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>Date Created:</td>
                     <td>
                         <asp:TextBox ID="DateCreatedTextBox" runat="server" Text='<%# Bind("DateCreated") %>' /></td>
                 </tr>--%>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>Date Approved:</td>
                     <td>
                         <asp:TextBox ID="DateApprovedTextBox" runat="server" Text='<%# Bind("DateApproved") %>' /></td>
                 </tr>--%>
 
-                <%--                <tr>
+                        <%--                <tr>
                     <td>Date Hired:</td>
                     <td>
                         <asp:TextBox ID="DateHiredTextBox" runat="server" Text='<%# Bind("DateHired") %>' /></td>
                 </tr>--%>
-                <tr>
-                    <td>Date Needed:</td>
-                    <td>
-                        <asp:TextBox ID="DateNeededTextbox" runat="server" Text='<%# Bind("DateNeeded")%>' />
-                        <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
-                        <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateNeededTextbox" PopupButtonID="Calendar_scheduleDR" />
-                        <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateNeededTextbox" PromptCharacter="_" />
-                        <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateNeededTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Please a date the job is needed for" ControlToValidate="DateNeededTextbox" />
-                    </td>
-                </tr>
+                        <tr>
+                            <td>Date Needed:</td>
+                            <td>
+                                <asp:TextBox ID="DateNeededTextbox" runat="server" Text='<%# Bind("DateNeeded")%>' />
+                                <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                                <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateNeededTextbox" PopupButtonID="Calendar_scheduleDR" />
+                                <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateNeededTextbox" PromptCharacter="_" />
+                                <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateNeededTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Please a date the job is needed for" ControlToValidate="DateNeededTextbox" />
+                            </td>
+                        </tr>
 
-                <tr>
+                        <%--                <tr>
                     <td>Cost Of Recruitment:</td>
                     <td>
                         <asp:TextBox ID="CostOfRecruitmentTextBox" runat="server" Text='<%# Bind("CostOfRecruitment") %>' /></td>
                         <asp:RangeValidator ID="RangeValidator3" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="CostOfRecruitmentTextBox" ValidationGroup="Insert" />
-                </tr>
+                </tr>--%>
 
-                <tr>
-                    <td>Job Description Link:</td>
-                    <td>
-                        <asp:TextBox ID="JobDescriptionLinkTextBox" runat="server" Text='<%# Bind("JobDescriptionLink") %>' /></td>
-                </tr>
+                        <tr>
+                            <td>Job Description Link:</td>
+                            <td>
+                                <asp:TextBox ID="JobDescriptionLinkTextBox" runat="server" Text='<%# Bind("JobDescriptionLink") %>' Width="500" /></td>
+                        </tr>
 
-                <tr>
-                    <td>Leadership Team Review:</td>
-                    <td>
-                        <asp:CheckBox ID="LeadershipTeamReviewCheckBox" runat="server" Checked='<%# Bind("LeadershipTeamReview") %>' /></td>
-                </tr>
-                 <tr>
-                    <td>Investment sheet</td>
-                    <td>
-                        <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx" >Investment decision analysis form</a><br />
-                        <asp:FileUpload ID="fuDialog" runat="server" /> <br />
-<%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        
+                        <tr>
+                            <td>Replacement</td>
+                            <td>
+                                <asp:CheckBox ID="chkReplacement" runat="server" Checked='<%# Bind("ReplacementCheck")%>' OnCheckedChanged="chkReplacement_CheckedChanged" AutoPostBack="true" /><asp:Label ID="lblReplacement" runat="server" Text="Replacement for who: " Visible="false" /><asp:TextBox ID="ReplacementTextBox" runat="server" Text='<%# Bind("Replacement") %>' Visible="false" /></td>
+                        </tr>
+                        <tr>
+                            <td>Budgeted:</td>
+                            <td>
+                                <asp:CheckBox ID="BudgetedCheckBox" runat="server" Checked='<%# Bind("Budgeted") %>' /></td>
+                        </tr>
+
+                        <tr>
+                            <td>Billable:</td>
+                            <td>
+                                <asp:CheckBox ID="BillableCheckBox" runat="server" Checked='<%# Bind("Billable") %>' /></td>
+                        </tr>
+
+<%--                        <tr>
+                            <td>Leadership Team Review:</td>
+                            <td>
+                                <asp:CheckBox ID="LeadershipTeamReviewCheckBox" runat="server" Checked='<%# Bind("LeadershipTeamReview") %>' /></td>
+                        </tr>--%>
+                        <tr>
+                            <td>Investment sheet</td>
+                            <td>
+                                <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx">Investment decision analysis form</a><br />
+                                <asp:FileUpload ID="fuDialog" runat="server" />
+                                <br />
+                                <%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
                         Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("Path")%>' Text='<%# Eval("Path") %>' ></asp:Hyperlink>--%>
-                    </td>
+                            </td>
 
-                </tr>
-                <%--                <tr>
+                        </tr>
+                        <%--                <tr>
                     <td>Visible:</td>
                     <td>
                         <asp:CheckBox ID="VisibleCheckBox" runat="server" Checked='<%# Bind("Visible") %>' /></td>
                 </tr>--%>
-                <tr>
-                    <td>
-                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
-                    </td>
-                </tr>
-        </InsertItemTemplate>
-    </asp:FormView>
-    <asp:GridView ID="gvNewEmployeeRequests" runat="server" AutoGenerateColumns="False" DataSourceID="sdsNewEmployeeRequests" AllowPaging="True" AllowSorting="True" DataKeyNames="NerID"
-        HeaderStyle-CssClass="grid_Header"
-        RowStyle-CssClass="grid_RowStyle"
-        CellPadding="4" ForeColor="#333333"
-        Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvNewEmployeeRequests_OnSelectedIndexChanged">
-        <Columns>
-            <asp:TemplateField ShowHeader="False">
-                <ItemTemplate>
-                    <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this request?');" />
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
-            <asp:BoundField DataField="NERID" HeaderText="NERID" InsertVisible="False" ReadOnly="True" SortExpression="NERID" />
-            <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-            <asp:BoundField DataField="Position" HeaderText="Position" SortExpression="Position" />
-            <asp:CheckBoxField DataField="Budgeted" HeaderText="Budgeted" SortExpression="Budgeted" />
-            <asp:CheckBoxField DataField="Billable" HeaderText="Billable" SortExpression="Billable" />
-            <%--<asp:BoundField DataField="Replacement" HeaderText="Replacement" SortExpression="Replacement" />
+                        <tr>
+                            <td>
+                                <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
+                            </td>
+                        </tr>
+                </InsertItemTemplate>
+            </asp:FormView>
+
+            <asp:GridView ID="gvNewEmployeeRequests" runat="server" AutoGenerateColumns="False" DataSourceID="sdsNewEmployeeRequests" AllowPaging="True" AllowSorting="True" DataKeyNames="NerID"
+                HeaderStyle-CssClass="grid_Header"
+                RowStyle-CssClass="grid_RowStyle"
+                CellPadding="4" ForeColor="#333333"
+                Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvNewEmployeeRequests_OnSelectedIndexChanged">
+                <Columns>
+                    <asp:TemplateField ShowHeader="False">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this request?');" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
+                    <asp:BoundField DataField="NERID" HeaderText="NERID" InsertVisible="False" ReadOnly="True" SortExpression="NERID" />
+                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+                    <asp:BoundField DataField="shortposition" HeaderText="Position" SortExpression="Position" />
+                    <asp:CheckBoxField DataField="Budgeted" HeaderText="Budgeted" SortExpression="Budgeted" />
+                    <asp:CheckBoxField DataField="Billable" HeaderText="Billable" SortExpression="Billable" />
+                    <%--<asp:BoundField DataField="Replacement" HeaderText="Replacement" SortExpression="Replacement" />
             <asp:BoundField DataField="Return" HeaderText="Return" SortExpression="Return" />--%>
-            <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
-            <asp:BoundField DataField="DateApproved" HeaderText="DateApproved" SortExpression="DateApproved" />
-            <asp:BoundField DataField="DateHired" HeaderText="DateHired" SortExpression="DateHired" />
-            <asp:BoundField DataField="DateNeeded" HeaderText="DateNeeded" SortExpression="DateNeeded" />
-            <%--<asp:BoundField DataField="CostOfRecruitment" HeaderText="CostOfRecruitment" SortExpression="CostOfRecruitment" />
+                    <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
+                    <asp:BoundField DataField="DateApproved" HeaderText="DateApproved" SortExpression="DateApproved" />
+                    <asp:BoundField DataField="DateHired" HeaderText="DateHired" SortExpression="DateHired" />
+                    <asp:BoundField DataField="DateNeeded" HeaderText="DateNeeded" SortExpression="DateNeeded" />
+                    <%--<asp:BoundField DataField="CostOfRecruitment" HeaderText="CostOfRecruitment" SortExpression="CostOfRecruitment" />
             <asp:BoundField DataField="JobDescriptionLink" HeaderText="JobDescriptionLink" SortExpression="JobDescriptionLink" />--%>
-            <%--<asp:CheckBoxField DataField="LeadershipTeamReview" HeaderText="LeadershipTeamReview" SortExpression="LeadershipTeamReview" />--%>
-            <%--<asp:CheckBoxField DataField="Visible" HeaderText="Visible" SortExpression="Visible" />--%>
-            <asp:BoundField DataField="EmployeeType" HeaderText="EmployeeType" SortExpression="EmployeeType" />
-            <asp:BoundField DataField="EmploymentForm" HeaderText="EmploymentForm" SortExpression="EmploymentForm" />
-            <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
-            <asp:BoundField DataField="ManagerName" HeaderText="ManagerName" SortExpression="ManagerName" />
-            <asp:BoundField DataField="Source" HeaderText="Source" SortExpression="Source" />
-        </Columns>
-        <EditRowStyle BackColor="#999999" />
-        <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-        <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
-        <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-        <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
-        <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-        <SortedAscendingCellStyle BackColor="#E9E7E2" />
-        <SortedAscendingHeaderStyle BackColor="#506C8C" />
-        <SortedDescendingCellStyle BackColor="#FFFDF8" />
-        <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-    </asp:GridView>
+                    <%--<asp:CheckBoxField DataField="LeadershipTeamReview" HeaderText="LeadershipTeamReview" SortExpression="LeadershipTeamReview" />--%>
+                    <%--<asp:CheckBoxField DataField="Visible" HeaderText="Visible" SortExpression="Visible" />--%>
+                    <asp:BoundField DataField="EmployeeType" HeaderText="EmployeeType" SortExpression="EmployeeType" />
+                    <asp:BoundField DataField="EmploymentForm" HeaderText="EmploymentForm" SortExpression="EmploymentForm" />
+                    <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
+                    <asp:BoundField DataField="StatusReason" HeaderText="Status Reason" SortExpression="StatusReason" />
+                    <asp:BoundField DataField="ManagerName" HeaderText="ManagerName" SortExpression="ManagerName" />
+                    <asp:BoundField DataField="Source" HeaderText="Source" SortExpression="Source" />
+                </Columns>
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+            </asp:GridView>
+        </ContentTemplate>
+    </asp:UpdatePanel>
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="SELECT * FROM [tblNewEmployeeRequest] where NERID=@ID"
@@ -402,6 +416,7 @@
            ,[Budgeted]
            ,[Billable]
            ,[Replacement]
+           ,[ReplacementCheck]
            ,[Return]
            ,[DateCreated]
            ,[DateApproved]
@@ -423,6 +438,7 @@
            ,@Budgeted
            ,@Billable
            ,@Replacement
+           ,@ReplacementCheck
            ,@Return
            ,@DateCreated
            ,@DateApproved
@@ -445,6 +461,7 @@
       ,[Budgeted] = @Budgeted
       ,[Billable] = @Billable
       ,[Replacement] = @Replacement
+      ,[ReplacementCheck] = @ReplacementCheck
       ,[Return] = @Return
       ,[DateCreated] = @DateCreated
       ,[DateApproved] = @DateApproved
@@ -460,7 +477,7 @@
         </SelectParameters>
         <InsertParameters>
             <asp:Parameter Name="ManagerID" />
-            <asp:Parameter Name="StatusID" defaultvalue ="1"/>
+            <asp:Parameter Name="StatusID" DefaultValue="1" />
             <asp:Parameter Name="EmployeeTypeID" />
             <asp:Parameter Name="EmploymentFormID" />
             <asp:Parameter Name="SourceID" />
@@ -469,6 +486,7 @@
             <asp:Parameter Name="Budgeted" />
             <asp:Parameter Name="Billable" />
             <asp:Parameter Name="Replacement" />
+            <asp:Parameter Name="ReplacementCheck" />
             <asp:Parameter Name="Return" />
             <asp:Parameter Name="DateCreated" />
             <asp:Parameter Name="DateApproved" />
@@ -476,8 +494,8 @@
             <asp:Parameter Name="DateNeeded" />
             <asp:Parameter Name="CostOfRecruitment" />
             <asp:Parameter Name="JobDescriptionLink" />
-            <asp:Parameter Name="LeadershipTeamReview" />
-            <asp:Parameter Name="Visible" DefaultValue="true"/>
+            <asp:Parameter Name="LeadershipTeamReview" DefaultValue ="false" />
+            <asp:Parameter Name="Visible" DefaultValue="true" />
             <asp:Parameter Name="AttachmentSheetLink" />
             <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
         </InsertParameters>
@@ -492,6 +510,7 @@
             <asp:Parameter Name="Budgeted" />
             <asp:Parameter Name="Billable" />
             <asp:Parameter Name="Replacement" />
+            <asp:Parameter Name="ReplacementCheck" />
             <asp:Parameter Name="Return" />
             <asp:Parameter Name="DateCreated" />
             <asp:Parameter Name="DateApproved" />
@@ -499,12 +518,12 @@
             <asp:Parameter Name="DateNeeded" />
             <asp:Parameter Name="CostOfRecruitment" />
             <asp:Parameter Name="JobDescriptionLink" />
-            <asp:Parameter Name="LeadershipTeamReview" />
+            <asp:Parameter Name="LeadershipTeamReview" DefaultValue ="false"  />
             <asp:Parameter Name="AttachmentSheetLink" />
         </UpdateParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsNewEmployeeRequests" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
-        SelectCommand="SELECT *
+        SelectCommand="SELECT *,left(position,150) as shortposition
                          FROM  tblNewEmployeeRequest 
                     LEFT JOIN  tblEmployeeTypes
                            ON  tblNewEmployeeRequest.EmployeeTypeID = tblEmployeeTypes.EmployeeTypeID
@@ -516,7 +535,8 @@
                            ON  tblNewEmployeeRequest.ManagerID = tblManagers.ManagerID
                     LEFT JOIN  tblSources
                            ON  tblNewEmployeeRequest.SourceID = tblSources.SourceID
-                       where MAnagerDomainUser=@ManagerDomainUser and visible = 1"
+                       where MAnagerDomainUser=@ManagerDomainUser and visible = 1
+        order by nerid desc"
         DeleteCommand="update tblNewEmployeeRequest set visible = 0 where NERID = @NERID">
         <SelectParameters>
             <asp:SessionParameter SessionField="Username" Name="ManagerDomainUser" />

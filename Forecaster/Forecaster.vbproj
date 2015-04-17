@@ -173,11 +173,15 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Managers\Mg_ProductCode.aspx" />
     <Content Include="Admin\PurchaseAdmin.aspx" />
+    <Content Include="NER\AccessDenied.aspx" />
     <Content Include="NER\NERManager.aspx" />
     <Content Include="NER\NER.aspx" />
     <Content Include="Purchase\Purchase.aspx" />
     <Content Include="Purchase\PurchaseEntry.aspx" />
     <Content Include="Purchase\PurchaseManager.aspx" />
+    <Content Include="QLT\Autocomplete.asmx" />
+    <Content Include="QLT\QLTMgmt.aspx" />
+    <Content Include="QLT\QLT.aspx" />
     <Content Include="Quotebuilder\Customer Management.aspx" />
     <Content Include="Receptionist\Admin.aspx" />
     <Content Include="Receptionist\Receptionist.aspx" />
@@ -448,6 +452,13 @@
       <DependentUpon>PurchaseAdmin.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="NER\AccessDenied.aspx.designer.vb">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NER\AccessDenied.aspx.vb">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="NER\NERManager.aspx.designer.vb">
       <DependentUpon>NERManager.aspx</DependentUpon>
     </Compile>
@@ -482,6 +493,24 @@
     <Compile Include="Purchase\PurchaseManager.aspx.vb">
       <DependentUpon>PurchaseManager.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QLT\Autocomplete.asmx.vb">
+      <DependentUpon>Autocomplete.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QLT\QLTMgmt.aspx.designer.vb">
+      <DependentUpon>QLTMgmt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="QLT\QLTMgmt.aspx.vb">
+      <DependentUpon>QLTMgmt.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="QLT\QLT.aspx.designer.vb">
+      <DependentUpon>QLT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="QLT\QLT.aspx.vb">
+      <DependentUpon>QLT.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Quotebuilder\Customer Management.aspx.designer.vb">
       <DependentUpon>Customer Management.aspx</DependentUpon>

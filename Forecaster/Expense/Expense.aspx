@@ -8,9 +8,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>New Expense Report</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView runat="server" ID="frmExpense" DefaultMode="Insert" DataKeyNames="ExpenseReportID" DataSourceID="sdsForm" 
-        OnItemInserted="frmExpense_ItemInserted" 
-        OnDataBound="frmExpense_DataBound" 
+    <asp:FormView runat="server" ID="frmExpense" DefaultMode="Insert" DataKeyNames="ExpenseReportID" DataSourceID="sdsForm"
+        OnItemInserted="frmExpense_ItemInserted"
+        OnDataBound="frmExpense_DataBound"
         OnItemUpdated="frmExpense_ItemUpdated"
         OnItemInserting="frmExpense_ItemInserting"
         OnItemUpdating="frmExpense_ItemUpdating">
@@ -18,7 +18,8 @@
             <table>
                 <tr>
                     <td>Expense Report ID:</td>
-                    <td><asp:Label ID="ExpenseReportIDLabel" runat="server" Text='<%# Eval("ExpenseReportID") %>' /></td>
+                    <td>
+                        <asp:Label ID="ExpenseReportIDLabel" runat="server" Text='<%# Eval("ExpenseReportID") %>' /></td>
                 </tr>
                 <tr>
                     <td>Employee Name:
@@ -65,7 +66,7 @@
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
                     </td>
                 </tr>
-<%--                <tr>
+                <%--                <tr>
                     <td>Payment Type:
                     </td>
                     <td>
@@ -87,7 +88,7 @@
                         <asp:MaskedEditValidator ID="Maskededitvalidator" ValidationGroup="update" runat="server" ForeColor="Red" ControlToValidate="ExpenseDateTextBox" ControlExtender="meeExpenseDate" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
                     </td>
                 </tr>
-<%--                <tr>
+                <%--                <tr>
                     <td>Advance Amount:
                     </td>
                     <td>
@@ -98,7 +99,7 @@
                     <td>Business Purpose:
                     </td>
                     <td>
-                        <asp:TextBox ID="BusinessPurposeTextBox" runat="server" Text='<%# Bind("BusinessPurpose") %>' TextMode="MultiLine" Rows="5" Width="500" />
+                        <asp:TextBox ID="BusinessPurposeTextBox" runat="server" Text='<%# Bind("BusinessPurpose") %>' Width="500" />
                     </td>
                 </tr>
                 <tr>
@@ -110,7 +111,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold;">Enter an expense
+                    <td style="font-weight: bold;">Enter an expense
                     </td>
                     <td>
                         <asp:DropDownList ID="ddlExpenseCategories" runat="server" AutoPostBack="True" DataSourceID="sdsExpenseCategories" DataValueField="CategoryID" AppendDataBoundItems="true" DataTextField="label" OnSelectedIndexChanged="ddlExpenseCategories_SelectedIndexChanged">
@@ -119,8 +120,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold;">Expense details:</td>
-                    <td>                        
+                    <td style="font-weight: bold;">Expense details:</td>
+                    <td>
                         <asp:Panel ID="panStd" runat="server" Visible="false">
                             <asp:FormView runat="server" ID="frmStdExpenseDetails" DefaultMode="Insert" OnItemInserting="frmStdExpenseDetails_ItemInserting" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px">
                                 <InsertItemTemplate>
@@ -157,7 +158,7 @@
                                                         <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="http://lcl-adimp/_layouts/15/start.aspx#/SitePages/Kilometer%20Rate.aspx" Text="Intranet link" Target="_blank"></asp:HyperLink>
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /><asp:Button runat="server" id="btnCalculate" OnClick="btnCalculate_Click" Text="Calculate Total" /></td>
+                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /><asp:Button runat="server" ID="btnCalculate" OnClick="btnCalculate_Click" Text="Calculate Total" /></td>
                                             </tr>
                                         </asp:Panel>
                                         <tr>
@@ -170,22 +171,25 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><asp:Label runat="server" Text="Description" ID="DescriptionLabel" />
+                                            <td>
+                                                <asp:Label runat="server" Text="Description" ID="DescriptionLabel" />
                                             </td>
                                             <td>
                                                 <asp:TextBox runat="server" ID="ExpenseItemDescriptionTextBox" />
                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="InsertDetails" ForeColor="Red" ErrorMessage="Description required" ControlToValidate="ExpenseItemDescriptionTextBox" />
-                                                </td>
+                                            </td>
                                         </tr>
                                         <asp:Panel ID="panExtras" runat="server">
                                             <tr>
                                                 <td>Non-Taxable Extras:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("NonTaxableExtras")%>' runat="server" ID="Non_TaxableExtrasTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("NonTaxableExtras")%>' runat="server" ID="Non_TaxableExtrasTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator5" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="Non_TaxableExtrasTextBox" ValidationGroup="InsertDetails" />
+                                                </td>
                                             </tr>
                                         </asp:Panel>
-                                        
+
                                         <%-- %><tr>
                                             <td>TaxCategory:
                                             </td>
@@ -198,7 +202,18 @@
                                                 <td>Tip:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("Tip") %>' runat="server" ID="TipTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("Tip") %>' runat="server" ID="TipTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator6" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="TipTextBox" ValidationGroup="InsertDetails" />
+                                                </td>
+                                            </tr>
+                                        </asp:Panel>
+
+                                        <asp:Panel ID="panGuests" runat="server" Visible="false">
+                                            <tr>
+                                                <td>List of guests <br />(specify name, company and remarks):
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Guests")%>' runat="server" ID="GuestsTextbox" textmode="MultiLine" Rows="5" width="500"/></td>
                                             </tr>
                                         </asp:Panel>
                                         <asp:Panel ID="panLodging" runat="server">
@@ -206,7 +221,10 @@
                                                 <td>Lodging Taxes:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("Lodging_Taxes") %>' runat="server" ID="Lodging_TaxesTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("Lodging_Taxes") %>' runat="server" ID="Lodging_TaxesTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator4" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="Lodging_TaxesTextBox" ValidationGroup="InsertDetails" />
+                                                </td>
+
                                             </tr>
                                         </asp:Panel>
                                         <asp:Panel ID="panAir" runat="server">
@@ -214,13 +232,17 @@
                                                 <td>XG: GST/HST Taxes:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("AGST") %>' runat="server" ID="AGSTTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("AGST") %>' runat="server" ID="AGSTTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator7" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="AGSTTextBox" ValidationGroup="InsertDetails" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>XQ: QST Taxes:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("AQST") %>' runat="server" ID="AQSTTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("AQST") %>' runat="server" ID="AQSTTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator8" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="AQSTTextBox" ValidationGroup="InsertDetails" />
+                                                </td>
                                             </tr>
                                         </asp:Panel>
                                         <tr>
@@ -232,7 +254,7 @@
                                                 </asp:DropDownList>
                                                 <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
                                         </tr>
-<%--                                        <tr>
+                                        <%--                                        <tr>
                                             <td>Type of transaction:
                                             </td>
                                             <td>
@@ -276,9 +298,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold;">Expenses List</td>
+                    <td style="font-weight: bold;">Expenses List</td>
                     <td>
-                        <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting" >
+                        <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
+                            RowStyle-CssClass="grid_RowStyle"
+                            CellPadding="4" ForeColor="#333333"
+                            Font-Size="10px" OnSelectedIndexChanged="gvExpenseDetails_SelectedIndexChanged" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting">
                             <Columns>
                                 <%--<asp:BoundField DataField="ExpenseDetailID" HeaderText="ExpenseDetailID" InsertVisible="False" ReadOnly="True" SortExpression="ExpenseDetailID" />--%>
                                 <%--<asp:BoundField DataField="ExpenseReportID" HeaderText="ExpenseReportID" SortExpression="ExpenseReportID" />--%>
@@ -287,11 +312,7 @@
                                         <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this expense?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                               <asp:TemplateField ShowHeader="False">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="EditButton" ForeColor="Black" runat="server" CommandName="Edit" Text="Edit" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:TemplateField HeaderText="Category" SortExpression="CategoryID">
                                     <ItemTemplate>
                                         <asp:Label ID="CategoryLabel" runat="server" Text='<%# FindCategory(Eval("CategoryID")) %>' />
@@ -335,8 +356,9 @@
                             <EmptyDataTemplate>
                                 No expense entered yet!
                             </EmptyDataTemplate>
-                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" Font-Size="8px" />
-                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
                             <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
                             <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
                             <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
@@ -350,7 +372,7 @@
                 <tr>
                     <td>
                         <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
-                        &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+                        <%--&nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
                     </td>
                     <td></td>
                 </tr>
@@ -404,7 +426,7 @@
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
                     </td>
                 </tr>
-<%--                <tr>
+                <%--                <tr>
                     <td>Payment Type:
                     </td>
                     <td>
@@ -426,7 +448,7 @@
                         <asp:MaskedEditValidator ID="Maskededitvalidator" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="ExpenseDateTextBox" ControlExtender="meeExpenseDate" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
                     </td>
                 </tr>
-<%--                <tr>
+                <%--                <tr>
                     <td>Advance Amount:
                     </td>
                     <td>
@@ -437,7 +459,7 @@
                     <td>Business Purpose:
                     </td>
                     <td>
-                        <asp:TextBox ID="BusinessPurposeTextBox" runat="server" Text='<%# Bind("BusinessPurpose") %>' TextMode="MultiLine" Rows="5" Width="500" />
+                        <asp:TextBox ID="BusinessPurposeTextBox" runat="server" Text='<%# Bind("BusinessPurpose") %>' Width="500" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Business Purpose required" ControlToValidate="BusinessPurposeTextBox" />
                     </td>
                 </tr>
@@ -450,7 +472,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Enter an expense
+                    <td style="font-weight: bold">Enter an expense
                     </td>
                     <td>
                         <asp:DropDownList ID="ddlExpenseCategories" runat="server" AutoPostBack="True" DataSourceID="sdsExpenseCategories" DataValueField="CategoryID" AppendDataBoundItems="true" DataTextField="label" OnSelectedIndexChanged="ddlExpenseCategories_SelectedIndexChanged">
@@ -459,7 +481,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td  style="font-weight:bold">Expense details:</td>
+                    <td style="font-weight: bold">Expense details:</td>
                     <td>
                         <asp:Panel ID="panStd" runat="server" Visible="false">
                             <asp:FormView runat="server" ID="frmStdExpenseDetails" DefaultMode="Insert" OnItemInserting="frmStdExpenseDetails_ItemInserting" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px">
@@ -497,7 +519,7 @@
                                                         <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="http://lcl-adimp/_layouts/15/start.aspx#/SitePages/Kilometer%20Rate.aspx" Text="Intranet link" Target="_blank"></asp:HyperLink>
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /><asp:Button runat="server" id="btnCalculate" OnClick="btnCalculate_Click" Text="Calculate Total" /></td>
+                                                    <asp:TextBox Text='<%# Bind("Km_Rate") %>' runat="server" ID="Km_RateTextBox" /><asp:Button runat="server" ID="btnCalculate" OnClick="btnCalculate_Click" Text="Calculate Total" /></td>
                                             </tr>
                                         </asp:Panel>
                                         <tr>
@@ -510,22 +532,24 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><asp:Label runat="server" Text="Description" ID="DescriptionLabel" />
+                                            <td>
+                                                <asp:Label runat="server" Text="Description" ID="DescriptionLabel" />
                                             </td>
                                             <td>
                                                 <asp:TextBox runat="server" ID="ExpenseItemDescriptionTextBox" />
                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="InsertDetails" ForeColor="Red" ErrorMessage="Description required" ControlToValidate="ExpenseItemDescriptionTextBox" />
-                                                </td>
+                                            </td>
                                         </tr>
                                         <asp:Panel ID="panExtras" runat="server">
                                             <tr>
                                                 <td>Non-Taxable Extras:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("NonTaxableExtras")%>' runat="server" ID="Non_TaxableExtrasTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("NonTaxableExtras")%>' runat="server" ID="Non_TaxableExtrasTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator1" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="Non_TaxableExtrasTextBox" ValidationGroup="InsertDetails" /></td>
                                             </tr>
                                         </asp:Panel>
-                                        
+
                                         <%-- %><tr>
                                             <td>TaxCategory:
                                             </td>
@@ -538,7 +562,16 @@
                                                 <td>Tip:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("Tip") %>' runat="server" ID="TipTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("Tip") %>' runat="server" ID="TipTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator2" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="TipTextBox" ValidationGroup="InsertDetails" /></td>
+                                            </tr>
+                                        </asp:Panel>
+                                        <asp:Panel ID="panGuests" runat="server" visiblae="false">
+                                            <tr>
+                                                <td>List of guests  <br />(specify name, company and remarks):
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox Text='<%# Bind("Guests")%>' runat="server" ID="GuestsTextbox" textmode="MultiLine" Rows="5" width="500" /></td>
                                             </tr>
                                         </asp:Panel>
                                         <asp:Panel ID="panLodging" runat="server">
@@ -546,7 +579,9 @@
                                                 <td>Lodging Taxes:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("Lodging_Taxes") %>' runat="server" ID="Lodging_TaxesTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("Lodging_Taxes") %>' runat="server" ID="Lodging_TaxesTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator9" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="Lodging_TaxesTextBox" ValidationGroup="InsertDetails" /></td>
+                                                </td>
                                             </tr>
                                         </asp:Panel>
                                         <asp:Panel ID="panAir" runat="server">
@@ -554,13 +589,15 @@
                                                 <td>XG: GST/HST Taxes:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("AGST") %>' runat="server" ID="AGSTTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("AGST") %>' runat="server" ID="AGSTTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator10" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="AGSTTextBox" ValidationGroup="InsertDetails" /></td>
                                             </tr>
                                             <tr>
                                                 <td>XQ: QST Taxes:
                                                 </td>
                                                 <td>
-                                                    <asp:TextBox Text='<%# Bind("AQST") %>' runat="server" ID="AQSTTextBox" /></td>
+                                                    <asp:TextBox Text='<%# Bind("AQST") %>' runat="server" ID="AQSTTextBox" />
+                                                    <asp:RangeValidator ID="RangeValidator11" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="AQSTTextBox" ValidationGroup="InsertDetails" /></td>
                                             </tr>
                                         </asp:Panel>
                                         <tr>
@@ -572,7 +609,7 @@
                                                 </asp:DropDownList>
                                                 <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
                                         </tr>
-<%--                                        <tr>
+                                        <%--                                        <tr>
                                             <td>Type of transaction:
                                             </td>
                                             <td>
@@ -616,9 +653,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold;">Expenses List</td>
+                    <td style="font-weight: bold;">Expenses List</td>
                     <td>
-                        <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" OnRowDataBound="gvExpenseDetails_RowDataBound" OnRowDeleting="gvExpenseDetails_RowDeleting">
+                        <asp:GridView ID="gvExpenseDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
+                            RowStyle-CssClass="grid_RowStyle"
+                            CellPadding="4" ForeColor="#333333"
+                            Font-Size="10px" OnSelectedIndexChanged="gvExpenseDetails_SelectedIndexChanged" OnRowDeleting="gvExpenseDetails_RowDeleting">
                             <Columns>
                                 <%--<asp:BoundField DataField="ExpenseDetailID" HeaderText="ExpenseDetailID" InsertVisible="False" ReadOnly="True" SortExpression="ExpenseDetailID" />--%>
                                 <%--<asp:BoundField DataField="ExpenseReportID" HeaderText="ExpenseReportID" SortExpression="ExpenseReportID" />--%>
@@ -627,6 +667,7 @@
                                         <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this expense?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:TemplateField HeaderText="Category" SortExpression="CategoryID">
                                     <ItemTemplate>
                                         <asp:Label ID="CategoryLabel" runat="server" Text='<%# FindCategory(Eval("CategoryID")) %>' />
@@ -670,8 +711,9 @@
                             <EmptyDataTemplate>
                                 No expense entered yet!
                             </EmptyDataTemplate>
-                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" Font-Size="8px" />
-                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
                             <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
                             <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
                             <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
@@ -684,7 +726,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" ValidationGroup="Insert" CommandName="Insert" Text="Submit Expense" />
+                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" ValidationGroup="Insert" CommandName="Insert" Text="Save Expense Report" />
                         <%--&nbsp;<asp:Button ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
                     </td>
                     <td></td>
@@ -696,7 +738,7 @@
         HeaderStyle-CssClass="grid_Header"
         RowStyle-CssClass="grid_RowStyle"
         CellPadding="4" ForeColor="#333333"
-        Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvExpenseReports_SelectedIndexChanged" OnSelectedIndexChanging="gvExpenseReports_SelectedIndexChanging" OnRowCommand="gvExpenseReports_RowCommand" >
+        Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvExpenseReports_SelectedIndexChanged" OnSelectedIndexChanging="gvExpenseReports_SelectedIndexChanging" OnRowCommand="gvExpenseReports_RowCommand">
         <Columns>
             <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
@@ -704,9 +746,9 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
-            <asp:TemplateField ShowHeader="false" >
+            <asp:TemplateField ShowHeader="false">
                 <ItemTemplate>
-                    <asp:LinkButton ID="btnAddToCard" runat="server" CausesValidation="false" Text="Show Report" ForeColor="Black"
+                    <asp:LinkButton ID="btnAddToCard" runat="server" CausesValidation="false" Text="Show & Print Report" ForeColor="Black"
                         CommandName="ShowReport" CommandArgument='<%# Eval("ExpenseReportID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
@@ -714,9 +756,9 @@
             <asp:BoundField DataField="ManagerName" HeaderText="Manager" SortExpression="ManagerName" />
             <asp:BoundField DataField="ExpenseDate" HeaderText="Expense Date" SortExpression="ExpenseDate" DataFormatString="{0:d}" />
             <asp:BoundField DataField="shortBusiness" HeaderText="Business Purpose" SortExpression="shortBusiness" />
-            <%--<asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" SortExpression="EmployeeName" />
+            <asp:BoundField DataField="EmployeeName" HeaderText="Employee Name" SortExpression="EmployeeName" />
             <asp:BoundField DataField="EmployeeDomainUser" HeaderText="EmployeeDomainUser" SortExpression="EmployeeDomainUser" />
-            <asp:BoundField DataField="EmployeeEmail" HeaderText="Employee Email" SortExpression="EmployeeEmail" />--%>
+            <%--<asp:BoundField DataField="EmployeeEmail" HeaderText="Employee Email" SortExpression="EmployeeEmail" />--%>
             <%--<asp:BoundField DataField="AdvanceAmount" HeaderText="Advance Amount" SortExpression="AdvanceAmount" />--%>
             <%--<asp:BoundField DataField="PaymentType" HeaderText="Payment Type" SortExpression="PaymentType" />--%>
             <asp:BoundField DataField="Total" HeaderText="Total" SortExpression="Total" DataFormatString="{0:c}" />
@@ -826,7 +868,7 @@
                order by tblExpenseReports.ExpenseReportID desc"
         DeleteCommand="Update tblexpensereports set visible = 0 where expensereportID = @ExpenseReportID">
         <SelectParameters>
-            <asp:SessionParameter Name ="Username" SessionField="Username" />
+            <asp:SessionParameter Name="Username" SessionField="Username" />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsDepartments" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"

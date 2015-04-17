@@ -8,6 +8,11 @@ Public Class NERManager
         Session("Username") = Me.User.Identity.Name.ToString
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
+
+        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" Then
+            'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
+            Response.Redirect("~/NER/AccessDenied.aspx")
+        End If
     End Sub
 
     Protected Sub gvNewEmployeeRequests_OnSelectedIndexChanged(sender As Object, e As EventArgs)
@@ -32,7 +37,30 @@ Public Class NERManager
 
             'CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
             'CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
-            'End If
+            'End If            
+            If frmInsert.CurrentMode = FormViewMode.Edit Then
+                If CType(frmInsert.FindControl("chkReplacement"), CheckBox).Checked = True Then
+                    CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = True
+                    CType(frmInsert.FindControl("lblReplacement"), Label).Visible = True
+                Else
+                    CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = False
+                    CType(frmInsert.FindControl("lblReplacement"), Label).Visible = False
+                End If
+
+                If CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Denied" Then
+                    CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Text = "Reason: "
+                ElseIf CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Closed" Then
+                    CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Text = "Employee Name: "
+                Else
+                    CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = False
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = False
+                End If
+                UpdatePanel1.Update()
+            End If
         Catch ex As Exception
 
         End Try
@@ -52,7 +80,7 @@ Public Class NERManager
             reader.Close()
 
             'Copy the files
-            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\NewEmployeeRequest\Ner" & Session("ID") & "\"
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & Session("ID") & "\"
             System.IO.Directory.CreateDirectory(savePath)
 
             If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
@@ -65,13 +93,13 @@ Public Class NERManager
                                  "Name: " & CType(frmInsert.FindControl("NameTextBox"), TextBox).Text & vbCrLf & _
                                  "Employee Type: " & CType(frmInsert.FindControl("EmployeeTypeDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Date Needed:" & CType(frmInsert.FindControl("DateNeededTextBox"), TextBox).Text & vbCrLf & _
-                                 "Please go to this address: http://lcl-sql2k5-s:81/NER/NER.aspx to see it!"
+                                 "Please go to this address: http://lcl-sql2k5-s:81/NER/NER.aspx to see it!" & vbCrLf
             Dim mm As New MailMessage("NER@Laurentide.com", "NER@laurentide.com", "New Employee request: " & Session("ID") & " issued by " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text, body)
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
-            'smtp.Send(mm)
-            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
+            smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
 
             'update gridview
             Me.gvNewEmployeeRequests.DataBind()
@@ -93,7 +121,7 @@ Public Class NERManager
             Dim managerEmail As String = reader.GetString(0)
             reader.Close()
 
-            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\NewEmployeeRequest\Ner" & Session("ID") & "\"
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & "\"
             System.IO.Directory.CreateDirectory(savePath)
 
             If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
@@ -111,8 +139,8 @@ Public Class NERManager
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
-            'smtp.Send(mm)
-            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewreq();", True)
+            smtp.Send(mm)
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
 
             'update gridview
             Me.gvNewEmployeeRequests.DataBind()
@@ -124,5 +152,29 @@ Public Class NERManager
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
         Dim ID As Integer = e.Command.Parameters("@ID").Value
         Session("ID") = ID
+    End Sub
+    Protected Sub chkReplacement_CheckedChanged(sender As Object, e As EventArgs)
+        If CType(frmInsert.FindControl("chkReplacement"), CheckBox).Checked = True Then
+            CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = True
+            CType(frmInsert.FindControl("lblReplacement"), Label).Visible = True
+        Else
+            CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = False
+            CType(frmInsert.FindControl("lblReplacement"), Label).Visible = False
+        End If
+    End Sub
+
+    Protected Sub StatusDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Denied" Then
+            CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = True
+            CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = True
+            CType(frmInsert.FindControl("StatusReasonLabel"), Label).Text = "Reason: "
+        ElseIf CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedItem.Text = "Closed" Then
+            CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = True
+            CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = True
+            CType(frmInsert.FindControl("StatusReasonLabel"), Label).Text = "Employee Name: "
+        Else
+            CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = False
+            CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = False
+        End If
     End Sub
 End Class

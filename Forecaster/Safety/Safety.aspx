@@ -17,7 +17,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Description
+                    <td>Description:
                     </td>
                     <td>
                         <asp:TextBox ID="DescriptionTextbox" runat="server" Text='<%# Bind("Description")%>' Width="500" />
@@ -405,7 +405,7 @@
         <InsertItemTemplate>
             <table>
                 <tr>
-                    <td>Description
+                    <td><b>Description:</b>
                     </td>
                     <td>
                         <asp:TextBox ID="DescriptionTextbox" runat="server" Text='<%# Bind("Description")%>' Width="500" />
@@ -413,7 +413,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Catégorie/Type:
+                    <td><b>Catégorie/Type:</b>
                     </td>
                     <td>
                         <asp:DropDownList ID="TypeDropDown" runat="server" DataSourceID="sdsSafetyTypes" AppendDataBoundItems="true" DataValueField="SafetyTypeID" DataTextField="SafetyType" SelectedValue='<%# Bind("SafetyTypeID")%>'>
@@ -435,7 +435,7 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Créé par/Issued By:
+                    <td><b>Créé par/Issued By:</b>
                     </td>
                     <td>
                         <asp:TextBox ID="IssuedByTextBox" runat="server" Text='<%# Bind("IssuedBy") %>' Width="250" />
@@ -443,7 +443,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Date de l'incident/Incident date:
+                    <td><b>Date de l'incident/Incident date:</b>
                     </td>
                     <td>
                         <asp:TextBox ID="IncidentDateTextbox" runat="server" Text='<%# Bind("IncidentDate")%>' Width="250" />
@@ -455,7 +455,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Courriel/Email:
+                    <td><b>Courriel/Email:</b>
                     </td>
                     <td>
                         <asp:TextBox ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' Width="250" />
@@ -465,7 +465,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Superviseur/Manager:
+                    <td><b>Superviseur/Manager:</b>
                     </td>
                     <td>
                         <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -508,7 +508,7 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td>Province de l'incident/Province where the incident occured
+                    <td><b>Province de l'incident/Province where the incident occured</b>
                     </td>
                     <td>
                         <asp:DropDownList ID="ProvinceDropDown" runat="server" DataSourceID="sdsProvinces" AppendDataBoundItems="true" DataValueField="ProvinceID" DataTextField="Province" SelectedValue='<%# Bind("ProvinceID")%>'>
@@ -518,7 +518,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">Circonstances/Circumstances (Lieu de l'évènement/Description exacte/À quelle heure/Conséquences)|(Where/Description/Exact time/Consequences):</td>
+                    <td colspan="2"><b>Circonstances/Circumstances (Lieu de l'évènement/Description exacte/À quelle heure/Conséquences)|(Where/Description/Exact time/Consequences):</b></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -548,7 +548,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Blessure et traitement requis/Wound and required treatment
+                    <td><b>Blessure et traitement requis/Wound and required treatment</b>
                     </td>
                     <td>
                         <asp:DropDownList ID="TreatmentDropDown" runat="server" DataSourceID="sdsTreatments" AppendDataBoundItems="true" DataValueField="TreatmentID" DataTextField="Treatment" SelectedValue='<%# Bind("TreatmentID")%>'>
@@ -645,13 +645,13 @@
                 </tr>--%>
                
                 <tr>
-                    <td colspan="2">Selon vous, quels sont les causes de cet incident ou potentiel incident (erreur humaine, problème d'équipement, mauvais matériels, facteurs environnementales, erreur dans un procédé)?<br />
-                        In your opinion, what are the root causes of this incident or potential incident (Human error, equipement defect, wrong materials, environment factors, error(s) in a process)?</td>
+                    <td colspan="2"><b>Selon vous, quels sont les causes de cet incident ou potentiel incident (erreur humaine, problème d'équipement, mauvais matériels, facteurs environnementales, erreur dans un procédé)?<br />
+                        In your opinion, what are the root causes of this incident or potential incident (Human error, equipement defect, wrong materials, environment factors, error(s) in a process)?</b></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <asp:TextBox ID="SuspectedRootCauseTextbox" runat="server" Text='<%# Bind("SuspectedRootCause")%>' TextMode="MultiLine" Rows="7" Width="500" />
+                        <b><asp:TextBox ID="SuspectedRootCauseTextbox" runat="server" Text='<%# Bind("SuspectedRootCause")%>' TextMode="MultiLine" Rows="7" Width="500" /></b>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Suspected root cause required" ControlToValidate="SuspectedRootCauseTextbox" />
                     </td>
                 </tr>

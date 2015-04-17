@@ -21,8 +21,17 @@
             alert('Email Sent!')
         }
 
+
+        function alertaccess() {
+            alert('Access Denied!')
+        }
+
         function alertemailnewcase() {
             alert('Email sent! Le comité de sécurité fera un suivi de votre requête d’ici deux semaines.  S’il s’agit d’une urgence veuillez contacter votre supérieur immédiat / The safety committee will follow-up on your request within two weeks.  If this is an emergency, please contact your manager.')
+        }
+
+        function alertemailnewQLTcase() {
+            alert('Email sent! Le comité de qualité fera un suivi de votre requête d’ici deux semaines.  S’il s’agit d’une urgence veuillez contacter votre supérieur immédiat / The quality team will follow-up on your request within two weeks.  If this is an emergency, please contact your manager.')
         }
 
         function alertemailnewreq() {

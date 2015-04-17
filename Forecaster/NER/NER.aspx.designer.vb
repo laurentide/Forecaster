@@ -23,6 +23,15 @@ Partial Public Class NER
     Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
 
     '''<summary>
+    '''UpdatePanel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
     '''frmInsert control.
     '''</summary>
     '''<remarks>
