@@ -32,7 +32,7 @@ Public Class QLT
 
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
-                                 "Please go to this address:http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
+                                 "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
                                  "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
             Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "New Quality case #:" & Session("ID") & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
@@ -65,7 +65,7 @@ Public Class QLT
 
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
-                                 "Please go to this address:http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
+                                 "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
                                  "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
             Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
