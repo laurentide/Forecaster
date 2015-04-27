@@ -677,7 +677,7 @@
                        LEFT JOIN tblpurchasecategories
                        on Tblpurchaserequests.purchasecategoryid = tblpurchasecategories.purchasecategoryid
                        where RequesterUsername = @RequesterUsername
-                       and visible = 1
+                       and visible = 1 
                        order by purchaseRequestID desc"
         DeleteCommand="update tblpurchaseRequests set visible = 0 where purchaserequestid = @PurchaseRequestID">
         <SelectParameters>
