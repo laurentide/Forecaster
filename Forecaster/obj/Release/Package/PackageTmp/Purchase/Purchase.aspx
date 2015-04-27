@@ -687,7 +687,7 @@
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsDepartments" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="select * from tblDepartments order by departmentName"></asp:SqlDataSource>
+        SelectCommand="select * from tblDepartments where departmentid <> 16 order by departmentName"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsApprovalTypes" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblApprovalTypes"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsPurchaseCategories" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"

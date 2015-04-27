@@ -195,7 +195,7 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select a category" ControlToValidate="PurchaseCategoryDropDown" />
                     </td>
                 </tr>
-                <tr>
+<%--                <tr>
                     <td style="background-color:#E6E6E6">BOLT Sponsor:
                     </td>
                     <td>
@@ -208,7 +208,7 @@
                     <td>
                         <asp:Label ID="PurchaseAgentLabel" runat="server" />
                     </td>
-                </tr>
+                </tr>--%>
 <%--                <tr>
                     <td>Is this an IT item? <br /><span style="font-weight:bold">(If yes, the buyer needs to be Johanne Legault)</span> 
                     </td>
@@ -217,7 +217,7 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td style="background-color:#E6E6E6">Message to purchase agent
+                    <td style="background-color:#E6E6E6">Message to IT:
                     </td>
                     <td>
                         <asp:TextBox ID="ITMessageTextBox" runat="server" TextMode="MultiLine" Height="100" Width="500" Text='<%# Bind("ITMessage")%>' />
@@ -232,7 +232,7 @@
                     </td>
                 </tr>--%>
                 <tr>
-                    <td style="background-color:#E6E6E6">Order Entry:
+                    <td style="background-color:#E6E6E6">Order Entry/Buyer:
                     </td>
                     <td>
                         <asp:DropDownList ID="BuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BuyerID")%>'>
@@ -243,7 +243,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="background-color:#E6E6E6">Backup Order Entry:
+                    <td style="background-color:#E6E6E6">Backup Order Entry/Buyer:
                     </td>
                     <td>
                         <asp:DropDownList ID="BackupBuyerDropDown" runat="server" DataSourceID="sdsBuyers" AppendDataBoundItems="true" DataValueField="BuyerID" DataTextField="BuyerName" SelectedValue='<%# Bind("BackupBuyerID")%>'>

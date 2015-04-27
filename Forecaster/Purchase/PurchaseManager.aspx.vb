@@ -147,27 +147,29 @@ Public Class PurchaseManager
             Dim connectionString As String
             connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
             Dim SqlConnection As New SqlConnection(connectionString)
+
             SqlConnection.Open()
+            'Dim reader As SqlDataReader
 
-            'Purchasing Agent
-            Dim sc As New SqlCommand("select tblPurchasingAgents.purchasingAgent from tblPurchasingAgents inner join tblpurchasecategories on tblpurchasecategories.PurchasingAgentid = tblPurchasingAgents.PurchasingAgentID where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue, SqlConnection)
-            Dim reader As SqlDataReader = sc.ExecuteReader()
-            reader.Read()
-            CType(frmView.FindControl("PurchaseAgentLabel"), Label).Text = reader.GetString(0)
-            reader.Close()
+            ''Purchasing Agent
+            'Dim sc As New SqlCommand("select tblPurchasingAgents.purchasingAgent from tblPurchasingAgents inner join tblpurchasecategories on tblpurchasecategories.PurchasingAgentid = tblPurchasingAgents.PurchasingAgentID where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue, SqlConnection)
+            'Dim reader As SqlDataReader = sc.ExecuteReader()
+            'reader.Read()
+            'CType(frmView.FindControl("PurchaseAgentLabel"), Label).Text = reader.GetString(0)
+            'reader.Close()
 
-            'Bolt sponsor
-            sc.CommandText = "Select tblBoltSponsors.Boltsponsor from tblBoltSponsors inner join  tblpurchasecategories on tblpurchasecategories.boltsponsorid = tblboltsponsors.boltsponsorid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue
-            reader = sc.ExecuteReader
-            reader.Read()
-            CType(frmView.FindControl("boltsponsorlabel"), Label).Text = reader.GetString(0)
-            reader.Close()
+            ''Bolt sponsor
+            'sc.CommandText = "Select tblBoltSponsors.Boltsponsor from tblBoltSponsors inner join  tblpurchasecategories on tblpurchasecategories.boltsponsorid = tblboltsponsors.boltsponsorid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue
+            'reader = sc.ExecuteReader
+            'reader.Read()
+            'CType(frmView.FindControl("boltsponsorlabel"), Label).Text = reader.GetString(0)
+            'reader.Close()
 
             'Buyer
             Dim BuyerDropDown As DropDownList
             BuyerDropDown = CType(frmView.FindControl("BuyerDropDown"), DropDownList)
-            sc.CommandText = "Select tblbuyers.buyerid from tblbuyers inner join  tblpurchasecategories on tblpurchasecategories.AdminOE = tblbuyers.buyerid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue
-            reader = sc.ExecuteReader
+            Dim sc As New SqlCommand("Select tblbuyers.buyerid from tblbuyers inner join  tblpurchasecategories on tblpurchasecategories.AdminOE = tblbuyers.buyerid where purchasecategoryid =  " & CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue, SqlConnection)
+            Dim reader As SqlDataReader = sc.ExecuteReader
             reader.Read()
             BuyerDropDown.SelectedValue = reader.GetInt32(0)
             reader.Close()
