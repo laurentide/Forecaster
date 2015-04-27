@@ -33,4 +33,5 @@ C:\Data\Projects\Forecaster\Forecaster\obj\Debug\RdlCompile.compiled
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.dll
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.xml
 C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.pdb
-C:\Data\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.vbprojResolveAssemblyReference.cache
+C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.dll.CodeAnalysisLog.xml
+C:\Data\Projects\Forecaster\Forecaster\bin\Forecaster.dll.lastcodeanalysissucceeded
