@@ -38,10 +38,10 @@ Public Class PurchaseManager
                                  "Date Required: " & CType(frmView.FindControl("DateRequiredTextBox"), Label).Text & vbCrLf & _
                                  "Requested by: " & CType(frmView.FindControl("RequesterNameTextBox"), Label).Text & vbCrLf & _
                                  "Approved by: " & CType(frmView.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
-                                 "Approved on: " & Session("DateApproved") & vbCrLf & _
-                                 "Purchasing Agent" & CType(frmView.FindControl("PurchaseAgentLabel"), Label).Text & vbCrLf & _
-                                 "Message to purchase agent: " & CType(frmView.FindControl("ITMessageTextBox"), TextBox).Text & vbCrLf & _
-                                 "Bolt Sponsor" & CType(frmView.FindControl("BoltSponsorLabel"), Label).Text
+                                 "Approved on: " & Session("DateApproved")
+            '"Purchasing Agent" & CType(frmView.FindControl("PurchaseAgentLabel"), Label).Text & vbCrLf & _
+            '"Message to purchase agent: " & CType(frmView.FindControl("ITMessageTextBox"), TextBox).Text & vbCrLf & _
+            '"Bolt Sponsor" & CType(frmView.FindControl("BoltSponsorLabel"), Label).Text
 
             Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request Approved (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
             If CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue = 1 Or CType(frmView.FindControl("PurchaseCategoryDropDown"), DropDownList).SelectedValue = 2 Then
