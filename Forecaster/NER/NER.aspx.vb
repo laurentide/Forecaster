@@ -9,7 +9,7 @@ Public Class NER
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
 
-        If Not User.IsInRole("LCLMTL\LCL_manager_folder_access") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" Then
+        If Not User.IsInRole("LCLMTL\LCL_manager_folder_access") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" And Not User.Identity.Name = "LCLMTL\mignoto" Then
             'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
             Response.Redirect("~/NER/AccessDenied.aspx")
         End If
