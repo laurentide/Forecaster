@@ -151,4 +151,20 @@ Public Class NER
             CType(frmInsert.FindControl("lblReplacement"), Label).Visible = False
         End If
     End Sub
+
+    'This method makes the PROI details visible 
+    Protected Sub PROI_ID_onSelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panel As Panel
+        Dim proi As DropDownList
+
+        panel = CType(frmInsert.FindControl("proi_panel"), Panel)
+        proi = CType(frmInsert.FindControl("proi_id"), DropDownList)
+
+        Select Case proi.SelectedValue
+            Case 0
+                panel.Visible = False
+            Case 1
+                panel.Visible = True
+        End Select
+    End Sub
 End Class

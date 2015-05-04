@@ -223,6 +223,16 @@
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
                             </td>
                         </tr>
+                      
+<%--                        <tr>
+                            <td>Source of Recruitment:</td>
+                            <td>
+                                <asp:DropDownList ID="RecruitmentSourceDropDown" runat="server" DataSourceID="sdsRecruitmentSource" AppendDataBoundItems="true" DataValueField="RecruitmentSourceID" DataTextField="RecruitmentSource" SelectedValue='<%# Bind("RecruitmentSourceID")%>'>
+                                    <asp:ListItem Text="(Select the recruitment source)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RFVRecruitmentSource" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your source of recruitment" ControlToValidate="RecruitmentSourceDropDown" />
+                            </td>
+                        </tr>--%>
                         <tr>
                             <td>Employment Form:</td>
                             <td>
@@ -351,7 +361,77 @@
                             <td>
                                 <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
                             </td>
+                        </tr>      
+
+                        <%-- Investment Sheet Integration --%>                  
+<%--                        <tr>
+                            <td>Investment Owner: </td>
+                            <td>
+                                <asp:TextBox ID="InvestmentOwnerID" runat="server" Text='<%# Bind("InvestmentOwner")%>' Width="500" /></td>
                         </tr>
+                        <tr>
+                            <td>Investment Start Date:</td>
+                            <td>
+                                <asp:TextBox ID="ISD_TextBox" runat="server" Text='<%# Bind("InvestmentStartDate")%>' />
+                                <asp:Image runat="server" ID="ISD_Image" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                                <asp:CalendarExtender ID="ISD_CalendarExtender" runat="server" TargetControlID="ISD_TextBox" PopupButtonID="ISD_Image" />
+                                <asp:MaskedEditExtender ID="ISD_MaskedEditExtender" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="ISD_TextBox" PromptCharacter="_" />
+                                <asp:MaskedEditValidator ID="ISD_Maskededitvalidator" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="ISD_TextBox" ControlExtender="ISD_MaskedEditExtender" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                                <asp:RequiredFieldValidator ID="ISD_RequiredFieldValidator" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a date needed for" ControlToValidate="ISD_TextBox" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Definition of Investment (What is the investment that is proposed?):</td>
+                            <td>
+                                <asp:TextBox ID="DOF_ID" runat="server" Text='<%# Bind("InvestmentDefinition") %>' TextMode="MultiLine" Rows="5" Width="500" /></td>
+                        </tr>
+                        <tr>
+                            <td>Benefit to Laurentide (Why should we consider doing this? - both hard and soft benefits):</td>
+                            <td>
+                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("InvestmentLaurentideBenefit")%>' TextMode="MultiLine" Rows="5" Width="500" /></td>
+                        </tr>    
+                        <tr>
+                            <td>Projected ROI (if applicable)</td>
+                            <td>
+                            <asp:DropDownList ID="proi_id" runat="server" AutoPostBack="True" AppendDataBoundItems="true" OnSelectedIndexChanged="PROI_ID_onSelectedIndexChanged">
+                                <asp:ListItem Text="Not Applicable" Value="0"/>
+                                <asp:ListItem Text="Applicable" Value="1"/>
+                            </asp:DropDownList>
+                            </td>
+                       </tr>  
+                       <tr>
+                           <td>Hi</td>
+                           <td>
+                           <asp:Panel ID="proi_panel" runat="server" Visible="false">
+                                <asp:FormView runat="server" ID="proiDetails" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px" DefaultMode="Insert">   
+                                <InsertItemTemplate>                         
+                                <table>
+                                <td>Year:</td>
+                                <td>
+                                   <asp:DropDownList ID="year_id" runat="server" AutoPostBack="True" AppendDataBoundItems="true">
+                                       <asp:ListItem Text="FY14 - Year 0" Value="0"/>
+                                       <asp:ListItem Text="FY15 - Year 1" Value="1"/>
+                                       <asp:ListItem Text="FY16 - Year 2" Value="2"/>
+                                       <asp:ListItem Text="FY17 - Year 3" Value="3"/>
+                                       <asp:ListItem Text="FY18 - Year 4" Value="4"/>
+                                   </asp:DropDownList>
+                                </td>
+                                </tr>
+                                <tr><td>Benefits:</td><td>
+                                    <asp:TextBox ID="benefits_tb" runat="server" Width="500" />
+                                </td></tr>
+                                    <tr><td>FY14 - Year 0:</td><td><asp:TextBox ID="year0" runat="server" Width="500" /></td></tr>
+                                    <tr><td>FY15 - Year 1:</td><td><asp:TextBox ID="year1" runat="server" Width="500" /></td></tr>
+                                    <tr><td>FY16 - Year 2:</td><td><asp:TextBox ID="year2" runat="server" Width="500" /></td></tr>
+                                    <tr><td>FY17 - Year 3:</td><td><asp:TextBox ID="year3" runat="server" Width="500" /></td></tr>
+                                    <tr><td>FY18 - Year 4:</td><td><asp:TextBox ID="year4" runat="server" Width="500" /></td></tr>
+                                    <tr><td><asp:Button runat="server" Text="Add Projected ROI" CommandName="Insert" ID="InsertButton" CausesValidation="True" ValidationGroup="InsertDetails" /></td></tr>
+                                </table>
+                                </InsertItemTemplate>    
+                                </asp:FormView>
+                           </td>
+                           </asp:Panel>
+                       </tr>--%>
                 </InsertItemTemplate>
             </asp:FormView>
 
@@ -410,7 +490,7 @@
            ,[StatusID]
            ,[EmployeeTypeID]
            ,[EmploymentFormID]
-           ,[SourceID]
+           ,[RecruitmentSourceID]
            ,[Name]
            ,[Position]
            ,[Budgeted]
@@ -432,7 +512,7 @@
            ,@StatusID
            ,@EmployeeTypeID
            ,@EmploymentFormID
-           ,@SourceID
+           ,@RecruitmentSourceID
            ,@Name
            ,@Position
            ,@Budgeted
@@ -455,7 +535,7 @@
       ,[StatusID] = @StatusID
       ,[EmployeeTypeID] = @EmployeeTypeID
       ,[EmploymentFormID] = @EmploymentFormID
-      ,[SourceID] = @SourceID
+      ,[RecruitmentSourceID] = @RecruitmentSourceID
       ,[Name] = @Name
       ,[Position] = @Position
       ,[Budgeted] = @Budgeted
@@ -480,7 +560,7 @@
             <asp:Parameter Name="StatusID" DefaultValue="1" />
             <asp:Parameter Name="EmployeeTypeID" />
             <asp:Parameter Name="EmploymentFormID" />
-            <asp:Parameter Name="SourceID" />
+            <asp:Parameter Name="RecruitmentSourceID" />
             <asp:Parameter Name="Name" />
             <asp:Parameter Name="Position" />
             <asp:Parameter Name="Budgeted" />
@@ -504,7 +584,7 @@
             <asp:Parameter Name="StatusID" />
             <asp:Parameter Name="EmployeeTypeID" />
             <asp:Parameter Name="EmploymentFormID" />
-            <asp:Parameter Name="SourceID" />
+            <asp:Parameter Name="RecruitmentSourceID" />
             <asp:Parameter Name="Name" />
             <asp:Parameter Name="Position" />
             <asp:Parameter Name="Budgeted" />
@@ -533,8 +613,8 @@
                            ON  tblNewEmployeeRequest.statusid = tblStatus.statusid
                     LEFT JOIN  tblManagers
                            ON  tblNewEmployeeRequest.ManagerID = tblManagers.ManagerID
-                    LEFT JOIN  tblSources
-                           ON  tblNewEmployeeRequest.SourceID = tblSources.SourceID
+                    LEFT JOIN  tblRecruitmentSource
+                           ON  tblNewEmployeeRequest.RecruitmentSourceID = tblRecruitmentSource.RecruitmentSourceID
                        where MAnagerDomainUser=@ManagerDomainUser and visible = 1
         order by nerid desc"
         DeleteCommand="update tblNewEmployeeRequest set visible = 0 where NERID = @NERID">
@@ -545,11 +625,11 @@
     <asp:SqlDataSource ID="sdsStatus" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="select * from tblStatus order by Status"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsEmployeeTypes" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
-        SelectCommand="select * from tblEmployeeTypes order by EmployeeType"></asp:SqlDataSource>
+        SelectCommand="select * from tblEmployeeTypes order by EmployeeTypeID"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsRecruitmentSource" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
+        SelectCommand="select * from tblRecruitmentSource order by RecruitmentSourceID"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsEmploymentForms" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="select * from tblEmploymentForms order by EmploymentForm"></asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsSources" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
-        SelectCommand="select * from tblSources order by Source"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
 </asp:Content>

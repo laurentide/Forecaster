@@ -391,13 +391,14 @@ Public Class Expense
         frmExpense.ChangeMode(FormViewMode.Edit)
     End Sub
 
+    'Deletes the specified row from the ViewState("datatable") (Expenses List)
     Protected Sub gvExpenseDetails_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
-        Dim dt As DataTable
-        dt = CType(ViewState("datatable"), DataTable)
-        dt.Rows(e.RowIndex).Delete()
-        ViewState("datatable") = dt
-        CType(sender, GridView).DataSource = dt
-        CType(sender, GridView).DataBind()
+        Dim dt As DataTable 'create empty DataTable object dt
+        dt = CType(ViewState("datatable"), DataTable) 'store the current ViewState("datatable") into dt
+        dt.Rows(e.RowIndex).Delete() 'delete the row that was clicked on by the user (taken from the row's index)
+        ViewState("datatable") = dt 'store the changes made to dt into ViewState("datatable")
+        CType(sender, GridView).DataSource = dt 'set dt as the DataSource for the GridView
+        CType(sender, GridView).DataBind() 'binds the data source to the GridView control
     End Sub
 
     Protected Sub frmExpense_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)

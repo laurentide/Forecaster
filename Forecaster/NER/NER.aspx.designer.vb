@@ -86,6 +86,15 @@ Partial Public Class NER
     Protected WithEvents sdsEmployeeTypes As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
+    '''sdsRecruitmentSource control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsRecruitmentSource As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
     '''sdsEmploymentForms control.
     '''</summary>
     '''<remarks>
@@ -93,15 +102,6 @@ Partial Public Class NER
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsEmploymentForms As Global.System.Web.UI.WebControls.SqlDataSource
-
-    '''<summary>
-    '''sdsSources control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents sdsSources As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
     '''sdsManagers control.

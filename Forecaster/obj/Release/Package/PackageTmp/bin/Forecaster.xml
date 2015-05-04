@@ -1614,17 +1614,17 @@ sdsEmployeeTypes control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.NER.sdsEmploymentForms">
+</member><member name="F:Forecaster.NER.sdsRecruitmentSource">
 	<summary>
-sdsEmploymentForms control.
+sdsRecruitmentSource control.
 </summary>
 	<remarks>
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.NER.sdsSources">
+</member><member name="F:Forecaster.NER.sdsEmploymentForms">
 	<summary>
-sdsSources control.
+sdsEmploymentForms control.
 </summary>
 	<remarks>
 Auto-generated field.
