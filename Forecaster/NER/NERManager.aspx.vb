@@ -9,7 +9,7 @@ Public Class NERManager
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
 
-        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" Then
+        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" And Not User.Identity.Name = "LCLMTL\mignoto" And Not User.Identity.Name = "LCLMTL\mcarr" Then
             'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
             Response.Redirect("~/NER/AccessDenied.aspx")
         End If
@@ -58,7 +58,14 @@ Public Class NERManager
                 Else
                     CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = False
                     CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = False
-                End If
+                End If         
+                If CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 1 Then
+                    CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Internal Referal Name:"
+                    CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 2 Then
+                    CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Agency Name:"
+                    CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
+                End If 
                 UpdatePanel1.Update()
             End If
         Catch ex As Exception
@@ -176,5 +183,29 @@ Public Class NERManager
             CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = False
             CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = False
         End If
+    End Sub
+
+    Protected Sub RecruitmentDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panel As Panel
+        Dim recruitmentSource As DropDownList
+        Dim label As Label
+
+        panel = CType(frmInsert.FindControl("SORDetailPanel"), Panel)
+        recruitmentSource = CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList)
+        label = CType(panel.FindControl("SORDetailLabel"), Label)
+
+        Select Case recruitmentSource.SelectedValue
+            Case 1
+                label.Text = "Internal Referal Name:"
+                panel.Visible = True
+            Case 2
+                label.Text = "Agency Name:"
+                panel.Visible = True
+            Case 6
+                label.Text = "Other (details):"
+                panel.Visible = True
+            Case Else
+                panel.Visible = False
+        End Select
     End Sub
 End Class

@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="NER.aspx.vb" Inherits="Forecaster.NER" %>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -60,6 +59,15 @@
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
                             </td>
                         </tr>
+   <%--                     <tr>
+                            <td>Source of Recruitment:</td>
+                            <td>
+                                <asp:DropDownList ID="RecruitmentSourceDropDown" runat="server" DataSourceID="sdsRecruitmentSource" AppendDataBoundItems="true" DataValueField="RecruitmentSourceID" DataTextField="RecruitmentSource" SelectedValue='<%# Bind("RecruitmentSourceID")%>'>
+                                    <asp:ListItem Text="(Select the recruitment source)" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RFVRecruitmentSource" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your source of recruitment" ControlToValidate="RecruitmentSourceDropDown" />
+                            </td>
+                        </tr>--%>
 
                         <%--                <tr>
                     <td>Source:</td>
@@ -222,9 +230,8 @@
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
                             </td>
-                        </tr>
-                      
-<%--                        <tr>
+                        </tr>                      
+<%--                       <tr>
                             <td>Source of Recruitment:</td>
                             <td>
                                 <asp:DropDownList ID="RecruitmentSourceDropDown" runat="server" DataSourceID="sdsRecruitmentSource" AppendDataBoundItems="true" DataValueField="RecruitmentSourceID" DataTextField="RecruitmentSource" SelectedValue='<%# Bind("RecruitmentSourceID")%>'>
@@ -243,18 +250,6 @@
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
                             </td>
                         </tr>
-
-                        <%--                <tr>
-                    <td>Source:</td>
-                    <td>
-                        <asp:DropDownList ID="SourceDropDown" runat="server" DataSourceID="sdsSources" AppendDataBoundItems="true" DataValueField="SourceID" DataTextField="Source" SelectedValue='<%# Bind("SourceID")%>'>
-                            <asp:ListItem Text="(Select the source)" Value="" />
-                        </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="SourceDropDown" />
-
-                    </td>
-                </tr>--%>
-
                         <tr>
                             <td>Job Name:</td>
                             <td>
@@ -406,17 +401,6 @@
                                 <asp:FormView runat="server" ID="proiDetails" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px" DefaultMode="Insert">   
                                 <InsertItemTemplate>                         
                                 <table>
-                                <td>Year:</td>
-                                <td>
-                                   <asp:DropDownList ID="year_id" runat="server" AutoPostBack="True" AppendDataBoundItems="true">
-                                       <asp:ListItem Text="FY14 - Year 0" Value="0"/>
-                                       <asp:ListItem Text="FY15 - Year 1" Value="1"/>
-                                       <asp:ListItem Text="FY16 - Year 2" Value="2"/>
-                                       <asp:ListItem Text="FY17 - Year 3" Value="3"/>
-                                       <asp:ListItem Text="FY18 - Year 4" Value="4"/>
-                                   </asp:DropDownList>
-                                </td>
-                                </tr>
                                 <tr><td>Benefits:</td><td>
                                     <asp:TextBox ID="benefits_tb" runat="server" Width="500" />
                                 </td></tr>
@@ -467,7 +451,7 @@
                     <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
                     <asp:BoundField DataField="StatusReason" HeaderText="Status Reason" SortExpression="StatusReason" />
                     <asp:BoundField DataField="ManagerName" HeaderText="ManagerName" SortExpression="ManagerName" />
-                    <asp:BoundField DataField="Source" HeaderText="Source" SortExpression="Source" />
+                    <asp:BoundField DataField="RecruitmentSource" HeaderText="RecruitmentSource" SortExpression="RecruitmentSource" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -520,7 +504,7 @@
            ,@Replacement
            ,@ReplacementCheck
            ,@Return
-           ,@DateCreated
+           ,getDate()
            ,@DateApproved
            ,@DateHired
            ,@DateNeeded

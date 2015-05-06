@@ -394,8 +394,16 @@
         SelectCommand="select * from tblDepartments"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsApprovalTypes" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblApprovalTypes"></asp:SqlDataSource>
+    <%--
+        buyerid 59 = daniel isabelle
+        buyerid 28 = lyne bourgoin
+        buyerid 60 = chris vatne
+        buyerid 22 = nicole labillois
+
+        they are removed from buyer drop down list (sdsBuyers) at the request of Steve because they no longer work here
+    --%>
     <asp:SqlDataSource ID="sdsBuyers" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
-        SelectCommand="select * from tblBuyers where buyerid <> 40 order by buyername"></asp:SqlDataSource>
+        SelectCommand="select * from tblBuyers where buyerid <> 40 AND buyerid <> 59 AND buyerid <> 28 AND buyerid <> 60 AND buyerid <> 22 order by buyername"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsStatuses" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="select * from tblStatuses order by StatusID"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsPurchaseCategories" runat="server" ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"

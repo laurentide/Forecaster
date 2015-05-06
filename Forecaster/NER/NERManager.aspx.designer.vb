@@ -95,13 +95,13 @@ Partial Public Class NERManager
     Protected WithEvents sdsEmploymentForms As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''sdsSources control.
+    '''sdsRecruitmentSource control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents sdsSources As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents sdsRecruitmentSource As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
     '''sdsManagers control.

@@ -566,7 +566,7 @@
                                                     <asp:RangeValidator ID="RangeValidator2" runat="server" ForeColor="Red" ErrorMessage="Number between 0 and $2000000 without dollar signs" Type="double" MinimumValue="0" MaximumValue="2000000" ControlToValidate="TipTextBox" ValidationGroup="InsertDetails" /></td>
                                             </tr>
                                         </asp:Panel>
-                                        <asp:Panel ID="panGuests" runat="server" visiblae="false">
+                                        <asp:Panel ID="panGuests" runat="server" visible="false">
                                             <tr>
                                                 <td>List of guests  <br />(specify name, company and remarks):
                                                 </td>

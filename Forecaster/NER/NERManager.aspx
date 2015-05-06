@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="NERManager.aspx.vb" Inherits="Forecaster.NERManager" %>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -12,7 +11,8 @@
            <asp:PostBackTrigger ControlID="frmInsert" />
           </Triggers>
         <ContentTemplate>
-            <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="NERID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
+            <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="NERID" OnItemInserted="frmInsert_ItemInserted" 
+                OnItemUpdated="frmInsert_ItemUpdated">
                 <EditItemTemplate>
                     <table>
                         <tr>
@@ -58,17 +58,23 @@
                             </td>
                         </tr>
 
-                        <%--                <tr>
-                    <td>Source:</td>
+             <tr>
+                    <td>Source of Recruitment :</td>
                     <td>
-                        <asp:DropDownList ID="SourceDropDown" runat="server" DataSourceID="sdsSources" AppendDataBoundItems="true" DataValueField="SourceID" DataTextField="Source" SelectedValue='<%# Bind("SourceID")%>'>
-                            <asp:ListItem Text="(Select the source)" Value="" />
+                        <asp:DropDownList ID="RecruitmentDropDown" runat="server" DataSourceID="sdsRecruitmentSource" AppendDataBoundItems="True" DataValueField="RecruitmentSourceID" 
+                            DataTextField="RecruitmentSource" SelectedValue='<%# Eval("RecruitmentSourceID")%>' OnSelectedIndexChanged="RecruitmentDropDown_SelectedIndexChanged" 
+                            AutoPostBack="true">
+                            <asp:ListItem Text="(Select the source)" Selected="True" Value="" />
                         </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="SourceDropDown" />
-
-                    </td>
-                </tr>--%>
-
+                    </td>       
+            </tr><tr>        
+                        <asp:Panel ID="SORDetailPanel" runat="server" Visible="false">                        
+                        <td><asp:Label ID="SORDetailLabel" runat="server" /></td>
+                            <td>
+                                <asp:TextBox ID="SORDetailTextbox" runat="server" Text='<%# Bind("RecruitmentSourceDetail")%>' Width="500" />
+                            </td>
+                        </asp:Panel>
+                  </tr> 
                         <tr>
                             <td>Job Name:</td>
                             <td>
@@ -185,7 +191,8 @@
                             <td>Status:</td>
                             <td>
                                 <%--<asp:TextBox ID="StatusIDTextBox" runat="server" Text='<%# Bind("StatusID") %>' /></td>--%>
-                                <asp:DropDownList ID="StatusDropDown" runat="server" AutoPostBack="true" DataSourceID="sdsStatus" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged">
+                                <asp:DropDownList ID="StatusDropDown" runat="server" AutoPostBack="true" DataSourceID="sdsStatus" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" 
+                                    SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged">
                                     <asp:ListItem Text="(Select the status)" Value="" />
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="StatusDropDown" />
@@ -210,13 +217,14 @@
                 <Columns>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this request?');" />
+                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" 
+                                OnClientClick="return confirm('Are you sure you want to delete this request?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                     <asp:BoundField DataField="NERID" HeaderText="NERID" InsertVisible="False" ReadOnly="True" SortExpression="NERID" />
-                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                    <asp:BoundField DataField="ShortPosition" HeaderText="Position" SortExpression="Position" />
+                    <asp:BoundField DataField="Name" HeaderText="Job Title" SortExpression="Name" />
+                    <asp:BoundField DataField="ShortPosition" HeaderText="Job Description" SortExpression="Position" />
                     <asp:CheckBoxField DataField="Budgeted" HeaderText="Budgeted" SortExpression="Budgeted" />
                     <asp:CheckBoxField DataField="Billable" HeaderText="Billable" SortExpression="Billable" />
                     <asp:BoundField DataField="Replacement" HeaderText="Replacement" SortExpression="Replacement" />
@@ -230,11 +238,10 @@
                     <%--<asp:CheckBoxField DataField="LeadershipTeamReview" HeaderText="LeadershipTeamReview" SortExpression="LeadershipTeamReview" />--%>
                     <%--<asp:CheckBoxField DataField="Visible" HeaderText="Visible" SortExpression="Visible" />--%>
                     <asp:BoundField DataField="EmployeeType" HeaderText="Employee Type" SortExpression="EmployeeType" />
-                    <asp:BoundField DataField="EmploymentForm" HeaderText="Employment Form" SortExpression="EmploymentForm" />
+                    <asp:BoundField DataField="EmploymentForm" HeaderText="Employment Status" SortExpression="EmploymentForm" />
                     <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
                     <asp:BoundField DataField="StatusReason" HeaderText="New Employee Name" SortExpression="StatusReason" />
                     <asp:BoundField DataField="ManagerName" HeaderText="Manager Name" SortExpression="ManagerName" />
-                    <%--<asp:BoundField DataField="Source" HeaderText="Source" SortExpression="Source" />--%>
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -257,7 +264,8 @@
            ,[StatusID]
            ,[EmployeeTypeID]
 		   ,[EmploymentFormID]
-           ,[SourceID]
+           ,[RecruitmentSourceID]
+           ,[RecruitmentSourceDetail]
            ,[Name]
            ,[Position]
            ,[Budgeted]
@@ -280,7 +288,8 @@
            ,@StatusID
            ,@EmployeeTypeID
 		   ,@EmploymentFormID
-           ,@SourceID
+           ,@RecruitmentSourceID
+           ,@RecruitmentSourceDetail
            ,@Name
            ,@Position
            ,@Budgeted
@@ -304,7 +313,8 @@
       ,[StatusID] = @StatusID
       ,[EmployeeTypeID] = @EmployeeTypeID
 	  ,[EmploymentFormID] = @EmploymentFormID
-      ,[SourceID] = @SourceID
+      ,[RecruitmentSourceID] = @RecruitmentSourceID
+      ,[RecruitmentSourceDetail] = @RecruitmentSourceDetail
       ,[Name] = @Name
       ,[Position] = @Position
       ,[Budgeted] = @Budgeted
@@ -330,7 +340,6 @@
             <asp:Parameter Name="StatusID" DefaultValue="1" />
             <asp:Parameter Name="EmployeeTypeID" />
             <asp:Parameter Name="EmploymentFormID" />
-            <asp:Parameter Name="SourceID" />
             <asp:Parameter Name="Name" />
             <asp:Parameter Name="Position" />
             <asp:Parameter Name="Budgeted" />
@@ -355,7 +364,6 @@
             <asp:Parameter Name="StatusID" />
             <asp:Parameter Name="EmployeeTypeID" />
             <asp:Parameter Name="EmploymentFormID" />
-            <asp:Parameter Name="SourceID" />
             <asp:Parameter Name="Name" />
             <asp:Parameter Name="Position" />
             <asp:Parameter Name="Budgeted" />
@@ -385,8 +393,6 @@
                            ON  tblNewEmployeeRequest.statusid = tblStatus.statusid
                     LEFT JOIN  tblManagers
                            ON  tblNewEmployeeRequest.ManagerID = tblManagers.ManagerID
-                    LEFT JOIN  tblSources
-                           ON  tblNewEmployeeRequest.SourceID = tblSources.SourceID
                        where visible = 1 and @ManagerDomainUser in (select teammemberusername from tblNERMembers)
         order by nerid desc"
         DeleteCommand="update tblNewEmployeeRequest set visible = 0 where NERID = @NERID">
@@ -400,8 +406,8 @@
         SelectCommand="select * from tblEmployeeTypes order by EmployeeType"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsEmploymentForms" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="select * from tblEmploymentForms order by EmploymentForm"></asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsSources" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
-        SelectCommand="select * from tblSources order by Source"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsRecruitmentSource" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
+        SelectCommand="select * from tblRecruitmentSource order by RecruitmentSourceID"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
 </asp:Content>

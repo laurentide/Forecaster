@@ -318,7 +318,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Additional Impact:
+                    <td>Safety Committee Update :
                     </td>
                     <td>
                         <asp:TextBox ID="AdditionalImpactTextbox" runat="server" Text='<%# Bind("AdditionalImpact") %>' TextMode="MultiLine" Rows="5" Width="500" />
@@ -377,7 +377,7 @@
                     </tr>
                 </div>
                 <tr>
-                    <td>Corrective Action:
+                    <td>SALT update:
                     </td>
                     <td>
                         <asp:TextBox ID="CorrectiveActionTextBox" runat="server" Text='<%# Bind("CorrectiveAction") %>' TextMode="MultiLine" Rows="5" Width="500" />

@@ -1,12 +1,12 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="Purchase.aspx.vb" Inherits="Forecaster.Purchase" %>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Purchase Request</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmInsert" OnDataBound="frmInsert_DataBound" runat="server" DataSourceID="sdsInsert" DefaultMode="Insert" DataKeyNames="PurchaseRequestID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
+    <asp:FormView ID="frmInsert" OnDataBound="frmInsert_DataBound" runat="server" DataSourceID="sdsInsert" DefaultMode="Insert" DataKeyNames="PurchaseRequestID" OnItemInserted="frmInsert_ItemInserted" 
+        OnItemUpdated="frmInsert_ItemUpdated">
         <EditItemTemplate>
             <table>
                 <tr>
