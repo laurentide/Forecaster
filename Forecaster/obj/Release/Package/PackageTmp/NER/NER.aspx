@@ -504,7 +504,7 @@
            ,@Replacement
            ,@ReplacementCheck
            ,@Return
-           ,@DateCreated
+           ,getDate()
            ,@DateApproved
            ,@DateHired
            ,@DateNeeded

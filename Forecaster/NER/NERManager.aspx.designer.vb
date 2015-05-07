@@ -111,4 +111,13 @@ Partial Public Class NERManager
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsManagers As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsSchools control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsSchools As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

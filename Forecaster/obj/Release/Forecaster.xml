@@ -4196,6 +4196,14 @@ sdsManagers control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.NERManager.sdsSchools">
+	<summary>
+sdsSchools control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.Customer_Management.gvQB">
 	<summary>
 gvQB control.

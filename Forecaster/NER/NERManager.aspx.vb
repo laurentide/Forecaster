@@ -65,7 +65,29 @@ Public Class NERManager
                 ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 2 Then
                     CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Agency Name:"
                     CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
-                End If 
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 6 Then
+                    CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Other (details):"
+                    CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 7 And
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedItem.Value = 7 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                    CType(frmInsert.FindControl("OtherSchoolLabel"), Label).Text = "School Name (other):"
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 8 And
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedItem.Value = 7 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                    CType(frmInsert.FindControl("OtherSchoolLabel"), Label).Text = "School Name (other):"
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 7 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 8 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+
+                End If
                 UpdatePanel1.Update()
             End If
         Catch ex As Exception
@@ -196,15 +218,94 @@ Public Class NERManager
 
         Select Case recruitmentSource.SelectedValue
             Case 1
+                CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                If CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = False
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = ""
+                End If
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
+                End If
                 label.Text = "Internal Referal Name:"
                 panel.Visible = True
             Case 2
+                CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                If CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = False
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = ""
+                End If
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
+                End If
                 label.Text = "Agency Name:"
                 panel.Visible = True
             Case 6
+                CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                If CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = False
+                End If
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
+                End If
                 label.Text = "Other (details):"
                 panel.Visible = True
+            Case 7
+                CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                If panel.Visible = True Then
+                    panel.Visible = False
+                End If
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True And Not CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = 7 Then
+                    CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
+                End If
+                CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+            Case 8
+                CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                If panel.Visible = True Then
+                    panel.Visible = False
+                End If
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True And Not CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = 7 Then
+                    CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
+                End If
+                CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
             Case Else
+                CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
+                End If
+                If CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True Then
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = False
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = ""
+                ElseIf panel.Visible = True Then
+                    panel.Visible = False
+                    CType(frmInsert.FindControl("SORDetailTextbox"), TextBox).Text = ""
+                End If
+        End Select
+    End Sub
+
+    Protected Sub SchoolDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panel As Panel
+        Dim schools As DropDownList
+        Dim label As Label
+
+        panel = CType(frmInsert.FindControl("OtherSchoolPanel"), Panel)
+        schools = CType(frmInsert.FindControl("SchoolDropDown"), DropDownList)
+        label = CType(panel.FindControl("OtherSchoolLabel"), Label)
+
+        Select Case schools.SelectedValue
+            Case 7
+                CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
+                label.Text = "School Name (other):"
+                panel.Visible = True
+            Case Else
+                CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
                 panel.Visible = False
         End Select
     End Sub
