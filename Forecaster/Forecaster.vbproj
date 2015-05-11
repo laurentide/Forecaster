@@ -175,6 +175,7 @@
     <Content Include="Admin\PurchaseAdmin.aspx" />
     <Content Include="MasterActionItemTool\MasterActionItemTool.aspx" />
     <Content Include="MasterActionItemTool\MASTManager.aspx" />
+    <Content Include="MasterActionItemTool\ViewMyActionItems.aspx" />
     <Content Include="NER\AccessDenied.aspx" />
     <Content Include="NER\NERManager.aspx" />
     <Content Include="NER\NER.aspx" />
@@ -197,6 +198,7 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Testing\Testing.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -437,6 +439,13 @@
       <DependentUpon>MASTManager.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="MasterActionItemTool\ViewMyActionItems.aspx.designer.vb">
+      <DependentUpon>ViewMyActionItems.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterActionItemTool\ViewMyActionItems.aspx.vb">
+      <DependentUpon>ViewMyActionItems.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -576,6 +585,13 @@
     <Compile Include="Specialists\Sp_ProductCode.aspx.vb">
       <DependentUpon>Sp_ProductCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Testing\Testing.aspx.designer.vb">
+      <DependentUpon>Testing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Testing\Testing.aspx.vb">
+      <DependentUpon>Testing.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

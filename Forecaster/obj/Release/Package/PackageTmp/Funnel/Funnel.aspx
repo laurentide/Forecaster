@@ -443,11 +443,11 @@
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="Det-Tronics" HeaderText="Dtnics" ReadOnly="True" SortExpression="Det-Tronics"
+                    <asp:BoundField DataField="Det-Tronics" HeaderText="NSafety" ReadOnly="True" SortExpression="Det-Tronics"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="Farris" HeaderText="Farris" ReadOnly="True" SortExpression="Farris"
+                    <asp:BoundField DataField="Farris" HeaderText="SRV" ReadOnly="True" SortExpression="Farris"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
@@ -487,7 +487,7 @@
                         SortExpression="RSMT Analytical-Liquid" ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="Services" HeaderText="Serv" ReadOnly="True" SortExpression="Services"
+                    <asp:BoundField DataField="Services" HeaderText="Serv-INST" ReadOnly="True" SortExpression="Services"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
@@ -871,7 +871,7 @@
         </SelectParameters></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsTeams" runat="server" 
         ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
-        SelectCommand="select * from tblteams order by teamname"></asp:SqlDataSource>
+        SelectCommand="select * from tblteams where TeamID <> 13 and TeamID <> 19 order by teamname"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsCustomers" runat="server" 
         ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
         SelectCommand="select * from tblFunnelcustomers order by customername"></asp:SqlDataSource>
@@ -892,7 +892,7 @@
         SelectCommand="select industrycodeid,industrycode from tblFunnelIndustryCodes order by industrycode"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsExecSponsor" runat="server"   
         ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
-        SelectCommand="select ExecSponsorID,ExecSponsor from tblExecSponsor union select 0,'(None)' order by ExecSponsor"></asp:SqlDataSource>
+        SelectCommand="select ExecSponsorID,ExecSponsor from tblExecSponsor where ExecSponsorID <> 5 union select 0,'(None)' order by ExecSponsor"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsGetOpportunities" runat="server" 
     ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
     SelectCommand="select a.OpportunityID,  

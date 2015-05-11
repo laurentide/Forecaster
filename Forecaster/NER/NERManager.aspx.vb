@@ -257,7 +257,7 @@ Public Class NERManager
                 If panel.Visible = True Then
                     panel.Visible = False
                 End If
-                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True And Not CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = 7 Then
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True And Not CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedIndex = 7 Then
                     CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
                     CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
                 End If
@@ -268,7 +268,7 @@ Public Class NERManager
                 If panel.Visible = True Then
                     panel.Visible = False
                 End If
-                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True And Not CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedValue = 7 Then
+                If CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True And Not CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedIndex = 7 Then
                     CType(frmInsert.FindControl("OtherSchoolTextBox"), TextBox).Text = ""
                     CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = False
                 End If

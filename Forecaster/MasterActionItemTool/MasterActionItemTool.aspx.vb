@@ -8,34 +8,35 @@ Public Class MasterActionItemTool
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
+
+        'sdsTeams.SelectCommand = queryString
+        'place username in the Name text box
+        'CType(mastInsert.FindControl("NameTextBox"), TextBox).Text = Session("Username")
     End Sub
 
     Protected Sub mastInsert_DataBound(sender As Object, e As EventArgs)
-        'place username in the Name text box
-        'CType(mastInsert.FindControl("NameTextBox"), TextBox).Text = Session("Username")
-
-        If mastInsert.CurrentMode = FormViewMode.Insert Then
-            cmd.Connection = conn
-            conn.Open()
-            Dim ds As New DataSet
-            cmd.CommandText = "SELECT * FROM tblMasterActionItemTool WHERE Name='" + Session("Username") + "'"
-            da.Fill(ds)
-            CType(mastInsert.FindControl("MASTGridView"), GridView).DataSource = ds.Tables(0)
-            CType(mastInsert.FindControl("MASTGridView"), GridView).DataBind()
-            da.FillSchema(ds, SchemaType.Mapped)
-            conn.Close()
-        End If
+        Dim teamDropDown As DropDownList
+        teamDropDown = CType(mastInsert.FindControl("TeamsDropDownList"), DropDownList)
+        Dim queryString As String = "SELECT * FROM tblTeams JOIN tblTeamMembership ON tblTeams.TeamID = tblTeamMembership.TeamID JOIN tblMembers ON tblTeamMembership.MemberName = tblMembers.MemberName WHERE tblTeamMembership.MemberName = '" + Session("Username") + "'"
+        Dim connectionString As String = ConfigurationManager.ConnectionStrings("MASTConnectionString").ConnectionString
+        'Dim ds As New DataSet()
+        'Try
+        '    ' Connect to the database and run the query.
+        '    Dim connection As New SqlConnection(connectionString)
+        '    Dim adapter As New SqlDataAdapter(queryString, connection)
+        '    ' Fill the DataSet.
+        '    adapter.Fill(ds)
+        'Catch ex As Exception
+        'End Try
+        'teamDropDown.DataSource = ds
+        sdsTeams.SelectCommand = queryString
+        teamDropDown.DataValueField = "TeamID"
+        teamDropDown.DataTextField = "TeamName"
+        teamDropDown.DataBind()
     End Sub
 
-    Protected Sub MASTGridView_SelectedIndexChanged(sender As Object, e As EventArgs)
-        mastInsert.ChangeMode(FormViewMode.Edit)
-    End Sub
-
-    Protected Sub MASTGridView_RowEditing(sender As Object, e As GridViewEditEventArgs)
-        mastInsert.ChangeMode(FormViewMode.Edit)
-    End Sub
-
-    Protected Sub MASTGridView_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
-
+    Protected Sub TeamsDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
+        CType(mastInsert.FindControl("HiddenTeamNameTextbox"), TextBox).Text = CType(mastInsert.FindControl("TeamsDropDownList"), DropDownList).SelectedItem.Text
+        CType(mastInsert.FindControl("HiddenTeamIDTextbox"), TextBox).Text = CType(mastInsert.FindControl("TeamsDropDownList"), DropDownList).SelectedValue
     End Sub
 End Class

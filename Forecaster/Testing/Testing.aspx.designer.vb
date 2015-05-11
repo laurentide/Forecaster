@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class MasterActionItemTool
+Partial Public Class Testing
 
     '''<summary>
     '''ScriptManager control.
@@ -23,13 +23,31 @@ Partial Public Class MasterActionItemTool
     Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
 
     '''<summary>
-    '''mastInsert control.
+    '''UpdatePanel1 control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents mastInsert As Global.System.Web.UI.WebControls.FormView
+    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
+
+    '''<summary>
+    '''testInsert control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents testInsert As Global.System.Web.UI.WebControls.FormView
+
+    '''<summary>
+    '''testEdit control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents testEdit As Global.System.Web.UI.WebControls.GridView
 
     '''<summary>
     '''sdsInsert control.
@@ -41,11 +59,11 @@ Partial Public Class MasterActionItemTool
     Protected WithEvents sdsInsert As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''sdsTeams control.
+    '''sdsEdit control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents sdsTeams As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents sdsEdit As Global.System.Web.UI.WebControls.SqlDataSource
 End Class
