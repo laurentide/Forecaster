@@ -3,7 +3,7 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
-        Dim queryString As String = "SELECT MAST_ID, DateCreated, Name, TeamName, Topic, SubTopic, Action, Responsable, Notes FROM tblMasterActionItemTool JOIN tblTeamMembership ON tblMasterActionItemTool.TeamID = tblTeamMembership.TeamID WHERE tblTeamMembership.MemberName = '" + Session("Username") + "'"
+        Dim queryString As String = "SELECT * FROM tblMasterActionItemTool JOIN tblTeamMembership ON tblMasterActionItemTool.TeamID = tblTeamMembership.TeamID WHERE tblTeamMembership.MemberName = '" + Session("Username") + "'"
         Dim connectionString As String = ConfigurationManager.ConnectionStrings("MASTConnectionString").ConnectionString
         'Dim ds As New DataSet()
         'Try
@@ -26,5 +26,10 @@
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
         Dim ID As Integer = e.Command.Parameters("@ID").Value
         Session("ID") = ID
+    End Sub
+
+    Protected Sub mastInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
+        'update gridview
+        Me.mastEdit.DataBind()
     End Sub
 End Class

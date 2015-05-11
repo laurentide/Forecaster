@@ -51,26 +51,26 @@
                 </tr>
                 <tr>
                     <td>Due Date:</td>
-<%--                   <td>                                                 
+                   <td>                                                 
                         <asp:TextBox ID="DueDateTextbox" runat="server" Text='<%# Bind("DueDate")%>' />
                         <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
                         <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DueDateTextbox" PopupButtonID="Calendar_scheduleDR" />
                         <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DueDateTextbox" PromptCharacter="_" />
                         <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DueDateTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a due date" ControlToValidate="DueDateTextbox" />                       
-                    </td>--%>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Date Completed:</td>
-<%--                       <td>
-                            <asp:TextBox ID="CompletedDateTextbox" runat="server" Text='<%# Bind("CompletedDate")%>' />
+<%--                    <td>Date Completed:</td>
+                       <td>
+                            <asp:TextBox ID="CompletedDateTextbox" runat="server" Text='<%# Bind("DateCompleted")%>' />
                             <asp:Image runat="server" ID="Image1" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
                             <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="CompletedDateTextbox" PopupButtonID="Image1" />
                             <asp:MaskedEditExtender ID="MaskedEditExtender1" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="CompletedDateTextbox" PromptCharacter="_" />
                             <asp:MaskedEditValidator ID="Maskededitvalidator1" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="CompletedDateTextbox" ControlExtender="MaskedEditExtender1" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a completed date" ControlToValidate="CompletedDateTextbox" />
-                        </td>--%>
-                </tr>
+                        </td>
+                </tr>--%>
                 <tr>
                     <td>Notes:</td>
                     <td>
@@ -100,6 +100,7 @@
         [SubTopic],
         [Action],
         [Responsable],
+        [DueDate],
         [Notes])
      VALUES
         (getDate(),
@@ -110,6 +111,7 @@
         @SubTopic,
         @Action,
         @Responsable,
+        @DueDate,
         @Notes)">
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsTeams" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"></asp:SqlDataSource>

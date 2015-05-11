@@ -51,7 +51,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Employment Form:</td>
+                            <td>Employee Status:</td>
                             <td>
                                 <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
                                 <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
@@ -82,7 +82,7 @@
                 </tr>--%>
 
                         <tr>
-                            <td>Job Name:</td>
+                            <td>Job Title:</td>
                             <td>
                                 <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' Width="500" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a job description" ControlToValidate="NameTextBox" />
@@ -242,17 +242,17 @@
                             </td>
                         </tr>--%>
                         <tr>
-                            <td>Employment Form:</td>
+                            <td>Employee Status:</td>
                             <td>
                                 <%--<asp:TextBox ID="EmployeeTypeIDTextBox" runat="server" Text='<%# Bind("EmployeeTypeID") %>' />--%>
                                 <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
-                                    <asp:ListItem Text="(Select the employment form)" Value="" />
+                                    <asp:ListItem Text="(Select the employee status)" Value="" />
                                 </asp:DropDownList>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
                             </td>
                         </tr>
                         <tr>
-                            <td>Job Name:</td>
+                            <td>Job Title:</td>
                             <td>
                                 <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' Width="500" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Please enter a job description" ControlToValidate="NameTextBox" />
@@ -419,7 +419,6 @@
                        </tr>--%>
                 </InsertItemTemplate>
             </asp:FormView>
-
             <asp:GridView ID="gvNewEmployeeRequests" runat="server" AutoGenerateColumns="False" DataSourceID="sdsNewEmployeeRequests" AllowPaging="True" AllowSorting="True" DataKeyNames="NerID"
                 HeaderStyle-CssClass="grid_Header"
                 RowStyle-CssClass="grid_RowStyle"

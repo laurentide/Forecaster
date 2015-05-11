@@ -10,13 +10,19 @@
            <asp:PostBackTrigger ControlID="mastInsert" />
        </Triggers>--%>
         <ContentTemplate>
-        <asp:FormView ID="mastInsert" runat="server" DefaultMode="Edit" DataKeyNames="MAST_ID" DataSourceID="sdsInsert">
+        <asp:FormView ID="mastInsert" runat="server" DefaultMode="Edit" DataKeyNames="MAST_ID" DataSourceID="sdsInsert" OnItemUpdated="mastInsert_ItemUpdated">
         <EditItemTemplate>
             <table>
                 <tr>
+                    <td>MAST ID:</td>
+                    <td>
+                        <asp:Label ID="MASTIDLabel" runat="server" Text='<%# Eval("MAST_ID")%>' />
+                    </td>
+                </tr>
+                <tr>
                     <td>Name:</td>
                     <td>
-                        <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Eval("Name")%>' Width="500" /></td>
+                        <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name")%>' Width="500" /></td>
                     </td>
                 </tr>
 <%--                <tr>
@@ -31,56 +37,55 @@
                 <tr>
                     <td>Topic:</td>
                     <td>
-                        <asp:TextBox ID="TopicTextBox" runat="server" Text='<%# Eval("Topic")%>' Width="500" /></td>
+                        <asp:TextBox ID="TopicTextBox" runat="server" Text='<%# Bind("Topic")%>' Width="500" /></td>
                     </td>
                 </tr>
                 <tr>
                     <td>Sub-Topic:</td>
                     <td>
-                        <asp:TextBox ID="SubTextBox" runat="server" Text='<%# Eval("SubTopic")%>' Width="500" /></td>
+                        <asp:TextBox ID="SubTextBox" runat="server" Text='<%# Bind("SubTopic")%>' Width="500" /></td>
                     </td>
                 </tr>
                 <tr>
                     <td>Action:</td>
-                    <td><asp:TextBox ID="ActionTextBox" runat="server" Text='<%# Eval("Action")%>' Width="500" /></td>
+                    <td><asp:TextBox ID="ActionTextBox" runat="server" Text='<%# Bind("Action")%>' Width="500" /></td>
                 </tr>
                 <tr>
                     <td>Responsable:</td>
-                    <td><asp:TextBox ID="RespTextBox" runat="server" Text='<%# Eval("Responsable")%>' Width="500" /></td>
+                    <td><asp:TextBox ID="RespTextBox" runat="server" Text='<%# Bind("Responsable")%>' Width="500" /></td>
                 </tr>
                 <tr>
                     <td>Due Date:</td>
-<%--                   <td>                                                 
+                  <td>                                                 
                         <asp:TextBox ID="DueDateTextbox" runat="server" Text='<%# Bind("DueDate")%>' />
                         <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
                         <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DueDateTextbox" PopupButtonID="Calendar_scheduleDR" />
                         <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DueDateTextbox" PromptCharacter="_" />
                         <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DueDateTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a due date" ControlToValidate="DueDateTextbox" />                       
-                    </td>--%>
+                    </td>
                 </tr>
                 <tr>
                     <td>Date Completed:</td>
-<%--                       <td>
-                            <asp:TextBox ID="CompletedDateTextbox" runat="server" Text='<%# Bind("CompletedDate")%>' />
+                       <td>
+                            <asp:TextBox ID="CompletedDateTextbox" runat="server" Text='<%# Bind("DateCompleted")%>' />
                             <asp:Image runat="server" ID="Image1" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
                             <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="CompletedDateTextbox" PopupButtonID="Image1" />
                             <asp:MaskedEditExtender ID="MaskedEditExtender1" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="CompletedDateTextbox" PromptCharacter="_" />
                             <asp:MaskedEditValidator ID="Maskededitvalidator1" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="CompletedDateTextbox" ControlExtender="MaskedEditExtender1" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a completed date" ControlToValidate="CompletedDateTextbox" />
-                        </td>--%>
+                        </td>
                 </tr>
                 <tr>
                     <td>Notes:</td>
                     <td>
-                        <asp:TextBox ID="NotesTextBox" runat="server" Text='<%# Eval("Notes")%>' TextMode="MultiLine" Rows="5" Width="500" />
+                        <asp:TextBox ID="NotesTextBox" runat="server" Text='<%# Bind("Notes")%>' TextMode="MultiLine" Rows="5" Width="500" />
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
-                    </td>
-                </tr>      
+                        <td>
+                            <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
+                            &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+                        </td>
+                </tr>
             </table>
         </EditItemTemplate>
         </asp:FormView>
@@ -104,6 +109,8 @@
                     <asp:BoundField DataField="SubTopic" HeaderText="Sub Topic" SortExpression="SubTopic" />
                     <asp:BoundField DataField="Action" HeaderText="Action" SortExpression="Action" />
                     <asp:BoundField DataField="Responsable" HeaderText="Responsable" SortExpression="Responsable" />
+                    <asp:BoundField DataField="DueDate" HeaderText="Due Date" SortExpression="DueDate" />
+                    <asp:BoundField DataField="DateCompleted" HeaderText="Date Completed" SortExpression="DateCompleted" />
                     <asp:BoundField DataField="Notes" HeaderText="Notes" SortExpression="Notes" />
                 </Columns>
                 <EditRowStyle BackColor="#999999" />
@@ -120,29 +127,29 @@
         </ContentTemplate>
    <%--     </asp:UpdatePanel>--%>
         <asp:SqlDataSource ID="sdsEdit" runat="server" 
-        ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"></asp:SqlDataSource>
+        ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
+        DeleteCommand="update tblMasterActionItemTool set visible = 0 where MAST_ID = @MAST_ID"></asp:SqlDataSource>
         <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
         SelectCommand="SELECT * FROM [tblMasterActionItemTool] WHERE MAST_ID = @ID"
-        UpdateCommand="UPDATE [tblMasterActionItemList]
-        SET [DateCreated] = @DateCreated,
-        [Name] = @Name,
-        [TeamName] = @TeamName,
-        [TeamID] = @TeamID,
+        UpdateCommand="UPDATE [tblMasterActionItemTool]
+        SET [Name] = @Name,
         [Topic] = @Topic,
         [SubTopic] = @SubTopic,
         [Action] = @Action,
         [Responsable] = @Responsable,
+        [DueDate] = @DueDate,
+        [DateCompleted] = @DateCompleted,
         [Notes] = @Notes
-        WHERE MAST_ID = @ID">
+        WHERE MAST_ID = @MAST_ID">
         <UpdateParameters>
-            <asp:Parameter Name="DateCreated" />
             <asp:Parameter Name="Name" />
-            <asp:Parameter Name="TeamName" />
             <asp:Parameter Name="Topic" />
             <asp:Parameter Name="SubTopic" />
             <asp:Parameter Name="Action" />
             <asp:Parameter Name="Responsable" />
+            <asp:Parameter Name="DueDate" />
+            <asp:Parameter Name="DateCompleted" />
             <asp:Parameter Name="Notes" />
         </UpdateParameters>
         <SelectParameters>
