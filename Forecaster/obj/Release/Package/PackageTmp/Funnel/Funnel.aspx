@@ -46,11 +46,11 @@
                                     General Info
                                 </Header>
                                 <Content>
-                                <asp:FormView ID="frmInsert" runat="server" DataKeyNames="OpportunityID" DataSourceID="sdsInsert" DefaultMode="Insert">
+                                <asp:FormView ID="frmInsert" runat="server" DataKeyNames="OpportunityID" DataSourceID="sdsInsert" DefaultMode="Insert" OnDataBound="frmInsert_DataBound">
                                     <EditItemTemplate></EditItemTemplate>
                                     <InsertItemTemplate>
                                     <table>
-                                        <tr><td>Originator: </td><td><asp:Label ID="OriginatorTextBox" runat="server" Text='<%# Me.User.Identity.Name.ToString %>' /></td></tr>
+                                        <tr><td>Originator: </td><td><asp:TextBox ID="OriginatorTextBox" runat="server" Text='<%# Bind("Originator")%>' /></td></tr>
                                         <tr><td>Project Name(*): </td><td><asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' width="500" /></td><td><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ErrorMessage="Name of opportunity required" ControlToValidate="NameTextBox"  /></td></tr>
                                         <%--<tr><td>Customer ID: </td><td><asp:DropDownList ID="CustomerIDDropDown"  OnSelectedIndexChanged="CustomerIDDropDown_OnSelectedIndexChanged" OnDataBound="CustomerIDDropDown_OnDataBound" runat="server" DataSourceID="sdsCustomers" DataValueField="CustomerID" DataTextField="CustomerName"  SelectedValue='<%# Bind("CustomerID") %>' /></td></tr>--%>
                                         <tr><td>Customer(*): </td><td><asp:TextBox ID="CustomerTextBox" runat="server" Text='<%# Bind("Customer") %>' width="500" /></td><td><asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Insert" ErrorMessage="Customer required" ControlToValidate="CustomerTextBox"  /></td></tr>
@@ -539,7 +539,7 @@
                                 <EditItemTemplate>
                                     <table>
                                         <tr><td>Opportunity ID: </td><td><asp:Label ID="OpportunityIDLabel" runat="server" Text='<%# Bind("OpportunityID") %>' /></td></tr>
-                                        <tr><td>Originator: </td><td><asp:Label ID="OriginatorTextBox" runat="server" Text='<%# Bind("Originator") %>' /></td></tr>
+                                        <tr><td>Originator: </td><td><asp:TextBox ID="OriginatorTextBox" runat="server" Text='<%# Bind("Originator") %>' /></td></tr>
                                         <tr><td>Project Name(*): </td><td><asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' width="500" /></td></tr>
                                         <%--<tr><td>Customer ID: </td><td><asp:DropDownList ID="CustomerIDDropDown" runat="server" DataSourceID="sdsCustomers" DataValueField="CustomerID" DataTextField="CustomerName"  SelectedValue='<%# Bind("CustomerID") %>' /></td></tr>--%>
                                         <tr><td>Customer(*): </td><td><asp:TextBox ID="CustomerTextBox" runat="server" Text='<%# Bind("Customer") %>' width="500" /></td><td><asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ErrorMessage="Customer required" ControlToValidate="CustomerTextBox"  /></td></tr>

@@ -10,7 +10,8 @@
            <asp:PostBackTrigger ControlID="mastInsert" />
        </Triggers>
         <ContentTemplate>
-        <asp:FormView ID="mastInsert" AutoPostBack="True" runat="server" DefaultMode="Insert" DataKeyNames="MAST_ID" DataSourceID="sdsInsert" OnDataBound="mastInsert_DataBound">
+        <asp:FormView ID="mastInsert" AutoPostBack="True" runat="server" DefaultMode="Insert" DataKeyNames="MAST_ID" DataSourceID="sdsInsert" OnDataBound="mastInsert_DataBound"
+            OnItemInserted="mastInsert_ItemInserted">
         <InsertItemTemplate>
             <table>
                 <tr>
@@ -36,7 +37,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Sub-Topic:</td>
+                    <td>Description:</td>
                     <td>
                         <asp:TextBox ID="SubTextBox" runat="server" Text='<%# Bind("SubTopic") %>' Width="500" /></td>
                     </td>
@@ -47,7 +48,11 @@
                 </tr>
                 <tr>
                     <td>Responsable:</td>
-                    <td><asp:TextBox ID="RespTextBox" runat="server" Text='<%# Bind("Responsable") %>' Width="500" /></td>
+                    <td><asp:DropDownList ID="RespDropDownList" runat="server" SelectedValue='<%# Bind("Responsable") %>' AppendDataBoundItems="true" DataSourceID="sdsResponsable" 
+                        DataTextField="MemberName" />
+                             <asp:ListItem Text="(Select the responsable)" Value="" />
+                        </asp:DropDownList>
+                    </td>
                 </tr>
                 <tr>
                     <td>Due Date:</td>
@@ -89,7 +94,7 @@
 <%--    </asp:UpdatePanel>--%>
 <%--    <asp:SqlDataSource ID="sdsMAST" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
     SelectCommand="SELECT * FROM tblMasterActionItemTool"></asp:SqlDataSource>--%>
-    <asp:SqlDataSource ID="sdsInsert" runat="server" 
+    <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
         InsertCommand="INSERT INTO [tblMasterActionItemTool]
         ([DateCreated],
@@ -101,7 +106,9 @@
         [Action],
         [Responsable],
         [DueDate],
-        [Notes])
+        [Notes],
+        [ItemStatus],
+        [Visible])
      VALUES
         (getDate(),
         @Name,
@@ -112,7 +119,15 @@
         @Action,
         @Responsable,
         @DueDate,
-        @Notes)">
+        @Notes,
+        'Open',
+        1)
+        select @ID = @@IDENTITY">
+    <InsertParameters>
+        <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
+    </InsertParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsTeams" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsResponsable" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
+        SelectCommand="SELECT * FROM tblMembers"></asp:SqlDataSource>
 </asp:Content>

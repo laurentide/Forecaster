@@ -1,12 +1,12 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLT.aspx.vb" Inherits="Forecaster.QLT" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLT.aspx.vb" Inherits="Forecaster.QLT" MaintainScrollPositionOnPostback="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Quality Case</h2>
-    <%--<asp:ScriptManager ID="ScriptManager" runat="server" />--%>
-    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
+    <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <%--<asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />--%>
     <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Insert" DataKeyNames="QLTID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
         <InsertItemTemplate>
             <tr>
@@ -65,7 +65,7 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Enter an email" ControlToValidate="IssuedByEmailTextBox" />
                 </td>
             </tr>
-            <%--<tr>
+            <tr>
                 <td><b>Manager (*):</b></td>
                 <td>
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -82,7 +82,7 @@
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                 </td>
-            </tr>--%>
+            </tr>
             <tr>
                 <td>Customer:</td>
                 <td>
@@ -122,7 +122,7 @@
             <tr>
                 <td>Supplier:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="VendorTextbox" runat="server" Text='<%# Bind("CustomerID")%>'/>
+                    <asp:TextBox class="textboxWidth" ID="VendorTextbox" runat="server" Text='<%# Bind("VendorID")%>'/>
                     <asp:AutoCompleteExtender ID="AutocompleteExtender2" TargetControlID="VendorTextbox" runat="server" ServiceMethod="GetCompletionList_Vendor" 
                                                 MinimumPrefixLength="3" CompletionInterval="100" EnableCaching="true" CompletionSetCount="10" BehaviorID="AutoCompleteVen" 
                         CompletionListCssClass="autocomplete_completionListElement"
@@ -188,6 +188,17 @@
                     <asp:TextBox class="textboxWidth" ID="CauseTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("Cause") %>' />
                 </td>
             </tr>
+            <tr>
+                <td>Immediate action required?</td>
+                <td><asp:CheckBox ID="ImmediateActionRequiredCheckbox" runat="server" Checked='<%# Bind("ImmediateActionRequired")%>' OnCheckedChanged="ImmediateActionRequiredCheckbox_CheckedChanged"
+                    CausesValidation="true" AutoPostBack="true" /></td>
+            </tr>
+            <asp:Panel ID="ImmediateActionRequiredPanel" runat="server" Visible="false">
+                <tr>
+                    <td>Immediate action:</td>
+                    <td><asp:TextBox ID="ImmediateActionTextbox" runat="server" Text='<%# Bind("ImmediateAction")%>' class="textboxWidth" /></td>
+                </tr>
+            </asp:Panel>
             <tr>
                 <td>
                     <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Insert" ValidationGroup="Insert" />
@@ -256,7 +267,7 @@
                     <asp:TextBox class="textboxWidth" ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' />
                 </td>
             </tr>
-<%--            <tr>
+            <tr>
                 <td>Manager:</td>
                 <td>
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -273,7 +284,7 @@
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                 </td>
-            </tr>--%>
+            </tr>
             <tr>
                 <td>Customer:</td>
                 <td>
@@ -502,7 +513,9 @@
            ,@AdditionalCorrectiveAction
            ,@Visible
            ,@Type
-           ,@ClientContact);
+           ,@ClientContact
+           ,@ImmediateActionRequired
+           ,@ImmediateAction);
         select @ID = @@IDENTITY"
         UpdateCommand="UPDATE [QLT].[dbo].[tblQLT]
            SET [EventTypeID] =                         @EventTypeID
@@ -577,6 +590,8 @@
             <asp:parameter Name="Visible" DefaultValue="1"/>
             <asp:parameter Name="Type"/>
             <asp:parameter Name="ClientContact" DefaultValue="0"/>
+            <asp:Parameter Name="ImmediateActionRequired" />
+            <asp:Parameter Name="ImmediateAction" />
             <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
         </InsertParameters>
         <UpdateParameters>

@@ -10,7 +10,7 @@
            <asp:PostBackTrigger ControlID="testInsert" />
           </Triggers>
         <ContentTemplate>
-        <asp:FormView ID="testInsert" runat="server" DefaultMode="Insert" DataSourceID="sdsInsert">            
+        <asp:FormView ID="testInsert" runat="server" DefaultMode="Insert" DataSourceID="sdsInsert" OnDataBound="testInsert_DataBound">            
         <EditItemTemplate>
         <Table>
                         <tr>
@@ -22,6 +22,21 @@
                         </tr>
         </Table>
         </EditItemTemplate>
+        <InsertItemTemplate>
+            <table>
+                <tr>
+                    <td>Test:</td>
+                    <td>
+                        <asp:TextBox ID="TestTextBox" runat="server" Text='<%# Bind("Test")%>' />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
+                    </td>
+                </tr>  
+            </table>
+        </InsertItemTemplate>
         </asp:FormView>
         <asp:GridView ID="testEdit" runat="server" AutoGenerateColumns="False" AllowSorting="True" AllowPaging="True"
                 HeaderStyle-CssClass="grid_Header"
@@ -41,10 +56,17 @@
         </ContentTemplate>
         </asp:UpdatePanel>
     <asp:SqlDataSource ID="sdsInsert" runat="server" ConnectionString='<%$ ConnectionStrings:TestingConnectionString %>'
-        SelectCommand="SELECT TestingID FROM tblTesting WHERE TestingID = @ID">
+        SelectCommand="SELECT TestingID FROM tblTesting WHERE TestingID = @ID"
+        InsertCommand="INSERT INTO [tblTesting]
+        ([Test])
+        VALUES
+        (@Test)">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="testEdit" PropertyName="SelectedValue" />
         </SelectParameters>
+        <InsertParameters>
+            <asp:Parameter Name="Test" />
+        </InsertParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsEdit" runat="server" ConnectionString='<%$ ConnectionStrings:TestingConnectionString %>'
         SelectCommand="SELECT * FROM tblTesting"></asp:SqlDataSource>

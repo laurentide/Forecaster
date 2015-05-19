@@ -668,6 +668,7 @@ Public Class Funnel
 
     Protected Sub frmUpdate_DataBound(ByVal sender As Object, ByVal e As EventArgs)
         Try
+            CType(frmUpdate.FindControl("OriginatorTextBox"), TextBox).Text = Me.User.Identity.Name.ToString
             sdsOpportunityAssignments.SelectParameters(0).DefaultValue = CType(CType(sender, FormView).FindControl("OpportunityIDLabel"), Label).Text
             CType(CType(sender, FormView).FindControl("gvAssignments"), GridView).DataBind()
         Catch ex As Exception
@@ -688,5 +689,9 @@ Public Class Funnel
                 End If
             Next
         End If
+    End Sub
+
+    Protected Sub frmInsert_DataBound(sender As Object, e As EventArgs)
+        CType(frmInsert.FindControl("OriginatorTextBox"), TextBox).Text = Me.User.Identity.Name.ToString
     End Sub
 End Class

@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class QLT
 
     '''<summary>
-    '''ToolkitScriptManager1 control.
+    '''ScriptManager control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents ToolkitScriptManager1 As Global.AjaxControlToolkit.ToolkitScriptManager
+    Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
 
     '''<summary>
     '''frmInsert control.

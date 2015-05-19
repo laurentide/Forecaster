@@ -19,16 +19,16 @@ Public Class QLT
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
         Try
             'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
-            'Dim connectionString As String
-            'connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
-            'Dim SqlConnection As New SqlConnection(connectionString)
-            'SqlConnection.Open()
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
 
-            'Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
-            'Dim reader As SqlDataReader = sc.ExecuteReader()
-            'reader.Read()
-            'Dim managerEmail As String = reader.GetString(0)
-            'reader.Close()
+            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
+            Dim reader As SqlDataReader = sc.ExecuteReader()
+            reader.Read()
+            Dim managerEmail As String = reader.GetString(0)
+            reader.Close()
 
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
@@ -36,7 +36,7 @@ Public Class QLT
                                  "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
             Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "New Quality case #:" & Session("ID") & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
-            'mm.CC.Add(managerEmail)
+            mm.CC.Add(managerEmail)
             mm.CC.Add(mailaddress)
             mm.CC.Add("QLT@laurentide.com")
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
@@ -52,16 +52,16 @@ Public Class QLT
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
         Try
             'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
-            'Dim connectionString As String
-            'connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
-            'Dim SqlConnection As New SqlConnection(connectionString)
-            'SqlConnection.Open()
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
 
-            'Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
-            'Dim reader As SqlDataReader = sc.ExecuteReader()
-            'reader.Read()
-            'Dim managerEmail As String = reader.GetString(0)
-            'reader.Close()
+            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
+            Dim reader As SqlDataReader = sc.ExecuteReader()
+            reader.Read()
+            Dim managerEmail As String = reader.GetString(0)
+            reader.Close()
 
             Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                  "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
@@ -69,7 +69,7 @@ Public Class QLT
                                  "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
             Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
-            'mm.CC.Add(managerEmail)
+            mm.CC.Add(managerEmail)
             mm.CC.Add(mailaddress)
             mm.CC.Add("QLT@laurentide.com")
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
@@ -158,8 +158,8 @@ System.Web.Services.WebMethod()> _
     End Function
 
     Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
-        'Dim ID As Integer = e.Command.Parameters("@ID").Value
-        'Session("ID") = ID
+        Dim ID As Integer = e.Command.Parameters("@ID").Value
+        Session("ID") = ID
     End Sub
 
     Protected Sub CorrectiveActionDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -179,6 +179,15 @@ System.Web.Services.WebMethod()> _
         Else
             CType(frmInsert.FindControl("TypeTextBox"), TextBox).Visible = False
             CType(frmInsert.FindControl("TypeLabel"), Label).Visible = False
+        End If
+    End Sub
+
+    Protected Sub ImmediateActionRequiredCheckbox_CheckedChanged(sender As Object, e As EventArgs)
+        If CType(frmInsert.FindControl("ImmediateActionRequiredCheckbox"), CheckBox).Checked = True Then
+            CType(frmInsert.FindControl("ImmediateActionRequiredPanel"), Panel).Visible = True
+        Else
+            CType(frmInsert.FindControl("ImmediateActionTextbox"), TextBox).Text = ""
+            CType(frmInsert.FindControl("ImmediateActionRequiredPanel"), Panel).Visible = False
         End If
     End Sub
 End Class

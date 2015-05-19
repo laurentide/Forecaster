@@ -173,6 +173,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Managers\Mg_ProductCode.aspx" />
     <Content Include="Admin\PurchaseAdmin.aspx" />
+    <Content Include="MasterActionItemTool\AccessDenied.aspx" />
     <Content Include="MasterActionItemTool\MasterActionItemTool.aspx" />
     <Content Include="MasterActionItemTool\MASTManager.aspx" />
     <Content Include="MasterActionItemTool\ViewMyActionItems.aspx" />
@@ -424,6 +425,13 @@
     <Compile Include="Managers\Mg_ProductCode.aspx.vb">
       <DependentUpon>Mg_ProductCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterActionItemTool\AccessDenied.aspx.designer.vb">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterActionItemTool\AccessDenied.aspx.vb">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="MasterActionItemTool\MasterActionItemTool.aspx.designer.vb">
       <DependentUpon>MasterActionItemTool.aspx</DependentUpon>

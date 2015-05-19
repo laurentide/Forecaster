@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLTMgmt.aspx.vb" Inherits="Forecaster.QLTMgmt" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLTMgmt.aspx.vb" Inherits="Forecaster.QLTMgmt" MaintainScrollPositionOnPostback="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -6,7 +6,8 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>QLT Management page</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="QLTID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
+    <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="QLTID" OnItemInserted="frmInsert_ItemInserted" 
+        OnItemUpdated="frmInsert_ItemUpdated">
         <EditItemTemplate>
             <tr>
                     <td>ID
@@ -69,7 +70,7 @@
                     <asp:TextBox class="textboxWidth" ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' />
                 </td>
             </tr>
-<%--            <tr>
+            <tr>
                 <td>Manager:</td>
                 <td>
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -86,7 +87,7 @@
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                 </td>
-            </tr>--%>
+            </tr>
             <tr>
                 <td>Customer:</td>
                 <td>
@@ -191,6 +192,17 @@
                     <asp:TextBox class="textboxWidth" ID="CauseTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("Cause") %>' />
                 </td>
             </tr>
+            <tr>
+                <td>Immediate action required?</td>
+                <td><asp:CheckBox ID="ImmediateActionRequiredCheckbox" runat="server" Checked='<%# Bind("ImmediateActionRequired")%>' OnCheckedChanged="ImmediateActionRequiredCheckbox_CheckedChanged"
+                    CausesValidation="true" AutoPostBack="true" /></td>
+            </tr>
+            <asp:Panel ID="ImmediateActionRequiredPanel" runat="server" Visible="false">
+                <tr>
+                    <td>Immediate action:</td>
+                    <td><asp:TextBox ID="ImmediateActionTextbox" runat="server" Text='<%# Bind("ImmediateAction")%>' class="textboxWidth" /></td>
+                </tr>
+            </asp:Panel>
             <tr><td><h2>QLT Team</h2></td></tr>
             <tr>
                 <td>Assigned To:</td>
@@ -203,11 +215,24 @@
             <tr>
                 <td>Status:</td>
                 <td>
-                    <asp:DropDownList ID="StatusDropDown" runat="server" DataSourceID="sdsStatus" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" SelectedValue='<%# Bind("StatusID")%>' >
+                    <asp:DropDownList ID="StatusDropDown" runat="server" DataSourceID="sdsStatus" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" 
+                        SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged" CausesValidation="true" AutoPostBack="true">
                         <asp:ListItem Text="(Select the status)" Value="" />
                     </asp:DropDownList>
                 </td>
             </tr>
+            <asp:Panel ID="FollowUpDatePanel" runat="server" Visible="false">
+                <tr>
+                    <td>Follow-up Date:</td>
+                    <td>
+                                <asp:TextBox ID="FollowUpDateTextbox" runat="server" Text='<%# Bind("FollowupDate")%>' />
+                                <asp:Image runat="server" ID="ISD_Image" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                                <asp:CalendarExtender ID="ISD_CalendarExtender" runat="server" TargetControlID="FollowUpDateTextbox" PopupButtonID="ISD_Image" />
+                                <asp:MaskedEditExtender ID="ISD_MaskedEditExtender" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="FollowUpDateTextbox" PromptCharacter="_" />
+                                <asp:MaskedEditValidator ID="ISD_Maskededitvalidator" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="FollowUpDateTextbox" ControlExtender="ISD_MaskedEditExtender" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                    </td>
+                </tr>
+            </asp:Panel>
             <tr>
                 <td>Reassignment:</td>
                 <td>
@@ -247,14 +272,53 @@
                 </td>
             </tr>
             <tr>
+                <td>Root Cause Analysis:</td>
+                <td><asp:TextBox ID="RootCauseAnalysisTextbox" runat="server" Text='<%# Bind("RootCauseAnalysis")%>' class="textboxWidth" /></td>
+            </tr>
+            <tr>
+                <td>Cost To Laurentide:</td>
+                <td><asp:TextBox ID="CostToLaurentideTextbox" runat="server" Text='<%# Bind("LaurentideCost") %>' class="textboxWidth" /></td>
+            </tr>
+            <tr>
+                <td>Should a manager contact the client?</td>
+                <td>
+                    <asp:CheckBox ID="ManagerContactCheckbox" runat="server" Checked='<%# Bind("ManagerContact")%>' />
+                </td>
+            </tr>
+            <tr>
+                <td>Did a manager speak to the client?</td>
+                <td>
+                    <asp:CheckBox ID="ManagerContactedCheckbox" runat="server" Checked='<%# Bind("ManagerContacted")%>' />
+                </td>
+            </tr>
+            <tr>
+                <td>Manager Contact Note:</td>
+                <td>
+                    <asp:TextBox ID="ManagerNoteTextbox" runat="server" Text='<%# Bind("ManagerContactedNote") %>' class="textboxWidth" />
+                </td>
+            </tr>
+            <tr>
+                <td>Learning Opportunity?</td>
+                <td>
+                    <asp:CheckBox ID="LearningOpportunityCheckbox" runat="server" Checked='<%# Bind("LearningOpportunity")%>' OnCheckedChanged="LearningOpportunityCheckbox_CheckedChanged"
+                        CausesValidation="true" AutoPostBack="true"/>
+                </td>
+            </tr>
+            <asp:Panel ID="LearningOpportunityPanel" runat="server" Visible="false">
+            <tr>
+                <td>Learning Opportunity note:</td>               
+                <td>
+                    <asp:TextBox ID="LearningOpportunityTextbox" runat="server" class="textboxWidth" Text='<%# Bind("LearningOpportunityNote")%>' />
+                </td>
+            </tr>
+            </asp:Panel>
+            <tr>
                 <td></td>
                 <td>
                     <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
                     &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
                 </td>
-
             </tr>
-
         </EditItemTemplate>
     </asp:FormView>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
@@ -339,6 +403,14 @@
               ,[Cause] =						       @Cause 
               ,[Type] =							       @Type 
               ,[ClientContact] =                       @ClientContact
+              ,[ImmediateActionRequired] =             @ImmediateActionRequired
+              ,[ImmediateAction] =                     @ImmediateAction
+              ,[FollowupDate] =                        @FollowupDate
+              ,[RootCauseAnalysis] =                   @RootCauseAnalysis
+              ,[LaurentideCost] =                      @LaurentideCost
+              ,[ManagerContact] =                      @ManagerContact
+              ,[ManagerContacted] =                    @ManagerContacted
+              ,[ManagerContactedNote] =                @ManagerContactedNote
                WHERE QLTID = @QLTID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvQLT" PropertyName="SelectedValue" />
@@ -381,6 +453,14 @@
             <asp:Parameter Name="Visible" DefaultValue="1" />
             <asp:Parameter Name="Type" />
             <asp:Parameter Name="ClientContact" DefaultValue="0" />
+            <asp:Parameter Name="ImmediateActionRequired" />
+            <asp:Parameter Name="ImmediateAction" />
+            <asp:Parameter Name="FollowupDate" />
+            <asp:Parameter Name="RootCauseAnalysis" />
+            <asp:Parameter Name="LaurentideCost" />
+            <asp:Parameter Name="ManagerContact" />
+            <asp:Parameter Name="ManagerContacted" />
+            <asp:Parameter Name="ManagerContactedNote" />
             <asp:Parameter Name="QLTID" />
         </UpdateParameters>
     </asp:SqlDataSource>

@@ -5,8 +5,8 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Quality Case</h2>
-    <%--<asp:ScriptManager ID="ScriptManager" runat="server" />--%>
-    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />
+    <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <%--<asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" />--%>
     <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Insert" DataKeyNames="QLTID" OnItemInserted="frmInsert_ItemInserted" OnItemUpdated="frmInsert_ItemUpdated">
         <InsertItemTemplate>
             <tr>
@@ -65,7 +65,7 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Enter an email" ControlToValidate="IssuedByEmailTextBox" />
                 </td>
             </tr>
-            <%--<tr>
+            <tr>
                 <td><b>Manager (*):</b></td>
                 <td>
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -82,7 +82,7 @@
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                 </td>
-            </tr>--%>
+            </tr>
             <tr>
                 <td>Customer:</td>
                 <td>
@@ -122,7 +122,7 @@
             <tr>
                 <td>Supplier:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="VendorTextbox" runat="server" Text='<%# Bind("CustomerID")%>'/>
+                    <asp:TextBox class="textboxWidth" ID="VendorTextbox" runat="server" Text='<%# Bind("VendorID")%>'/>
                     <asp:AutoCompleteExtender ID="AutocompleteExtender2" TargetControlID="VendorTextbox" runat="server" ServiceMethod="GetCompletionList_Vendor" 
                                                 MinimumPrefixLength="3" CompletionInterval="100" EnableCaching="true" CompletionSetCount="10" BehaviorID="AutoCompleteVen" 
                         CompletionListCssClass="autocomplete_completionListElement"
@@ -256,7 +256,7 @@
                     <asp:TextBox class="textboxWidth" ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' />
                 </td>
             </tr>
-<%--            <tr>
+            <tr>
                 <td>Manager:</td>
                 <td>
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -273,7 +273,7 @@
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                 </td>
-            </tr>--%>
+            </tr>
             <tr>
                 <td>Customer:</td>
                 <td>

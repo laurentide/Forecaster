@@ -39,4 +39,30 @@ Public Class MasterActionItemTool
         CType(mastInsert.FindControl("HiddenTeamNameTextbox"), TextBox).Text = CType(mastInsert.FindControl("TeamsDropDownList"), DropDownList).SelectedItem.Text
         CType(mastInsert.FindControl("HiddenTeamIDTextbox"), TextBox).Text = CType(mastInsert.FindControl("TeamsDropDownList"), DropDownList).SelectedValue
     End Sub
+
+    Protected Sub sdsInsert_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
+        Dim ID As Integer = e.Command.Parameters("@ID").Value
+        Session("ID") = ID
+    End Sub
+
+    Protected Sub mastInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
+        'Check if the notes text box is empty
+        If CType(mastInsert.FindControl("NotesTextBox"), TextBox).Text IsNot "" Then
+            'if they wrote something in the notes box then insert it into tblNotes
+            Dim query As String = "INSERT INTO [tblNotes] ([MAST_ID], [Note], [DatePosted]) VALUES (@MAST_ID, @Note, getDate())"
+            Using conn As New SqlConnection("Server=lcl-sql2k5-s;Database=MasterActionItemTool;Trusted_Connection=true")
+                Using comm As New SqlCommand()
+                    With comm
+                        .Connection = conn
+                        .CommandType = CommandType.Text
+                        .CommandText = query
+                        .Parameters.AddWithValue("@MAST_ID", Session("ID"))
+                        .Parameters.AddWithValue("@Note", CType(mastInsert.FindControl("NotesTextBox"), TextBox).Text)
+                    End With
+                    conn.Open()
+                    comm.ExecuteNonQuery()
+                End Using
+            End Using
+        End If
+    End Sub
 End Class

@@ -69,7 +69,7 @@
                     <asp:TextBox class="textboxWidth" ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' />
                 </td>
             </tr>
-<%--            <tr>
+            <tr>
                 <td>Manager:</td>
                 <td>
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
@@ -86,7 +86,7 @@
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
                 </td>
-            </tr>--%>
+            </tr>
             <tr>
                 <td>Customer:</td>
                 <td>
