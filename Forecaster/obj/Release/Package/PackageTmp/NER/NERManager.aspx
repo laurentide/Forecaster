@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="NERManager.aspx.vb" Inherits="Forecaster.NERManager" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="NERManager.aspx.vb" Inherits="Forecaster.NERManager" MaintainScrollPositionOnPostback="true" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -11,8 +11,8 @@
            <asp:PostBackTrigger ControlID="frmInsert" />
           </Triggers>
         <ContentTemplate>
-            <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="NERID" OnItemInserted="frmInsert_ItemInserted" 
-                OnItemUpdated="frmInsert_ItemUpdated">
+            <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="NERID" OnItemInserted="frmInsert_ItemInserted"
+               OnItemUpdated="frmInsert_ItemUpdated">
                 <EditItemTemplate>
                     <table>
                         <tr>
@@ -30,7 +30,7 @@
                                 <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
                                     <asp:ListItem Text="(Select the manager)" Value="" />
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9" SetFocusOnError="true" runat ="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
                             </td>
                         </tr>
 
@@ -43,7 +43,7 @@
                                 <asp:DropDownList ID="EmployeeTypeDropDown" runat="server" DataSourceID="sdsEmployeeTypes" AppendDataBoundItems="true" DataValueField="EmployeeTypeID" DataTextField="EmployeeType" SelectedValue='<%# Bind("EmployeeTypeID")%>'>
                                     <asp:ListItem Text="(Select the employee type)" Value="" />
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employee type" ControlToValidate="EmployeeTypeDropDown" />
                             </td>
                         </tr>
 
@@ -54,14 +54,14 @@
                                 <asp:DropDownList ID="EmploymentFormDropDown" runat="server" DataSourceID="sdsEmploymentForms" AppendDataBoundItems="true" DataValueField="EmploymentFormID" DataTextField="EmploymentForm" SelectedValue='<%# Bind("EmploymentFormID")%>'>
                                     <asp:ListItem Text="(Select the employee status)" Value="" />
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your employment form" ControlToValidate="EmploymentFormDropDown" />
                             </td>
                         </tr>
                         <tr>
                             <td>Job Title:</td>
                             <td>
                                 <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' Width="500" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a job description" ControlToValidate="NameTextBox" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a job description" ControlToValidate="NameTextBox" />
                             </td>
 
                         </tr>
@@ -105,7 +105,7 @@
                                 <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateNeededTextbox" PopupButtonID="Calendar_scheduleDR" />
                                 <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateNeededTextbox" PromptCharacter="_" />
                                 <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateNeededTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a date needed for" ControlToValidate="DateNeededTextbox" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a date needed for" ControlToValidate="DateNeededTextbox" />
                             </td>
                         </tr>
 
@@ -143,7 +143,7 @@
 
 
 
-                        <tr>
+<%--                        <tr>
                             <td>Investment sheet</td>
                             <td>
                                 <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx">Investment decision analysis form</a><br />
@@ -152,7 +152,7 @@
                                 Path:<asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("AttachmentSheetLink")%>' Text='<%# Eval("AttachmentSheetLink")%>'></asp:HyperLink>
                             </td>
 
-                        </tr>
+                        </tr>--%>
 
                         <%--                <tr>
                     <td>Visible:</td>
@@ -177,9 +177,9 @@
                                     DataTextField="Status" SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged" CausesValidation="true">
                                     <asp:ListItem Text="(Select the status)" Value="" />
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the status" ControlToValidate="StatusDropDown" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the status" ControlToValidate="StatusDropDown" Display="Dynamic" />
                                 <asp:Label ID="StatusReasonLabel" runat="server" Visible="false" Text="" /><asp:TextBox ID="StatusReasonTextbox" Text='<%# Bind("StatusReason")%>' runat="server" Visible="False" Width="500" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Field Required" ControlToValidate="StatusReasonTextbox" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator11" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Field Required" ControlToValidate="StatusReasonTextbox" InitialValue="0" Display="Dynamic" />
                             </td>                            
                         </tr>
              <asp:Panel ID="SORPanel" runat="server" Visible="false">
@@ -191,7 +191,7 @@
                             AutoPostBack="true">
                             <asp:ListItem Text="(Select the source)" Value="" />
                         </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="RecruitmentDropDown" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the source" ControlToValidate="RecruitmentDropDown" />
                     </td>       
             </tr></asp:Panel>
                         <asp:Panel ID="SORDetailPanel" runat="server" Visible="false">  
@@ -199,7 +199,7 @@
                         <td><asp:Label ID="SORDetailLabel" runat="server" /></td>
                             <td>
                                 <asp:TextBox ID="SORDetailTextbox" runat="server" Text='<%# Bind("RecruitmentSourceDetail")%>' Width="500" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter the recruitment source" ControlToValidate="SORDetailTextbox" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter the recruitment source" ControlToValidate="SORDetailTextbox" />
                             </td>                        
                   </tr> 
                         </asp:Panel>
@@ -212,7 +212,7 @@
                                     AutoPostBack="true">
                                     <asp:ListItem Text="(Select the school)" Value="" />
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the school" ControlToValidate="SchoolDropDown" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the school" ControlToValidate="SchoolDropDown" />
                             </td>
                         </tr>
                         <asp:Panel ID="OtherSchoolPanel" runat="server" Visible="false">
@@ -220,12 +220,13 @@
                                 <td><asp:Label ID="OtherSchoolLabel" runat="server" /></td>
                                 <td>
                                     <asp:TextBox ID="OtherSchoolTextBox" runat="server" Text='<%# Bind("SchoolDetail")%>' Width="500" />
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter the school name" ControlToValidate="OtherSchoolTextBox" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter the school name" ControlToValidate="OtherSchoolTextBox" />
                                 </td>
                             </tr>
                         </asp:Panel>
                         </asp:Panel>
-<%--                        <tr><td><br /></td></tr>
+                        <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="true">
+                        <tr><td><br /></td></tr>
                         <tr><td><asp:Label Text="Investment Sheet" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
                         <tr>
                             <td>Investment Owner: </td>
@@ -268,7 +269,7 @@
                                 <tr><td>Benefits:</td><td>
                                     <asp:TextBox ID="BenefitsTextBox" runat="server" Width="500" Text='<%# Bind("Benefit") %>' />
                                 </td></tr>
-                                    <tr><td>Year 0:</td><td><asp:TextBox ID="year0" runat="server" Width="500" Text='<%# Bind("PROI_Year0")%>' /></td></tr>
+                                    <tr><td>Year 0:</td><td><asp:TextBox ID="year0" runat="server" Width="500" Text='<%# Bind("PROI_Year0")%>'/></td></tr>
                                     <tr><td>Year 1:</td><td><asp:TextBox ID="year1" runat="server" Width="500" Text='<%# Bind("PROI_Year1")%>'/></td></tr>
                                     <tr><td>Year 2:</td><td><asp:TextBox ID="year2" runat="server" Width="500" Text='<%# Bind("PROI_Year2")%>'/></td></tr>
                                     <tr><td>Year 3:</td><td><asp:TextBox ID="year3" runat="server" Width="500" Text='<%# Bind("PROI_Year3")%>'/></td></tr>
@@ -285,8 +286,8 @@
                            <td>Projected ROI list:</td>
                            <td>
                            <asp:GridView ID="gvPROIDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle"
-                            CellPadding="4" ForeColor="#333333"
+                            RowStyle-CssClass="grid_RowStyle" OnRowDataBound="gvPROIDetails_RowDataBound"
+                            CellPadding="4" ForeColor="#333333" OnDataBinding="gvPROIDetails_DataBinding"
                             Font-Size="10px" OnRowDeleting="gvPROIDetails_RowDeleting">
                              <Columns>
                               <asp:TemplateField ShowHeader="False">
@@ -296,11 +297,11 @@
                                 </asp:TemplateField>
                                 <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:BoundField DataField="Benefit" HeaderText="Benefit" SortExpression="Benefit" />
-                                <asp:BoundField DataField="PROI_Year0" HeaderText="Year 0" SortExpression="PROI_Year0" />
-                                <asp:BoundField DataField="PROI_Year1" HeaderText="Year 1" SortExpression="PROI_Year1" />
-                                <asp:BoundField DataField="PROI_Year2" HeaderText="Year 2" SortExpression="PROI_Year2" />
-                                <asp:BoundField DataField="PROI_Year3" HeaderText="Year 3" SortExpression="PROI_Year3" />
-                                <asp:BoundField DataField="PROI_Year4" HeaderText="Year 4" SortExpression="PROI_Year4" />
+                                <asp:BoundField DataField="PROI_Year0" HeaderText="Year 0" SortExpression="PROI_Year0" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year1" HeaderText="Year 1" SortExpression="PROI_Year1" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year2" HeaderText="Year 2" SortExpression="PROI_Year2" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year3" HeaderText="Year 3" SortExpression="PROI_Year3" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year4" HeaderText="Year 4" SortExpression="PROI_Year4" DataFormatString="{0:c}" />
                                </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -352,8 +353,8 @@
                            <td>Program Costs List:</td>
                            <td>
                            <asp:GridView ID="gvProgramCostsDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle" OnRowDeleting="gvProgramCostsDetails_RowDeleting"
-                            CellPadding="4" ForeColor="#333333"
+                            RowStyle-CssClass="grid_RowStyle" OnRowDeleting="gvProgramCostsDetails_RowDeleting" OnDataBinding="gvProgramCostsDetails_DataBinding"
+                            CellPadding="4" ForeColor="#333333" OnRowDataBound="gvProgramCostsDetails_RowDataBound"
                             Font-Size="10px">
                              <Columns>
                               <asp:TemplateField ShowHeader="False">
@@ -363,11 +364,11 @@
                                 </asp:TemplateField>
                                 <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:BoundField DataField="ProgramCostDetail" HeaderText="Program Cost" SortExpression="ProgramCostDetail" />
-                                <asp:BoundField DataField="PC_Year0" HeaderText="Year 0" SortExpression="PC_Year0" />
-                                <asp:BoundField DataField="PC_Year1" HeaderText="Year 1" SortExpression="PC_Year1" />
-                                <asp:BoundField DataField="PC_Year2" HeaderText="Year 2" SortExpression="PC_Year2" />
-                                <asp:BoundField DataField="PC_Year3" HeaderText="Year 3" SortExpression="PC_Year3" />
-                                <asp:BoundField DataField="PC_Year4" HeaderText="Year 4" SortExpression="PC_Year4" />
+                                <asp:BoundField DataField="PC_Year0" HeaderText="Year 0" SortExpression="PC_Year0" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year1" HeaderText="Year 1" SortExpression="PC_Year1" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year2" HeaderText="Year 2" SortExpression="PC_Year2" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year3" HeaderText="Year 3" SortExpression="PC_Year3" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year4" HeaderText="Year 4" SortExpression="PC_Year4" DataFormatString="{0:c}" />
                                </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -387,6 +388,31 @@
                            </td>
                         </tr>
                       </tr>
+                       <asp:Panel ID="NCFPanel" runat="server">
+                       <tr>
+                           <td><asp:Label Text="Net Cash Flow:" ID="NetCashFlowID" runat="server" /></td>
+                           <td>
+                               <table border="solid" width="100%" style="background-color:#F7F6F3;">
+                                   <tr style="background:#c1ddff;"><td></td><td><b>Year 0</b></td><td><b>Year 1</b></td><td><b>Year 2</b></td><td><b>Year 3</b></td><td><b>Year 4</b></td></tr>
+                                   <tr style="background:#c1ddff;"><td><b>Net Cash Flow:</b></td><td><b><asp:Label ID="NCFYear0" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="NCFYear1" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="NCFYear2" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="NCFYear3" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="NCFYear4" runat="server" /></b></td>
+                                   </tr>
+                                   <tr style="background:#c1ddff;"><td><b>Discount Rate:</b></td><td><b>10%</b></td></tr>
+                                   <tr style="background:#c1ddff;"><td><b>Discount Factor:</b></td><td><b>100%</b></td><td><b>91%</b></td><td><b>83%</b></td><td><b>75%</b></td><td><b>68%</b></td></tr>
+                                   <tr style="background:#c1ddff;"><td><b>Discounted Net Cash Flow:</b></td>
+                                       <td><b><asp:Label ID="DNCFYear0" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="DNCFYear1" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="DNCFYear2" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="DNCFYear3" runat="server" /></b></td>
+                                       <td><b><asp:Label ID="DNCFYear4" runat="server" /></b></td></tr>
+                                   <tr style="background:#c1ddff;"><td><b>Five Year Net Present Value (NPV):</b></td><td><b><asp:Label ID="NPVLabel" runat="server" /></b></td></tr>
+                               </table>
+                           </td>
+                       </tr>
+                       </asp:Panel>
                         <tr>
                             <td>Success Criteria (ie. how will we measure success/progress quarterly?)</td>
                             <td>
@@ -525,7 +551,7 @@
                         <tr>
                             <td>Contingency Plan (ie. what will you do if it does not meet objectives?)</td>
                             <td><asp:TextBox ID="ContingencyPlanTextbox" runat="server" Text='<%# Bind("ContingencyPlan") %>' TextMode="MultiLine" Rows="5" Width="500"></asp:TextBox></td>
-                        </tr>--%>
+                        </tr></asp:Panel>
                         <tr>
                             <td>
                                 <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
@@ -584,11 +610,6 @@
             </asp:GridView>
         </ContentTemplate>
     </asp:UpdatePanel>
-<%--          ,[InvestmentOwner] = @InvestmentOwner
-      ,[InvestmentStartDate] = @InvestmentStartDate
-      ,[InvestmentDefinition] = @InvestmentDefinition
-      ,[InvestmentLaurentideBenefit] = @InvestmentLaurentideBenefit
-      ,[ContingencyPlan] = @ContingencyPlan--%>
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="SELECT * FROM [tblNewEmployeeRequest] where NERID=@ID"
@@ -669,6 +690,11 @@
       ,[LeadershipTeamReview] = @LeadershipTeamReview
       ,[AttachmentSheetLink] = @AttachmentSheetLink
       ,[StatusReason] = @StatusReason
+      ,[InvestmentOwner] = @InvestmentOwner
+      ,[InvestmentStartDate] = @InvestmentStartDate
+      ,[InvestmentDefinition] = @InvestmentDefinition
+      ,[InvestmentLaurentideBenefit] = @InvestmentLaurentideBenefit
+      ,[ContingencyPlan] = @ContingencyPlan
  WHERE Nerid = @NERID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvNewEmployeeRequests" PropertyName="SelectedValue" />
@@ -726,6 +752,11 @@
             <asp:Parameter Name="LeadershipTeamReview" />
             <asp:Parameter Name="AttachmentSheetLink" />
             <asp:Parameter Name="StatusReason" />
+            <asp:Parameter Name="InvestmentOwner" />
+            <asp:Parameter Name="InvestmentStartDate" />
+            <asp:Parameter Name="InvestmentDefinition" />
+            <asp:Parameter Name="InvestmentLaurentideBenefit" />
+            <asp:Parameter Name="ContingencyPlan" />
         </UpdateParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsNewEmployeeRequests" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
@@ -762,5 +793,7 @@
         SelectCommand="SELECT * FROM tblSchools"></asp:SqlDataSource>
 <%--    <asp:SqlDataSource ID="sdsPROI" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="SELECT * FROM tblProjectedROI WHERE NERID = @NERID"></asp:SqlDataSource>--%>
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
+             ShowSummary="False" ValidationGroup="Update" />
 </asp:Content>
 

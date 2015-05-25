@@ -189,7 +189,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Immediate action required?</td>
+                <td>Is immediate action required?</td>
                 <td><asp:CheckBox ID="ImmediateActionRequiredCheckbox" runat="server" Checked='<%# Bind("ImmediateActionRequired")%>' OnCheckedChanged="ImmediateActionRequiredCheckbox_CheckedChanged"
                     CausesValidation="true" AutoPostBack="true" /></td>
             </tr>
@@ -200,8 +200,12 @@
                 </tr>
             </asp:Panel>
             <tr>
+                <td>Upload related document or picture (if neccessary):</td>
+                <td><asp:FileUpload ID="fuDialog" runat="server" /></td>
+            </tr>
+            <tr>
                 <td>
-                    <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Insert" ValidationGroup="Insert" />
+                    <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
                     &nbsp;<asp:Button ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" /></td>
             </tr>
         </InsertItemTemplate>
@@ -477,7 +481,12 @@
            ,[AdditionalCorrectiveAction]
            ,[Visible]
            ,[Type]
-           ,[ClientContact])
+           ,[ClientContact]
+           ,[ImmediateActionRequired]
+           ,[ImmediateAction]
+           ,[ManagerContact]
+           ,[ManagerContacted]
+           ,[LearningOpportunity])
      VALUES
            (@EventTypeID
            ,@OriginID
@@ -515,7 +524,10 @@
            ,@Type
            ,@ClientContact
            ,@ImmediateActionRequired
-           ,@ImmediateAction);
+           ,@ImmediateAction
+           ,0
+           ,0
+           ,0);
         select @ID = @@IDENTITY"
         UpdateCommand="UPDATE [QLT].[dbo].[tblQLT]
            SET [EventTypeID] =                         @EventTypeID

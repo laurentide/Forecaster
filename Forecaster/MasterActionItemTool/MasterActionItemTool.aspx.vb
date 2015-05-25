@@ -17,7 +17,7 @@ Public Class MasterActionItemTool
     Protected Sub mastInsert_DataBound(sender As Object, e As EventArgs)
         Dim teamDropDown As DropDownList
         teamDropDown = CType(mastInsert.FindControl("TeamsDropDownList"), DropDownList)
-        Dim queryString As String = "SELECT * FROM tblTeams JOIN tblTeamMembership ON tblTeams.TeamID = tblTeamMembership.TeamID JOIN tblMembers ON tblTeamMembership.MemberName = tblMembers.MemberName WHERE tblTeamMembership.MemberName = '" + Session("Username") + "'"
+        Dim queryString As String = "SELECT * FROM tblTeams JOIN tblTeamMembership ON tblTeams.TeamID = tblTeamMembership.TeamID JOIN tblMembers ON tblTeamMembership.MemberName = tblMembers.MemberUserName WHERE tblTeamMembership.MemberName = '" + Session("Username") + "'"
         Dim connectionString As String = ConfigurationManager.ConnectionStrings("MASTConnectionString").ConnectionString
         'Dim ds As New DataSet()
         'Try
@@ -49,7 +49,7 @@ Public Class MasterActionItemTool
         'Check if the notes text box is empty
         If CType(mastInsert.FindControl("NotesTextBox"), TextBox).Text IsNot "" Then
             'if they wrote something in the notes box then insert it into tblNotes
-            Dim query As String = "INSERT INTO [tblNotes] ([MAST_ID], [Note], [DatePosted]) VALUES (@MAST_ID, @Note, getDate())"
+            Dim query As String = "INSERT INTO [tblNotes] ([MAST_ID], [Note], [DatePosted], [Visible]) VALUES (@MAST_ID, @Note, getDate(), 1)"
             Using conn As New SqlConnection("Server=lcl-sql2k5-s;Database=MasterActionItemTool;Trusted_Connection=true")
                 Using comm As New SqlCommand()
                     With comm

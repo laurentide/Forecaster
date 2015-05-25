@@ -32,6 +32,42 @@ Partial Public Class ViewMyActionItems
     Protected WithEvents mastInsert As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
+    '''Label1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label1 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''TeamFilterDropdown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TeamFilterDropdown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''Label2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label2 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ResponsableFilterDropdown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResponsableFilterDropdown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''mastEdit control.
     '''</summary>
     '''<remarks>
@@ -48,6 +84,15 @@ Partial Public Class ViewMyActionItems
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsEdit As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsTeamFilter control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsTeamFilter As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
     '''sdsInsert control.
@@ -84,4 +129,13 @@ Partial Public Class ViewMyActionItems
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsNotes As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsTeams control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsTeams As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

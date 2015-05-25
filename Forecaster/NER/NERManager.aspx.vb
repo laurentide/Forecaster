@@ -4,31 +4,20 @@ Imports System.Data.SqlTypes
 
 Public Class NERManager
     Inherits System.Web.UI.Page
-    Public Shared PROIYear0Total As Decimal = 0
-    Public Shared PROIYear1Total As Decimal = 0
-    Public Shared PROIYear2Total As Decimal = 0
-    Public Shared PROIYear3Total As Decimal = 0
-    Public Shared PROIYear4Total As Decimal = 0
 
-    Public Shared PCYear0Total As Decimal = 0
-    Public Shared PCYear1Total As Decimal = 0
-    Public Shared PCYear2Total As Decimal = 0
-    Public Shared PCYear3Total As Decimal = 0
-    Public Shared PCYear4Total As Decimal = 0
+    Public NCFYear0 As Decimal = 0
+    Public NCFYear1 As Decimal = 0
+    Public NCFYear2 As Decimal = 0
+    Public NCFYear3 As Decimal = 0
+    Public NCFYear4 As Decimal = 0
 
-    Public Shared NCFYear0 As Decimal = 0
-    Public Shared NCFYear1 As Decimal = 0
-    Public Shared NCFYear2 As Decimal = 0
-    Public Shared NCFYear3 As Decimal = 0
-    Public Shared NCFYear4 As Decimal = 0
+    Public DNCFYear0 As Decimal = 0
+    Public DNCFYear1 As Decimal = 0
+    Public DNCFYear2 As Decimal = 0
+    Public DNCFYear3 As Decimal = 0
+    Public DNCFYear4 As Decimal = 0
 
-    Public Shared DNCFYear0 As Decimal = 0
-    Public Shared DNCFYear1 As Decimal = 0
-    Public Shared DNCFYear2 As Decimal = 0
-    Public Shared DNCFYear3 As Decimal = 0
-    Public Shared DNCFYear4 As Decimal = 0
-
-    Public Shared NPV As Decimal = 0
+    Public NPV As Decimal = 0
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
@@ -38,6 +27,20 @@ Public Class NERManager
         If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" And Not User.Identity.Name = "LCLMTL\mignoto" And Not User.Identity.Name = "LCLMTL\mcarr" Then
             'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
             Response.Redirect("~/NER/AccessDenied.aspx")
+        End If
+
+        If Not Page.IsPostBack Then
+            Session("PROIYear0Total") = 0
+            Session("PROIYear1Total") = 0
+            Session("PROIYear2Total") = 0
+            Session("PROIYear3Total") = 0
+            Session("PROIYear4Total") = 0
+
+            Session("PCYear0Total") = 0
+            Session("PCYear1Total") = 0
+            Session("PCYear2Total") = 0
+            Session("PCYear3Total") = 0
+            Session("PCYear4Total") = 0
         End If
 
         If ViewState("PROIDatatable") Is Nothing Then
@@ -104,31 +107,33 @@ Public Class NERManager
     End Sub
 
     Protected Sub frmInsert_DataBound(sender As Object, e As EventArgs)
+        'Try
+        'If frmInsert.CurrentMode = FormViewMode.Insert Then
+        'Dim connectionString As String
+        'connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+
+        'Dim SqlConnection As New SqlConnection(connectionString)
+        'Dim sc As New SqlCommand("select givenname + ' ' + sn as IssuedBy,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
+        'SqlConnection.Open()
+
+        'Dim reader As SqlDataReader = sc.ExecuteReader()
+        'reader.Read()
+        'Session("IssuedBy") = reader.GetString(0)
+        'Session("Email") = reader.GetString(1)
+        'reader.Close()
+
+        'CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
+        'CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
+        'End If            
         Try
-            'If frmInsert.CurrentMode = FormViewMode.Insert Then
-            'Dim connectionString As String
-            'connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
-
-            'Dim SqlConnection As New SqlConnection(connectionString)
-            'Dim sc As New SqlCommand("select givenname + ' ' + sn as IssuedBy,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
-            'SqlConnection.Open()
-
-            'Dim reader As SqlDataReader = sc.ExecuteReader()
-            'reader.Read()
-            'Session("IssuedBy") = reader.GetString(0)
-            'Session("Email") = reader.GetString(1)
-            'reader.Close()
-
-            'CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
-            'CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
-            'End If            
             If frmInsert.CurrentMode = FormViewMode.Edit Then
                 'Fill PROI gridview
                 Dim dt As New DataTable
                 Dim connectionString As String
                 connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
                 Dim SqlConnection As New SqlConnection(connectionString)
-                Dim sc As New SqlCommand("select * from tblProjectedROI where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, SqlConnection)
+                Dim neridstr As String = CType(frmInsert.FindControl("NERIDLabel1"), Label).Text
+                Dim sc As New SqlCommand("select * from tblProjectedROI where NERID = " & neridstr, SqlConnection)
                 SqlConnection.Open()
                 Dim da As New SqlDataAdapter(sc)
                 da.Fill(dt)
@@ -139,23 +144,23 @@ Public Class NERManager
                 gvPROIDetails.DataBind()
 
                 'Populate the footer row with the total value for each year
-                If Not IsNothing(dt) Then
-                    For Each gvr As GridViewRow In gvPROIDetails.Rows
-                        If gvr.RowType = DataControlRowType.DataRow Then
-                            PROIYear0Total += Convert.ToDecimal(gvr.Cells(3).Text)
-                            PROIYear1Total += Convert.ToDecimal(gvr.Cells(4).Text)
-                            PROIYear2Total += Convert.ToDecimal(gvr.Cells(5).Text)
-                            PROIYear3Total += Convert.ToDecimal(gvr.Cells(6).Text)
-                            PROIYear4Total += Convert.ToDecimal(gvr.Cells(7).Text)
-                        End If
-                    Next
-                    gvPROIDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
-                    gvPROIDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PROIYear0Total)
-                    gvPROIDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PROIYear1Total)
-                    gvPROIDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PROIYear2Total)
-                    gvPROIDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PROIYear3Total)
-                    gvPROIDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PROIYear4Total)
-                End If
+                'If Not IsNothing(dt) Then
+                '    For Each gvr As GridViewRow In gvPROIDetails.Rows
+                '        If gvr.RowType = DataControlRowType.DataRow Then
+                '            PROIYear0Total += gvr.Cells(3).Text
+                '            PROIYear1Total += gvr.Cells(4).Text
+                '            PROIYear2Total += gvr.Cells(5).Text
+                '            PROIYear3Total += gvr.Cells(6).Text
+                '            PROIYear4Total += gvr.Cells(7).Text
+                '        End If
+                '    Next
+                '    gvPROIDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
+                '    gvPROIDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PROIYear0Total)
+                '    gvPROIDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PROIYear1Total)
+                '    gvPROIDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PROIYear2Total)
+                '    gvPROIDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PROIYear3Total)
+                '    gvPROIDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PROIYear4Total)
+                'End If
 
 
                 'Fill PC gridview
@@ -174,23 +179,23 @@ Public Class NERManager
                 gvProgramCostsDetails.DataBind()
 
                 'Populate the footer row with the total value for each year
-                If Not IsNothing(PCdt) Then
-                    For Each gvr As GridViewRow In gvProgramCostsDetails.Rows
-                        If gvr.RowType = DataControlRowType.DataRow Then
-                            PCYear0Total += Convert.ToDecimal(gvr.Cells(3).Text)
-                            PCYear1Total += Convert.ToDecimal(gvr.Cells(4).Text)
-                            PCYear2Total += Convert.ToDecimal(gvr.Cells(5).Text)
-                            PCYear3Total += Convert.ToDecimal(gvr.Cells(6).Text)
-                            PCYear4Total += Convert.ToDecimal(gvr.Cells(7).Text)
-                        End If
-                    Next
-                    gvProgramCostsDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
-                    gvProgramCostsDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PCYear0Total)
-                    gvProgramCostsDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PCYear1Total)
-                    gvProgramCostsDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PCYear2Total)
-                    gvProgramCostsDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PCYear3Total)
-                    gvProgramCostsDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PCYear4Total)
-                End If
+                'If Not IsNothing(PCdt) Then
+                '    For Each gvr As GridViewRow In gvProgramCostsDetails.Rows
+                '        If gvr.RowType = DataControlRowType.DataRow Then
+                '            PCYear0Total += gvr.Cells(3).Text
+                '            PCYear1Total += gvr.Cells(4).Text
+                '            PCYear2Total += gvr.Cells(5).Text
+                '            PCYear3Total += gvr.Cells(6).Text
+                '            PCYear4Total += gvr.Cells(7).Text
+                '        End If
+                '    Next
+                '    gvProgramCostsDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
+                '    gvProgramCostsDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PCYear0Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PCYear1Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PCYear2Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PCYear3Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PCYear4Total)
+                'End If
 
                 UpdateNetCashFlow()
 
@@ -663,19 +668,12 @@ Public Class NERManager
         End If
 
         drow("Benefit") = CType(frm.FindControl("BenefitsTextBox"), TextBox).Text
-        drow("PROI_Year0") = CType(frm.FindControl("Year0"), TextBox).Text
-        drow("PROI_Year1") = CType(frm.FindControl("Year1"), TextBox).Text
-        drow("PROI_Year2") = CType(frm.FindControl("Year2"), TextBox).Text
-        drow("PROI_Year3") = CType(frm.FindControl("Year3"), TextBox).Text
-        drow("PROI_Year4") = CType(frm.FindControl("Year4"), TextBox).Text
+        drow("PROI_Year0") = If(CType(frm.FindControl("Year0"), TextBox).Text = "", 0, CType(frm.FindControl("Year0"), TextBox).Text)
+        drow("PROI_Year1") = If(CType(frm.FindControl("Year1"), TextBox).Text = "", 0, CType(frm.FindControl("Year1"), TextBox).Text)
+        drow("PROI_Year2") = If(CType(frm.FindControl("Year2"), TextBox).Text = "", 0, CType(frm.FindControl("Year2"), TextBox).Text)
+        drow("PROI_Year3") = If(CType(frm.FindControl("Year3"), TextBox).Text = "", 0, CType(frm.FindControl("Year3"), TextBox).Text)
+        drow("PROI_Year4") = If(CType(frm.FindControl("Year4"), TextBox).Text = "", 0, CType(frm.FindControl("Year4"), TextBox).Text)
         drow("Visible") = True
-
-        PROIYear0Total += Convert.ToDecimal(CType(frm.FindControl("Year0"), TextBox).Text)
-        PROIYear1Total += Convert.ToDecimal(CType(frm.FindControl("Year1"), TextBox).Text)
-        PROIYear2Total += Convert.ToDecimal(CType(frm.FindControl("Year2"), TextBox).Text)
-        PROIYear3Total += Convert.ToDecimal(CType(frm.FindControl("Year3"), TextBox).Text)
-        PROIYear4Total += Convert.ToDecimal(CType(frm.FindControl("Year4"), TextBox).Text)
-        UpdateNetCashFlow()
 
         If frmInsert.CurrentMode = FormViewMode.Edit Then
             drow("NERID") = CType(frmInsert.FindControl("NERIDLabel1"), Label).Text
@@ -733,18 +731,18 @@ Public Class NERManager
         End If
 
         drow("ProgramCostDetail") = CType(frm.FindControl("ProgramCostTextBox"), TextBox).Text
-        drow("PC_Year0") = CType(frm.FindControl("PCYear0"), TextBox).Text
-        drow("PC_Year1") = CType(frm.FindControl("PCYear1"), TextBox).Text
-        drow("PC_Year2") = CType(frm.FindControl("PCYear2"), TextBox).Text
-        drow("PC_Year3") = CType(frm.FindControl("PCYear3"), TextBox).Text
-        drow("PC_Year4") = CType(frm.FindControl("PCYear4"), TextBox).Text
+        drow("PC_Year0") = If(CType(frm.FindControl("PCYear0"), TextBox).Text = "", 0, CType(frm.FindControl("PCYear0"), TextBox).Text)
+        drow("PC_Year1") = If(CType(frm.FindControl("PCYear1"), TextBox).Text = "", 0, CType(frm.FindControl("PCYear1"), TextBox).Text)
+        drow("PC_Year2") = If(CType(frm.FindControl("PCYear2"), TextBox).Text = "", 0, CType(frm.FindControl("PCYear2"), TextBox).Text)
+        drow("PC_Year3") = If(CType(frm.FindControl("PCYear3"), TextBox).Text = "", 0, CType(frm.FindControl("PCYear3"), TextBox).Text)
+        drow("PC_Year4") = If(CType(frm.FindControl("PCYear4"), TextBox).Text = "", 0, CType(frm.FindControl("PCYear4"), TextBox).Text)
         drow("Visible") = True
 
-        PCYear0Total += Convert.ToDecimal(CType(frm.FindControl("PCYear0"), TextBox).Text)
-        PCYear1Total += Convert.ToDecimal(CType(frm.FindControl("PCYear1"), TextBox).Text)
-        PCYear2Total += Convert.ToDecimal(CType(frm.FindControl("PCYear2"), TextBox).Text)
-        PCYear3Total += Convert.ToDecimal(CType(frm.FindControl("PCYear3"), TextBox).Text)
-        PCYear4Total += Convert.ToDecimal(CType(frm.FindControl("PCYear4"), TextBox).Text)
+        'PCYear0Total += Convert.ToDecimal(CType(frm.FindControl("PCYear0"), TextBox).Text)
+        'PCYear1Total += Convert.ToDecimal(CType(frm.FindControl("PCYear1"), TextBox).Text)
+        'PCYear2Total += Convert.ToDecimal(CType(frm.FindControl("PCYear2"), TextBox).Text)
+        'PCYear3Total += Convert.ToDecimal(CType(frm.FindControl("PCYear3"), TextBox).Text)
+        'PCYear4Total += Convert.ToDecimal(CType(frm.FindControl("PCYear4"), TextBox).Text)
         UpdateNetCashFlow()
 
         If frmInsert.CurrentMode = FormViewMode.Edit Then
@@ -941,11 +939,11 @@ Public Class NERManager
     End Sub
 
     Protected Sub UpdateNetCashFlow()
-        NCFYear0 = PROIYear0Total - PCYear0Total
-        NCFYear1 = PROIYear1Total - PCYear1Total
-        NCFYear2 = PROIYear2Total - PCYear2Total
-        NCFYear3 = PROIYear3Total - PCYear3Total
-        NCFYear4 = PROIYear4Total - PCYear4Total
+        NCFYear0 = Session("PROIYear0Total") - Session("PCYear0Total")
+        NCFYear1 = Session("PROIYear1Total") - Session("PCYear1Total")
+        NCFYear2 = Session("PROIYear2Total") - Session("PCYear2Total")
+        NCFYear3 = Session("PROIYear3Total") - Session("PCYear3Total")
+        NCFYear4 = Session("PROIYear4Total") - Session("PCYear4Total")
 
         DNCFYear0 = NCFYear0 * 1
         DNCFYear1 = NCFYear1 * 0.91
@@ -971,26 +969,38 @@ Public Class NERManager
     End Sub
 
     Protected Sub gvPROIDetails_RowDataBound(sender As Object, e As GridViewRowEventArgs)
-        If e.Row.RowType = DataControlRowType.Footer Then
-            e.Row.Cells(2).Text = "Yearly Totals:"
-            e.Row.Cells(3).Text = String.Format("{0:c}", PROIYear0Total)
-            e.Row.Cells(4).Text = String.Format("{0:c}", PROIYear1Total)
-            e.Row.Cells(5).Text = String.Format("{0:c}", PROIYear2Total)
-            e.Row.Cells(6).Text = String.Format("{0:c}", PROIYear3Total)
-            e.Row.Cells(7).Text = String.Format("{0:c}", PROIYear4Total)
+        If e.Row.RowType = DataControlRowType.DataRow Then
+            Session("PROIYear0Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PROI_Year0"))
+            Session("PROIYear1Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PROI_Year1"))
+            Session("PROIYear2Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PROI_Year2"))
+            Session("PROIYear3Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PROI_Year3"))
+            Session("PROIYear4Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PROI_Year4"))
+        ElseIf e.Row.RowType = DataControlRowType.Footer Then
+        e.Row.Cells(2).Text = "Yearly Totals:"
+            e.Row.Cells(3).Text = String.Format("{0:c}", Session("PROIYear0Total"))
+            e.Row.Cells(4).Text = String.Format("{0:c}", Session("PROIYear1Total"))
+            e.Row.Cells(5).Text = String.Format("{0:c}", Session("PROIYear2Total"))
+            e.Row.Cells(6).Text = String.Format("{0:c}", Session("PROIYear3Total"))
+            e.Row.Cells(7).Text = String.Format("{0:c}", Session("PROIYear4Total"))
         End If
         UpdateNetCashFlow()
     End Sub
 
 
     Protected Sub gvProgramCostsDetails_RowDataBound(sender As Object, e As GridViewRowEventArgs)
-        If e.Row.RowType = DataControlRowType.Footer Then
+        If e.Row.RowType = DataControlRowType.DataRow Then
+            Session("PCYear0Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PC_Year0"))
+            Session("PCYear1Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PC_Year1"))
+            Session("PCYear2Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PC_Year2"))
+            Session("PCYear3Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PC_Year3"))
+            Session("PCYear4Total") += Convert.ToDecimal(DataBinder.Eval(e.Row.DataItem, "PC_Year4"))
+        ElseIf e.Row.RowType = DataControlRowType.Footer Then
             e.Row.Cells(2).Text = "Yearly Totals:"
-            e.Row.Cells(3).Text = String.Format("{0:c}", PCYear0Total)
-            e.Row.Cells(4).Text = String.Format("{0:c}", PCYear1Total)
-            e.Row.Cells(5).Text = String.Format("{0:c}", PCYear2Total)
-            e.Row.Cells(6).Text = String.Format("{0:c}", PCYear3Total)
-            e.Row.Cells(7).Text = String.Format("{0:c}", PCYear4Total)
+            e.Row.Cells(3).Text = String.Format("{0:c}", Session("PCYear0Total"))
+            e.Row.Cells(4).Text = String.Format("{0:c}", Session("PCYear1Total"))
+            e.Row.Cells(5).Text = String.Format("{0:c}", Session("PCYear2Total"))
+            e.Row.Cells(6).Text = String.Format("{0:c}", Session("PCYear3Total"))
+            e.Row.Cells(7).Text = String.Format("{0:c}", Session("PCYear4Total"))
         End If
         UpdateNetCashFlow()
     End Sub
@@ -1000,4 +1010,19 @@ Public Class NERManager
         Session("ID") = ID
     End Sub
 
+    Protected Sub gvPROIDetails_DataBinding(sender As Object, e As EventArgs)
+        Session("PROIYear0Total") = 0
+        Session("PROIYear1Total") = 0
+        Session("PROIYear2Total") = 0
+        Session("PROIYear3Total") = 0
+        Session("PROIYear4Total") = 0
+    End Sub
+
+    Protected Sub gvProgramCostsDetails_DataBinding(sender As Object, e As EventArgs)
+        Session("PCYear0Total") = 0
+        Session("PCYear1Total") = 0
+        Session("PCYear2Total") = 0
+        Session("PCYear3Total") = 0
+        Session("PCYear4Total") = 0
+    End Sub
 End Class

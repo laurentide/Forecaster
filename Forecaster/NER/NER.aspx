@@ -344,17 +344,17 @@
 
 
 
-                        <tr>
+<%--                       <tr>
                             <td>Investment sheet</td>
                             <td>
                                 <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx">Investment decision analysis form</a><br />
                                 <asp:FileUpload ID="fuDialog" runat="server" />
                                 <br />
-                                <%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                                                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
                         Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("Path")%>' Text='<%# Eval("Path") %>' ></asp:Hyperlink>
                             </td>
 
-                        </tr> 
+                        </tr> --%>
 
 
 
@@ -365,7 +365,7 @@
                         <asp:CheckBox ID="VisibleCheckBox" runat="server" Checked='<%# Bind("Visible") %>' /></td>
                 </tr>--%>  
 
-                        <%-- Investment Sheet Integration --%>  <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="false">
+                        <%-- Investment Sheet Integration --%>  <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="true">
                         <tr><td><br /></td></tr>
                         <tr><td><asp:Label Text="Investment Sheet" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
                         <tr>
@@ -437,7 +437,7 @@
                            <td>Projected ROI list:</td>
                            <td>
                            <asp:GridView ID="gvPROIDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle"
+                            RowStyle-CssClass="grid_RowStyle" OnDataBinding="gvPROIDetails_DataBinding"
                             CellPadding="4" ForeColor="#333333" OnRowDataBound="gvPROIDetails_RowDataBound"
                             Font-Size="10px" OnRowDeleting="gvPROIDetails_RowDeleting">
                              <Columns>
@@ -506,7 +506,7 @@
                            <td>
                            <asp:GridView ID="gvProgramCostsDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
                             RowStyle-CssClass="grid_RowStyle" OnRowDataBound="gvProgramCostsDetails_RowDataBound"
-                            CellPadding="4" ForeColor="#333333"
+                            CellPadding="4" ForeColor="#333333" OnDataBinding="gvProgramCostsDetails_DataBinding"
                             Font-Size="10px" OnRowDeleting="gvProgramCostsDetails_RowDeleting">
                              <Columns>
                               <asp:TemplateField ShowHeader="False">

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLT.aspx.vb" Inherits="Forecaster.QLT" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLT.aspx.vb" Inherits="Forecaster.QLT" MaintainScrollPositionOnPostback="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
@@ -189,8 +189,19 @@
                 </td>
             </tr>
             <tr>
+                <td>Is immediate action required?</td>
+                <td><asp:CheckBox ID="ImmediateActionRequiredCheckbox" runat="server" Checked='<%# Bind("ImmediateActionRequired")%>' OnCheckedChanged="ImmediateActionRequiredCheckbox_CheckedChanged"
+                    CausesValidation="true" AutoPostBack="true" /></td>
+            </tr>
+            <asp:Panel ID="ImmediateActionRequiredPanel" runat="server" Visible="false">
+                <tr>
+                    <td>Immediate action:</td>
+                    <td><asp:TextBox ID="ImmediateActionTextbox" runat="server" Text='<%# Bind("ImmediateAction")%>' class="textboxWidth" /></td>
+                </tr>
+            </asp:Panel>
+            <tr>
                 <td>
-                    <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Insert" ValidationGroup="Insert" />
+                    <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
                     &nbsp;<asp:Button ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" /></td>
             </tr>
         </InsertItemTemplate>
@@ -466,7 +477,12 @@
            ,[AdditionalCorrectiveAction]
            ,[Visible]
            ,[Type]
-           ,[ClientContact])
+           ,[ClientContact]
+           ,[ImmediateActionRequired]
+           ,[ImmediateAction]
+           ,[ManagerContact]
+           ,[ManagerContacted]
+           ,[LearningOpportunity])
      VALUES
            (@EventTypeID
            ,@OriginID
@@ -502,7 +518,12 @@
            ,@AdditionalCorrectiveAction
            ,@Visible
            ,@Type
-           ,@ClientContact);
+           ,@ClientContact
+           ,@ImmediateActionRequired
+           ,@ImmediateAction
+           ,0
+           ,0
+           ,0);
         select @ID = @@IDENTITY"
         UpdateCommand="UPDATE [QLT].[dbo].[tblQLT]
            SET [EventTypeID] =                         @EventTypeID
@@ -577,6 +598,8 @@
             <asp:parameter Name="Visible" DefaultValue="1"/>
             <asp:parameter Name="Type"/>
             <asp:parameter Name="ClientContact" DefaultValue="0"/>
+            <asp:Parameter Name="ImmediateActionRequired" />
+            <asp:Parameter Name="ImmediateAction" />
             <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
         </InsertParameters>
         <UpdateParameters>

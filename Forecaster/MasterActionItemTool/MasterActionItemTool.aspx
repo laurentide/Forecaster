@@ -14,12 +14,12 @@
             OnItemInserted="mastInsert_ItemInserted">
         <InsertItemTemplate>
             <table>
-                <tr>
+<%--                <tr>
                     <td>Name:</td>
                     <td>
                         <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name")%>' Width="500" /></td>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>Team(s):</td>
                     <td>
@@ -98,7 +98,6 @@
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
         InsertCommand="INSERT INTO [tblMasterActionItemTool]
         ([DateCreated],
-        [Name],
         [TeamName],
         [TeamID],
         [Topic],
@@ -106,12 +105,10 @@
         [Action],
         [Responsable],
         [DueDate],
-        [Notes],
         [ItemStatus],
         [Visible])
      VALUES
         (getDate(),
-        @Name,
         @TeamName,
         @TeamID,
         @Topic,
@@ -119,7 +116,6 @@
         @Action,
         @Responsable,
         @DueDate,
-        @Notes,
         'Open',
         1)
         select @ID = @@IDENTITY">

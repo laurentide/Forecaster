@@ -8,6 +8,23 @@ Public Class QLTMgmt
         Session("Username") = Me.User.Identity.Name.ToString
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
+
+        If ViewState("PCA") Is Nothing Then
+            Dim PCAdt As DataTable = New DataTable
+            PCAdt.Columns.Add("PCAID", GetType(Integer))
+            PCAdt.Columns.Add("QLTID", GetType(Integer))
+            PCAdt.Columns.Add("PermanentCorrectiveAction", GetType(String))
+            PCAdt.Columns.Add("Timestamp", GetType(DateTime))
+        End If
+
+        If ViewState("ACA") Is Nothing Then
+            Dim ACAdt As DataTable = New DataTable
+            ACAdt.Columns.Add("ACAID", GetType(Integer))
+            ACAdt.Columns.Add("QLTID", GetType(Integer))
+            ACAdt.Columns.Add("AdditionalCorrectiveAction", GetType(String))
+            ACAdt.Columns.Add("Timestamp", GetType(DateTime))
+        End If
+
     End Sub
     <System.Web.Script.Services.ScriptMethod(), _
     System.Web.Services.WebMethod()> _
@@ -44,14 +61,57 @@ System.Web.Services.WebMethod()> _
         SqlConnection.Close()
         Return customers
     End Function
+
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
 
     End Sub
+
     Protected Sub gvQLT_SelectedIndexChanged(sender As Object, e As EventArgs)
         frmInsert.ChangeMode(FormViewMode.Edit)
     End Sub
 
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
+        'Check if the PCA text box is empty
+        If CType(frmInsert.FindControl("PermanentCorrectiveActionTextBox"), TextBox).Text IsNot "" Then
+            'if they wrote then insert it into the table
+            Dim PCAquery As String = "INSERT INTO [tblPermanentCorrectiveAction] ([QLTID], [PermanentCorrectiveAction], [Timestamp]) VALUES (@QLTID, @PermanentCorrectiveAction, getDate())"
+            Using PCAconn As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+                Using PCAcomm As New SqlCommand()
+                    With PCAcomm
+                        .Connection = PCAconn
+                        .CommandType = CommandType.Text
+                        .CommandText = PCAquery
+                        .Parameters.AddWithValue("@QLTID", CType(frmInsert.FindControl("IDTextbox"), Label).Text)
+                        .Parameters.AddWithValue("@PermanentCorrectiveAction", CType(frmInsert.FindControl("PermanentCorrectiveActionTextBox"), TextBox).Text)
+                    End With
+                    PCAconn.Open()
+                    PCAcomm.ExecuteNonQuery()
+                End Using
+            End Using
+        End If
+
+        'Check if the ACA text box is empty
+        If CType(frmInsert.FindControl("AdditionalCorrectiveActionTextBox"), TextBox).Text IsNot "" Then
+            'if they wrote then insert it into the table
+            Dim query As String = "INSERT INTO [tblAdditionalCorrectiveAction] ([QLTID], [AdditionalCorrectiveAction], [Timestamp]) VALUES (@QLTID, @AdditionalCorrectiveAction, getDate())"
+            Using conn As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+                Using comm As New SqlCommand()
+                    With comm
+                        .Connection = conn
+                        .CommandType = CommandType.Text
+                        .CommandText = query
+                        .Parameters.AddWithValue("@QLTID", CType(frmInsert.FindControl("IDTextbox"), Label).Text)
+                        .Parameters.AddWithValue("@AdditionalCorrectiveAction", CType(frmInsert.FindControl("AdditionalCorrectiveActionTextBox"), TextBox).Text)
+                    End With
+                    conn.Open()
+                    comm.ExecuteNonQuery()
+                End Using
+            End Using
+        End If
+
+        'update gridview
+        Me.gvQLT.DataBind()
+
         Try
             'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
             Dim connectionString As String
@@ -107,6 +167,35 @@ System.Web.Services.WebMethod()> _
                 'CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
                 'CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
 
+                'Fill PCA GridView
+                Dim PCAdt As New DataTable
+                Dim PCAconnectionString As String
+                PCAconnectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                Dim PCASqlConnection As New SqlConnection(PCAconnectionString)
+                Dim PCAsc As New SqlCommand("select * from tblPermanentCorrectiveAction where QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, PCASqlConnection)
+                PCASqlConnection.Open()
+                Dim PCAda As New SqlDataAdapter(PCAsc)
+                PCAda.Fill(PCAdt)
+                ViewState("PCA") = PCAdt
+                Dim gvPermanentCorrectiveAction As GridView
+                gvPermanentCorrectiveAction = CType(frmInsert.FindControl("gvPermanentCorrectiveAction"), GridView)
+                gvPermanentCorrectiveAction.DataSource = PCAdt
+                gvPermanentCorrectiveAction.DataBind()
+
+                Dim ACAdt As New DataTable
+                Dim ACAconnectionString As String
+                ACAconnectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                Dim ACASqlConnection As New SqlConnection(ACAconnectionString)
+                Dim ACAsc As New SqlCommand("select * from tblAdditionalCorrectiveAction where QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, ACASqlConnection)
+                ACASqlConnection.Open()
+                Dim ACAda As New SqlDataAdapter(ACAsc)
+                ACAda.Fill(ACAdt)
+                ViewState("ACA") = ACAdt
+                Dim gvAdditionalCorrectiveAction As GridView
+                gvAdditionalCorrectiveAction = CType(frmInsert.FindControl("gvAdditionalCorrectiveAction"), GridView)
+                gvAdditionalCorrectiveAction.DataSource = ACAdt
+                gvAdditionalCorrectiveAction.DataBind()
+
                 If CType(frmInsert.FindControl("CorrectiveActionDropDown"), DropDownList).SelectedValue = 2 Then
                     CType(frmInsert.FindControl("CorrectiveActionTakenTextBox"), TextBox).Visible = True
                     CType(frmInsert.FindControl("CorrectiveActionLabel"), Label).Visible = True
@@ -156,22 +245,28 @@ System.Web.Services.WebMethod()> _
     End Sub
 
     Protected Sub ReassignmentDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Dim selectedUser As String
-        selectedUser = CType(frmInsert.FindControl("ReassignmentDropDown"), DropDownList).SelectedValue
-        Dim dv As DataView = CType(sdsActiveUsers.Select(DataSourceSelectArguments.Empty), DataView)
-        dv.Sort = "FullName"
-        Dim rowIndex As Integer = dv.Find(selectedUser)
-        CType(frmInsert.FindControl("ReassignmentUsernameTextbox"), TextBox).Text = dv(rowIndex)("mail").ToString()
-        CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text = "LCLMTL\" & dv(rowIndex)("sAMAccountName").ToString()
-
+        If CType(frmInsert.FindControl("ReassignmentDropDown"), DropDownList).SelectedValue IsNot "" Then
+            Dim selectedUser As String
+            selectedUser = CType(frmInsert.FindControl("ReassignmentDropDown"), DropDownList).SelectedValue
+            Dim dv As DataView = CType(sdsActiveUsers.Select(DataSourceSelectArguments.Empty), DataView)
+            dv.Sort = "FullName"
+            Dim rowIndex As Integer = dv.Find(selectedUser)
+            CType(frmInsert.FindControl("ReassignmentUsernameTextbox"), TextBox).Text = dv(rowIndex)("mail").ToString()
+            CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text = "LCLMTL\" & dv(rowIndex)("sAMAccountName").ToString()
+        Else
+            CType(frmInsert.FindControl("ReassignmentUsernameTextbox"), TextBox).Text = ""
+            CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text = ""
+        End If
     End Sub
 
     Protected Sub StatusDropDown_SelectedIndexChanged(sender As Object, e As EventArgs)
-        If CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedValue = 5 Then
-            CType(frmInsert.FindControl("FollowUpDatePanel"), Panel).Visible = True
-        Else
-            CType(frmInsert.FindControl("FollowUpDateTextbox"), TextBox).Text = ""
-            CType(frmInsert.FindControl("FollowUpDatePanel"), Panel).Visible = False
+        If CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedValue IsNot "" Then
+            If CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedValue = 5 Then
+                CType(frmInsert.FindControl("FollowUpDatePanel"), Panel).Visible = True
+            Else
+                CType(frmInsert.FindControl("FollowUpDateTextbox"), TextBox).Text = ""
+                CType(frmInsert.FindControl("FollowUpDatePanel"), Panel).Visible = False
+            End If
         End If
     End Sub
 

@@ -9,6 +9,7 @@
     <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="QLTID" OnItemInserted="frmInsert_ItemInserted" 
         OnItemUpdated="frmInsert_ItemUpdated">
         <EditItemTemplate>
+        <table>
             <tr>
                     <td>ID
                     </td>
@@ -236,7 +237,8 @@
             <tr>
                 <td>Reassignment:</td>
                 <td>
-                    <asp:DropDownList ID="ReassignmentDropDown" runat="server" DataSourceID="sdsActiveUsers" AutoPostBack="true" OnSelectedIndexChanged="ReassignmentDropDown_SelectedIndexChanged" AppendDataBoundItems="true" DataValueField="FullName" DataTextField="FullName" SelectedValue='<%# Bind("Reassignment")%>' >
+                    <asp:DropDownList ID="ReassignmentDropDown" runat="server" DataSourceID="sdsActiveUsers" AutoPostBack="true" OnSelectedIndexChanged="ReassignmentDropDown_SelectedIndexChanged" 
+                        AppendDataBoundItems="true" DataValueField="FullName" DataTextField="FullName" SelectedValue='<%# Bind("Reassignment")%>' >
                         <asp:ListItem Text="(Reassign to somebody)" Value="" />
                     </asp:DropDownList>
                 </td>
@@ -256,8 +258,42 @@
             <tr>
                 <td>Permanent Corrective Action:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="PermanentCorrectiveActionTextBox" runat="server" Text='<%# Bind("PermanentCorrectiveAction") %>' TextMode="MultiLine" Rows="5" />
-                </td>
+                    <asp:TextBox class="textboxWidth" ID="PermanentCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
+                </td></tr><tr><td>Permanent Corrective Action List:</td><td colspan="2">
+                        <asp:GridView ID="gvPermanentCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
+                            RowStyle-CssClass="grid_RowStyle"
+                            CellPadding="4" ForeColor="#333333"
+                            Font-Size="10px">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action?');" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
+                                <asp:TemplateField HeaderText="ID" SortExpression="PCAID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="PCALabel" runat="server" Text='<%# Eval("PCAID")%>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="PermanentCorrectiveAction" HeaderText="Permanent Corrective Action" SortExpression="PermanentCorrectiveAction" />
+                                <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" />
+                            </Columns>
+                            <EditRowStyle BackColor="#999999" />
+                            <EmptyDataTemplate>
+                                No Permanent Corrective Action entered yet.
+                            </EmptyDataTemplate>
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
+                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
+                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                        </asp:GridView></td></tr>
             </tr>
             <tr>
                 <td>QLT Approved:</td>
@@ -268,9 +304,42 @@
             <tr>
                 <td>Additional Corrective Action:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="AdditionalCorrectiveActionTextBox" runat="server" Text='<%# Bind("AdditionalCorrectiveAction") %>' TextMode="MultiLine" Rows="5" />
-                </td>
-            </tr>
+                    <asp:TextBox class="textboxWidth" ID="AdditionalCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
+                </td></tr><tr><td>Additional Corrective Action List:</td><td colspan="2">
+                        <asp:GridView ID="gvAdditionalCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
+                            RowStyle-CssClass="grid_RowStyle"
+                            CellPadding="4" ForeColor="#333333"
+                            Font-Size="10px">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action?');" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
+                                <asp:TemplateField HeaderText="ID" SortExpression="ACAID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ACALabel" runat="server" Text='<%# Eval("ACAID")%>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="AdditionalCorrectiveAction" HeaderText="Additional Corrective Action" SortExpression="AdditionalCorrectiveAction" />
+                                <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" />
+                            </Columns>
+                            <EditRowStyle BackColor="#999999" />
+                            <EmptyDataTemplate>
+                                No Additional Corrective Action entered yet.
+                            </EmptyDataTemplate>
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
+                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
+                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                        </asp:GridView></td></tr>
             <tr>
                 <td>Root Cause Analysis:</td>
                 <td><asp:TextBox ID="RootCauseAnalysisTextbox" runat="server" Text='<%# Bind("RootCauseAnalysis")%>' class="textboxWidth" /></td>
@@ -319,6 +388,7 @@
                     &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
                 </td>
             </tr>
+          </table>
         </EditItemTemplate>
     </asp:FormView>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
@@ -397,9 +467,7 @@
               ,[ReassignmentUsername] =                @ReassignmentUsername
               ,[ReassignmentEmail] =                   @ReassignmentEmail
               ,[DateReAssigned]  =                     case when dateReassigned is null then @DateReAssigned end
-              ,[PermanentCorrectiveAction] =           @PermanentCorrectiveAction
               ,[QLTApproved] =                         @QLTApproved
-              ,[AdditionalCorrectiveAction] =          @AdditionalCorrectiveAction
               ,[Cause] =						       @Cause 
               ,[Type] =							       @Type 
               ,[ClientContact] =                       @ClientContact
@@ -411,6 +479,9 @@
               ,[ManagerContact] =                      @ManagerContact
               ,[ManagerContacted] =                    @ManagerContacted
               ,[ManagerContactedNote] =                @ManagerContactedNote
+              ,[DateClose] =                           CASE WHEN @StatusID = 6 THEN getDate() ELSE NULL END 
+              ,[LearningOpportunity] =                 @LearningOpportunity
+              ,[LearningOpportunityNote] =             @LearningOpportunityNote
                WHERE QLTID = @QLTID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvQLT" PropertyName="SelectedValue" />
@@ -461,6 +532,9 @@
             <asp:Parameter Name="ManagerContact" />
             <asp:Parameter Name="ManagerContacted" />
             <asp:Parameter Name="ManagerContactedNote" />
+            <asp:Parameter Name="DateClose" />
+            <asp:Parameter Name="LearningOpportunity" />
+            <asp:Parameter Name="LearningOpportunityNote" />
             <asp:Parameter Name="QLTID" />
         </UpdateParameters>
     </asp:SqlDataSource>
@@ -516,6 +590,5 @@
     SelectCommand="select * from tblQLTMembers order by QLTMemberName"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsActiveUsers" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
     SelectCommand="select * from vwActiveUsers order by FullName"></asp:SqlDataSource>
-
 </asp:Content>
 

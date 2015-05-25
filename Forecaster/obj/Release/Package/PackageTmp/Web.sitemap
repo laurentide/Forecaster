@@ -43,5 +43,10 @@
 			<siteMapNode url="QLT/QLT.aspx" title="New Quality Case" description=""/>
 			<siteMapNode url="QLT/QLTMgmt.aspx" title="Quality MgMT" description=""/>
 		</siteMapNode>
+		<siteMapNode title="Action Items" roles="*" description="">
+			<siteMapNode url="MasterActionItemTool/MasterActionItemTool.aspx" title="New Action Item" description="" />
+			<siteMapNode url="MasterActionItemTool/ViewMyActionItems.aspx" title="View Existing Action Items" description="" />
+			<siteMapNode url="MasterActionItemTool/MASTManager.aspx" title="Action Item Mgmt" description="" />
+		</siteMapNode>
 	</siteMapNode>
 </siteMap>

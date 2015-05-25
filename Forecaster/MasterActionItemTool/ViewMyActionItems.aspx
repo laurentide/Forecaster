@@ -10,7 +10,7 @@
            <asp:PostBackTrigger ControlID="mastInsert" />
        </Triggers>--%>
         <ContentTemplate>
-        <asp:FormView ID="mastInsert" runat="server" DefaultMode="Edit" DataKeyNames="MAST_ID" DataSourceID="sdsInsert" OnItemUpdated="mastInsert_ItemUpdated">
+        <asp:FormView ID="mastInsert" runat="server" DefaultMode="Edit" DataKeyNames="MAST_ID" DataSourceID="sdsInsert" OnItemUpdated="mastInsert_ItemUpdated" OnDataBound="mastInsert_DataBound">
         <EditItemTemplate>
             <table>
                 <tr>
@@ -19,12 +19,12 @@
                         <asp:Label ID="MASTIDLabel" runat="server" Text='<%# Eval("MAST_ID")%>' />
                     </td>
                 </tr>
-                <tr>
+<%--                <tr>
                     <td>Name:</td>
                     <td>
                         <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name")%>' Width="500" /></td>
                     </td>
-                </tr>
+                </tr>--%>
 <%--                <tr>
                     <td>Team(s):</td>
                     <td>
@@ -34,6 +34,16 @@
                     </td><td><asp:TextBox ID="HiddenTeamNameTextbox" runat="server" Visible="false" Text='<%# Eval("TeamName")%>'></asp:TextBox></td>
                     <td><asp:TextBox ID="HiddenTeamIDTextbox" runat="server" Visible="false" Text='<%# Eval("TeamID")%>'></asp:TextBox></td>
                 </tr>--%>
+                <tr>
+                    <td>Team(s):</td>
+                    <td>
+                        <asp:DropDownList ID="TeamsDropDownList" runat="server" AutoPostBack="true" DataSourceID="sdsTeams" AppendDataBoundItems="true" DataTextField="TeamName" DataValueField="TeamID"
+                            OnSelectedIndexChanged="TeamsDropDownList_SelectedIndexChanged">
+                            <asp:ListItem Text="(Choose team)" Value="" />
+                        </asp:DropDownList>
+                    </td><td><asp:TextBox ID="HiddenTeamNameTextbox" runat="server" Visible="false" Text='<%# Bind("TeamName")%>'></asp:TextBox></td>
+                    <td><asp:TextBox ID="HiddenTeamIDTextbox" runat="server" Visible="false" Text='<%# Bind("TeamID") %>'></asp:TextBox></td>
+                </tr>
                 <tr>
                     <td>Topic:</td>
                     <td>
@@ -132,10 +142,24 @@
             </table>
         </EditItemTemplate>
         </asp:FormView>
+            <table><tr><td>
+        Filter by: </td><%--<td><asp:DropDownList ID="DropDownList1" runat="server">
+                        <asp:ListItem Text="(select filter)" Value="" Selected="True" />
+                        <asp:ListItem Text="Team" Value="team" />
+                   </asp:DropDownList></td>--%>
+                <td><asp:Label ID="Label1" Text="Team" runat="server" /></td>
+                <td><asp:DropDownList runat="server" DataSourceID="sdsTeamFilter" ID="TeamFilterDropdown" OnLoad="TeamFilterDropdown_Load" AppendDataBoundItems="true" AutoPostBack="true">
+                    <asp:ListItem Text="(no filter)" Value="" />
+                    </asp:DropDownList></td><td><asp:Label ID="Label2" Text="Responsable" runat="server" /></td>
+                <td><asp:DropDownList runat="server" DataSourceID="sdsResponsable" ID="ResponsableFilterDropdown" AppendDataBoundItems="true" AutoPostBack="true" DataTextField="MemberName"
+                    DataValueField="MemberName">
+                    <asp:ListItem Text="(no filter)" Value="" />
+                    </asp:DropDownList></td>
+            </tr></table>
         <asp:GridView ID="mastEdit" runat="server" AutoGenerateColumns="False" AllowSorting="True" AllowPaging="True"
-                HeaderStyle-CssClass="grid_Header"
+                HeaderStyle-CssClass="grid_Header" OnDataBound="mastEdit_DataBound"
                 RowStyle-CssClass="grid_RowStyle" DefaultMode="Edit" DataKeyNames="MAST_ID" DataSourceID="sdsEdit"
-                CellPadding="4" ForeColor="#333333" 
+                CellPadding="4" ForeColor="#333333"  
                 Font-Size="10px" PageSize="50" OnSelectedIndexChanged="mastEdit_SelectedIndexChanged">
                 <Columns>
                     <asp:TemplateField ShowHeader="False">
@@ -146,10 +170,10 @@
                     <asp:CommandField ShowSelectButton="True" SelectText="Edit"/>
                     <asp:BoundField DataField="MAST_ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="MAST_ID" />
                     <asp:BoundField DataField="DateCreated" HeaderText="Date Created" ReadOnly="true" SortExpression="DateCreated" DataFormatString="{0:d}" ApplyFormatInEditMode="true"/>
-                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
+<%--                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />--%>
                     <asp:BoundField DataField="TeamName" HeaderText="Team" SortExpression="TeamName" />
                     <asp:BoundField DataField="Topic" HeaderText="Topic" SortExpression="Topic" />
-                    <asp:BoundField DataField="SubTopic" HeaderText="Sub Topic" SortExpression="SubTopic" />
+                    <asp:BoundField DataField="SubTopic" HeaderText="Description" SortExpression="SubTopic" />
                     <asp:BoundField DataField="Action" HeaderText="Action" SortExpression="Action" />
                     <asp:BoundField DataField="Responsable" HeaderText="Responsable" SortExpression="Responsable" />
                     <asp:BoundField DataField="DueDate" HeaderText="Due Date" SortExpression="DueDate" DataFormatString="{0:d}" ApplyFormatInEditMode="true" />
@@ -169,21 +193,26 @@
             </asp:GridView>
         </ContentTemplate>
    <%--     </asp:UpdatePanel>--%>
-        <asp:SqlDataSource ID="sdsEdit" runat="server" 
+        <asp:SqlDataSource ID="sdsEdit" runat="server" FilterExpression="(TeamID = '{0}' or '{0}' = '-1') AND (Responsable = '{1}' or '{1}' = '-1')"
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
-        DeleteCommand="update tblMasterActionItemTool set visible = 0 where MAST_ID = @MAST_ID"></asp:SqlDataSource>
+        DeleteCommand="update tblMasterActionItemTool set visible = 0 where MAST_ID = @MAST_ID">
+            <FilterParameters>
+                <asp:ControlParameter Name="TeamID" ControlID="TeamFilterDropdown" PropertyName="SelectedValue" DefaultValue="-1" />
+                <asp:ControlParameter Name="Responsable" ControlID="ResponsableFilterDropdown" PropertyName="SelectedValue" DefaultValue="-1" />
+            </FilterParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="sdsTeamFilter" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>">
+        </asp:SqlDataSource>
         <asp:SqlDataSource ID="sdsInsert" runat="server" 
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
         SelectCommand="SELECT * FROM [tblMasterActionItemTool] WHERE MAST_ID = @ID"
         UpdateCommand="UPDATE [tblMasterActionItemTool]
-        SET [Name] = @Name,
-        [Topic] = @Topic,
+        SET [Topic] = @Topic,
         [SubTopic] = @SubTopic,
         [Action] = @Action,
         [Responsable] = @Responsable,
         [DueDate] = @DueDate,
         [DateCompleted] = @DateCompleted,
-        [Notes] = @Notes,
         [ItemStatus] = @ItemStatus
         WHERE MAST_ID = @MAST_ID">
         <UpdateParameters>
@@ -194,7 +223,6 @@
             <asp:Parameter Name="Responsable" />
             <asp:Parameter Name="DueDate" Type="DateTime" />
             <asp:Parameter Name="DateCompleted" Type="DateTime" />
-            <asp:Parameter Name="Notes" />
             <asp:Parameter Name="ItemStatus" />
         </UpdateParameters>
         <SelectParameters>
@@ -211,5 +239,9 @@
             <asp:ControlParameter Name="ID" ControlID="mastEdit" PropertyName="SelectedValue" />
         </SelectParameters>
     </asp:SqlDataSource>
+    <asp:SqlDataSource ID="sdsTeams" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
+SelectCommand="SELECT * FROM tblTeams JOIN tblTeamMembership ON tblTeams.TeamID = tblTeamMembership.TeamID JOIN tblMembers ON tblTeamMembership.MemberName = tblMembers.MemberUserName WHERE tblTeamMembership.MemberName = @Username">
+<SelectParameters><asp:SessionParameter Name="Username" SessionField="Username" /></SelectParameters>
+</asp:SqlDataSource>
     </asp:Content>
 

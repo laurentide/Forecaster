@@ -143,7 +143,7 @@
 
 
 
-                        <tr>
+<%--                        <tr>
                             <td>Investment sheet</td>
                             <td>
                                 <a href="file://lcl-fil1/Directory_2000/Managers/Forms/Investment%20Decision%20Analysis.xlsx">Investment decision analysis form</a><br />
@@ -152,7 +152,7 @@
                                 Path:<asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("AttachmentSheetLink")%>' Text='<%# Eval("AttachmentSheetLink")%>'></asp:HyperLink>
                             </td>
 
-                        </tr>
+                        </tr>--%>
 
                         <%--                <tr>
                     <td>Visible:</td>
@@ -225,7 +225,7 @@
                             </tr>
                         </asp:Panel>
                         </asp:Panel>
-                        <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="false">
+                        <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="true">
                         <tr><td><br /></td></tr>
                         <tr><td><asp:Label Text="Investment Sheet" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
                         <tr>
@@ -269,7 +269,7 @@
                                 <tr><td>Benefits:</td><td>
                                     <asp:TextBox ID="BenefitsTextBox" runat="server" Width="500" Text='<%# Bind("Benefit") %>' />
                                 </td></tr>
-                                    <tr><td>Year 0:</td><td><asp:TextBox ID="year0" runat="server" Width="500" Text='<%# Bind("PROI_Year0")%>' /></td></tr>
+                                    <tr><td>Year 0:</td><td><asp:TextBox ID="year0" runat="server" Width="500" Text='<%# Bind("PROI_Year0")%>'/></td></tr>
                                     <tr><td>Year 1:</td><td><asp:TextBox ID="year1" runat="server" Width="500" Text='<%# Bind("PROI_Year1")%>'/></td></tr>
                                     <tr><td>Year 2:</td><td><asp:TextBox ID="year2" runat="server" Width="500" Text='<%# Bind("PROI_Year2")%>'/></td></tr>
                                     <tr><td>Year 3:</td><td><asp:TextBox ID="year3" runat="server" Width="500" Text='<%# Bind("PROI_Year3")%>'/></td></tr>
@@ -287,7 +287,7 @@
                            <td>
                            <asp:GridView ID="gvPROIDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
                             RowStyle-CssClass="grid_RowStyle" OnRowDataBound="gvPROIDetails_RowDataBound"
-                            CellPadding="4" ForeColor="#333333"
+                            CellPadding="4" ForeColor="#333333" OnDataBinding="gvPROIDetails_DataBinding"
                             Font-Size="10px" OnRowDeleting="gvPROIDetails_RowDeleting">
                              <Columns>
                               <asp:TemplateField ShowHeader="False">
@@ -297,11 +297,11 @@
                                 </asp:TemplateField>
                                 <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:BoundField DataField="Benefit" HeaderText="Benefit" SortExpression="Benefit" />
-                                <asp:BoundField DataField="PROI_Year0" HeaderText="Year 0" SortExpression="PROI_Year0" />
-                                <asp:BoundField DataField="PROI_Year1" HeaderText="Year 1" SortExpression="PROI_Year1" />
-                                <asp:BoundField DataField="PROI_Year2" HeaderText="Year 2" SortExpression="PROI_Year2" />
-                                <asp:BoundField DataField="PROI_Year3" HeaderText="Year 3" SortExpression="PROI_Year3" />
-                                <asp:BoundField DataField="PROI_Year4" HeaderText="Year 4" SortExpression="PROI_Year4" />
+                                <asp:BoundField DataField="PROI_Year0" HeaderText="Year 0" SortExpression="PROI_Year0" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year1" HeaderText="Year 1" SortExpression="PROI_Year1" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year2" HeaderText="Year 2" SortExpression="PROI_Year2" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year3" HeaderText="Year 3" SortExpression="PROI_Year3" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PROI_Year4" HeaderText="Year 4" SortExpression="PROI_Year4" DataFormatString="{0:c}" />
                                </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -353,7 +353,7 @@
                            <td>Program Costs List:</td>
                            <td>
                            <asp:GridView ID="gvProgramCostsDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle" OnRowDeleting="gvProgramCostsDetails_RowDeleting"
+                            RowStyle-CssClass="grid_RowStyle" OnRowDeleting="gvProgramCostsDetails_RowDeleting" OnDataBinding="gvProgramCostsDetails_DataBinding"
                             CellPadding="4" ForeColor="#333333" OnRowDataBound="gvProgramCostsDetails_RowDataBound"
                             Font-Size="10px">
                              <Columns>
@@ -364,11 +364,11 @@
                                 </asp:TemplateField>
                                 <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:BoundField DataField="ProgramCostDetail" HeaderText="Program Cost" SortExpression="ProgramCostDetail" />
-                                <asp:BoundField DataField="PC_Year0" HeaderText="Year 0" SortExpression="PC_Year0" />
-                                <asp:BoundField DataField="PC_Year1" HeaderText="Year 1" SortExpression="PC_Year1" />
-                                <asp:BoundField DataField="PC_Year2" HeaderText="Year 2" SortExpression="PC_Year2" />
-                                <asp:BoundField DataField="PC_Year3" HeaderText="Year 3" SortExpression="PC_Year3" />
-                                <asp:BoundField DataField="PC_Year4" HeaderText="Year 4" SortExpression="PC_Year4" />
+                                <asp:BoundField DataField="PC_Year0" HeaderText="Year 0" SortExpression="PC_Year0" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year1" HeaderText="Year 1" SortExpression="PC_Year1" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year2" HeaderText="Year 2" SortExpression="PC_Year2" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year3" HeaderText="Year 3" SortExpression="PC_Year3" DataFormatString="{0:c}" />
+                                <asp:BoundField DataField="PC_Year4" HeaderText="Year 4" SortExpression="PC_Year4" DataFormatString="{0:c}" />
                                </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
