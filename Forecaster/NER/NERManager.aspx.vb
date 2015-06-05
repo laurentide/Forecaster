@@ -107,24 +107,24 @@ Public Class NERManager
     End Sub
 
     Protected Sub frmInsert_DataBound(sender As Object, e As EventArgs)
-        'Try
-        'If frmInsert.CurrentMode = FormViewMode.Insert Then
-        'Dim connectionString As String
-        'connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+        Try
+            If frmInsert.CurrentMode = FormViewMode.Insert Then
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
 
-        'Dim SqlConnection As New SqlConnection(connectionString)
-        'Dim sc As New SqlCommand("select givenname + ' ' + sn as IssuedBy,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
-        'SqlConnection.Open()
+                Dim SqlConnection As New SqlConnection(connectionString)
+                Dim sc As New SqlCommand("select givenname + ' ' + sn as IssuedBy,mail as Email from vwEmployees where 'LCLMTL\' + sAMAccountName = '" & Session("Username") & "'", SqlConnection)
+                SqlConnection.Open()
 
-        'Dim reader As SqlDataReader = sc.ExecuteReader()
-        'reader.Read()
-        'Session("IssuedBy") = reader.GetString(0)
-        'Session("Email") = reader.GetString(1)
-        'reader.Close()
+                Dim reader As SqlDataReader = sc.ExecuteReader()
+                reader.Read()
+                Session("IssuedBy") = reader.GetString(0)
+                Session("Email") = reader.GetString(1)
+                reader.Close()
 
-        'CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
-        'CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
-        'End If            
+                CType(frmInsert.FindControl("IssuedByTextbox"), TextBox).Text = Session("IssuedBy")
+                CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text = Session("Email")
+            End If
         Try
             If frmInsert.CurrentMode = FormViewMode.Edit Then
                 'Fill PROI gridview
@@ -281,6 +281,8 @@ Public Class NERManager
                 UpdatePanel1.Update()
             End If
         Catch ex As Exception
+            End Try
+        Catch ex As Exception
         End Try
     End Sub
 
@@ -315,7 +317,7 @@ Public Class NERManager
             Dim mm As New MailMessage("NER@Laurentide.com", "NER@laurentide.com", "New Employee request: " & Session("ID") & " issued by " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text, body)
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
-            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+            Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
 
@@ -482,11 +484,11 @@ Public Class NERManager
             Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & "\"
             System.IO.Directory.CreateDirectory(savePath)
 
-            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
-                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
-                Dim updatecommand As New SqlCommand("update tblNewEmployeeRequest set AttachmentSheetLink = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, SqlConnection)
-                updatecommand.ExecuteNonQuery()
-            End If
+            'If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+            '    CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+            '    Dim updatecommand As New SqlCommand("update tblNewEmployeeRequest set AttachmentSheetLink = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, SqlConnection)
+            '    updatecommand.ExecuteNonQuery()
+            'End If
 
             Dim body As String = "Manager: " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Name: " & CType(frmInsert.FindControl("NameTextBox"), TextBox).Text & vbCrLf & _
@@ -496,7 +498,7 @@ Public Class NERManager
             Dim mm As New MailMessage("NER@Laurentide.com", "NER@laurentide.com", "Updated NER: " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & " issued by " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text, body)
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
-            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+            Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)
 
@@ -1024,5 +1026,78 @@ Public Class NERManager
         Session("PCYear2Total") = 0
         Session("PCYear3Total") = 0
         Session("PCYear4Total") = 0
+    End Sub
+
+    Protected Sub gvPROIDetails_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panelPROI As Panel = CType(frmInsert.FindControl("proi_panel"), Panel)
+        Dim fvPROI As FormView = CType(frmInsert.FindControl("proiDetails"), FormView)
+        Dim dtPROI As DataTable = New DataTable
+        dtPROI = ViewState("PROIDatatable")
+        Dim gvPROI As GridView = CType(frmInsert.FindControl("gvPROIDetails"), GridView)
+
+        Dim dtRow As DataRow = dtPROI.Rows(gvPROI.SelectedRow.RowIndex)
+
+        panelPROI.Visible = True
+        CType(fvPROI.FindControl("BenefitsTextBox"), TextBox).Text = dtRow("Benefit")
+        CType(fvPROI.FindControl("year0"), TextBox).Text = dtRow("PROI_Year0")
+        CType(fvPROI.FindControl("year1"), TextBox).Text = dtRow("PROI_Year1")
+        CType(fvPROI.FindControl("year2"), TextBox).Text = dtRow("PROI_Year2")
+        CType(fvPROI.FindControl("year3"), TextBox).Text = dtRow("PROI_Year3")
+        CType(fvPROI.FindControl("year4"), TextBox).Text = dtRow("PROI_Year4")
+    End Sub
+
+    Protected Sub gvProgramCostsDetails_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panelPC As Panel = CType(frmInsert.FindControl("ProgramCostsPanel"), Panel)
+        Dim fvPC As FormView = CType(frmInsert.FindControl("frmProgramCosts"), FormView)
+        Dim dtPC As DataTable = New DataTable
+        dtPC = ViewState("PCDatatable")
+        Dim gvPC As GridView = CType(frmInsert.FindControl("gvProgramCostsDetails"), GridView)
+
+        Dim dtRow As DataRow = dtPC.Rows(gvPC.SelectedRow.RowIndex)
+
+        panelPC.Visible = True
+        CType(fvPC.FindControl("ProgramCostTextBox"), TextBox).Text = dtRow("ProgramCostDetail")
+        CType(fvPC.FindControl("PCYear0"), TextBox).Text = dtRow("PC_Year0")
+        CType(fvPC.FindControl("PCYear1"), TextBox).Text = dtRow("PC_Year1")
+        CType(fvPC.FindControl("PCYear2"), TextBox).Text = dtRow("PC_Year2")
+        CType(fvPC.FindControl("PCYear3"), TextBox).Text = dtRow("PC_Year3")
+        CType(fvPC.FindControl("PCYear4"), TextBox).Text = dtRow("PC_Year4")
+    End Sub
+
+    Protected Sub gvSuccessCriteria_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panelSC As Panel = CType(frmInsert.FindControl("SuccessCriteriaPanel"), Panel)
+        Dim fvSC As FormView = CType(frmInsert.FindControl("frmSuccessCriteria"), FormView)
+        Dim dtSC As DataTable = New DataTable
+        dtSC = ViewState("SCDatatable")
+        Dim gvSC As GridView = CType(frmInsert.FindControl("gvSuccessCriteria"), GridView)
+
+        Dim dtRow As DataRow = dtSC.Rows(gvSC.SelectedRow.RowIndex)
+
+        panelSC.Visible = True
+        CType(fvSC.FindControl("SuccessCriteriaTextbox"), TextBox).Text = dtRow("SuccessCriteriaDetail")
+        CType(fvSC.FindControl("BaselineID"), TextBox).Text = dtRow("Baseline")
+        CType(fvSC.FindControl("Q1"), TextBox).Text = dtRow("Q1")
+        CType(fvSC.FindControl("Q2"), TextBox).Text = dtRow("Q2")
+        CType(fvSC.FindControl("Q3"), TextBox).Text = dtRow("Q3")
+        CType(fvSC.FindControl("Q4"), TextBox).Text = dtRow("Q4")
+        CType(fvSC.FindControl("Q5"), TextBox).Text = dtRow("Q5")
+        CType(fvSC.FindControl("Q6"), TextBox).Text = dtRow("Q6")
+    End Sub
+
+    Protected Sub gvImplementation_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim panelFUP As Panel = CType(frmInsert.FindControl("ImplementationPanel"), Panel)
+        Dim fvFUP As FormView = CType(frmInsert.FindControl("frmImplementation"), FormView)
+        Dim dtFUP As DataTable = New DataTable
+        dtFUP = ViewState("FUPDatatable")
+        Dim gvFUP As GridView = CType(frmInsert.FindControl("gvImplementation"), GridView)
+
+        Dim dtRow As DataRow = dtFUP.Rows(gvFUP.SelectedRow.RowIndex)
+
+        panelFUP.Visible = True
+        CType(fvFUP.FindControl("EventTextbox"), TextBox).Text = dtRow("Event")
+        CType(fvFUP.FindControl("WhenID"), TextBox).Text = dtRow("FUPWhen")
+        CType(fvFUP.FindControl("ComplID"), TextBox).Text = dtRow("Compl")
+        CType(fvFUP.FindControl("RespID"), TextBox).Text = dtRow("Resp")
+        CType(fvFUP.FindControl("NotesID"), TextBox).Text = dtRow("Notes")
     End Sub
 End Class

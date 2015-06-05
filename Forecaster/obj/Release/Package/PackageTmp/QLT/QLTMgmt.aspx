@@ -27,7 +27,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Origin of Event:</td>
+                <td>Origin of Feedback:</td>
                 <td>
                     <asp:DropDownList ID="OriginDropDown" runat="server" DataSourceID="sdsOrigins" AppendDataBoundItems="true" DataValueField="OriginID" DataTextField="Origin" SelectedValue='<%# Bind("OriginID")%>'>
                         <asp:ListItem Text="(Select the origin)" Value="" />
@@ -340,6 +340,16 @@
                             <SortedDescendingCellStyle BackColor="#FFFDF8" />
                             <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
                         </asp:GridView></td></tr>
+                <tr>
+                    <td>Next Action Due Date:</td>
+                    <td>
+                                <asp:TextBox ID="NextActionDueDateTextbox" runat="server" Text='<%# Bind("NextActionDueDate")%>' />
+                                <asp:Image runat="server" ID="Image1" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                                <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="NextActionDueDateTextbox" PopupButtonID="Image1" />
+                                <asp:MaskedEditExtender ID="MaskedEditExtender1" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="NextActionDueDateTextbox" PromptCharacter="_" />
+                                <asp:MaskedEditValidator ID="MaskedEditValidator1" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="NextActionDueDateTextbox" ControlExtender="MaskedEditExtender1" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                    </td>
+                </tr>
             <tr>
                 <td>Root Cause Analysis:</td>
                 <td><asp:TextBox ID="RootCauseAnalysisTextbox" runat="server" Text='<%# Bind("RootCauseAnalysis")%>' class="textboxWidth" /></td>
@@ -381,6 +391,14 @@
                 </td>
             </tr>
             </asp:Panel>
+            <tr><td><br /></td></tr>
+            <tr><td><br /></td></tr>
+            <tr>
+                <td>Send update notification e-mail to QLT?</td>
+                <td>
+                    <asp:CheckBox ID="SendEmailCheckbox" runat="server" CausesValidation="true" AutoPostBack="true"/>
+                </td>
+            </tr>
             <tr>
                 <td></td>
                 <td>
@@ -468,6 +486,7 @@
               ,[ReassignmentEmail] =                   @ReassignmentEmail
               ,[DateReAssigned]  =                     case when dateReassigned is null then @DateReAssigned end
               ,[QLTApproved] =                         @QLTApproved
+              ,[NextActionDueDate] =                   @NextActionDueDate
               ,[Cause] =						       @Cause 
               ,[Type] =							       @Type 
               ,[ClientContact] =                       @ClientContact
@@ -521,6 +540,7 @@
             <asp:Parameter Name="PermanentCorrectiveAction" />
             <asp:Parameter Name="QLTApproved" defaultvalue="0"/>
             <asp:Parameter Name="AdditionalCorrectiveAction" />
+            <asp:Parameter Name="NextActionDueDate" />
             <asp:Parameter Name="Visible" DefaultValue="1" />
             <asp:Parameter Name="Type" />
             <asp:Parameter Name="ClientContact" DefaultValue="0" />

@@ -130,7 +130,7 @@
                                     <ContentTemplate>
                                     <%-- Gridview that contains product details and forecast, needs to link to header --%>
                                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
-                                        DataKeyNames="OpportunityDetailID,FunnelProductID1" datasourceid="sdsEmptyOpportunityDetails" ShowFooter="true"
+                                        DataKeyNames="OpportunityDetailID,FunnelProductID" datasourceid="sdsEmptyOpportunityDetails" ShowFooter="true"
                                         OnRowDataBound="Gridview1_OnRowDataBound">
                                     <Columns>
                                     <asp:BoundField DataField="ProductCategory" HeaderText="Product Category" SortExpression="ProductCategory" ItemStyle-Font-Bold="true" FooterText="Total" FooterStyle-HorizontalAlign="Right" FooterStyle-Font-Bold="true"  />
@@ -439,15 +439,15 @@
                     <asp:BoundField DataField="AMS" HeaderText="AMS" ItemStyle-HorizontalAlign="Center" ReadOnly="True" SortExpression="AMS">
                     <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="CSI" HeaderText="CSI" ReadOnly="True" SortExpression="CSI"
+                    <asp:BoundField DataField="Prod-FIAB" HeaderText="Prod Fiab" ReadOnly="True" SortExpression="Prod-FIAB"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="Det-Tronics" HeaderText="NSafety" ReadOnly="True" SortExpression="Det-Tronics"
+                    <asp:BoundField DataField="Fire & Gas" HeaderText="Fire & Gas" ReadOnly="True" SortExpression="Fire & Gas"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="Farris" HeaderText="SRV" ReadOnly="True" SortExpression="Farris"
+                    <asp:BoundField DataField="SRV" HeaderText="SRV" ReadOnly="True" SortExpression="SRV"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
@@ -479,15 +479,15 @@
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="RSMT Analytical-Gas" HeaderText="Gas" ReadOnly="True"
-                        SortExpression="RSMT Analytical-Gas" ItemStyle-HorizontalAlign="Center">
+                    <asp:BoundField DataField="RSMT Analytical" HeaderText="Analytical" ReadOnly="True"
+                        SortExpression="RSMT Analytical" ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="RSMT Analytical-Liquid" HeaderText="Liquid" ReadOnly="True"
+<%--                    <asp:BoundField DataField="RSMT Analytical-Liquid" HeaderText="Liquid" ReadOnly="True"
                         SortExpression="RSMT Analytical-Liquid" ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="Services" HeaderText="Serv-INST" ReadOnly="True" SortExpression="Services"
+                    </asp:BoundField>--%>
+                    <asp:BoundField DataField="Serv-INST" HeaderText="Serv-INST" ReadOnly="True" SortExpression="Serv-INST"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
@@ -496,6 +496,10 @@
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
                     <asp:BoundField DataField="Wireless" HeaderText="Wireless" ReadOnly="True" SortExpression="Wireless"
+                        ItemStyle-HorizontalAlign="Center">
+                        <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="Serv-FIAB" HeaderText="Serv-FIAB" ReadOnly="True" SortExpression="Serv-FIAB"
                         ItemStyle-HorizontalAlign="Center">
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
@@ -893,6 +897,8 @@
     <asp:SqlDataSource ID="sdsExecSponsor" runat="server"   
         ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
         SelectCommand="select ExecSponsorID,ExecSponsor from tblExecSponsor where ExecSponsorID <> 5 union select 0,'(None)' order by ExecSponsor"></asp:SqlDataSource>
+<%--    	    ,cast(round(MAX(case when productcategory = 'RSMT Analytical - Liquid'  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [RSMT Analytical-Liquid]--%>
+
     <asp:SqlDataSource ID="sdsGetOpportunities" runat="server" 
     ConnectionString="<%$ ConnectionStrings:ForecasterConnectionString %>" 
     SelectCommand="select a.OpportunityID,  
@@ -910,9 +916,9 @@
        Outage,
        sum(b.total) / case when count (distinct username) = 0 then 1 else count(distinct username) end  as [total]
 	    ,cast(round(MAX(case when productcategory = 'AMS'                       and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [AMS]
-	    ,cast(round(MAX(case when productcategory = 'CSI'                       and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [CSI]
-	    ,cast(round(MAX(case when productcategory = 'Det-Tronics'               and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Det-Tronics]
-	    ,cast(round(MAX(case when productcategory = 'Farris'                    and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Farris]
+	    ,cast(round(MAX(case when productcategory = 'Prod-FIAB'                       and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Prod-FIAB]
+	    ,cast(round(MAX(case when productcategory = 'Fire & Gas'               and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Fire & Gas]
+	    ,cast(round(MAX(case when productcategory = 'SRV'                    and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [SRV]
 	    ,cast(round(MAX(case when productcategory = 'Fisher Regs'               and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [FisherRegs]
 	    ,cast(round(MAX(case when productcategory = 'Fisher Valves'             and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [FisherValves]
 	    ,cast(round(MAX(case when productcategory = 'IVS'                       and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [IVS]
@@ -920,11 +926,11 @@
         ,cast(round(MAX(case when productcategory = 'PSS'                       and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [PSS]
 	    ,cast(round(MAX(case when productcategory = 'RSMT Flow'                 and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [RSMT Flow]
 	    ,cast(round(MAX(case when productcategory = 'RSMT PTL'                  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [RSMT PTL]
-	    ,cast(round(MAX(case when productcategory = 'RSMT Analytical - Gas'     and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [RSMT Analytical-Gas]
-	    ,cast(round(MAX(case when productcategory = 'RSMT Analytical - Liquid'  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [RSMT Analytical-Liquid]
-	    ,cast(round(MAX(case when productcategory = 'Services'                  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Services]
+	    ,cast(round(MAX(case when productcategory = 'RSMT Analytical'     and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [RSMT Analytical]
+	    ,cast(round(MAX(case when productcategory = 'Serv-INST'                  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Serv-INST]
 	    ,cast(round(MAX(case when productcategory = 'VAD'                       and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [VAD]
-	    ,cast(round(MAX(case when productcategory = 'Wireless'                  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Wireless]             
+	    ,cast(round(MAX(case when productcategory = 'Wireless'                  and b.total &gt; 0  then case when b.percentage= 0 then 1 else (b.percentage / 100) end  * B.TOTAL else 0 end ),0) as int) as [Wireless] 
+        ,cast(round(MAX(case when productcategory = 'Serv-FIAB'                 and b.total &gt; 0 then case when b.percentage= 0 then 1 else (b.percentage / 100) end   * B.TOTAL else 0 end ),0) as int) as [Serv-FIAB]            
 from tblOpportunities a
  inner join tblopportunitydetails b
 on a.opportunityid = b.opportunityid

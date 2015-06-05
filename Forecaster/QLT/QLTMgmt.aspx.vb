@@ -112,39 +112,40 @@ System.Web.Services.WebMethod()> _
         'update gridview
         Me.gvQLT.DataBind()
 
-        Try
-            'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
-            Dim connectionString As String
-            connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
-            Dim SqlConnection As New SqlConnection(connectionString)
-            SqlConnection.Open()
+        If CType(frmInsert.FindControl("SendEmailCheckbox"), CheckBox).Checked Then
+            Try
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                Dim SqlConnection As New SqlConnection(connectionString)
+                SqlConnection.Open()
 
-            Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
-            Dim reader As SqlDataReader = sc.ExecuteReader()
-            reader.Read()
-            Dim managerEmail As String = reader.GetString(0)
-            reader.Close()
+                Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
+                Dim reader As SqlDataReader = sc.ExecuteReader()
+                reader.Read()
+                Dim managerEmail As String = reader.GetString(0)
+                reader.Close()
 
-            Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
-                                 "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
-                                 "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
-                                 "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
-            Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
-            Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
-            mm.CC.Add(managerEmail)
-            mm.CC.Add(mailaddress)
-            If Not String.IsNullOrEmpty(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text) Then
-                mm.CC.Add(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text)
-            End If
-            mm.CC.Add("QLT@laurentide.com")
-            Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
-            smtp.Send(mm)
-            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
-            'update gridview
-            Me.gvQLT.DataBind()
-        Catch ex As Exception
-            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alerterror();", True)
-        End Try
+                Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
+                                     "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
+                                     "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
+                                     "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
+                Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+                Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
+                mm.CC.Add(managerEmail)
+                mm.CC.Add(mailaddress)
+                If Not String.IsNullOrEmpty(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text) Then
+                    mm.CC.Add(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text)
+                End If
+                'mm.CC.Add("QLT@laurentide.com")
+                Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+                smtp.Send(mm)
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
+                'update gridview
+                Me.gvQLT.DataBind()
+            Catch ex As Exception
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alerterror();", True)
+            End Try
+        End If
     End Sub
 
     Protected Sub frmInsert_DataBound(sender As Object, e As EventArgs)

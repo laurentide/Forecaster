@@ -142,11 +142,7 @@
             </table>
         </EditItemTemplate>
     </asp:FormView>
-            <table><tr><td>
-        Filter by: </td><%--<td><asp:DropDownList ID="DropDownList1" runat="server">
-                        <asp:ListItem Text="(select filter)" Value="" Selected="True" />
-                        <asp:ListItem Text="Team" Value="team" />
-                   </asp:DropDownList></td>--%>
+            <table><tr><td>Filter by: </td>
                 <td><asp:Label ID="Label1" Text="Team" runat="server" /></td>
                 <td><asp:DropDownList runat="server" DataSourceID="sdsTeamFilter" ID="TeamFilterDropdown" OnLoad="TeamFilterDropdown_Load" AppendDataBoundItems="true" AutoPostBack="true">
                     <asp:ListItem Text="(no filter)" Value="" />
@@ -155,20 +151,24 @@
                     DataValueField="MemberName">
                     <asp:ListItem Text="(no filter)" Value="" />
                     </asp:DropDownList></td>
+                <td><asp:Label ID="Label3" Text="Search:" runat="server" /></td>
+                <td><asp:TextBox runat="server" ID="TopicFilterTextbox" /></td><td><asp:Button ID="SearchButton" runat="server" Text="Search" /></td>
+                <td><asp:Button ID="ResetButton" runat="server" Text="Reset" OnClick="ResetButton_Click" CausesValidation="true" /></td>
             </tr></table>
             <asp:GridView ID="MASTGridView" runat="server" AutoGenerateColumns="False" AllowSorting="True" AllowPaging="True" DataSourceID="sdsMAST"
-                HeaderStyle-CssClass="grid_Header" DataKeyNames="MAST_ID"
+                HeaderStyle-CssClass="grid_Header" DataKeyNames="MAST_ID" DefaultMode="Edit"
                 RowStyle-CssClass="grid_RowStyle" OnSelectedIndexChanged="MASTGridView_SelectedIndexChanged"
                 CellPadding="4" ForeColor="#333333"
                 Font-Size="10px" PageSize="50">
                 <Columns>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this request?');" />
+                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action item?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                     <asp:BoundField DataField="MAST_ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="MAST_ID" />
+                    <asp:BoundField DataField="DateCreated" HeaderText="Date Created" SortExpression="DateCreated" DataFormatString="{0:d}" ApplyFormatInEditMode="true" />
 <%--                    <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />--%>
                     <asp:BoundField DataField="Topic" HeaderText="Topic" SortExpression="Topic" />
                     <asp:BoundField DataField="TeamName" HeaderText="Team" SortExpression="TeamName" />
@@ -176,7 +176,7 @@
                     <asp:BoundField DataField="Action" HeaderText="Action" SortExpression="Action" />
                     <asp:BoundField DataField="Responsable" HeaderText="Responsable" SortExpression="Responsable" />
                     <asp:BoundField DataField="ItemStatus" HeaderText="Item Status" SortExpression="ItemStatus" />
-                    <asp:BoundField DataField="DueDate" HeaderText="Due Date" SortExpression="DueDate" />
+                    <asp:BoundField DataField="DueDate" HeaderText="Due Date" SortExpression="DueDate" DataFormatString="{0:d}" ApplyFormatInEditMode="true" />
                 </Columns> 
                 <EditRowStyle BackColor="#999999" />
                 <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
@@ -192,10 +192,14 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 <asp:SqlDataSource ID="sdsMAST" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
-    SelectCommand="SELECT * FROM tblMasterActionItemTool" FilterExpression="(TeamID = '{0}' or '{0}' = '-1') AND (Responsable = '{1}' or '{1}' = '-1')">
+    SelectCommand="SELECT * FROM tblMasterActionItemTool WHERE visible = 1" FilterExpression="(TeamID = '{0}' or '{0}' = '-1') AND (Responsable = '{1}' or '{1}' = '-1') AND ((Topic LIKE '%{2}%' or '{2}' = '-1') OR (SubTopic LIKE '%{3}%' or '{3}' = '-1') OR (Action LIKE '%{4}%' or '{4}' = '-1'))"
+    DeleteCommand="update tblMasterActionItemTool set visible = 0 where MAST_ID = @MAST_ID">
        <FilterParameters>
             <asp:ControlParameter Name="TeamID" ControlID="TeamFilterDropdown" PropertyName="SelectedValue" DefaultValue="-1" />
             <asp:ControlParameter Name="Responsable" ControlID="ResponsableFilterDropdown" PropertyName="SelectedValue" DefaultValue="-1" />
+            <asp:ControlParameter Name="Topic" ControlID="TopicFilterTextbox" PropertyName="Text" DefaultValue="-1" />
+            <asp:ControlParameter Name="Description" ControlID="TopicFilterTextbox" PropertyName="Text" DefaultValue="-1" />
+            <asp:ControlParameter Name="Action" ControlID="TopicFilterTextbox" PropertyName="Text" DefaultValue="-1" />
        </FilterParameters>
 </asp:SqlDataSource>
         <asp:SqlDataSource ID="sdsInsert" runat="server" 

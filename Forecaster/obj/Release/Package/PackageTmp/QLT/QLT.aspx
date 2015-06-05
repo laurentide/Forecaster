@@ -19,7 +19,7 @@
                 </td>
             </tr>
             <tr>
-                <td><b>Origin of Event (*):</b></td>
+                <td><b>Origin of Feedback (*):</b></td>
                 <td>
                     <asp:DropDownList ID="OriginDropDown" runat="server" DataSourceID="sdsOrigins" AppendDataBoundItems="true" DataValueField="OriginID" DataTextField="Origin" SelectedValue='<%# Bind("OriginID")%>'>
                         <asp:ListItem Text="(Select the origin)" Value="" />
@@ -199,6 +199,10 @@
                     <td><asp:TextBox ID="ImmediateActionTextbox" runat="server" Text='<%# Bind("ImmediateAction")%>' class="textboxWidth" /></td>
                 </tr>
             </asp:Panel>
+<%--            <tr>
+                <td>Upload related document or picture (if neccessary):</td>
+                <td><asp:FileUpload ID="fuDialog" runat="server" AllowMultiple="true" /></td>
+            </tr>--%>
             <tr>
                 <td>
                     <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />

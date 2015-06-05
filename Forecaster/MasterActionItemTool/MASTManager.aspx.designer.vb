@@ -77,6 +77,42 @@ Partial Public Class MASTManager
     Protected WithEvents ResponsableFilterDropdown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''Label3 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Label3 As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''TopicFilterTextbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents TopicFilterTextbox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''SearchButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SearchButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ResetButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResetButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''MASTGridView control.
     '''</summary>
     '''<remarks>

@@ -551,14 +551,14 @@
         SelectCommand="select * from tblPaymentTypes order by PaymentType"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"
         SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
+    <%-- where paiddate >= getdate() --%>
     <asp:SqlDataSource ID="sdsPayDates" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"
-        SelectCommand="select * from tblPayDates where paiddate >= getdate() order by paiddateid"></asp:SqlDataSource>
+        SelectCommand="select * from tblPayDates order by paiddateid"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsExchangeRate" runat="server" ConnectionString="<%$ ConnectionStrings:ExpenseReportConnectionString %>"
     SelectCommand="select * from tblDefaultExchangeRate" UpdateCommand="update tbldefaultexchangerate set exchangerate = @ExchangeRate">
         <UpdateParameters>
             <asp:Parameter Name="ExchangeRate" />
         </UpdateParameters>
-
     </asp:SqlDataSource>
     <asp:Button ID="FakeTarget" runat="server" Style="display: none;" />
 </asp:Content>

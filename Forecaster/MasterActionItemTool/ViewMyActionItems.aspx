@@ -143,28 +143,26 @@
         </EditItemTemplate>
         </asp:FormView>
             <table><tr><td>
-        Filter by: </td><%--<td><asp:DropDownList ID="DropDownList1" runat="server">
-                        <asp:ListItem Text="(select filter)" Value="" Selected="True" />
-                        <asp:ListItem Text="Team" Value="team" />
-                   </asp:DropDownList></td>--%>
-                <td><asp:Label ID="Label1" Text="Team" runat="server" /></td>
+        Filter by: </td><td><asp:Label ID="Label1" Text="Team" runat="server" /></td>
                 <td><asp:DropDownList runat="server" DataSourceID="sdsTeamFilter" ID="TeamFilterDropdown" OnLoad="TeamFilterDropdown_Load" AppendDataBoundItems="true" AutoPostBack="true">
                     <asp:ListItem Text="(no filter)" Value="" />
                     </asp:DropDownList></td><td><asp:Label ID="Label2" Text="Responsable" runat="server" /></td>
                 <td><asp:DropDownList runat="server" DataSourceID="sdsResponsable" ID="ResponsableFilterDropdown" AppendDataBoundItems="true" AutoPostBack="true" DataTextField="MemberName"
                     DataValueField="MemberName">
                     <asp:ListItem Text="(no filter)" Value="" />
-                    </asp:DropDownList></td>
+                    </asp:DropDownList></td><td><asp:Label ID="Label3" Text="Search:" runat="server" /></td>
+                <td><asp:TextBox runat="server" ID="TopicFilterTextbox" /></td><td><asp:Button ID="SearchButton" runat="server" Text="Search" /></td>
+                <td><asp:Button ID="ResetButton" runat="server" Text="Reset" OnClick="ResetButton_Click" CausesValidation="true" /></td>
             </tr></table>
         <asp:GridView ID="mastEdit" runat="server" AutoGenerateColumns="False" AllowSorting="True" AllowPaging="True"
                 HeaderStyle-CssClass="grid_Header" OnDataBound="mastEdit_DataBound"
                 RowStyle-CssClass="grid_RowStyle" DefaultMode="Edit" DataKeyNames="MAST_ID" DataSourceID="sdsEdit"
-                CellPadding="4" ForeColor="#333333"  
-                Font-Size="10px" PageSize="50" OnSelectedIndexChanged="mastEdit_SelectedIndexChanged">
+                CellPadding="4" ForeColor="#333333" 
+                Font-Size="Large" PageSize="50" OnSelectedIndexChanged="mastEdit_SelectedIndexChanged">
                 <Columns>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:LinkButton ID="DeleteButton" CommandName="Delete" ForeColor="Black" runat="server" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this request?');" />
+                            <asp:LinkButton ID="DeleteButton" CommandName="Delete" ForeColor="Black" runat="server" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action item?');" />
                         </ItemTemplate>
                     </asp:TemplateField>                    
                     <asp:CommandField ShowSelectButton="True" SelectText="Edit"/>
@@ -193,12 +191,15 @@
             </asp:GridView>
         </ContentTemplate>
    <%--     </asp:UpdatePanel>--%>
-        <asp:SqlDataSource ID="sdsEdit" runat="server" FilterExpression="(TeamID = '{0}' or '{0}' = '-1') AND (Responsable = '{1}' or '{1}' = '-1')"
+        <asp:SqlDataSource ID="sdsEdit" runat="server" FilterExpression="(TeamID = '{0}' or '{0}' = '-1') AND (Responsable = '{1}' or '{1}' = '-1') AND ((Topic LIKE '%{2}%' or '{2}' = '-1') OR (SubTopic LIKE '%{3}%' or '{3}' = '-1') OR (Action LIKE '%{4}%' or '{4}' = '-1'))"
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
         DeleteCommand="update tblMasterActionItemTool set visible = 0 where MAST_ID = @MAST_ID">
             <FilterParameters>
                 <asp:ControlParameter Name="TeamID" ControlID="TeamFilterDropdown" PropertyName="SelectedValue" DefaultValue="-1" />
                 <asp:ControlParameter Name="Responsable" ControlID="ResponsableFilterDropdown" PropertyName="SelectedValue" DefaultValue="-1" />
+                <asp:ControlParameter Name="Topic" ControlID="TopicFilterTextbox" PropertyName="Text" DefaultValue="-1" />
+                <asp:ControlParameter Name="Description" ControlID="TopicFilterTextbox" PropertyName="Text" DefaultValue="-1" />
+                <asp:ControlParameter Name="Action" ControlID="TopicFilterTextbox" PropertyName="Text" DefaultValue="-1" />
             </FilterParameters>
         </asp:SqlDataSource>
         <asp:SqlDataSource ID="sdsTeamFilter" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>">

@@ -96,4 +96,11 @@ Public Class ViewMyActionItems
         'teamDropDown.DataTextField = "TeamName"
         'teamDropDown.DataBind()
     End Sub
+
+    Protected Sub ResetButton_Click(sender As Object, e As EventArgs)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        CType(MainContent.FindControl("TopicFilterTextbox"), TextBox).Text = ""
+        CType(MainContent.FindControl("TeamFilterDropdown"), DropDownList).SelectedValue = ""
+        CType(MainContent.FindControl("ResponsableFilterDropdown"), DropDownList).SelectedValue = ""
+    End Sub
 End Class

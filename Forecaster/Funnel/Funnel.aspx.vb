@@ -147,7 +147,7 @@ Public Class Funnel
                                     "      ,[Outage] = @Outage           " & _
                                     " WHERE Opportunityid = @OpportunityID         "
 
-            SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmUpdate.FindControl("OriginatorTextBox"), Label).Text
+            SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmUpdate.FindControl("OriginatorTextBox"), TextBox).Text
             'SqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CType(Me.frmUpdate.FindControl("CustomerIDDropDown"), DropDownList).Text
             SqlCommand.Parameters.Add("@Customer", SqlDbType.VarChar, 100).Value = CType(Me.frmUpdate.FindControl("CustomerTextBox"), TextBox).Text
             SqlCommand.Parameters.Add("@CustomerLocation", SqlDbType.VarChar, 50).Value = CType(Me.frmUpdate.FindControl("CustomerLocationTextbox"), TextBox).Text
@@ -291,7 +291,7 @@ Public Class Funnel
                                     "      ,@Top25           " & _
                                     "      ,@IndustryCode" & _
                                     "      ,@Outage)           "
-            SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmInsert.FindControl("OriginatorTextBox"), Label).Text
+            SqlCommand.Parameters.Add("@Originator", SqlDbType.VarChar, 50).Value = CType(Me.frmInsert.FindControl("OriginatorTextBox"), TextBox).Text
             'SqlCommand.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CType(Me.frmInsert.FindControl("CustomerIDDropDown"), DropDownList).Text
             SqlCommand.Parameters.Add("@Customer", SqlDbType.VarChar, 100).Value = CType(Me.frmInsert.FindControl("CustomerTextBox"), TextBox).Text
             SqlCommand.Parameters.Add("@CustomerLocation", SqlDbType.VarChar, 50).Value = CType(Me.frmInsert.FindControl("CustomerLocationTextbox"), TextBox).Text
@@ -668,7 +668,7 @@ Public Class Funnel
 
     Protected Sub frmUpdate_DataBound(ByVal sender As Object, ByVal e As EventArgs)
         Try
-            CType(frmUpdate.FindControl("OriginatorTextBox"), TextBox).Text = Me.User.Identity.Name.ToString
+            'CType(frmUpdate.FindControl("OriginatorTextBox"), TextBox).Text = Me.User.Identity.Name.ToString
             sdsOpportunityAssignments.SelectParameters(0).DefaultValue = CType(CType(sender, FormView).FindControl("OpportunityIDLabel"), Label).Text
             CType(CType(sender, FormView).FindControl("gvAssignments"), GridView).DataBind()
         Catch ex As Exception

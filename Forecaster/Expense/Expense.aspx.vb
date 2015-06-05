@@ -265,6 +265,7 @@ Public Class Expense
         CType(frmExpense.FindControl("panStd"), Panel).Visible = False
         'Reset drop down
         CType(frmExpense.FindControl("ddlExpenseCategories"), DropDownList).SelectedIndex = -1
+        CType(frm.FindControl("GuestsTextbox"), TextBox).Text = ""
     End Sub
 
     Protected Sub frmExpense_DataBound(sender As Object, e As EventArgs)

@@ -14,8 +14,6 @@ Public Class QLT
         frmInsert.ChangeMode(FormViewMode.Edit)
     End Sub
 
-
-
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
         Try
             'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
@@ -23,6 +21,25 @@ Public Class QLT
             connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
             Dim SqlConnection As New SqlConnection(connectionString)
             SqlConnection.Open()
+
+            'save uploaded files
+            'Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\QLT\QLT" & Session("ID") & "\"
+            'System.IO.Directory.CreateDirectory(savePath)
+            'Dim uploadedFiles As HttpFileCollection = Request.Files
+            'Dim i As Integer = 0
+            'Dim userPostedFile As HttpPostedFile
+
+            'Do Until i = uploadedFiles.Count
+            '    userPostedFile = uploadedFiles(i)
+
+            '    Try
+            '        If (userPostedFile.ContentLength > 0) Then
+            '            userPostedFile.SaveAs(savePath & "\" & System.IO.Path.GetFileName(userPostedFile.FileName))
+            '        End If
+            '    Catch ex As Exception
+            '    End Try
+            '    i += 1
+            'Loop
 
             Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
             Dim reader As SqlDataReader = sc.ExecuteReader()
@@ -38,7 +55,7 @@ Public Class QLT
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             mm.CC.Add(managerEmail)
             mm.CC.Add(mailaddress)
-            mm.CC.Add("QLT@laurentide.com")
+            'mm.CC.Add("QLT@laurentide.com")
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)

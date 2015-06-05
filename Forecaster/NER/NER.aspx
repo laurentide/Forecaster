@@ -165,6 +165,12 @@
                             <td>
                                 <asp:CheckBox ID="BillableCheckBox" runat="server" Checked='<%# Bind("Billable") %>' /></td>
                         </tr>
+                        <tr>
+                            <td>New Position:</td>
+                            <td>
+                                <asp:CheckBox ID="NewPositionCheckBox" runat="server" Checked='<%# Bind("NewPosition")%>' />
+                            </td>
+                        </tr>
 
 
 
@@ -312,7 +318,7 @@
                 </tr>--%>
 
                         <tr>
-                            <td>Job Description Link:</td>
+                            <td>Job Description Link (Copy URL into this field):</td>
                             <td>
                                 <asp:TextBox ID="JobDescriptionLinkTextBox" runat="server" Text='<%# Bind("JobDescriptionLink") %>' Width="500" /></td>
                         </tr>
@@ -333,6 +339,13 @@
                             <td>Billable:</td>
                             <td>
                                 <asp:CheckBox ID="BillableCheckBox" runat="server" Checked='<%# Bind("Billable") %>' /></td>
+                        </tr>
+
+                        <tr>
+                            <td>New Position:</td>
+                            <td>
+                                <asp:CheckBox ID="NewPositionCheckBox" runat="server" Checked='<%# Bind("NewPosition")%>' />
+                            </td>
                         </tr>
 
 <%--                        <tr>
@@ -367,7 +380,7 @@
 
                         <%-- Investment Sheet Integration --%>  <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="true">
                         <tr><td><br /></td></tr>
-                        <tr><td><asp:Label Text="Investment Sheet" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
+                        <tr><td><asp:Label Text="Investment" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
                         <tr>
                             <td>Investment Owner: </td>
                             <td>
@@ -394,20 +407,20 @@
                                 <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("InvestmentLaurentideBenefit")%>' TextMode="MultiLine" Rows="5" Width="500" /></td>
                         </tr>    
                         <tr>
-                            <td>Projected ROI (if applicable)</td>
+                            <td>Projected ROI (if applicable):</td>
                             <td>
-                                <asp:Button ID="AddPROIButton" runat="server" CausesValidation="True" Text="Add new PROI" OnClick="AddPROIButton_Click" />
+                                <asp:Button ID="AddPROIButton" runat="server" CausesValidation="True" Text="Add new Projected ROI" OnClick="AddPROIButton_Click" />
                             </td>
                        </tr>  
                        <tr>
                            <td></td>
-                           <td colspan="3" >
+                           <td>
                            <asp:Panel ID="proi_panel" runat="server" Visible="false">
                                 <asp:FormView runat="server" ID="proiDetails" BackColor="#c1ddff" BorderStyle="Solid" BorderWidth="1px" DefaultMode="Insert" 
                                     OnItemInserting="proiDetails_ItemInserting">   
                                 <InsertItemTemplate>                         
                                 <table>
-                                <tr><td>Benefits:</td><td>
+                                <tr><td>Benefit (description):</td><td>
                                     <asp:TextBox ID="BenefitsTextBox" runat="server" Text='<%# Bind("Benefit") %>' />
                                 </td></tr>
                                     <tr><td>Year 0:</td><td><asp:TextBox ID="year0" runat="server"  Text='<%# Bind("PROI_Year0")%>' />
@@ -437,7 +450,7 @@
                            <td>Projected ROI list:</td>
                            <td>
                            <asp:GridView ID="gvPROIDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle" OnDataBinding="gvPROIDetails_DataBinding"
+                            RowStyle-CssClass="grid_RowStyle" OnDataBinding="gvPROIDetails_DataBinding" OnSelectedIndexChanged="gvPROIDetails_SelectedIndexChanged"
                             CellPadding="4" ForeColor="#333333" OnRowDataBound="gvPROIDetails_RowDataBound"
                             Font-Size="10px" OnRowDeleting="gvPROIDetails_RowDeleting">
                              <Columns>
@@ -486,14 +499,14 @@
                                     OnItemInserting="frmProgramCosts_ItemInserting">   
                                 <InsertItemTemplate>                         
                                 <table>
-                                <tr><td>Program Cost:</td><td>
-                                    <asp:TextBox ID="ProgramCostTextBox" runat="server" Width="500" Text='<%# Bind("ProgramCostDetail")%>'/>
+                                <tr><td>Program Cost (description):</td><td>
+                                    <asp:TextBox ID="ProgramCostTextBox" runat="server" Text='<%# Bind("ProgramCostDetail")%>'/>
                                 </td></tr>
-                                    <tr><td>Year 0:</td><td><asp:TextBox ID="PCYear0" runat="server" Width="500" Text='<%# Bind("PC_Year0")%>' /></td></tr>
-                                    <tr><td>Year 1:</td><td><asp:TextBox ID="PCYear1" runat="server" Width="500" Text='<%# Bind("PC_Year1")%>'/></td></tr>
-                                    <tr><td>Year 2:</td><td><asp:TextBox ID="PCYear2" runat="server" Width="500" Text='<%# Bind("PC_Year2")%>'/></td></tr>
-                                    <tr><td>Year 3:</td><td><asp:TextBox ID="PCYear3" runat="server" Width="500" Text='<%# Bind("PC_Year3")%>'/></td></tr>
-                                    <tr><td>Year 4:</td><td><asp:TextBox ID="PCYear4" runat="server" Width="500" Text='<%# Bind("PC_Year4")%>'/></td></tr>
+                                    <tr><td>Year 0:</td><td><asp:TextBox ID="PCYear0" runat="server" Text='<%# Bind("PC_Year0")%>' /></td></tr>
+                                    <tr><td>Year 1:</td><td><asp:TextBox ID="PCYear1" runat="server" Text='<%# Bind("PC_Year1")%>'/></td></tr>
+                                    <tr><td>Year 2:</td><td><asp:TextBox ID="PCYear2" runat="server" Text='<%# Bind("PC_Year2")%>'/></td></tr>
+                                    <tr><td>Year 3:</td><td><asp:TextBox ID="PCYear3" runat="server" Text='<%# Bind("PC_Year3")%>'/></td></tr>
+                                    <tr><td>Year 4:</td><td><asp:TextBox ID="PCYear4" runat="server" Text='<%# Bind("PC_Year4")%>'/></td></tr>
                                     <tr><td><asp:Button runat="server" Text="Save Program Cost" CommandName="Insert" ID="InsertButton" CausesValidation="True" ValidationGroup="InsertDetails" /></td>
                                         <td><asp:Button runat="server" Text="Cancel" ID="CancelProgramCostButton" CausesValidation="true" OnClick="CancelProgramCostButton_Click"/></td></tr>
                                 </table>
@@ -507,7 +520,7 @@
                            <asp:GridView ID="gvProgramCostsDetails" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
                             RowStyle-CssClass="grid_RowStyle" OnRowDataBound="gvProgramCostsDetails_RowDataBound"
                             CellPadding="4" ForeColor="#333333" OnDataBinding="gvProgramCostsDetails_DataBinding"
-                            Font-Size="10px" OnRowDeleting="gvProgramCostsDetails_RowDeleting">
+                            Font-Size="10px" OnRowDeleting="gvProgramCostsDetails_RowDeleting" OnSelectedIndexChanged="gvProgramCostsDetails_SelectedIndexChanged">
                              <Columns>
                               <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
@@ -582,12 +595,12 @@
                                     <asp:TextBox ID="SuccessCriteriaTextbox" runat="server" Width="500" Text='<%# Bind("SuccessCriteriaDetail")%>'/>
                                 </td></tr>
                                     <tr><td>Baseline:</td><td><asp:TextBox ID="BaselineID" runat="server" Width="500" Text='<%# Bind("Baseline")%>' /></td></tr>
-                                    <tr><td>Q1:</td><td><asp:TextBox ID="Q1" runat="server" Width="500" Text='<%# Bind("Q1")%>'/></td></tr>
-                                    <tr><td>Q2:</td><td><asp:TextBox ID="Q2" runat="server" Width="500" Text='<%# Bind("Q2")%>'/></td></tr>
-                                    <tr><td>Q3:</td><td><asp:TextBox ID="Q3" runat="server" Width="500" Text='<%# Bind("Q3")%>'/></td></tr>
-                                    <tr><td>Q4:</td><td><asp:TextBox ID="Q4" runat="server" Width="500" Text='<%# Bind("Q4")%>'/></td></tr>
-                                    <tr><td>Q5:</td><td><asp:TextBox ID="Q5" runat="server" Width="500" Text='<%# Bind("Q5")%>'/></td></tr>
-                                    <tr><td>Q6:</td><td><asp:TextBox ID="Q6" runat="server" Width="500" Text='<%# Bind("Q6")%>'/></td></tr>
+                                    <tr><td>P1:</td><td><asp:TextBox ID="Q1" runat="server" Width="500" Text='<%# Bind("Q1")%>'/></td></tr>
+                                    <tr><td>P2:</td><td><asp:TextBox ID="Q2" runat="server" Width="500" Text='<%# Bind("Q2")%>'/></td></tr>
+                                    <tr><td>P3:</td><td><asp:TextBox ID="Q3" runat="server" Width="500" Text='<%# Bind("Q3")%>'/></td></tr>
+                                    <tr><td>P4:</td><td><asp:TextBox ID="Q4" runat="server" Width="500" Text='<%# Bind("Q4")%>'/></td></tr>
+                                    <tr><td>P5:</td><td><asp:TextBox ID="Q5" runat="server" Width="500" Text='<%# Bind("Q5")%>'/></td></tr>
+                                    <tr><td>P6:</td><td><asp:TextBox ID="Q6" runat="server" Width="500" Text='<%# Bind("Q6")%>'/></td></tr>
                                     <tr><td><asp:Button runat="server" Text="Save Success Criteria" CommandName="Insert" ID="InsertSuccessCriteriaButton" CausesValidation="True" ValidationGroup="InsertDetails" /></td>
                                         <td><asp:Button runat="server" Text="Cancel" ID="CancelSuccessCriteriaButton" CausesValidation="true" OnClick="CancelSuccessCriteriaButton_Click"/></td></tr>
                                 </table>
@@ -601,7 +614,7 @@
                             <td>Success Criteria List:</td>
                             <td>
                            <asp:GridView ID="gvSuccessCriteria" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle"
+                            RowStyle-CssClass="grid_RowStyle" OnSelectedIndexChanged="gvSuccessCriteria_SelectedIndexChanged"
                             CellPadding="4" ForeColor="#333333"
                             Font-Size="10px" OnRowDeleting="gvSuccessCriteria_RowDeleting">
                              <Columns>
@@ -612,12 +625,13 @@
                                 </asp:TemplateField>
                                 <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
                                 <asp:BoundField DataField="SuccessCriteriaDetail" HeaderText="Success Criteria" SortExpression="SuccessCriteriaDetail" />
-                                <asp:BoundField DataField="Q1" HeaderText="Q1" SortExpression="Q1" />
-                                <asp:BoundField DataField="Q2" HeaderText="Q2" SortExpression="Q2" />
-                                <asp:BoundField DataField="Q3" HeaderText="Q3" SortExpression="Q3" />
-                                <asp:BoundField DataField="Q4" HeaderText="Q4" SortExpression="Q4" />
-                                <asp:BoundField DataField="Q5" HeaderText="Q5" SortExpression="Q5" />
-                                <asp:BoundField DataField="Q6" HeaderText="Q6" SortExpression="Q6" />
+                                <asp:BoundField DataField="Baseline" HeaderText="Baseline" SortExpression="Baseline" />
+                                <asp:BoundField DataField="Q1" HeaderText="P1" SortExpression="Q1" />
+                                <asp:BoundField DataField="Q2" HeaderText="P2" SortExpression="Q2" />
+                                <asp:BoundField DataField="Q3" HeaderText="P3" SortExpression="Q3" />
+                                <asp:BoundField DataField="Q4" HeaderText="P4" SortExpression="Q4" />
+                                <asp:BoundField DataField="Q5" HeaderText="P5" SortExpression="Q5" />
+                                <asp:BoundField DataField="Q6" HeaderText="P6" SortExpression="Q6" />
                                </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -667,7 +681,7 @@
                             <td>Implementation/Follow-Up Plan list:</td>
                             <td>
                            <asp:GridView ID="gvImplementation" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle"
+                            RowStyle-CssClass="grid_RowStyle" OnSelectedIndexChanged="gvImplementation_SelectedIndexChanged"
                             CellPadding="4" ForeColor="#333333"
                             Font-Size="10px" OnRowDeleting="gvImplementation_RowDeleting">
                              <Columns>
@@ -775,6 +789,7 @@
            ,[Billable]
            ,[Replacement]
            ,[ReplacementCheck]
+           ,[NewPosition]
            ,[Return]
            ,[DateCreated]
            ,[DateApproved]
@@ -802,6 +817,7 @@
            ,@Billable
            ,@Replacement
            ,@ReplacementCheck
+           ,@NewPosition
            ,@Return
            ,getDate()
            ,@DateApproved
@@ -854,6 +870,7 @@
             <asp:Parameter Name="Budgeted" />
             <asp:Parameter Name="Billable" />
             <asp:Parameter Name="Replacement" />
+            <asp:Parameter Name="NewPosition" />
             <asp:Parameter Name="ReplacementCheck" />
             <asp:Parameter Name="Return" />
             <asp:Parameter Name="DateCreated" />

@@ -6,15 +6,7 @@ Forecaster
 </name>
 </assembly>
 <members>
-<member name="F:Forecaster.MAITAccessDenied.ScriptManager">
-	<summary>
-ScriptManager control.
-</summary>
-	<remarks>
-Auto-generated field.
-To modify move field declaration from designer file to code-behind file.
-</remarks>
-</member><member name="F:Forecaster.Mg_Forecasts.ScriptManager">
+<member name="F:Forecaster.Mg_Forecasts.ScriptManager">
 	<summary>
 ScriptManager control.
 </summary>
@@ -265,6 +257,14 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.ChangePassword.ChangeUserPassword">
 	<summary>
 ChangeUserPassword control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.MAITAccessDenied.ScriptManager">
+	<summary>
+ScriptManager control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -982,6 +982,38 @@ ResponsableFilterDropdown control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.MASTManager.Label3">
+	<summary>
+Label3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.MASTManager.TopicFilterTextbox">
+	<summary>
+TopicFilterTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.MASTManager.SearchButton">
+	<summary>
+SearchButton control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.MASTManager.ResetButton">
+	<summary>
+ResetButton control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.MASTManager.MASTGridView">
 	<summary>
 MASTGridView control.
@@ -1089,6 +1121,38 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.ViewMyActionItems.ResponsableFilterDropdown">
 	<summary>
 ResponsableFilterDropdown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ViewMyActionItems.Label3">
+	<summary>
+Label3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ViewMyActionItems.TopicFilterTextbox">
+	<summary>
+TopicFilterTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ViewMyActionItems.SearchButton">
+	<summary>
+SearchButton control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.ViewMyActionItems.ResetButton">
+	<summary>
+ResetButton control.
 </summary>
 	<remarks>
 Auto-generated field.
