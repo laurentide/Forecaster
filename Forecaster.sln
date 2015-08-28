@@ -1,13 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F36BBF18-D803-4DA7-96F0-0CD3C260FD8F}"
-	ProjectSection(SolutionItems) = preProject
-		Forecaster.vsmdi = Forecaster.vsmdi
-		Local.testsettings = Local.testsettings
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Forecaster", "Forecaster\Forecaster.vbproj", "{6E40092A-C230-47B3-8B2E-10FDA5618E59}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FunnelTest", "FunnelTest\FunnelTest.vbproj", "{0A01C664-B04F-4A7A-A2AA-2BE2289FBA85}"

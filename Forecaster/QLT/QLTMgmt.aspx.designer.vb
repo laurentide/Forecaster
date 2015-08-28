@@ -32,6 +32,24 @@ Partial Public Class QLTMgmt
     Protected WithEvents frmInsert As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
+    '''PSSFilterButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PSSFilterButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ResetPSSFilterButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResetPSSFilterButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''gvQLT control.
     '''</summary>
     '''<remarks>
@@ -156,4 +174,13 @@ Partial Public Class QLTMgmt
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsActiveUsers As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''ExportToExcel1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ExportToExcel1 As Global.KrishLabs.Web.Controls.ExportToExcel
 End Class

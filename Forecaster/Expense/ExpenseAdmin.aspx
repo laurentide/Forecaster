@@ -380,10 +380,24 @@
             </table>
         </EditItemTemplate>
     </asp:FormView>
-    <br />
+    <table>
+        <tr><td>Filter by </td></tr><tr><td>Paid:</td><td><asp:DropDownList ID="PaidFilterDropDownList" runat="server">
+            <asp:ListItem Text="(no filter)" Value="" />
+            <asp:ListItem Text="Paid" Value="True" />
+            <asp:ListItem Text="Unpaid" Value="False" />
+          </asp:DropDownList></td><td><asp:Button ID="SearchPaidButton" runat="server" Text="Apply Filter" OnClick="SearchButton_Click" /></td></tr>
+            <tr><td>Paid date:  </td><td><asp:TextBox ID="PaidDateTextbox" runat="server" Width="75px" />
+                        <asp:Image runat="server" ID="Calendar_scheduleDR" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                        <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="PaidDateTextbox" PopupButtonID="Calendar_scheduleDR" />
+                        <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="PaidDateTextbox" PromptCharacter="_" />
+                        <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="PaidDateTextbox" ControlExtender="meeDateNeeded" 
+                            InvalidValueMessage="Date is Invalid" IsValidEmpty="True" /></td>
+            <td><asp:Button ID="SearchPaidDateButton" runat="server" Text="Apply Filter" OnClick="SearchPaidDateButton_Click" /><asp:Button ID="ResetButton" runat="server" Text="Reset Filters" CausesValidation="true" OnClick="ResetButton_Click" /></td>
+        </tr>
+          </table>
     <asp:GridView ID="gvExpenseReports" runat="server" AutoGenerateColumns="False" DataKeyNames="ExpenseReportID" DataSourceID="sdsExpenseReportGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
-        RowStyle-CssClass="grid_RowStyle"
+        RowStyle-CssClass="grid_RowStyle" OnPageIndexChanging="gvExpenseReports_PageIndexChanging"
         CellPadding="4" ForeColor="#333333"
         Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvExpenseReports_SelectedIndexChanged" OnRowCommand="gvExpenseReports_RowCommand">
         <Columns>

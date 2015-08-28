@@ -6,6 +6,7 @@ Public Class QLTMgmt
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Session("Username") = Me.User.Identity.Name.ToString
+        Dim un As String = Session("Username")
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
 
@@ -24,6 +25,12 @@ Public Class QLTMgmt
             ACAdt.Columns.Add("AdditionalCorrectiveAction", GetType(String))
             ACAdt.Columns.Add("Timestamp", GetType(DateTime))
         End If
+
+        'Set the count at the top of the page (work in progress)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim IssuedLabel As Label = CType(MainContent.FindControl("IssuedCount"), Label)
+        Dim AssignedLabel As Label = CType(MainContent.FindControl("AssignedCount"), Label)
+
 
     End Sub
     <System.Web.Script.Services.ScriptMethod(), _
@@ -62,8 +69,10 @@ System.Web.Services.WebMethod()> _
         Return customers
     End Function
 
-    Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
-
+    Public Sub BindPCA()
+        Dim gvPermanentCorrectiveAction As GridView = CType(frmInsert.FindControl("gvPermanentCorrectiveAction"), GridView)
+        gvPermanentCorrectiveAction.DataSource = ViewState("PCA")
+        gvPermanentCorrectiveAction.DataBind()
     End Sub
 
     Protected Sub gvQLT_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -74,7 +83,7 @@ System.Web.Services.WebMethod()> _
         'Check if the PCA text box is empty
         If CType(frmInsert.FindControl("PermanentCorrectiveActionTextBox"), TextBox).Text IsNot "" Then
             'if they wrote then insert it into the table
-            Dim PCAquery As String = "INSERT INTO [tblPermanentCorrectiveAction] ([QLTID], [PermanentCorrectiveAction], [Timestamp]) VALUES (@QLTID, @PermanentCorrectiveAction, getDate())"
+            Dim PCAquery As String = "INSERT INTO [tblPermanentCorrectiveAction] ([QLTID], [PermanentCorrectiveAction], [Timestamp], [Visible]) VALUES (@QLTID, @PermanentCorrectiveAction, getDate(), 1)"
             Using PCAconn As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
                 Using PCAcomm As New SqlCommand()
                     With PCAcomm
@@ -112,7 +121,7 @@ System.Web.Services.WebMethod()> _
         'update gridview
         Me.gvQLT.DataBind()
 
-        If CType(frmInsert.FindControl("SendEmailCheckbox"), CheckBox).Checked Then
+        If CType(frmInsert.FindControl("SendEmailCheckbox"), CheckBox).Checked And CType(frmInsert.FindControl("SendEmailOriginatorCheckbox"), CheckBox).Checked Then
             Try
                 Dim connectionString As String
                 connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
@@ -125,19 +134,150 @@ System.Web.Services.WebMethod()> _
                 Dim managerEmail As String = reader.GetString(0)
                 reader.Close()
 
+                Dim QLTMemberID As String = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedValue.ToString
+                Dim sqlConnection1 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+                Dim cmd As New SqlCommand
+                Dim AssignedToEmail As String
+                cmd.CommandText = "SELECT QLTMemberEmail FROM tblQLTMembers WHERE QLTMemberID = " + QLTMemberID + ""
+                cmd.CommandType = CommandType.Text
+                cmd.Connection = sqlConnection1
+                sqlConnection1.Open()
+                AssignedToEmail = cmd.ExecuteScalar()
+                sqlConnection1.Close()
+
+                Dim AssignedToName As String
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    AssignedToName = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
+                Else
+                    AssignedToName = "Not yet assigned"
+                End If
+
                 Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                      "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
+                                     "Assigned To: " & AssignedToName & vbCrLf & _
                                      "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
                                      "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
                 Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
                 Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
                 mm.CC.Add(managerEmail)
                 mm.CC.Add(mailaddress)
+
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    mm.CC.Add(AssignedToEmail)
+                End If
+
+                Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
+                smtp.Send(mm)
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
+
+                'update gridview
+                Me.gvQLT.DataBind()
+            Catch ex As Exception
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alerterror();", True)
+            End Try
+        ElseIf CType(frmInsert.FindControl("SendEmailCheckbox"), CheckBox).Checked Then
+            Try
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                Dim SqlConnection As New SqlConnection(connectionString)
+                SqlConnection.Open()
+
+                Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
+                Dim reader As SqlDataReader = sc.ExecuteReader()
+                reader.Read()
+                Dim managerEmail As String = reader.GetString(0)
+                reader.Close()
+
+                Dim QLTMemberID As String = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedValue.ToString
+                Dim sqlConnection1 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+                Dim cmd As New SqlCommand
+                Dim AssignedToEmail As String
+                cmd.CommandText = "SELECT QLTMemberEmail FROM tblQLTMembers WHERE QLTMemberID = " + QLTMemberID + ""
+                cmd.CommandType = CommandType.Text
+                cmd.Connection = sqlConnection1
+                sqlConnection1.Open()
+                AssignedToEmail = cmd.ExecuteScalar()
+                sqlConnection1.Close()
+
+                Dim AssignedToName As String
+                If Not String.IsNullOrEmpty(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text) Then
+                    AssignedToName = CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text
+                ElseIf Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    AssignedToName = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
+                Else
+                    AssignedToName = "Not yet assigned"
+                End If
+
+                Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
+                                     "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
+                                     "Assigned To: " & AssignedToName & vbCrLf & _
+                                     "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
+                                     "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
+                Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+                'Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
+                mm.CC.Add(managerEmail)
+                'mm.CC.Add(mailaddress)
+
                 If Not String.IsNullOrEmpty(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text) Then
                     mm.CC.Add(CType(frmInsert.FindControl("ReassignmentEmailTextbox"), TextBox).Text)
+                ElseIf Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    mm.CC.Add(AssignedToEmail)
                 End If
                 'mm.CC.Add("QLT@laurentide.com")
-                Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
+                Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
+                smtp.Send(mm)
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
+                'update gridview
+                Me.gvQLT.DataBind()
+            Catch ex As Exception
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alerterror();", True)
+            End Try
+        ElseIf CType(frmInsert.FindControl("SendEmailOriginatorCheckbox"), CheckBox).Checked Then
+            Try
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                Dim SqlConnection As New SqlConnection(connectionString)
+                SqlConnection.Open()
+
+                Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
+                Dim reader As SqlDataReader = sc.ExecuteReader()
+                reader.Read()
+                Dim managerEmail As String = reader.GetString(0)
+                reader.Close()
+
+                Dim QLTMemberID As String = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedValue.ToString
+                Dim sqlConnection1 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+                Dim cmd As New SqlCommand
+                Dim AssignedToEmail As String
+                cmd.CommandText = "SELECT QLTMemberEmail FROM tblQLTMembers WHERE QLTMemberID = " + QLTMemberID + ""
+                cmd.CommandType = CommandType.Text
+                cmd.Connection = sqlConnection1
+                sqlConnection1.Open()
+                AssignedToEmail = cmd.ExecuteScalar()
+                sqlConnection1.Close()
+
+                Dim AssignedToName As String
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    AssignedToName = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
+                Else
+                    AssignedToName = "Not yet assigned"
+                End If
+
+                Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
+                Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
+                                     "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
+                                     "Assigned To: " & AssignedToName & vbCrLf & _
+                                     "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
+                                     "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
+                Dim mm As New MailMessage("QLT@Laurentide.com", mailaddress.ToString, "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
+
+                mm.CC.Add(managerEmail)
+
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    mm.CC.Add(AssignedToEmail)
+                End If
+
+                Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
                 smtp.Send(mm)
                 System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
                 'update gridview
@@ -173,7 +313,7 @@ System.Web.Services.WebMethod()> _
                 Dim PCAconnectionString As String
                 PCAconnectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
                 Dim PCASqlConnection As New SqlConnection(PCAconnectionString)
-                Dim PCAsc As New SqlCommand("select * from tblPermanentCorrectiveAction where QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, PCASqlConnection)
+                Dim PCAsc As New SqlCommand("select * from tblPermanentCorrectiveAction where Visible = 1 AND QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, PCASqlConnection)
                 PCASqlConnection.Open()
                 Dim PCAda As New SqlDataAdapter(PCAsc)
                 PCAda.Fill(PCAdt)
@@ -214,7 +354,11 @@ System.Web.Services.WebMethod()> _
                 If CType(frmInsert.FindControl("ImmediateActionRequiredCheckbox"), CheckBox).Checked = True Then
                     CType(frmInsert.FindControl("ImmediateActionRequiredPanel"), Panel).Visible = True
                 End If
+                If CType(frmInsert.FindControl("LearningOpportunityCheckbox"), CheckBox).Checked = True Then
+                    CType(frmInsert.FindControl("LearningOpportunityPanel"), Panel).Visible = True
+                End If
             End If
+            Session("Assigned") = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
         Catch ex As Exception
 
         End Try
@@ -287,5 +431,164 @@ System.Web.Services.WebMethod()> _
             CType(frmInsert.FindControl("LearningOpportunityTextbox"), TextBox).Text = ""
             CType(frmInsert.FindControl("LearningOpportunityPanel"), Panel).Visible = False
         End If
+    End Sub
+
+    Protected Sub StatusDropDown_DataBound(sender As Object, e As EventArgs)
+        Dim un As String = Session("Username")
+        If Not un.Equals("LCLMTL\pruvo") And Not un.Equals("LCLMTL\MichaelD") And Not un.Equals("LCLMTL\mignoto") Then
+            CType(frmInsert.FindControl("StatusDropDown"), DropDownList).Items.FindByValue("6").Attributes.Add("disabled", "true")
+        End If
+    End Sub
+
+    Protected Sub PSSFilterButton_Click(sender As Object, e As EventArgs)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
+        gvDS.FilterExpression = "DepartmentID = 17 OR DepartmentID = 20 OR DepartmentID = 21"
+        gvDS.DataBind()
+        gvQLT.DataBind()
+    End Sub
+
+    Protected Sub ResetPSSFilterButton_Click(sender As Object, e As EventArgs)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
+        gvDS.FilterExpression = ""
+        gvDS.DataBind()
+        gvQLT.DataBind()
+    End Sub
+
+    Protected Sub frmInsert_ItemUpdating(sender As Object, e As FormViewUpdateEventArgs)
+        Try
+            Dim statusID As String = CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedValue 'store what the status is at the time the update begins
+            If statusID = "6" Then 'If status is Resolved, send an email to ticket originator and manager 
+
+                'Get Manager email from database
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                Dim SqlConnection As New SqlConnection(connectionString)
+                SqlConnection.Open()
+
+                Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
+                Dim reader As SqlDataReader = sc.ExecuteReader()
+                reader.Read()
+                Dim managerEmail As String = reader.GetString(0)
+                reader.Close()
+
+                Dim AssignedToName As String
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    AssignedToName = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
+                Else
+                    AssignedToName = "Not yet assigned"
+                End If
+
+                Dim AssignedToEmail As String = ""
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    Dim QLTMemberID As String = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedValue.ToString
+                    Dim cmd As New SqlCommand
+                    cmd.CommandText = "SELECT QLTMemberEmail FROM tblQLTMembers WHERE QLTMemberID = " + QLTMemberID + ""
+                    cmd.CommandType = CommandType.Text
+                    cmd.Connection = SqlConnection
+                    AssignedToEmail = cmd.ExecuteScalar()
+                    SqlConnection.Close()
+                End If
+
+                Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text) 'Get Originator email from form 
+                Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
+                                     "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
+                                     "Assigned To: " & AssignedToName & vbCrLf & _
+                                     "Quality Case #" + CType(frmInsert.FindControl("IDTextbox"), Label).Text + " has been resolved!" & vbCrLf & vbCrLf & _
+                                     "Feedback To Issuer: " + CType(frmInsert.FindControl("FeedbackToIssuerTextBox"), TextBox).Text
+                Dim mm As New MailMessage("QLT@Laurentide.com", mailaddress.ToString, "Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & "has been resolved", body)
+
+                mm.CC.Add(managerEmail)
+
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    mm.CC.Add(AssignedToEmail)
+                End If
+
+                Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
+                smtp.Send(mm)
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
+            End If
+            If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString.Equals(Session("Assigned")) Then
+
+                Dim AssignedToName As String
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    AssignedToName = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
+                Else
+                    AssignedToName = "Not yet assigned"
+                End If
+
+                Dim AssignedToEmail As String = ""
+
+                If Not CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString = "(Assign a QLT Member)" Then
+                    Dim connectionString As String
+                    connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+                    Dim SqlConnection As New SqlConnection(connectionString)
+                    SqlConnection.Open()
+                    Dim QLTMemberID As String = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedValue.ToString
+                    Dim cmd As New SqlCommand
+                    cmd.CommandText = "SELECT QLTMemberEmail FROM tblQLTMembers WHERE QLTMemberID = " + QLTMemberID + ""
+                    cmd.CommandType = CommandType.Text
+                    cmd.Connection = SqlConnection
+                    AssignedToEmail = cmd.ExecuteScalar()
+                    SqlConnection.Close()
+                End If
+
+                Dim body As String = "You have been assigned to Quality Case #" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & vbCrLf & _
+                                     "Click here to view it: http://lcl-sql2k5-s:81/QLT/QLT.aspx"
+                Dim mm As New MailMessage("QLT@Laurentide.com", AssignedToEmail.ToString, "Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body & " has been assigned to you.")
+                Dim smtp As New SmtpClient("lcl-mail.adc.laurentidecontrols.com")
+                smtp.Send(mm)
+                System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemailnewQLTcase();", True)
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Protected Sub gvPermanentCorrectiveAction_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
+        Dim gvPermanentCorrectiveAction As GridView = CType(frmInsert.FindControl("gvPermanentCorrectiveAction"), GridView)
+        Dim dt As DataTable = ViewState("PCA")
+        Dim row = gvPermanentCorrectiveAction.Rows(e.RowIndex)
+        dt.Rows.RemoveAt(e.RowIndex)
+        Dim idLabel As Label = CType(row.Cells(2).FindControl("PCALabel"), Label)
+        Dim PCAID As String = idLabel.Text.ToString
+
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        SqlConnection.Open()
+        Dim cmd As New SqlCommand
+        cmd.CommandText = "UPDATE tblPermanentCorrectiveAction SET Visible = '0' WHERE PCAID = '" + PCAID + "'"
+        cmd.CommandType = CommandType.Text
+        cmd.Connection = SqlConnection
+        cmd.ExecuteScalar()
+        SqlConnection.Close()
+
+        BindPCA()
+    End Sub
+
+    Protected Sub gvPermanentCorrectiveAction_RowEditing(sender As Object, e As GridViewEditEventArgs)
+        sender.EditIndex = e.NewEditIndex
+        BindPCA()
+    End Sub
+
+    Protected Sub gvPermanentCorrectiveAction_RowUpdating(sender As Object, e As GridViewUpdateEventArgs)
+        Dim dt As DataTable = ViewState("PCA")
+
+        Dim gvPermanentCorrectiveAction As GridView = CType(frmInsert.FindControl("gvPermanentCorrectiveAction"), GridView)
+        Dim row = gvPermanentCorrectiveAction.Rows(e.RowIndex)
+
+        dt.Rows(row.DataItemIndex)("PermanentCorrectiveAction") = (CType((row.Cells(3).Controls(0)), TextBox)).Text
+
+        gvPermanentCorrectiveAction.EditIndex = -1
+
+        BindPCA()
+    End Sub
+
+    Protected Sub gvPermanentCorrectiveAction_RowCancelingEdit(sender As Object, e As GridViewCancelEditEventArgs)
+        Dim gvPermanentCorrectiveAction As GridView = CType(frmInsert.FindControl("gvPermanentCorrectiveAction"), GridView)
+        gvPermanentCorrectiveAction.EditIndex = -1
+        BindPCA()
     End Sub
 End Class

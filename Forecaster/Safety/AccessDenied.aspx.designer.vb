@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class MasterActionItemTool
+Partial Public Class SafetyAccessDenied
 
     '''<summary>
     '''ScriptManager control.
@@ -21,22 +21,4 @@ Partial Public Class MasterActionItemTool
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
-
-    '''<summary>
-    '''mastInsert control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents mastInsert As Global.System.Web.UI.WebControls.FormView
-
-    '''<summary>
-    '''sdsInsert control.
-    '''</summary>
-    '''<remarks>
-    '''Auto-generated field.
-    '''To modify move field declaration from designer file to code-behind file.
-    '''</remarks>
-    Protected WithEvents sdsInsert As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

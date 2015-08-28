@@ -68,6 +68,24 @@ Partial Public Class ViewMyActionItems
     Protected WithEvents ResponsableFilterDropdown As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
+    '''ItemStatusFilterLabel control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ItemStatusFilterLabel As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ItemStatusFilterDropDown control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ItemStatusFilterDropDown As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''Label3 control.
     '''</summary>
     '''<remarks>
@@ -167,11 +185,11 @@ Partial Public Class ViewMyActionItems
     Protected WithEvents sdsNotes As Global.System.Web.UI.WebControls.SqlDataSource
 
     '''<summary>
-    '''sdsTeams control.
+    '''sdsItemStatus control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents sdsTeams As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents sdsItemStatus As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

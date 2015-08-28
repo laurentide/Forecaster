@@ -24,7 +24,7 @@ Public Class NERManager
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
 
-        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" And Not User.Identity.Name = "LCLMTL\mignoto" And Not User.Identity.Name = "LCLMTL\mcarr" Then
+        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" And Not User.Identity.Name = "LCLMTL\mignoto" And Not User.Identity.Name = "LCLMTL\mcarr" And Not User.Identity.Name = "LCLMTL\ClaireD" Then
             'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
             Response.Redirect("~/NER/AccessDenied.aspx")
         End If
@@ -313,7 +313,8 @@ Public Class NERManager
                                  "Name: " & CType(frmInsert.FindControl("NameTextBox"), TextBox).Text & vbCrLf & _
                                  "Employee Type: " & CType(frmInsert.FindControl("EmployeeTypeDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Date Needed:" & CType(frmInsert.FindControl("DateNeededTextBox"), TextBox).Text & vbCrLf & _
-                                 "Please go to this address: http://lcl-sql2k5-s:81/NER/NER.aspx to see it!" & vbCrLf
+                                 "Please go to this address: http://lcl-sql2k5-s:81/NER/NER.aspx to see it!" & vbCrLf & _
+                                 "For NER Team go to : http://lcl-sql2k5-s:81/NER/NERManager.aspx" 
             Dim mm As New MailMessage("NER@Laurentide.com", "NER@laurentide.com", "New Employee request: " & Session("ID") & " issued by " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text, body)
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)
@@ -494,7 +495,8 @@ Public Class NERManager
                                  "Name: " & CType(frmInsert.FindControl("NameTextBox"), TextBox).Text & vbCrLf & _
                                  "Employee Type: " & CType(frmInsert.FindControl("EmployeeTypeDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Date Needed:" & CType(frmInsert.FindControl("DateNeededTextBox"), TextBox).Text & vbCrLf & _
-                                 "Please go to this address: http://lcl-sql2k5-s:81/NER/NER.aspx to see it!"
+                                 "Please go to this address: http://lcl-sql2k5-s:81/NER/NER.aspx to see it!" & vbCrLf & _
+                                 "For NER Team go to : http://lcl-sql2k5-s:81/NER/NERManager.aspx"
             Dim mm As New MailMessage("NER@Laurentide.com", "NER@laurentide.com", "Updated NER: " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & " issued by " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text, body)
             Dim mailaddress As New MailAddress(managerEmail)
             mm.CC.Add(mailaddress)

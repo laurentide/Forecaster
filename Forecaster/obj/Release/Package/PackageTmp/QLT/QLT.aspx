@@ -203,6 +203,12 @@
                 <td>Upload related document or picture (if neccessary):</td>
                 <td><asp:FileUpload ID="fuDialog" runat="server" AllowMultiple="true" /></td>
             </tr>--%>
+            <tr><td>Attachment</td>
+                    <td>
+                        <asp:FileUpload ID="fuDialog" runat="server"/>  <%--                        FileName:<asp:TextBox ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' />
+                        Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Bind("Path")%>' Text='<%# Eval("Path") %>' ></asp:Hyperlink>--%>
+                    </td>
+            </tr>
             <tr>
                 <td>
                     <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
@@ -358,13 +364,13 @@
             <tr>
                 <td>Purchase Order #:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="PurchaseOrderTextBox" runat="server" Text='<%# Bind("PurchaseOrder") %>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="PurchaseOrderTextBox" runat="server" Text='<%# Bind("PurchaseOrder") %>'  />
                 </td>
             </tr>
             <tr>
                 <td>Description:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' />
+                    <asp:TextBox class="textboxWidth" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' Enabled="false" />
                 </td>
             </tr>
             <tr>
@@ -390,18 +396,31 @@
                     <br />
                     cause of this occurence:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="CauseTextBox" runat="server" TextMode="MultiLine"  Rows="5" Text='<%# Bind("Cause") %>' />
+                    <asp:TextBox class="textboxWidth" ID="CauseTextBox" runat="server" TextMode="MultiLine"  Rows="5" Text='<%# Bind("Cause") %>' Enabled="false" />
                 </td>
             </tr>
+            <tr>
+                <td>Assigned To: </td>
+                <td><asp:TextBox ID="AssignedToTextbox" runat="server" Text='<%# Bind("QLTMemberName")%>' class="textboxWidth" Enabled="false"/></td>
+            </tr>
+            <tr>
+                <td>Feedback to Issuer: </td>
+                <td><asp:TextBox ID="FeedbackToIssuerTextbox" runat="server" Text='<%# Bind("FeedbackToIssuer")%>' TextMode="MultiLine" Rows="5" Enabled="false" class="textboxWidth"/></td>
+            </tr>
+                <tr><td>Add Attachment</td><td>
+                        <asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/></td></tr>
+            <tr><td>  
+                        FileName:</td><td><asp:Label ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /></td></tr>
+                        <tr><td>Path:</td><td><asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
+                    </td>
+                </tr>
             <tr>
                 <td></td>
                 <td>
                     <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
                     &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
                 </td>
-
             </tr>
-
         </EditItemTemplate>
     </asp:FormView>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
@@ -445,7 +464,10 @@
     </asp:GridView>
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
-        SelectCommand="SELECT * FROM [tblQLT] where QLTID=@ID"
+        SelectCommand="SELECT *
+                       FROM [QLT].[dbo].[tblQLT]
+                       LEFT JOIN [QLT].[dbo].[tblQLTMembers] ON [tblQLT].[AssignedTo] = [tblQLTMembers].[QLTMemberID]
+                       WHERE [tblQLT].[QLTID]=@ID"
         InsertCommand="INSERT INTO [QLT].[dbo].[tblQLT]
            ([EventTypeID]
            ,[OriginID]
@@ -649,7 +671,7 @@
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsQLTGrid" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
         SelectCommand="SELECT *, customerid as CustomerName,vendorid as VendorName,left(description,50) as ShortDescription,left(CorrectiveActionTaken,50) as shortcorrect
-                         FROM  tblQLT 
+                         FROM  tblQLT
                        LEFT JOIN tblEventTypes
                           on  tblQLT.EventTypeID = tblEventTypes.EventTypeID
                        LEFT JOIN tblStatus

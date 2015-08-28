@@ -183,8 +183,8 @@
                                     DataTextField="Status" SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged" CausesValidation="true">
                                     <asp:ListItem Text="(Select the status)" Value="" />
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the status" ControlToValidate="StatusDropDown" Display="Dynamic" />
-                                <asp:Label ID="StatusReasonLabel" runat="server" Visible="false" Text="" /><asp:TextBox ID="StatusReasonTextbox" Text='<%# Bind("StatusReason")%>' runat="server" Visible="False" Width="500" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the status" ControlToValidate="StatusDropDown" Display="Dynamic" /></td></tr>
+                                <tr><td><asp:Label ID="StatusReasonLabel" runat="server" Visible="false" Text="" /></td><td><asp:TextBox ID="StatusReasonTextbox" Text='<%# Bind("StatusReason")%>' runat="server" Visible="False" Width="500" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator11" SetFocusOnError="true" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Field Required" ControlToValidate="StatusReasonTextbox" InitialValue="0" Display="Dynamic" />
                             </td>                            
                         </tr>
@@ -797,7 +797,7 @@
     <asp:SqlDataSource ID="sdsRecruitmentSource" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="select * from tblRecruitmentSource order by RecruitmentSource"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
-        SelectCommand="select * from tblManagers order by managername"></asp:SqlDataSource>
+        SelectCommand="select * from tblManagers where managerid <> 22 order by managername"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsSchools" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="SELECT * FROM tblSchools"></asp:SqlDataSource>
 <%--    <asp:SqlDataSource ID="sdsPROI" runat="server" ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"

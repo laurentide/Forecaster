@@ -1,13 +1,14 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="QLTMgmt.aspx.vb" Inherits="Forecaster.QLTMgmt" MaintainScrollPositionOnPostback="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register Assembly="ExportToExcel" Namespace="KrishLabs.Web.Controls" TagPrefix="RK" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>QLT Management page</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
-    <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="QLTID" OnItemInserted="frmInsert_ItemInserted" 
-        OnItemUpdated="frmInsert_ItemUpdated">
+    <asp:FormView ID="frmInsert" runat="server" DataSourceID="sdsInsert" OnDataBound="frmInsert_DataBound" DefaultMode="Edit" DataKeyNames="QLTID" OnItemUpdated="frmInsert_ItemUpdated" 
+        OnItemUpdating="frmInsert_ItemUpdating">
         <EditItemTemplate>
         <table>
             <tr>
@@ -23,7 +24,7 @@
                     <asp:DropDownList ID="EventTypeDropDown" runat="server" DataSourceID="sdsEventTypes" AppendDataBoundItems="true" DataValueField="EventTypeID" DataTextField="EventType" SelectedValue='<%# Bind("EventTypeID")%>'>
                         <asp:ListItem Text="(Select the event type)" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the event type" ControlToValidate="EventTypeDropDown" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the event type" ControlToValidate="EventTypeDropDown" SetFocusOnError="true" />
                 </td>
             </tr>
             <tr>
@@ -32,7 +33,7 @@
                     <asp:DropDownList ID="OriginDropDown" runat="server" DataSourceID="sdsOrigins" AppendDataBoundItems="true" DataValueField="OriginID" DataTextField="Origin" SelectedValue='<%# Bind("OriginID")%>'>
                         <asp:ListItem Text="(Select the origin)" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the origin" ControlToValidate="OriginDropDown" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the origin" ControlToValidate="OriginDropDown" SetFocusOnError="true" />
                 </td>
             </tr>
             <tr>
@@ -41,7 +42,7 @@
                     <asp:DropDownList ID="TypeDropDown" runat="server" DataSourceID="sdsTypes" AutoPostBack="true" AppendDataBoundItems="true" DataValueField="TypeID" DataTextField="Type" SelectedValue='<%# Bind("TypeID")%>' OnSelectedIndexChanged="TypeDropDown_SelectedIndexChanged">
                         <asp:ListItem Text="(Select the complaint type)" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the type" ControlToValidate="TypeDropDown" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the type" ControlToValidate="TypeDropDown" SetFocusOnError="true" />
                     <br />
                     <asp:Label runat="server" Text="Other complaint type:" Visible="false" ID="TypeLabel" />
                     <br />
@@ -56,7 +57,7 @@
                     <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateIncidentTextbox" PopupButtonID="Calendar_scheduleDR" />
                     <asp:MaskedEditExtender ID="meeDateincident" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateIncidentTextbox" PromptCharacter="_" />
                     <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Update" runat="server" ForeColor="Red" ControlToValidate="DateIncidentTextbox" ControlExtender="meeDateincident" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter the incident date" ControlToValidate="DateIncidentTextbox" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter the incident date" ControlToValidate="DateIncidentTextbox" SetFocusOnError="true" />
                 </td>
             </tr>
             <tr>
@@ -77,7 +78,7 @@
                     <asp:DropDownList ID="ManagerDropDown" runat="server" DataSourceID="sdsManagers" AppendDataBoundItems="true" DataValueField="ManagerID" DataTextField="ManagerName" SelectedValue='<%# Bind("ManagerID")%>'>
                         <asp:ListItem Text="(Select your manager)" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" SetFocusOnError="true" />
                 </td>
             </tr>
             <tr>
@@ -86,7 +87,7 @@
                     <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="Department" SelectedValue='<%# Bind("DepartmentID")%>'>
                         <asp:ListItem Text="(Select your department)" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" SetFocusOnError="true" />
                 </td>
             </tr>
             <tr>
@@ -164,7 +165,7 @@
             <tr>
                 <td>Description:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' />
+                    <asp:TextBox width="500px" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' Enabled="false"/>
                 </td>
             </tr>
             <tr>
@@ -173,7 +174,7 @@
                     <asp:DropDownList ID="CorrectiveActionDropDown" runat="server" DataSourceID="sdsCorrectiveActions" AutoPostBack="true" AppendDataBoundItems="true" DataValueField="CorrectiveActionID" DataTextField="CorrectiveAction" SelectedValue='<%# Bind("CorrectiveActionID")%>' OnSelectedIndexChanged="CorrectiveActionDropDown_SelectedIndexChanged">
                         <asp:ListItem Text="(Select the corrective action)" Value="" />
                     </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the corrective action" ControlToValidate="CorrectiveActionDropDown" /><br />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Select the corrective action" ControlToValidate="CorrectiveActionDropDown" SetFocusOnError="true" /><br />
                     <asp:Label runat="server" Text="Corrective action taken:" Visible="false" ID="CorrectiveActionLabel" />
                     <br />
                     <asp:TextBox class="textboxWidth" ID="CorrectiveActionTakenTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("CorrectiveActionTaken") %>' Visible="false" />
@@ -190,7 +191,7 @@
                     <br />
                     cause of this occurence:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="CauseTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("Cause") %>' />
+                    <asp:TextBox width="500px" ID="CauseTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("Cause") %>' Enabled="false" />
                 </td>
             </tr>
             <tr>
@@ -204,6 +205,16 @@
                     <td><asp:TextBox ID="ImmediateActionTextbox" runat="server" Text='<%# Bind("ImmediateAction")%>' class="textboxWidth" /></td>
                 </tr>
             </asp:Panel>
+                <tr>
+                    <td>FileName:</td>
+                    <td>
+                        <asp:Label ID="FilenameTextbox" runat="server" Text='<%# Bind("Filename")%>' /></td>
+                </tr>
+                <tr>
+                    <td>Path:
+                    </td>
+                    <td><asp:HyperLink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" /></td>
+                </tr>
             <tr><td><h2>QLT Team</h2></td></tr>
             <tr>
                 <td>Assigned To:</td>
@@ -215,9 +226,10 @@
             </tr>
             <tr>
                 <td>Status:</td>
+                <%--DataSourceID="sdsStatus"--%>
                 <td>
-                    <asp:DropDownList ID="StatusDropDown" runat="server" DataSourceID="sdsStatus" AppendDataBoundItems="true" DataValueField="StatusID" DataTextField="Status" 
-                        SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged" CausesValidation="true" AutoPostBack="true">
+                    <asp:DropDownList ID="StatusDropDown" runat="server"  AppendDataBoundItems="true"  DataSourceID="sdsStatus" DataValueField="StatusID" DataTextField="Status" 
+                        SelectedValue='<%# Bind("StatusID")%>' OnSelectedIndexChanged="StatusDropDown_SelectedIndexChanged" CausesValidation="true" AutoPostBack="true" OnDataBound="StatusDropDown_DataBound">
                         <asp:ListItem Text="(Select the status)" Value="" />
                     </asp:DropDownList>
                 </td>
@@ -234,7 +246,7 @@
                     </td>
                 </tr>
             </asp:Panel>
-            <tr>
+<%--            <tr>
                 <td>Reassignment:</td>
                 <td>
                     <asp:DropDownList ID="ReassignmentDropDown" runat="server" DataSourceID="sdsActiveUsers" AutoPostBack="true" OnSelectedIndexChanged="ReassignmentDropDown_SelectedIndexChanged" 
@@ -254,13 +266,17 @@
                 <td>
                     <asp:TextBox class="textboxWidth" ID="ReassignmentEmailTextBox" runat="server" Text='<%# Bind("ReassignmentEmail")%>' ReadOnly="true" BackColor="WhiteSmoke" />
                 </td>
+            </tr>--%>
+            <tr>
+                <td>Root Cause Analysis:</td>
+                <td><asp:TextBox ID="RootCauseAnalysisTextbox" runat="server" Text='<%# Bind("RootCauseAnalysis")%>' class="textboxWidth" TextMode="MultiLine" Rows="5" /></td>
             </tr>
             <tr>
-                <td>Permanent Corrective Action:</td>
+                <td>Corrective Action:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="PermanentCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
-                </td></tr><tr><td>Permanent Corrective Action List:</td><td colspan="2">
-                        <asp:GridView ID="gvPermanentCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
+                    <asp:TextBox class="textboxWidth" ID="AdditionalCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
+                </td></tr><tr><td>Corrective Action List:</td><td colspan="2">
+                        <asp:GridView ID="gvAdditionalCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
                             RowStyle-CssClass="grid_RowStyle"
                             CellPadding="4" ForeColor="#333333"
                             Font-Size="10px">
@@ -271,13 +287,62 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
-                                <asp:TemplateField HeaderText="ID" SortExpression="PCAID">
+                                <asp:TemplateField HeaderText="ID" SortExpression="ACAID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="ACALabel" runat="server" Text='<%# Eval("ACAID")%>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="AdditionalCorrectiveAction" HeaderText="Additional Corrective Action" SortExpression="AdditionalCorrectiveAction" />
+                                <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" />
+                            </Columns>
+                            <EditRowStyle BackColor="#999999" />
+                            <EmptyDataTemplate>
+                                No Corrective Action entered yet.
+                            </EmptyDataTemplate>
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
+                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
+                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                        </asp:GridView></td></tr>
+            <tr>
+                <td>Next Action Due Date:</td>
+                <td>
+                            <asp:TextBox ID="NextActionDueDateTextbox" runat="server" Text='<%# Bind("NextActionDueDate")%>' />
+                            <asp:Image runat="server" ID="Image1" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
+                            <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="NextActionDueDateTextbox" PopupButtonID="Image1" />
+                            <asp:MaskedEditExtender ID="MaskedEditExtender1" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="NextActionDueDateTextbox" PromptCharacter="_" />
+                            <asp:MaskedEditValidator ID="MaskedEditValidator1" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="NextActionDueDateTextbox" ControlExtender="MaskedEditExtender1" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
+                </td>
+            </tr>
+            <tr>
+                <td>Permanent Corrective Actions:</td>
+                <td>
+                    <asp:TextBox class="textboxWidth" ID="PermanentCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
+                </td></tr><tr><td>Permanent Corrective Action List:</td><td colspan="2">
+                        <asp:GridView ID="gvPermanentCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
+                            RowStyle-CssClass="grid_RowStyle" AutoGenerateEditButton="true" OnRowCancelingEdit="gvPermanentCorrectiveAction_RowCancelingEdit"
+                            CellPadding="4" ForeColor="#333333" OnRowDeleting="gvPermanentCorrectiveAction_RowDeleting" OnRowEditing="gvPermanentCorrectiveAction_RowEditing"
+                            Font-Size="10px" OnRowUpdating="gvPermanentCorrectiveAction_RowUpdating" DatKeyNames="PCAID">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action?');" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ID" SortExpression="PCAID" >
                                     <ItemTemplate>
                                         <asp:Label ID="PCALabel" runat="server" Text='<%# Eval("PCAID")%>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="PermanentCorrectiveAction" HeaderText="Permanent Corrective Action" SortExpression="PermanentCorrectiveAction" />
-                                <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" />
+                                <asp:BoundField DataField="PermanentCorrectiveAction" HeaderText="Permanent Corrective Action" SortExpression="PermanentCorrectiveAction">
+                                <ControlStyle Width="100%" /></asp:BoundField>
+                                <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" ReadOnly="true"/>
                             </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -300,59 +365,6 @@
                 <td>
                     <asp:CheckBox ID="QLTApprovedCheckBox" runat="server" Checked='<%# Bind("QLTApproved") %>' />
                 </td>
-            </tr>
-            <tr>
-                <td>Additional Corrective Action:</td>
-                <td>
-                    <asp:TextBox class="textboxWidth" ID="AdditionalCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
-                </td></tr><tr><td>Additional Corrective Action List:</td><td colspan="2">
-                        <asp:GridView ID="gvAdditionalCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle"
-                            CellPadding="4" ForeColor="#333333"
-                            Font-Size="10px">
-                            <Columns>
-                                <asp:TemplateField ShowHeader="False">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action?');" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
-                                <asp:TemplateField HeaderText="ID" SortExpression="ACAID">
-                                    <ItemTemplate>
-                                        <asp:Label ID="ACALabel" runat="server" Text='<%# Eval("ACAID")%>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="AdditionalCorrectiveAction" HeaderText="Additional Corrective Action" SortExpression="AdditionalCorrectiveAction" />
-                                <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" />
-                            </Columns>
-                            <EditRowStyle BackColor="#999999" />
-                            <EmptyDataTemplate>
-                                No Additional Corrective Action entered yet.
-                            </EmptyDataTemplate>
-                            <EditRowStyle BackColor="#999999" />
-                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="10px" />
-                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
-                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#E9E7E2" />
-                            <SortedAscendingHeaderStyle BackColor="#506C8C" />
-                            <SortedDescendingCellStyle BackColor="#FFFDF8" />
-                            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
-                        </asp:GridView></td></tr>
-                <tr>
-                    <td>Next Action Due Date:</td>
-                    <td>
-                                <asp:TextBox ID="NextActionDueDateTextbox" runat="server" Text='<%# Bind("NextActionDueDate")%>' />
-                                <asp:Image runat="server" ID="Image1" ImageUrl="~/_assets/img/Calendar_scheduleHS.png" />
-                                <asp:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="NextActionDueDateTextbox" PopupButtonID="Image1" />
-                                <asp:MaskedEditExtender ID="MaskedEditExtender1" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="NextActionDueDateTextbox" PromptCharacter="_" />
-                                <asp:MaskedEditValidator ID="MaskedEditValidator1" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="NextActionDueDateTextbox" ControlExtender="MaskedEditExtender1" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                    </td>
-                </tr>
-            <tr>
-                <td>Root Cause Analysis:</td>
-                <td><asp:TextBox ID="RootCauseAnalysisTextbox" runat="server" Text='<%# Bind("RootCauseAnalysis")%>' class="textboxWidth" /></td>
             </tr>
             <tr>
                 <td>Cost To Laurentide:</td>
@@ -391,12 +403,22 @@
                 </td>
             </tr>
             </asp:Panel>
+            <tr>
+                <td>Feedback to Issuer: </td>
+                <td><asp:TextBox ID="FeedbackToIssuerTextBox" runat="server" Text='<%# Bind("FeedbackToIssuer")%>' class="textboxWidth" TextMode="MultiLine" Rows="5"  /> </td>
+            </tr>
             <tr><td><br /></td></tr>
             <tr><td><br /></td></tr>
             <tr>
                 <td>Send update notification e-mail to QLT?</td>
                 <td>
                     <asp:CheckBox ID="SendEmailCheckbox" runat="server" CausesValidation="true" AutoPostBack="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Send update notification e-mail to ticket originator?</td>
+                <td>
+                    <asp:CheckBox ID="SendEmailOriginatorCheckbox" runat="server" CausesValidation="true" AutoPostBack="true" />
                 </td>
             </tr>
             <tr>
@@ -408,7 +430,11 @@
             </tr>
           </table>
         </EditItemTemplate>
-    </asp:FormView>
+    </asp:FormView><table><tr><td>
+    <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true"/>
+    <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td></tr>
+<%--    <tr><td>Issued: <asp:Label ID="IssuedCount" runat="server" /> Assigned: <asp:Label ID="AssignedCount" runat="server" /></td></tr>--%>
+    </table>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
         RowStyle-CssClass="grid_RowStyle"
@@ -437,9 +463,10 @@
             <%--<asp:BoundField DataField="shortcorrect" HeaderText="CorrectiveActionTaken" SortExpression="CorrectiveActionTaken" />--%>
             <asp:BoundField DataField="QLTMemberName" HeaderText="Assigned To" SortExpression="AssignedTo" />
             <%--<asp:BoundField DataField="DateAssigned" HeaderText="Date Assigned" SortExpression="Date Assigned" />--%>
-            <asp:BoundField DataField="Reassignment" HeaderText="Reassignment" SortExpression="Reassignment" />
+<%--            <asp:BoundField DataField="Reassignment" HeaderText="Reassignment" SortExpression="Reassignment" />--%>
 <%--            <asp:BoundField DataField="DateReAssigned" HeaderText="DateReAssigned" SortExpression="DateReAssigned" />--%>
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
+            <asp:BoundField DataField="NextActionDueDate" HeaderText="Next Action Date" SortExpression="NextActionDueDate" DataFormatString="{0:d}" ApplyFormatInEditMode="true" />
             
             <%--<asp:BoundField DataField="QLTMemberName" HeaderText="QLTMemberName" SortExpression="QLTMemberName" />
             <asp:BoundField DataField="ManagerName" HeaderText="ManagerName" SortExpression="ManagerName" /--%>
@@ -481,9 +508,6 @@
               ,[CorrectiveActionTaken] =		       @CorrectiveActionTaken 
               ,[AssignedTo] =                          @AssignedTo
               ,[DateAssigned] =                        case when DateAssigned is null then @DateAssigned end
-              ,[Reassignment] =                        @Reassignment
-              ,[ReassignmentUsername] =                @ReassignmentUsername
-              ,[ReassignmentEmail] =                   @ReassignmentEmail
               ,[DateReAssigned]  =                     case when dateReassigned is null then @DateReAssigned end
               ,[QLTApproved] =                         @QLTApproved
               ,[NextActionDueDate] =                   @NextActionDueDate
@@ -501,6 +525,7 @@
               ,[DateClose] =                           CASE WHEN @StatusID = 6 THEN getDate() ELSE NULL END 
               ,[LearningOpportunity] =                 @LearningOpportunity
               ,[LearningOpportunityNote] =             @LearningOpportunityNote
+              ,[FeedbackToIssuer] =                    @FeedbackToIssuer
                WHERE QLTID = @QLTID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="gvQLT" PropertyName="SelectedValue" />
@@ -532,9 +557,9 @@
             <asp:Parameter Name="CorrectiveActionTaken" />
             <asp:Parameter Name="AssignedTo" />
             <asp:SessionParameter Name="DateAssigned" SessionField="IssuedDate" />
-            <asp:Parameter Name="Reassignment" />
+<%--            <asp:Parameter Name="Reassignment" />
             <asp:Parameter Name="ReassignmentUsername" />
-            <asp:Parameter Name="ReassignmentEmail" />
+            <asp:Parameter Name="ReassignmentEmail" />--%>
             <asp:SessionParameter Name="DateReAssigned" SessionField="IssuedDate" />
             <asp:Parameter Name="Cause" />
             <asp:Parameter Name="PermanentCorrectiveAction" />
@@ -555,6 +580,7 @@
             <asp:Parameter Name="DateClose" />
             <asp:Parameter Name="LearningOpportunity" />
             <asp:Parameter Name="LearningOpportunityNote" />
+            <asp:Parameter Name="FeedbackToIssuer" />
             <asp:Parameter Name="QLTID" />
         </UpdateParameters>
     </asp:SqlDataSource>
@@ -592,8 +618,9 @@
         SelectCommand="select * from tblTypes order by Type"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsManagers" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
         SelectCommand="select * from tblManagers order by ManagerName"></asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsStatus" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
-        SelectCommand="select * from tblStatus order by Statusid"></asp:SqlDataSource>
+   <asp:SqlDataSource ID="sdsStatus" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
+        SelectCommand="select * from tblStatus order by Statusid">
+   </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsCorrectiveActions" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
         SelectCommand="select * from tblCorrectiveActions order by CorrectiveAction"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsCustomers" SelectCommand="select cazxnb,rtrim(CACSTX) + ' - ' + rtrim(CAZXNB) as CustName
@@ -610,5 +637,8 @@
     SelectCommand="select * from tblQLTMembers order by QLTMemberName"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsActiveUsers" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
     SelectCommand="select * from vwActiveUsers order by FullName"></asp:SqlDataSource>
+<RK:ExportToExcel ID="ExportToExcel1" runat="server" ApplyStyleInExcel="True" Charset="utf-8" ContentEncoding="windows-1250"
+EnableHyperLinks="True" ExportFileName="QLT.xls" IncludeTimeStamp="True" PageSize="All" 
+Text="Export To Excel" GridViewID="gvQLT" />
 </asp:Content>
 

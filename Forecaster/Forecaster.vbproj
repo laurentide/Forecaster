@@ -189,6 +189,7 @@
     <Content Include="Quotebuilder\Customer Management.aspx" />
     <Content Include="Receptionist\Admin.aspx" />
     <Content Include="Receptionist\Receptionist.aspx" />
+    <Content Include="Safety\AccessDenied.aspx" />
     <Content Include="Safety\SafetyMgmt.aspx" />
     <Content Include="Safety\Safety.aspx" />
     <Content Include="Scripts\toggleGroup.js" />
@@ -566,6 +567,13 @@
       <DependentUpon>Receptionist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Safety\AccessDenied.aspx.designer.vb">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Safety\AccessDenied.aspx.vb">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Safety\SafetyMgmt.aspx.designer.vb">
       <DependentUpon>SafetyMgmt.aspx</DependentUpon>
     </Compile>
@@ -779,7 +787,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>11831</DevelopmentServerPort>
+          <DevelopmentServerPort>48478</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

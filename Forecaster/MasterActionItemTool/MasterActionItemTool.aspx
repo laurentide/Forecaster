@@ -23,19 +23,20 @@
                 <tr>
                     <td>Team(s):</td>
                     <td>
-                        <asp:DropDownList ID="TeamsDropDownList" runat="server" AutoPostBack="true" DataSourceID="sdsTeams" AppendDataBoundItems="true" 
-                            OnSelectedIndexChanged="TeamsDropDownList_SelectedIndexChanged">
+                        <asp:DropDownList ID="TeamsDropDownList" runat="server" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="TeamsDropDownList_SelectedIndexChanged">
                             <asp:ListItem Text="(Choose team)" Value="" />
+                            <asp:ListItem Text="Individual" Value="Individual" />
                         </asp:DropDownList>
                     </td><td><asp:TextBox ID="HiddenTeamNameTextbox" runat="server" Visible="false" Text='<%# Bind("TeamName")%>'></asp:TextBox></td>
                     <td><asp:TextBox ID="HiddenTeamIDTextbox" runat="server" Visible="false" Text='<%# Bind("TeamID") %>'></asp:TextBox></td>
+                    <asp:RequiredFieldValidator ID="TeamsDropDownRequired" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Please select a team" ControlToValidate="TeamsDropDownList" />                       
                 </tr>
-                <tr>
+<%--                <tr>
                     <td>Topic:</td>
                     <td>
                         <asp:TextBox ID="TopicTextBox" runat="server" Text='<%# Bind("Topic") %>' Width="500" /></td>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>Description:</td>
                     <td>
@@ -48,11 +49,10 @@
                 </tr>
                 <tr>
                     <td>Responsable:</td>
-                    <td><asp:DropDownList ID="RespDropDownList" runat="server" SelectedValue='<%# Bind("Responsable") %>' AppendDataBoundItems="true" DataSourceID="sdsResponsable" 
-                        DataTextField="MemberName" />
-                             <asp:ListItem Text="(Select the responsable)" Value="" />
+                    <td><asp:DropDownList ID="RespDropDownList" runat="server" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="RespDropDownList_SelectedIndexChanged">
+                             <asp:ListItem Text="(Select the responsable)" Value="" Selected="true" />
                         </asp:DropDownList>
-                    </td>
+                    </td><td><asp:TextBox ID="HiddenResponsableTextbox" runat="server" Visible="false" Text='<%# Bind("Responsable") %>'></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>Due Date:</td>
@@ -96,11 +96,10 @@
     SelectCommand="SELECT * FROM tblMasterActionItemTool"></asp:SqlDataSource>--%>
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
-        InsertCommand="INSERT INTO [tblMasterActionItemTool]
+        InsertCommand="INSERT INTO [MasterActionItemTool].[dbo].[tblMasterActionItemTool]
         ([DateCreated],
         [TeamName],
         [TeamID],
-        [Topic],
         [SubTopic],
         [Action],
         [Responsable],
@@ -111,19 +110,25 @@
         (getDate(),
         @TeamName,
         @TeamID,
-        @Topic,
         @SubTopic,
         @Action,
         @Responsable,
         @DueDate,
         'Open',
-        1)
+        1);
         select @ID = @@IDENTITY">
     <InsertParameters>
+        <asp:Parameter Name="TeamName" />
+        <asp:Parameter Name="TeamID" />
+        <asp:Parameter Name="SubTopic" />
+        <asp:Parameter Name="Action" />
+        <asp:Parameter Name="Responsable" />
+        <asp:Parameter Name="DueDate" />
         <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
     </InsertParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsTeams" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"></asp:SqlDataSource>
+<%--    <asp:SqlDataSource ID="sdsTeams" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"></asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsResponsable" runat="server" ConnectionString="<%$ ConnectionStrings:MASTConnectionString %>"
-        SelectCommand="SELECT * FROM tblMembers"></asp:SqlDataSource>
+        SelectCommand="SELECT * FROM tblMembers ORDER BY MemberName"></asp:SqlDataSource>--%>
+    <%--WHERE MemberID <> 28--%>
 </asp:Content>

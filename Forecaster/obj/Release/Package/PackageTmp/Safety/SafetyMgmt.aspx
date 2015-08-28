@@ -582,7 +582,7 @@
                         LEFT JOIN tblManagers
                             on tblSafetyCases.ManagerID = tblManagers.ManagerID
                        where visible = 1 and 
-                   (@Username in (select SaLTUsername from tblSALTMembers) or @Username = ManagerDomainUser) 
+                   (@Username in (select SaLTUsername from tblSALTMembers where SaLTMemberID <> 28) or @Username = ManagerDomainUser) 
                                and safetycaseid in (select safetycaseid from tblsafetycases where 
 							(tblsafetycases.statusid in  (SELECT item from fnSplit(@lbStatus,',')) or 
 							@lbStatus = '0'))

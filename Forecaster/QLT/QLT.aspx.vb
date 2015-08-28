@@ -22,6 +22,15 @@ Public Class QLT
             Dim SqlConnection As New SqlConnection(connectionString)
             SqlConnection.Open()
 
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\QLT\" & Session("ID") & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblQLT set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where QLTID = " & Session("ID"), SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+
             'save uploaded files
             'Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\QLT\QLT" & Session("ID") & "\"
             'System.IO.Directory.CreateDirectory(savePath)
@@ -55,6 +64,11 @@ Public Class QLT
             Dim mailaddress As New MailAddress(CType(frmInsert.FindControl("IssuedByEmailTextBox"), TextBox).Text)
             mm.CC.Add(managerEmail)
             mm.CC.Add(mailaddress)
+            mm.CC.Add("mbrisebois@laurentide.com")
+            mm.CC.Add("gkaperonis@laurentide.com")
+            mm.CC.Add("mmogianesi@laurentide.com")
+            mm.CC.Add("Jeff.Robertson@atlanticcontrols.ca")
+            mm.CC.Add("jmvallieres@laurentide.com")
             'mm.CC.Add("QLT@laurentide.com")
             Dim smtp As New SmtpClient("lcl-exc.adc.laurentidecontrols.com")
             smtp.Send(mm)
@@ -73,6 +87,16 @@ Public Class QLT
             connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
             Dim SqlConnection As New SqlConnection(connectionString)
             SqlConnection.Open()
+
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\QLT\" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            'Copy the files
+            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblQLT set Filename = '" & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "', Path = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
 
             Dim sc As New SqlCommand("select managerEmail from tblManagers where managerid = " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedValue.ToString, SqlConnection)
             Dim reader As SqlDataReader = sc.ExecuteReader()

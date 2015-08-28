@@ -93,4 +93,13 @@ Partial Public Class Purchase
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsPurchaseCategories As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsProductCode control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsProductCode As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

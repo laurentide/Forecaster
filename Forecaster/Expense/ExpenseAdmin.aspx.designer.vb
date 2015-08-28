@@ -32,6 +32,87 @@ Partial Public Class ExpenseAdmin
     Protected WithEvents frmExpense As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
+    '''PaidFilterDropDownList control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PaidFilterDropDownList As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''SearchPaidButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SearchPaidButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''PaidDateTextbox control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents PaidDateTextbox As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Calendar_scheduleDR control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Calendar_scheduleDR As Global.System.Web.UI.WebControls.Image
+
+    '''<summary>
+    '''CalendarExtender2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents CalendarExtender2 As Global.AjaxControlToolkit.CalendarExtender
+
+    '''<summary>
+    '''meeDateNeeded control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents meeDateNeeded As Global.AjaxControlToolkit.MaskedEditExtender
+
+    '''<summary>
+    '''Maskededitvalidator2 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents Maskededitvalidator2 As Global.AjaxControlToolkit.MaskedEditValidator
+
+    '''<summary>
+    '''SearchPaidDateButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents SearchPaidDateButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''ResetButton control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResetButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
     '''gvExpenseReports control.
     '''</summary>
     '''<remarks>

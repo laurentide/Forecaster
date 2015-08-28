@@ -33,6 +33,14 @@ Public Class ExpenseAdmin
             ViewState("datatable") = dt
         End If
 
+        If ViewState("PageIndexChangedPaidFlag") Is Nothing Then
+            ViewState("PageIndexChangedPaidFlag") = False
+        End If
+
+        If ViewState("PageIndexChangedPaidDateFlag") Is Nothing Then
+            ViewState("PageIndexChangedPaidDateFlag") = False
+        End If
+
     End Sub
 
     Protected Sub ddlExpenseCategories_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -553,5 +561,176 @@ Public Class ExpenseAdmin
             Case 5
                 descriptionLabel.Text = "Car Rental Company"
         End Select
+    End Sub
+
+    'Protected Sub PaidFilterDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
+    '    Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+    '    Dim paidFilter As DropDownList = CType(MainContent.FindControl("PaidFilterDropDownList"), DropDownList)
+    '    Dim sdsExpense As SqlDataSource = CType(MainContent.FindControl("sdsExpenseReportGrid"), SqlDataSource)
+    '    Dim startDate As TextBox = CType(MainContent.FindControl("StartDateTextbox"), TextBox)
+    '    Dim endDate As TextBox = CType(MainContent.FindControl("EndDateTextbox"), TextBox)
+
+    '    '<FilterParameters>
+    '    '    <asp:ControlParameter Name="Paid" ControlID="PaidFilterDropDownList" PropertyName="SelectedValue" DefaultValue="NULL"/>
+    '    '    <asp:ControlParameter Name="ExpenseDate" ControlID="StartDateTextbox" PropertyName="Text" DefaultValue="-1" />
+    '    '    <asp:ControlParameter Name="ExpenseDate" ControlID="EndDateTextbox" PropertyName="Text" DefaultValue="-1" />
+    '    '</FilterParameters>
+
+    '    'Define ControlParameters for filtering the GridView 
+    '    Dim paidParameter As ControlParameter = New ControlParameter
+    '    paidParameter.Name = "Paid"
+    '    paidParameter.ControlID = "PaidFilterDropDownList"
+    '    paidParameter.PropertyName = "SelectedValue"
+
+    '    Dim startDateParameter As ControlParameter = New ControlParameter
+    '    startDateParameter.Name = "ExpenseDate"
+    '    startDateParameter.ControlID = "StartDateTextbox"
+    '    startDateParameter.PropertyName = "Text"
+
+    '    Dim endDateParameter As ControlParameter = New ControlParameter
+    '    endDateParameter.Name = "ExpenseDate"
+    '    endDateParameter.ControlID = "EndDateTextbox"
+    '    endDateParameter.PropertyName = "Text"
+
+    '    'Clear the FilterParameters from the previous filter 
+    '    sdsExpense.FilterParameters.Clear()
+
+    '    If Boolean.TryParse(paidFilter.SelectedValue, True) = True Then 'Check if the SelectedValue of the paid filter is "" by trying to parse it as a boolean 
+    '        sdsExpense.FilterParameters.Add(paidParameter) 'Add the paidParameter to the FilterParameters of the SqlDataSource sdsExpense
+    '        If startDate.Text = "" Or endDate.Text = "" Then 'If no date is entered 
+    '            sdsExpense.FilterExpression = "Paid = '{0}'" 'Filter only by Paid
+    '        Else
+    '            sdsExpense.FilterParameters.Add(startDateParameter) 'Add the dates as Filter Parameters
+    '            sdsExpense.FilterParameters.Add(endDateParameter)
+    '            sdsExpense.FilterExpression = "Paid = '{0}' AND ExpenseDate > '{1}' AND ExpenseDate < '{2}'" 'Filter by both Paid and ExpenseDate 
+    '        End If
+    '    Else 'Case when (no filter) is selected in the drop down 
+    '        If startDate.Text = "" Or endDate.Text = "" Then 'If no date is entered
+    '            sdsExpense.FilterExpression = "" 'Apply no filter 
+    '        Else
+    '            sdsExpense.FilterParameters.Add(startDateParameter) 'Add the dates as Filter Parameters
+    '            sdsExpense.FilterParameters.Add(endDateParameter)
+    '            sdsExpense.FilterExpression = "ExpenseDate > '{0}' AND ExpenseDate < '{1}'" 'Filter by date only 
+    '        End If
+    '    End If
+    'End Sub
+
+    Protected Sub SearchButton_Click(sender As Object, e As EventArgs)
+        ViewState("PageIndexChangedFlag") = True
+        ViewState("PageIndexChangedPaidDateFlag") = False
+
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim paidFilter As DropDownList = CType(MainContent.FindControl("PaidFilterDropDownList"), DropDownList)
+        Dim sdsExpense As SqlDataSource = CType(MainContent.FindControl("sdsExpenseReportGrid"), SqlDataSource)
+
+        '<FilterParameters>
+        '    <asp:ControlParameter Name="Paid" ControlID="PaidFilterDropDownList" PropertyName="SelectedValue" DefaultValue="NULL"/>
+        '    <asp:ControlParameter Name="ExpenseDate" ControlID="StartDateTextbox" PropertyName="Text" DefaultValue="-1" />
+        '    <asp:ControlParameter Name="ExpenseDate" ControlID="EndDateTextbox" PropertyName="Text" DefaultValue="-1" />
+        '</FilterParameters>
+
+        'Define ControlParameters for filtering the GridView 
+        Dim paidParameter As ControlParameter = New ControlParameter
+        paidParameter.Name = "Paid"
+        paidParameter.ControlID = "PaidFilterDropDownList"
+        paidParameter.PropertyName = "SelectedValue"
+
+        'Clear the FilterParameters from the previous filter 
+        sdsExpense.FilterParameters.Clear()
+
+        If Boolean.TryParse(paidFilter.SelectedValue, True) = True Then 'Check if the SelectedValue of the paid filter is "" by trying to parse it as a boolean 
+            sdsExpense.FilterParameters.Add(paidParameter) 'Add the paidParameter to the FilterParameters of the SqlDataSource sdsExpense
+            sdsExpense.FilterExpression = "Paid = '{0}'" 'Filter only by Paid
+        Else 'Case when (no filter) is selected in the drop down 
+            sdsExpense.FilterExpression = "" 'Apply no filter 
+        End If
+    End Sub
+
+    Protected Sub ResetButton_Click(sender As Object, e As EventArgs)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        CType(MainContent.FindControl("PaidFilterDropDownList"), DropDownList).SelectedValue = ""
+        CType(MainContent.FindControl("PaidDateTextbox"), TextBox).Text = "" 
+        CType(MainContent.FindControl("gvExpenseReports"), GridView).PageIndex = 0
+    End Sub
+
+    Protected Sub gvExpenseReports_PageIndexChanging(sender As Object, e As GridViewPageEventArgs)
+        If ViewState("PageIndexChangedFlag") = True Then
+            Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+            Dim paidFilter As DropDownList = CType(MainContent.FindControl("PaidFilterDropDownList"), DropDownList)
+            Dim sdsExpense As SqlDataSource = CType(MainContent.FindControl("sdsExpenseReportGrid"), SqlDataSource)
+
+            '<FilterParameters>
+            '    <asp:ControlParameter Name="Paid" ControlID="PaidFilterDropDownList" PropertyName="SelectedValue" DefaultValue="NULL"/>
+            '    <asp:ControlParameter Name="ExpenseDate" ControlID="StartDateTextbox" PropertyName="Text" DefaultValue="-1" />
+            '    <asp:ControlParameter Name="ExpenseDate" ControlID="EndDateTextbox" PropertyName="Text" DefaultValue="-1" />
+            '</FilterParameters>
+
+            'Define ControlParameters for filtering the GridView 
+            Dim paidParameter As ControlParameter = New ControlParameter
+            paidParameter.Name = "Paid"
+            paidParameter.ControlID = "PaidFilterDropDownList"
+            paidParameter.PropertyName = "SelectedValue"
+
+            'Clear the FilterParameters from the previous filter 
+            sdsExpense.FilterParameters.Clear()
+
+            If Boolean.TryParse(paidFilter.SelectedValue, True) = True Then 'Check if the SelectedValue of the paid filter is "" by trying to parse it as a boolean 
+                sdsExpense.FilterParameters.Add(paidParameter) 'Add the paidParameter to the FilterParameters of the SqlDataSource sdsExpense
+                sdsExpense.FilterExpression = "Paid = '{0}'" 'Filter only by Paid
+            Else 'Case when (no filter) is selected in the drop down 
+                sdsExpense.FilterExpression = "" 'Apply no filter 
+            End If
+        Else 
+            Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+            Dim paidDateFilter As TextBox = CType(MainContent.FindControl("PaidDateTextbox"), TextBox)
+            Dim sdsExpense As SqlDataSource = CType(MainContent.FindControl("sdsExpenseReportGrid"), SqlDataSource)
+
+            '<FilterParameters>
+            '    <asp:ControlParameter Name="Paid" ControlID="PaidFilterDropDownList" PropertyName="SelectedValue" DefaultValue="NULL"/>
+            '    <asp:ControlParameter Name="ExpenseDate" ControlID="StartDateTextbox" PropertyName="Text" DefaultValue="-1" />
+            '    <asp:ControlParameter Name="ExpenseDate" ControlID="EndDateTextbox" PropertyName="Text" DefaultValue="-1" />
+            '</FilterParameters>
+
+            'Define ControlParameters for filtering the GridView 
+            Dim paidDateParameter As ControlParameter = New ControlParameter
+            paidDateParameter.Name = "PaidDate"
+            paidDateParameter.ControlID = "PaidDateTextbox"
+            paidDateParameter.PropertyName = "Text"
+
+            'Clear the FilterParameters from the previous filter 
+            sdsExpense.FilterParameters.Clear()  
+
+            If paidDateFilter.Text <> "" Then
+                sdsExpense.FilterParameters.Add(paidDateParameter) 'Add the paidDateParameter to the FilterParameters of the SqlDataSource sdsExpense
+                sdsExpense.FilterExpression = "PaidDate = '{0}'" 'Filter only by Paid            
+            Else
+                sdsExpense.FilterExpression = "" 'Apply no filter    
+            End If
+        End If                
+    End Sub
+
+    Protected Sub SearchPaidDateButton_Click(sender As Object, e As EventArgs)
+        ViewState("PageIndexChangedFlag") = False
+        ViewState("PageIndexChangedPaidDateFlag") = True
+
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim paidDateFilter As TextBox = CType(MainContent.FindControl("PaidDateTextbox"), TextBox)
+        Dim sdsExpense As SqlDataSource = CType(MainContent.FindControl("sdsExpenseReportGrid"), SqlDataSource)  
+
+        'Define ControlParameters for filtering the GridView 
+        Dim paidDateParameter As ControlParameter = New ControlParameter
+        paidDateParameter.Name = "PaidDate"
+        paidDateParameter.ControlID = "PaidDateTextbox"
+        paidDateParameter.PropertyName = "Text"
+
+        'Clear the FilterParameters from the previous filter 
+        sdsExpense.FilterParameters.Clear()
+
+        If paidDateFilter.Text <> "" Then
+            sdsExpense.FilterParameters.Add(paidDateParameter)
+            sdsExpense.FilterExpression = "PaidDate = '{0}'" 'Filter only by PaidDate     
+        Else
+            sdsExpense.FilterExpression = "" 'Apply no filter               
+        End If  
     End Sub
 End Class

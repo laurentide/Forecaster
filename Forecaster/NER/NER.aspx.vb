@@ -127,6 +127,108 @@ Public Class NER
 
 
             If frmInsert.CurrentMode = FormViewMode.Edit Then
+                'Fill PROI gridview
+                Dim dt As New DataTable
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+                Dim SqlConnection As New SqlConnection(connectionString)
+                Dim neridstr As String = CType(frmInsert.FindControl("NERIDLabel1"), Label).Text
+                Dim sc As New SqlCommand("select * from tblProjectedROI where NERID = " & neridstr, SqlConnection)
+                SqlConnection.Open()
+                Dim da As New SqlDataAdapter(sc)
+                da.Fill(dt)
+                ViewState("PROIDatatable") = dt
+                Dim gvPROIDetails As GridView
+                gvPROIDetails = CType(frmInsert.FindControl("gvPROIDetails"), GridView)
+                gvPROIDetails.DataSource = dt
+                gvPROIDetails.DataBind()
+
+                'Populate the footer row with the total value for each year
+                'If Not IsNothing(dt) Then
+                '    For Each gvr As GridViewRow In gvPROIDetails.Rows
+                '        If gvr.RowType = DataControlRowType.DataRow Then
+                '            PROIYear0Total += gvr.Cells(3).Text
+                '            PROIYear1Total += gvr.Cells(4).Text
+                '            PROIYear2Total += gvr.Cells(5).Text
+                '            PROIYear3Total += gvr.Cells(6).Text
+                '            PROIYear4Total += gvr.Cells(7).Text
+                '        End If
+                '    Next
+                '    gvPROIDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
+                '    gvPROIDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PROIYear0Total)
+                '    gvPROIDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PROIYear1Total)
+                '    gvPROIDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PROIYear2Total)
+                '    gvPROIDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PROIYear3Total)
+                '    gvPROIDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PROIYear4Total)
+                'End If
+
+
+                'Fill PC gridview
+                Dim PCdt As New DataTable
+                Dim PCconnectionString As String
+                PCconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+                Dim PCSqlConnection As New SqlConnection(PCconnectionString)
+                Dim PCsc As New SqlCommand("select * from tblProgramCost where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, PCSqlConnection)
+                PCSqlConnection.Open()
+                Dim PCda As New SqlDataAdapter(PCsc)
+                PCda.Fill(PCdt)
+                ViewState("PCDatatable") = PCdt
+                Dim gvProgramCostsDetails As GridView
+                gvProgramCostsDetails = CType(frmInsert.FindControl("gvProgramCostsDetails"), GridView)
+                gvProgramCostsDetails.DataSource = PCdt
+                gvProgramCostsDetails.DataBind()
+
+                'Populate the footer row with the total value for each year
+                'If Not IsNothing(PCdt) Then
+                '    For Each gvr As GridViewRow In gvProgramCostsDetails.Rows
+                '        If gvr.RowType = DataControlRowType.DataRow Then
+                '            PCYear0Total += gvr.Cells(3).Text
+                '            PCYear1Total += gvr.Cells(4).Text
+                '            PCYear2Total += gvr.Cells(5).Text
+                '            PCYear3Total += gvr.Cells(6).Text
+                '            PCYear4Total += gvr.Cells(7).Text
+                '        End If
+                '    Next
+                '    gvProgramCostsDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
+                '    gvProgramCostsDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PCYear0Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PCYear1Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PCYear2Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PCYear3Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PCYear4Total)
+                'End If
+
+                UpdateNetCashFlow()
+
+                'Fill SC gridview
+                Dim SCdt As New DataTable
+                Dim SCconnectionString As String
+                SCconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+                Dim SCSqlConnection As New SqlConnection(SCconnectionString)
+                Dim SCsc As New SqlCommand("select * from tblSuccessCriteria where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, SCSqlConnection)
+                SCSqlConnection.Open()
+                Dim SCda As New SqlDataAdapter(SCsc)
+                SCda.Fill(SCdt)
+                ViewState("SCDatatable") = SCdt
+                Dim gvSuccessCriteria As GridView
+                gvSuccessCriteria = CType(frmInsert.FindControl("gvSuccessCriteria"), GridView)
+                gvSuccessCriteria.DataSource = SCdt
+                gvSuccessCriteria.DataBind()
+
+                'Fill FUP gridview
+                Dim FUPdt As New DataTable
+                Dim FUPconnectionString As String
+                FUPconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+                Dim FUPSqlConnection As New SqlConnection(FUPconnectionString)
+                Dim FUPsc As New SqlCommand("select * from tblFUP where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, FUPSqlConnection)
+                FUPSqlConnection.Open()
+                Dim FUPda As New SqlDataAdapter(FUPsc)
+                FUPda.Fill(FUPdt)
+                ViewState("FUPDatatable") = FUPdt
+                Dim gvImplementation As GridView
+                gvImplementation = CType(frmInsert.FindControl("gvImplementation"), GridView)
+                gvImplementation.DataSource = FUPdt
+                gvImplementation.DataBind()
+
                 If CType(frmInsert.FindControl("chkReplacement"), CheckBox).Checked = True Then
                     CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = True
                     CType(frmInsert.FindControl("lblReplacement"), Label).Visible = True
@@ -134,10 +236,51 @@ Public Class NER
                     CType(frmInsert.FindControl("ReplacementTextBox"), TextBox).Visible = False
                     CType(frmInsert.FindControl("lblReplacement"), Label).Visible = False
                 End If
+
+                If CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedItem.Value = 3 Then
+                    CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Text = "Reason: "
+                ElseIf CType(frmInsert.FindControl("StatusDropDown"), DropDownList).SelectedItem.Value = 4 Then
+                    CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = True
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Text = "Employee Name:"
+                    CType(frmInsert.FindControl("SORPanel"), Panel).Visible = True
+                Else
+                    CType(frmInsert.FindControl("StatusReasonTextbox"), TextBox).Visible = False
+                    CType(frmInsert.FindControl("StatusReasonLabel"), Label).Visible = False
+                End If
+                If CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 1 Then
+                    CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Internal Referal Name:"
+                    CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 2 Then
+                    CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Agency Name:"
+                    CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 6 Then
+                    CType(frmInsert.FindControl("SORDetailLabel"), Label).Text = "Other (details):"
+                    CType(frmInsert.FindControl("SORDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 7 And
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedItem.Value = 7 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                    CType(frmInsert.FindControl("OtherSchoolLabel"), Label).Text = "School Name (other):"
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 8 And
+                    CType(frmInsert.FindControl("SchoolDropDown"), DropDownList).SelectedItem.Value = 7 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                    CType(frmInsert.FindControl("OtherSchoolLabel"), Label).Text = "School Name (other):"
+                    CType(frmInsert.FindControl("OtherSchoolPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 7 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                ElseIf CType(frmInsert.FindControl("RecruitmentDropDown"), DropDownList).SelectedItem.Value = 8 Then
+                    CType(frmInsert.FindControl("SchoolDetailLabel"), Label).Text = "School Name:"
+                    CType(frmInsert.FindControl("SchoolDetailPanel"), Panel).Visible = True
+                End If
                 UpdatePanel1.Update()
             End If
         Catch ex As Exception
-
         End Try
     End Sub
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
@@ -335,6 +478,146 @@ Public Class NER
     End Sub
 
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
+        Dim dt As New DataTable
+        dt = CType(ViewState("PROIDatatable"), DataTable)
+
+        Dim PROIconnectionString As String
+        PROIconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+
+        Using destinationConnection As SqlConnection = New SqlConnection(PROIconnectionString)
+            destinationConnection.Open()
+            Try
+
+                Dim sqlcommand As New SqlCommand("Delete from tblProjectedROI where NERID = " & CType(Me.frmInsert.FindControl("NERIDLabel1"), Label).Text)
+                sqlcommand.Connection = destinationConnection
+                sqlcommand.ExecuteNonQuery()
+                Using bulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(destinationConnection)
+                    bulkCopy.DestinationTableName = _
+                    "dbo.tblProjectedROI"
+                    ' Write from the source to the destination.
+                    bulkCopy.WriteToServer(dt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            destinationConnection.Close()
+        End Using
+        gvNewEmployeeRequests.DataBind()
+        dt.Clear()
+        ViewState("PROIDatatable") = dt
+
+        Dim PCdt As New DataTable
+        PCdt = CType(ViewState("PCDatatable"), DataTable)
+
+        Dim PCconnectionString As String
+        PCconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+
+        Using PCdestinationConnection As SqlConnection = New SqlConnection(PCconnectionString)
+            PCdestinationConnection.Open()
+            Try
+
+                Dim PCsqlcommand As New SqlCommand("Delete from tblProgramCost where NERID = " & CType(Me.frmInsert.FindControl("NERIDLabel1"), Label).Text)
+                PCsqlcommand.Connection = PCdestinationConnection
+                PCsqlcommand.ExecuteNonQuery()
+                Using PCbulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(PCdestinationConnection)
+                    PCbulkCopy.DestinationTableName = _
+                    "dbo.tblProgramCost"
+                    ' Write from the source to the destination.
+                    PCbulkCopy.WriteToServer(PCdt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            PCdestinationConnection.Close()
+        End Using
+        gvNewEmployeeRequests.DataBind()
+        PCdt.Clear()
+        ViewState("PCDatatable") = PCdt
+
+        Dim SCdt As New DataTable
+        SCdt = CType(ViewState("SCDatatable"), DataTable)
+
+        Dim SCconnectionString As String
+        SCconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+
+        Using SCdestinationConnection As SqlConnection = New SqlConnection(SCconnectionString)
+            SCdestinationConnection.Open()
+            Try
+
+                Dim SCsqlcommand As New SqlCommand("Delete from tblSuccessCriteria where NERID = " & CType(Me.frmInsert.FindControl("NERIDLabel1"), Label).Text)
+                SCsqlcommand.Connection = SCdestinationConnection
+                SCsqlcommand.ExecuteNonQuery()
+                Using SCbulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(SCdestinationConnection)
+                    SCbulkCopy.DestinationTableName = _
+                    "dbo.tblSuccessCriteria"
+                    ' Write from the source to the destination.
+                    SCbulkCopy.WriteToServer(SCdt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            SCdestinationConnection.Close()
+        End Using
+        gvNewEmployeeRequests.DataBind()
+        SCdt.Clear()
+        ViewState("SCDatatable") = SCdt
+
+        Dim FUPdt As New DataTable
+        FUPdt = CType(ViewState("FUPDatatable"), DataTable)
+
+        Dim FUPconnectionString As String
+        FUPconnectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
+
+        Using FUPdestinationConnection As SqlConnection = New SqlConnection(FUPconnectionString)
+            FUPdestinationConnection.Open()
+            Try
+
+                Dim FUPsqlcommand As New SqlCommand("Delete from tblFUP where NERID = " & CType(Me.frmInsert.FindControl("NERIDLabel1"), Label).Text)
+                FUPsqlcommand.Connection = FUPdestinationConnection
+                FUPsqlcommand.ExecuteNonQuery()
+                Using FUPbulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(FUPdestinationConnection)
+                    FUPbulkCopy.DestinationTableName = _
+                    "dbo.tblFUP"
+                    ' Write from the source to the destination.
+                    FUPbulkCopy.WriteToServer(FUPdt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            FUPdestinationConnection.Close()
+        End Using
+        gvNewEmployeeRequests.DataBind()
+        FUPdt.Clear()
+        ViewState("FUPDatatable") = FUPdt
+
         Try
             Dim connectionString As String
             connectionString = "Server=lcl-sql2k5-s;Database=NewEmployeeRequest;Trusted_Connection=true"
@@ -347,14 +630,14 @@ Public Class NER
             Dim managerEmail As String = reader.GetString(0)
             reader.Close()
 
-            Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & "\"
-            System.IO.Directory.CreateDirectory(savePath)
+            'Dim savePath As String = "\\lcl-fil1\directory_2000\Managers\New Employee Requests\Ner" & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text & "\"
+            'System.IO.Directory.CreateDirectory(savePath)
 
-            If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
-                CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
-                Dim updatecommand As New SqlCommand("update tblNewEmployeeRequest set AttachmentSheetLink = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, SqlConnection)
-                updatecommand.ExecuteNonQuery()
-            End If
+            'If (CType(frmInsert.FindControl("fudialog"), FileUpload).HasFile) Then
+            '    CType(frmInsert.FindControl("fudialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName)
+            '    Dim updatecommand As New SqlCommand("update tblNewEmployeeRequest set AttachmentSheetLink = '" & savePath & CType(frmInsert.FindControl("fudialog"), FileUpload).FileName & "' where NERID = " & CType(frmInsert.FindControl("NERIDLabel1"), Label).Text, SqlConnection)
+            '    updatecommand.ExecuteNonQuery()
+            'End If
 
             Dim body As String = "Manager: " & CType(frmInsert.FindControl("ManagerDropDown"), DropDownList).SelectedItem.Text & vbCrLf & _
                                  "Name: " & CType(frmInsert.FindControl("NameTextBox"), TextBox).Text & vbCrLf & _
@@ -460,7 +743,6 @@ Public Class NER
         CType(frm.FindControl("year2"), TextBox).Text = ""
         CType(frm.FindControl("year3"), TextBox).Text = ""
         CType(frm.FindControl("year4"), TextBox).Text = ""
-
     End Sub
 
     Protected Sub AddProgramCostButton_Click(sender As Object, e As EventArgs)
@@ -855,5 +1137,10 @@ Public Class NER
         CType(fvFUP.FindControl("ComplID"), TextBox).Text = dtRow("Compl")
         CType(fvFUP.FindControl("RespID"), TextBox).Text = dtRow("Resp")
         CType(fvFUP.FindControl("NotesID"), TextBox).Text = dtRow("Notes")
+    End Sub
+
+    Protected Sub sdsInsert_Updated(sender As Object, e As SqlDataSourceStatusEventArgs)
+        Dim ID As Integer = e.Command.Parameters("@ID").Value
+        Session("ID") = ID
     End Sub
 End Class
