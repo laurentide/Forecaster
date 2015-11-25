@@ -334,7 +334,7 @@
                        WHERE PurchaseRequestID = @ID"
         InsertCommand=""
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
-                       SET [ManagerApprovalDate] = @ManagerApprovalDate
+                       SET [ManagerApprovalDate] = CASE WHEN @StatusID = '2' THEN @ManagerApprovalDate ELSE NULL END
                           ,[ITMessage]=@ITMessage
                           ,[BuyerID] = @BuyerID
                           ,[BackupBuyerID] = @BackupBuyerID

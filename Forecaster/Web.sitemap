@@ -10,9 +10,9 @@
 			<siteMapNode url="Funnel/Funnel.aspx" title="Funnel Tool" description=""/>
 			<siteMapNode url="Managers/Mg_FunnelManagement.aspx" title="Funnel Admin" description=""/>
 		</siteMapNode>
-		<siteMapNode title="Inventory" roles="*" description="">
+		<!--<siteMapNode title="Inventory" roles="*" description="">
 			<siteMapNode url="Inventory/InventorySearch.aspx" title="Inventory Search" description=""/>
-		</siteMapNode>
+		</siteMapNode>-->
 		<siteMapNode title="Receptionist" roles="*" description="">
 			<siteMapNode url="Receptionist/Receptionist.aspx" title="Receptionist" description=""/>
 			<siteMapNode url="Receptionist/Admin.aspx" title="Receptionist Admin" description=""/>
