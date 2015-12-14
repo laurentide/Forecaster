@@ -441,6 +441,7 @@
             <tr><td><br /></td></tr>
           </table>
         </EditItemTemplate>
+<<<<<<< HEAD
     </asp:FormView><table><tr><td>Filter by department: <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department" 
         AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="DeptFilterDropDownList_SelectedIndexChanged" AutoPostBack="true">
         <asp:ListItem Text="(Select the department)" Value="" /></asp:DropDownList>
@@ -450,6 +451,46 @@
         Waiting For QLT Review: <asp:Label ID="QLTReviewCount" runat="server" /> Resolved: <asp:Label ID="ResolvedCount" runat="server" />
         Waiting For QT Review: <asp:Label ID="QTReviewCount" runat="server" />
         </td></tr>
+=======
+    </asp:FormView>
+    <table>
+        <tr>
+            <td>Filter by department:
+                <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department"
+                    AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="DeptFilterDropDownList_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:ListItem Text="(Select the department)" Value="" />
+                </asp:DropDownList>
+                <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true" />
+                <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td>
+        </tr>
+        <tr>
+            <td>Filter by Assignee
+            <asp:DropDownList ID="AssigneeDropDownList" runat="server" DataSourceID="sdsQLTMembers" DataValueField="QLTMemberID" DataTextField="QLTMemberName"
+                    AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="AssigneeDropDownList_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:ListItem Text="(Select the Assignee)" Value="" />
+                </asp:DropDownList></td>            
+        </tr>
+         <tr>
+            <td>Filter by Status
+            <asp:DropDownList ID="StatusDropDownList" runat="server" DataSourceID="sdsStatus" DataValueField="statusID" DataTextField="Status"
+                    AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="StatusDropDownList_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:ListItem Text="(Select the status)" Value="" />
+                </asp:DropDownList></td>            
+        </tr>
+        <tr>
+            <td>Issued:
+                <asp:Label ID="IssuedCount" runat="server" />
+                Assigned:
+                <asp:Label ID="AssignedCount" runat="server" />
+                Waiting For QLT Review:
+                <asp:Label ID="QLTReviewCount" runat="server" />
+                Resolved:
+                <asp:Label ID="ResolvedCount" runat="server" />
+                Waiting For QT Review:
+                <asp:Label ID="QTReviewCount" runat="server" />
+            </td>
+        </tr>
+>>>>>>> origin/master
     </table>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
@@ -618,10 +659,16 @@
                             on tblQLT.TypeID = tblTypes.TypeID
                        where  visible = 1 
                          and (@ManagerDomainUser in (select QLTMemberUserName from tblQLTMembers) or ReassignmentUsername = @ManagerDomainUser)
+                         and (tblQLT.AssignedTo = @AssignedTo or @AssignedTo = 0)
+                         and (tblQLT.StatusID = @StatusID or @StatusID = 0)
+                         and (tblQLT.DepartmentID = @DeptID or @DeptID = 0)
                         Order by QLTID Desc"
         DeleteCommand="Update tblQLT set visible = 0 where QLTID = @QLTID">
         <SelectParameters>
-             <asp:SessionParameter SessionField="Username" Name="ManagerDomainUser" />
+             <asp:SessionParameter SessionField="Username" Name="ManagerDomainUser"  />
+             <asp:ControlParameter Name="AssignedTo" ControlID="AssigneeDropDownList" PropertyName="SelectedValue" DefaultValue="0" />
+             <asp:ControlParameter Name="StatusID" ControlID="StatusDropDownList" PropertyName="SelectedValue" DefaultValue="0" />
+             <asp:ControlParameter Name="DeptID" ControlID="DeptFilterDropDownList" PropertyName="SelectedValue" DefaultValue="0"  />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsEventTypes" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"

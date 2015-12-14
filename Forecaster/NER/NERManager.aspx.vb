@@ -24,7 +24,7 @@ Public Class NERManager
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
 
-        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not User.Identity.Name = "LCLMTL\Duc-DuyN" And Not User.Identity.Name = "LCLMTL\mignoto" And Not User.Identity.Name = "LCLMTL\mcarr" And Not User.Identity.Name = "LCLMTL\ClaireD" Then
+        If Not User.IsInRole("LCLMTL\LCL_Manager") And Not LCase(User.Identity.Name) = "lclmtl\duc-duyn" And Not User.Identity.Name = "LCLMTL\mignoto" And Not User.Identity.Name = "LCLMTL\mcarr" And Not User.Identity.Name = "LCLMTL\ClaireD" Then
             'System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertaccess();", True)
             Response.Redirect("~/NER/AccessDenied.aspx")
         End If

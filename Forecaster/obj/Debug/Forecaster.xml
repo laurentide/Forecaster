@@ -959,6 +959,22 @@ ResetPSSFilterButton control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.QLTMgmt.AssigneeDropDownList">
+	<summary>
+AssigneeDropDownList control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.StatusDropDownList">
+	<summary>
+StatusDropDownList control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.QLTMgmt.IssuedCount">
 	<summary>
 IssuedCount control.

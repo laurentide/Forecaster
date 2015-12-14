@@ -513,7 +513,7 @@
     </Compile>
     <Compile Include="NIIRF\NIIRF.aspx.vb">
       <DependentUpon>NIIRF.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Purchase\Purchase.aspx.designer.vb">
       <DependentUpon>Purchase.aspx</DependentUpon>

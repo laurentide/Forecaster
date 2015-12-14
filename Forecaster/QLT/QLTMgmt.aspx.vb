@@ -472,6 +472,9 @@ System.Web.Services.WebMethod()> _
         Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
         gvDS.FilterExpression = ""
         gvDS.DataBind()
+        DeptFilterDropDownList.SelectedValue = ""
+        AssigneeDropDownList.SelectedValue = ""
+        StatusDropDownList.SelectedValue = ""
         gvQLT.DataBind()
     End Sub
 
@@ -488,6 +491,55 @@ System.Web.Services.WebMethod()> _
             gvDS.DataBind()
             gvQLT.DataBind()
         End If
+        'Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        'Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
+        'Dim DeptID As String = CType(MainContent.FindControl("DeptFilterDropDownList"), DropDownList).SelectedValue
+        'If (DeptID IsNot String.Empty) Then
+        '    gvDS.FilterExpression = gvDS.FilterExpression & " DepartmentID = " & DeptID
+        '    gvDS.DataBind()
+        '    gvQLT.DataBind()
+        'Else
+        '    gvDS.FilterExpression = ""
+        '    gvDS.DataBind()
+        '    gvQLT.DataBind()
+        'End If
+        gvQLT.DataBind()
+
+    End Sub
+
+    Protected Sub AssigneeDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
+        'Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        'Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
+        'Dim AssignedTo As String = CType(MainContent.FindControl("AssigneeDropDownList"), DropDownList).SelectedValue
+        'If (AssignedTo IsNot String.Empty) Then
+        '    gvDS.FilterExpression = gvDS.FilterExpression & " AssignedTo = " & AssignedTo
+        '    gvDS.DataBind()
+        '    gvQLT.DataBind()
+        'Else
+        '    gvDS.FilterExpression = ""
+        '    gvDS.DataBind()
+        '    gvQLT.DataBind()
+        'End If
+        gvQLT.DataBind()
+
+
+    End Sub
+
+    Protected Sub StatusDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
+        'Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        'Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
+        'Dim StatusID As String = CType(MainContent.FindControl("StatusDropDownList"), DropDownList).SelectedValue
+        'If (StatusID IsNot String.Empty) Then
+        '    gvDS.FilterExpression = gvDS.FilterExpression & " StatusID = " & StatusID
+        '    gvDS.DataBind()
+        '    gvQLT.DataBind()
+        'Else
+        '    gvDS.FilterExpression = ""
+        '    gvDS.DataBind()
+        '    gvQLT.DataBind()
+        'End If
+
+        gvQLT.DataBind()
 
 
     End Sub

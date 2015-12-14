@@ -59,6 +59,24 @@ Partial Public Class QLTMgmt
     Protected WithEvents ResetPSSFilterButton As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''AssigneeDropDownList control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents AssigneeDropDownList As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
+    '''StatusDropDownList control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents StatusDropDownList As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''IssuedCount control.
     '''</summary>
     '''<remarks>

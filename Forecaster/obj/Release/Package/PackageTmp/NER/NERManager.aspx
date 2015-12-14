@@ -591,7 +591,7 @@
                     <%--<asp:BoundField DataField="Return" HeaderText="Return" SortExpression="Return" />--%>
                     <asp:BoundField DataField="DateCreated" HeaderText="Date Created" SortExpression="DateCreated" />
                     <asp:BoundField DataField="DateApproved" HeaderText="Date Approved" SortExpression="DateApproved" />
-                    <asp:BoundField DataField="DateHired" HeaderText="Date Hired" SortExpression="DateHired" />
+                    <asp:BoundField DataField="InvestmentStartDate" HeaderText="Start Date" SortExpression="InvestmentStartDate" />
                     <asp:BoundField DataField="DateNeeded" HeaderText="Date Needed" SortExpression="DateNeelded" />
                     <%--<asp:BoundField DataField="CostOfRecruitment" HeaderText="CostOfRecruitment" SortExpression="CostOfRecruitment" />
                     <asp:BoundField DataField="JobDescriptionLink" HeaderText="JobDescriptionLink" SortExpression="JobDescriptionLink" />--%>
