@@ -441,19 +441,17 @@
             <tr><td><br /></td></tr>
           </table>
         </EditItemTemplate>
-<<<<<<< HEAD
     </asp:FormView><table><tr><td>Filter by department: <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department" 
         AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="DeptFilterDropDownList_SelectedIndexChanged" AutoPostBack="true">
         <asp:ListItem Text="(Select the department)" Value="" /></asp:DropDownList>
     <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true"/>
     <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td></tr>
-    <tr><td>Issued: <asp:Label ID="IssuedCount" runat="server" /> Assigned: <asp:Label ID="AssignedCount" runat="server" />
+<%--    <tr><td>Issued: <asp:Label ID="IssuedCount" runat="server" /> Assigned: <asp:Label ID="AssignedCount" runat="server" />
         Waiting For QLT Review: <asp:Label ID="QLTReviewCount" runat="server" /> Resolved: <asp:Label ID="ResolvedCount" runat="server" />
         Waiting For QT Review: <asp:Label ID="QTReviewCount" runat="server" />
-        </td></tr>
-=======
+        </td></tr>--%>
     </asp:FormView>
-    <table>
+<%--    <table>
         <tr>
             <td>Filter by department:
                 <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department"
@@ -462,7 +460,7 @@
                 </asp:DropDownList>
                 <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true" />
                 <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td>
-        </tr>
+        </tr> --%>
         <tr>
             <td>Filter by Assignee
             <asp:DropDownList ID="AssigneeDropDownList" runat="server" DataSourceID="sdsQLTMembers" DataValueField="QLTMemberID" DataTextField="QLTMemberName"
@@ -490,7 +488,6 @@
                 <asp:Label ID="QTReviewCount" runat="server" />
             </td>
         </tr>
->>>>>>> origin/master
     </table>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"

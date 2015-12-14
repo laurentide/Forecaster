@@ -70,6 +70,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Original Order & Original P.O.#:</td>
+                    <td>
+                        <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("OriginalOrder")%>' Width="200" /><asp:Label ID="blah" runat="server" Text=" " /><asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("OriginalPO")%>' Width="200" /></td>
+                    </td>
+                </tr>
+                <tr>
                     <td>Date:</td>
                    <td>                                                 
                         <asp:TextBox ID="DateTextbox" runat="server" Text='<%# Bind("Date")%>' />
@@ -78,6 +84,57 @@
                         <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateTextbox" PromptCharacter="_" />
                         <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a due date" ControlToValidate="DateTextbox" />                       
+                    </td>
+                </tr>
+                <tr>
+                    <td>Originator:</td>
+                    <td>
+                        <asp:TextBox ID="OriginatorTextBox" runat="server" Text='<%# Bind("Originator")%>' Width="500" /></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Set as Reorder?:</td>
+                    <td>
+                        <asp:RadioButton ID="ReorderYes" runat="server" Text="Yes" GroupName="Reorder" AutoPostBack="true" OnCheckedChanged="ReorderYes_CheckedChanged"/>
+                        <asp:RadioButton ID="ReorderNo" runat="server" Text="No" GroupName="Reorder" AutoPostBack="true" OnCheckedChanged="ReorderYes_CheckedChanged" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>State:</td>
+                    <td>
+                        <asp:RadioButton ID="StateNew" runat="server" Text="New" GroupName="State" AutoPostBack="true" OnCheckedChanged="StateNew_CheckedChanged"/>
+                        <asp:RadioButton ID="StateUsed" runat="server" Text="Used" GroupName="State" AutoPostBack="true" OnCheckedChanged="StateNew_CheckedChanged" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Please explain busniess reason for the additional stock:</td>
+                    <td>
+                        <asp:TextBox ID="BuisnessReasonTextBox" runat="server" Text='<%# Bind("BusinessReason")%>' Width="500" /></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Our stock investment target is "turns" * "margin" = 1.0. Will this stock meet this?:</td>
+                    <td>
+                        <asp:RadioButton ID="StockInvestmentYes" runat="server" Text="Yes" GroupName="StockInvestment" AutoPostBack="true" OnCheckedChanged="StockInvestmentYes_CheckedChanged"/>
+                        <asp:RadioButton ID="StockInvestmentNo" runat="server" Text="No" GroupName="StockInvestment" AutoPostBack="true" OnCheckedChanged="StockInvestmentYes_CheckedChanged" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>What is the initial investment?:</td>
+                    <td>
+                        <asp:TextBox ID="InitialInvestmentTextBox" runat="server" Text='<%# Bind("InitialInvestment")%>' Width="500" /></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Where is this sourced from?:</td>
+                    <td>
+                        <asp:TextBox ID="SourcedTextBox" runat="server" Text='<%# Bind("SourcedFrom")%>' Width="500" /></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>What is the lead time from factory?:</td>
+                    <td>
+                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("LeadTime")%>' Width="500" /></td>
                     </td>
                 </tr>
             </table>

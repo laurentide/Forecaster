@@ -67,7 +67,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>IssuedDate:
+                    <td>Issued Date:
                     </td>
                     <td>
                         <asp:TextBox ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate") %>' readonly="true"/>

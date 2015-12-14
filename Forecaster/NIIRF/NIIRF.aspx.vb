@@ -15,4 +15,15 @@ Public Class NIIRF
     End Sub
 
  
+    Protected Sub ReorderYes_CheckedChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Protected Sub StateNew_CheckedChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Protected Sub StockInvestmentYes_CheckedChanged(sender As Object, e As EventArgs)
+
+    End Sub
 End Class
