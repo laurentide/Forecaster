@@ -84,7 +84,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Customer:</td>
+                <td><b>Customer (*)(Write "N/A" if none):</b></td>
                 <td>
                     <asp:TextBox class="textboxWidth" ID="CustomerTextbox" runat="server" Text='<%# Bind("CustomerID")%>'/>
                     <asp:AutoCompleteExtender ID="AutocompleteExtender1" TargetControlID="CustomerTextbox" runat="server" ServiceMethod="GetCompletionList" 
@@ -92,6 +92,7 @@
                         CompletionListCssClass="autocomplete_completionListElement"
                         CompletionListItemCssClass="autocomplete_listItem"
                         CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem" />
+                    <asp:RequiredFieldValidator ID="CustomerRequiredFieldValidator" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Enter Customer Name (Write N/A if none)" ControlToValidate="CustomerTextbox" />
                 </td>
             </tr>
             <tr>
@@ -114,9 +115,10 @@
             </tr>
 
             <tr>
-                <td>Sales Order #:</td>
+                <td><b>Sales Order # (*)(Write "N/A" if none):</b></td>
                 <td>
                     <asp:TextBox class="smallTextboxWidth" ID="SalesOrderTextBox" runat="server" Text='<%# Bind("SalesOrder") %>' />
+                    <asp:RequiredFieldValidator ID="SalesOrderNumberRFV" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Enter Sales Order # (Write N/A if none)" ControlToValidate="SalesOrderTextBox" />
                 </td>
             </tr>
             <tr>
@@ -370,7 +372,7 @@
             <tr>
                 <td>Description:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' Enabled="false" />
+                    <asp:TextBox Width="500px" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' Enabled="false" />
                 </td>
             </tr>
             <tr>
@@ -396,7 +398,7 @@
                     <br />
                     cause of this occurence:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="CauseTextBox" runat="server" TextMode="MultiLine"  Rows="5" Text='<%# Bind("Cause") %>' Enabled="false" />
+                    <asp:TextBox Width="500px" ID="CauseTextBox" runat="server" TextMode="MultiLine"  Rows="5" Text='<%# Bind("Cause") %>' Enabled="false" />
                 </td>
             </tr>
             <tr>
@@ -405,7 +407,7 @@
             </tr>
             <tr>
                 <td>Feedback to Issuer: </td>
-                <td><asp:TextBox ID="FeedbackToIssuerTextbox" runat="server" Text='<%# Bind("FeedbackToIssuer")%>' TextMode="MultiLine" Rows="5" Enabled="false" class="textboxWidth"/></td>
+                <td><asp:TextBox ID="FeedbackToIssuerTextbox" runat="server" Text='<%# Bind("FeedbackToIssuer")%>' TextMode="MultiLine" Rows="5" Enabled="false" Width="500px"/></td>
             </tr>
                 <tr><td>Add Attachment</td><td>
                         <asp:FileUpload ID="fuDialog" runat="server" allowmultiple="true"/></td></tr>
@@ -438,7 +440,7 @@
             <asp:BoundField DataField="CustomerName" HeaderText="Customer" SortExpression="CustomerName" />
             <asp:BoundField DataField="CustomerContactName" HeaderText="Customer Contact" SortExpression="CustomerContactName" />
             <asp:BoundField DataField="VendorName" HeaderText="Supplier" SortExpression="VendorName" />
-            <asp:BoundField DataField="VendorContactName" HeaderText="Supplier Contact" SortExpression="VendorContactName" />
+<%--            <asp:BoundField DataField="VendorContactName" HeaderText="Supplier Contact" SortExpression="VendorContactName" />--%>
             <%--<asp:BoundField DataField="SalesOrder" HeaderText="SalesOrder" SortExpression="SalesOrder" />
             <asp:BoundField DataField="PurchaseOrder" HeaderText="PurchaseOrder" SortExpression="PurchaseOrder" />--%>
             <%--<asp:BoundField DataField="shortcorrect" HeaderText="CorrectiveActionTaken" SortExpression="CorrectiveActionTaken" />--%>
@@ -447,7 +449,8 @@
             <asp:BoundField DataField="Reassignment" HeaderText="Reassignment" SortExpression="Reassignment" />
             <asp:BoundField DataField="DateReAssigned" HeaderText="DateReAssigned" SortExpression="DateReAssigned" />--%>
             <asp:BoundField DataField="Status" HeaderText="Status" SortExpression="Status" />
-            <asp:BoundField DataField="Origin" HeaderText="Origin" SortExpression="Origin" />
+            <asp:BoundField DataField="QLTMemberName" HeaderText="Assigned To" SortExpression="QLTMemberName" />
+<%--            <asp:BoundField DataField="Origin" HeaderText="Origin" SortExpression="Origin" />--%>
             <%--<asp:BoundField DataField="QLTMemberName" HeaderText="QLTMemberName" SortExpression="QLTMemberName" />
             <asp:BoundField DataField="ManagerName" HeaderText="ManagerName" SortExpression="ManagerName" /--%>
         </Columns>

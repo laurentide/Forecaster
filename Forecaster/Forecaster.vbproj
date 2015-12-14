@@ -180,6 +180,7 @@
     <Content Include="NER\AccessDenied.aspx" />
     <Content Include="NER\NERManager.aspx" />
     <Content Include="NER\NER.aspx" />
+    <Content Include="NIIRF\NIIRF.aspx" />
     <Content Include="Purchase\Purchase.aspx" />
     <Content Include="Purchase\PurchaseEntry.aspx" />
     <Content Include="Purchase\PurchaseManager.aspx" />
@@ -506,6 +507,13 @@
     <Compile Include="NER\NER.aspx.vb">
       <DependentUpon>NER.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NIIRF\NIIRF.aspx.designer.vb">
+      <DependentUpon>NIIRF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NIIRF\NIIRF.aspx.vb">
+      <DependentUpon>NIIRF.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Purchase\Purchase.aspx.designer.vb">
       <DependentUpon>Purchase.aspx</DependentUpon>

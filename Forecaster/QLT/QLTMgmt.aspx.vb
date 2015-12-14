@@ -25,13 +25,6 @@ Public Class QLTMgmt
             ACAdt.Columns.Add("AdditionalCorrectiveAction", GetType(String))
             ACAdt.Columns.Add("Timestamp", GetType(DateTime))
         End If
-
-        'Set the count at the top of the page (work in progress)
-        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
-        Dim IssuedLabel As Label = CType(MainContent.FindControl("IssuedCount"), Label)
-        Dim AssignedLabel As Label = CType(MainContent.FindControl("AssignedCount"), Label)
-
-
     End Sub
     <System.Web.Script.Services.ScriptMethod(), _
     System.Web.Services.WebMethod()> _
@@ -75,15 +68,39 @@ System.Web.Services.WebMethod()> _
         gvPermanentCorrectiveAction.DataBind()
     End Sub
 
+    Public Sub BindACA()
+        Dim gvAdditionalCorrectiveAction As GridView = CType(frmInsert.FindControl("gvAdditionalCorrectiveAction"), GridView)
+        gvAdditionalCorrectiveAction.DataSource = ViewState("ACA")
+        gvAdditionalCorrectiveAction.DataBind()
+    End Sub
+
     Protected Sub gvQLT_SelectedIndexChanged(sender As Object, e As EventArgs)
         frmInsert.ChangeMode(FormViewMode.Edit)
     End Sub
 
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
+        Try
+            'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
+            Dim connectionString As String
+            connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+            Dim SqlConnection As New SqlConnection(connectionString)
+            SqlConnection.Open()
+
+            Dim savePath As String = "\\lcl-fil1\directory_2000\Administration\LCL\Corporate\QLT\" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & "\"
+            System.IO.Directory.CreateDirectory(savePath)
+
+            If (CType(frmInsert.FindControl("CasehandlerfuDialog"), FileUpload).HasFile) Then
+                CType(frmInsert.FindControl("CasehandlerfuDialog"), FileUpload).SaveAs(savePath & CType(frmInsert.FindControl("CasehandlerfuDialog"), FileUpload).FileName)
+                Dim updatecommand As New SqlCommand("update tblQLT set CasehandlerFilename = '" & CType(frmInsert.FindControl("CasehandlerfuDialog"), FileUpload).FileName & "', CasehandlerPath = '" & savePath & CType(frmInsert.FindControl("CasehandlerfuDialog"), FileUpload).FileName & "' where QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, SqlConnection)
+                updatecommand.ExecuteNonQuery()
+            End If
+        Catch ex As Exception
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alerterror();", True)
+        End Try
         'Check if the PCA text box is empty
         If CType(frmInsert.FindControl("PermanentCorrectiveActionTextBox"), TextBox).Text IsNot "" Then
             'if they wrote then insert it into the table
-            Dim PCAquery As String = "INSERT INTO [tblPermanentCorrectiveAction] ([QLTID], [PermanentCorrectiveAction], [Timestamp], [Visible]) VALUES (@QLTID, @PermanentCorrectiveAction, getDate(), 1)"
+            Dim PCAquery As String = "INSERT INTO [tblPermanentCorrectiveAction] ([QLTID], [PermanentCorrectiveAction], [Timestamp], [Visible], [PostedBy]) VALUES (@QLTID, @PermanentCorrectiveAction, getDate(), 1, @PostedBy)"
             Using PCAconn As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
                 Using PCAcomm As New SqlCommand()
                     With PCAcomm
@@ -92,6 +109,7 @@ System.Web.Services.WebMethod()> _
                         .CommandText = PCAquery
                         .Parameters.AddWithValue("@QLTID", CType(frmInsert.FindControl("IDTextbox"), Label).Text)
                         .Parameters.AddWithValue("@PermanentCorrectiveAction", CType(frmInsert.FindControl("PermanentCorrectiveActionTextBox"), TextBox).Text)
+                        .Parameters.AddWithValue("@PostedBy", Me.User.Identity.Name.ToString())
                     End With
                     PCAconn.Open()
                     PCAcomm.ExecuteNonQuery()
@@ -102,7 +120,7 @@ System.Web.Services.WebMethod()> _
         'Check if the ACA text box is empty
         If CType(frmInsert.FindControl("AdditionalCorrectiveActionTextBox"), TextBox).Text IsNot "" Then
             'if they wrote then insert it into the table
-            Dim query As String = "INSERT INTO [tblAdditionalCorrectiveAction] ([QLTID], [AdditionalCorrectiveAction], [Timestamp]) VALUES (@QLTID, @AdditionalCorrectiveAction, getDate())"
+            Dim query As String = "INSERT INTO [tblAdditionalCorrectiveAction] ([QLTID], [AdditionalCorrectiveAction], [Timestamp], [Visible], [PostedBy]) VALUES (@QLTID, @AdditionalCorrectiveAction, getDate(), 1, @PostedBy)"
             Using conn As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
                 Using comm As New SqlCommand()
                     With comm
@@ -111,6 +129,7 @@ System.Web.Services.WebMethod()> _
                         .CommandText = query
                         .Parameters.AddWithValue("@QLTID", CType(frmInsert.FindControl("IDTextbox"), Label).Text)
                         .Parameters.AddWithValue("@AdditionalCorrectiveAction", CType(frmInsert.FindControl("AdditionalCorrectiveActionTextBox"), TextBox).Text)
+                        .Parameters.AddWithValue("@PostedBy", Me.User.Identity.Name.ToString())
                     End With
                     conn.Open()
                     comm.ExecuteNonQuery()
@@ -327,7 +346,7 @@ System.Web.Services.WebMethod()> _
                 Dim ACAconnectionString As String
                 ACAconnectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
                 Dim ACASqlConnection As New SqlConnection(ACAconnectionString)
-                Dim ACAsc As New SqlCommand("select * from tblAdditionalCorrectiveAction where QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, ACASqlConnection)
+                Dim ACAsc As New SqlCommand("select * from tblAdditionalCorrectiveAction where Visible = 1 AND QLTID = " & CType(frmInsert.FindControl("IDTextbox"), Label).Text, ACASqlConnection)
                 ACASqlConnection.Open()
                 Dim ACAda As New SqlDataAdapter(ACAsc)
                 ACAda.Fill(ACAdt)
@@ -454,6 +473,23 @@ System.Web.Services.WebMethod()> _
         gvDS.FilterExpression = ""
         gvDS.DataBind()
         gvQLT.DataBind()
+    End Sub
+
+    Protected Sub DeptFilterDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
+        Dim DeptID As String = CType(MainContent.FindControl("DeptFilterDropDownList"), DropDownList).SelectedValue
+        If (DeptID IsNot String.Empty) Then
+            gvDS.FilterExpression = "DepartmentID = " & DeptID
+            gvDS.DataBind()
+            gvQLT.DataBind()
+        Else
+            gvDS.FilterExpression = ""
+            gvDS.DataBind()
+            gvQLT.DataBind()
+        End If
+
+
     End Sub
 
     Protected Sub frmInsert_ItemUpdating(sender As Object, e As FormViewUpdateEventArgs)
@@ -590,5 +626,80 @@ System.Web.Services.WebMethod()> _
         Dim gvPermanentCorrectiveAction As GridView = CType(frmInsert.FindControl("gvPermanentCorrectiveAction"), GridView)
         gvPermanentCorrectiveAction.EditIndex = -1
         BindPCA()
+    End Sub
+
+    Protected Sub gvQLT_DataBound(sender As Object, e As EventArgs)
+        'Set the count at the top of the page (work in progress)
+        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
+        Dim IssuedLabel As Label = CType(MainContent.FindControl("IssuedCount"), Label)
+        Dim AssignedLabel As Label = CType(MainContent.FindControl("AssignedCount"), Label)
+        Dim QLTReviewLabel As Label = CType(MainContent.FindControl("QLTReviewCount"), Label)
+        Dim Resolvedlabel As Label = CType(MainContent.FindControl("ResolvedCount"), Label)
+        Dim QTReviewLabel As Label = CType(MainContent.FindControl("QTReviewCount"), Label)
+
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        SqlConnection.Open()
+
+        Dim scIssuedCount As New SqlCommand("SELECT COUNT(QLTID) FROM tblQLT WHERE StatusID = 1 AND Visible = 1", SqlConnection)
+        Dim reader As SqlDataReader = scIssuedCount.ExecuteReader()
+        reader.Read()
+        Dim IssuedCount As Int32 = reader.GetInt32(0)
+        reader.Close()
+
+        Dim scAssignedCount As New SqlCommand("SELECT COUNT(QLTID) FROM tblQLT WHERE StatusID = 2 AND Visible = 1", SqlConnection)
+        reader = scAssignedCount.ExecuteReader()
+        reader.Read()
+        Dim AssignedCount As Int32 = reader.GetInt32(0)
+        reader.Close()
+
+        Dim scQLTReviewCount As New SqlCommand("SELECT COUNT(QLTID) FROM tblQLT WHERE StatusID = 4 AND Visible = 1", SqlConnection)
+        reader = scQLTReviewCount.ExecuteReader()
+        reader.Read()
+        Dim QLTReviewCount As Int32 = reader.GetInt32(0)
+        reader.Close()
+
+        Dim scResolvedCount As New SqlCommand("SELECT COUNT(QLTID) FROM tblQLT WHERE StatusID = 6 AND Visible = 1", SqlConnection)
+        reader = scResolvedCount.ExecuteReader()
+        reader.Read()
+        Dim ResolvedCount As Int32 = reader.GetInt32(0)
+        reader.Close()
+
+        Dim scQTReviewCount As New SqlCommand("SELECT COUNT(QLTID) FROM tblQLT WHERE StatusID = 9 AND Visible = 1", SqlConnection)
+        reader = scQTReviewCount.ExecuteReader()
+        reader.Read()
+        Dim QTReviewCount As Int32 = reader.GetInt32(0)
+        reader.Close()
+
+        SqlConnection.Close()
+
+        IssuedLabel.Text = IssuedCount
+        AssignedLabel.Text = AssignedCount
+        QLTReviewLabel.Text = QLTReviewCount
+        Resolvedlabel.Text = ResolvedCount
+        QTReviewLabel.Text = QTReviewCount
+    End Sub
+
+    Protected Sub gvAdditionalCorrectiveAction_RowDeleting(sender As Object, e As GridViewDeleteEventArgs)
+        Dim gvAdditionalCorrectiveAction As GridView = CType(frmInsert.FindControl("gvAdditionalCorrectiveAction"), GridView)
+        Dim dt As DataTable = ViewState("ACA")
+        Dim row = gvAdditionalCorrectiveAction.Rows(e.RowIndex)
+        dt.Rows.RemoveAt(e.RowIndex)
+        Dim idLabel As Label = CType(row.Cells(2).FindControl("ACALabel"), Label)
+        Dim ACAID As String = idLabel.Text.ToString
+
+        Dim connectionString As String
+        connectionString = "Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true"
+        Dim SqlConnection As New SqlConnection(connectionString)
+        SqlConnection.Open()
+        Dim cmd As New SqlCommand
+        cmd.CommandText = "UPDATE tblAdditionalCorrectiveAction SET Visible = '0' WHERE ACAID = '" + ACAID + "'"
+        cmd.CommandType = CommandType.Text
+        cmd.Connection = SqlConnection
+        cmd.ExecuteScalar()
+        SqlConnection.Close()
+
+        BindACA()
     End Sub
 End Class

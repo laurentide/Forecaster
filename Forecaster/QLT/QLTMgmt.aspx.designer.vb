@@ -32,6 +32,15 @@ Partial Public Class QLTMgmt
     Protected WithEvents frmInsert As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
+    '''DeptFilterDropDownList control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DeptFilterDropDownList As Global.System.Web.UI.WebControls.DropDownList
+
+    '''<summary>
     '''PSSFilterButton control.
     '''</summary>
     '''<remarks>
@@ -48,6 +57,51 @@ Partial Public Class QLTMgmt
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents ResetPSSFilterButton As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''IssuedCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents IssuedCount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''AssignedCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents AssignedCount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''QLTReviewCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QLTReviewCount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''ResolvedCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents ResolvedCount As Global.System.Web.UI.WebControls.Label
+
+    '''<summary>
+    '''QTReviewCount control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents QTReviewCount As Global.System.Web.UI.WebControls.Label
 
     '''<summary>
     '''gvQLT control.

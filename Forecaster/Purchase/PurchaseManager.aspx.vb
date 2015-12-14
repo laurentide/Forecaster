@@ -97,6 +97,7 @@ Public Class PurchaseManager
                                  "Cost not to exceed: " & CType(frmView.FindControl("TotalPriceTextBox"), TextBox).Text & vbCrLf & _
                                  "This request was redirected to another manager!"
             Dim mm As New MailMessage(managerEmail, CType(frmView.FindControl("RequesterEmailTextBox"), Label).Text, "Request transferred (ID: " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text & ")", body)
+            mm.CC.Add(managerEmail)
             Dim smtp As New SmtpClient("lcl-exc")
             smtp.Send(mm)
             System.Web.UI.ScriptManager.RegisterClientScriptBlock(Me, Me.GetType(), "Script", "alertemail();", True)

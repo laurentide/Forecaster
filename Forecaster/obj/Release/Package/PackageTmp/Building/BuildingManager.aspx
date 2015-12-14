@@ -66,13 +66,13 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Office needed" ControlToValidate="OfficeDropDown" />
                     </td>
                 </tr>
-                <%--                <tr>
+                <tr>
                     <td>IssuedDate:
                     </td>
                     <td>
-                        <asp:TextBox ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate") %>' />
+                        <asp:TextBox ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate") %>' readonly="true"/>
                     </td>
-                </tr>--%>
+                </tr>
                 <%--                <tr>
                     <td>RevisedDate:
                     </td>
@@ -232,7 +232,6 @@
    SET [StatusID] =          @StatusID    
       ,[Description] =       @Description 
       ,[OfficeID] =          @OfficeID 
-      ,[IssuedDate] =        @IssuedDate 
       ,[RevisedDate] =       @RevisedDate
       ,[AdditionalInfo] =    @AdditionalInfo 
       ,[CorrectiveAction] =  @CorrectiveAction
@@ -252,7 +251,6 @@
             <asp:Parameter Name="StatusID" DefaultValue="1" />
             <asp:Parameter Name="IssuedBy" />
             <asp:Parameter Name="OfficeID" />
-            <asp:Parameter Name="IssuedDate" />
             <asp:SessionParameter Name="RevisedDate" SessionField="RevisedDate" />
             <asp:Parameter Name="AdditionalInfo" />
             <asp:Parameter Name="Visible" DefaultValue="true" />

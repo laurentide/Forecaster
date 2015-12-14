@@ -279,21 +279,22 @@
                         <asp:GridView ID="gvAdditionalCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
                             RowStyle-CssClass="grid_RowStyle"
                             CellPadding="4" ForeColor="#333333"
-                            Font-Size="10px">
+                            Font-Size="10px" OnRowDeleting="gvAdditionalCorrectiveAction_RowDeleting">
                             <Columns>
                                 <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
-                                <asp:TemplateField HeaderText="ID" SortExpression="ACAID">
+<%--                               <asp:CommandField ShowSelectButton="True" SelectText="Edit" />--%>
+                                <asp:TemplateField HeaderText="ID" SortExpression="ACAID" Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="ACALabel" runat="server" Text='<%# Eval("ACAID")%>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="AdditionalCorrectiveAction" HeaderText="Additional Corrective Action" SortExpression="AdditionalCorrectiveAction" />
                                 <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" />
+                                <asp:BoundField DataField="PostedBy" HeaderText="Posted By" SortExpression="PostedBy" />
                             </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -326,7 +327,7 @@
                     <asp:TextBox class="textboxWidth" ID="PermanentCorrectiveActionTextBox" runat="server" TextMode="MultiLine" Rows="5" />
                 </td></tr><tr><td>Permanent Corrective Action List:</td><td colspan="2">
                         <asp:GridView ID="gvPermanentCorrectiveAction" runat="server" AutoGenerateColumns="False" ShowFooter="true" HeaderStyle-CssClass="grid_Header"
-                            RowStyle-CssClass="grid_RowStyle" AutoGenerateEditButton="true" OnRowCancelingEdit="gvPermanentCorrectiveAction_RowCancelingEdit"
+                            RowStyle-CssClass="grid_RowStyle" OnRowCancelingEdit="gvPermanentCorrectiveAction_RowCancelingEdit"
                             CellPadding="4" ForeColor="#333333" OnRowDeleting="gvPermanentCorrectiveAction_RowDeleting" OnRowEditing="gvPermanentCorrectiveAction_RowEditing"
                             Font-Size="10px" OnRowUpdating="gvPermanentCorrectiveAction_RowUpdating" DatKeyNames="PCAID">
                             <Columns>
@@ -335,7 +336,7 @@
                                         <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID" SortExpression="PCAID" >
+                                <asp:TemplateField HeaderText="ID" SortExpression="PCAID" Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="PCALabel" runat="server" Text='<%# Eval("PCAID")%>' />
                                     </ItemTemplate>
@@ -343,6 +344,7 @@
                                 <asp:BoundField DataField="PermanentCorrectiveAction" HeaderText="Permanent Corrective Action" SortExpression="PermanentCorrectiveAction">
                                 <ControlStyle Width="100%" /></asp:BoundField>
                                 <asp:BoundField DataField="Timestamp" HeaderText="Date Posted" SortExpression="Timestamp" DataFormatString="{0:d}" ReadOnly="true"/>
+                                <asp:BoundField DataField="PostedBy" HeaderText="Posted By" SortExpression="PostedBy" />
                             </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
@@ -407,6 +409,13 @@
                 <td>Feedback to Issuer: </td>
                 <td><asp:TextBox ID="FeedbackToIssuerTextBox" runat="server" Text='<%# Bind("FeedbackToIssuer")%>' class="textboxWidth" TextMode="MultiLine" Rows="5"  /> </td>
             </tr>
+            <tr><td>Add Attachment (for case handler, not visible to issuer)</td><td>
+                <asp:FileUpload ID="CasehandlerfuDialog" runat="server" allowmultiple="true"/></td></tr>
+            <tr><td>  
+                 FileName:</td><td><asp:Label ID="CaseHandlerFileName" runat="server" Text='<%# Bind("CasehandlerFilename")%>' /></td></tr>
+                <tr><td>Path:</td><td><asp:Hyperlink ID="CasehandlerPath" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("CasehandlerPath")), "", Eval("CasehandlerPath")))%>' Text='<%# IIf(IsDBNull(Eval("CasehandlerPath")),"",Eval("CasehandlerPath"))%>' Target="_blank" />
+                </td>
+            </tr>
             <tr><td><br /></td></tr>
             <tr><td><br /></td></tr>
             <tr>
@@ -428,17 +437,24 @@
                     &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
                 </td>
             </tr>
+            <tr><td><br /></td></tr>
+            <tr><td><br /></td></tr>
           </table>
         </EditItemTemplate>
-    </asp:FormView><table><tr><td>
+    </asp:FormView><table><tr><td>Filter by department: <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department" 
+        AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="DeptFilterDropDownList_SelectedIndexChanged" AutoPostBack="true">
+        <asp:ListItem Text="(Select the department)" Value="" /></asp:DropDownList>
     <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true"/>
     <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td></tr>
-<%--    <tr><td>Issued: <asp:Label ID="IssuedCount" runat="server" /> Assigned: <asp:Label ID="AssignedCount" runat="server" /></td></tr>--%>
+    <tr><td>Issued: <asp:Label ID="IssuedCount" runat="server" /> Assigned: <asp:Label ID="AssignedCount" runat="server" />
+        Waiting For QLT Review: <asp:Label ID="QLTReviewCount" runat="server" /> Resolved: <asp:Label ID="ResolvedCount" runat="server" />
+        Waiting For QT Review: <asp:Label ID="QTReviewCount" runat="server" />
+        </td></tr>
     </table>
     <asp:GridView ID="gvQLT" runat="server" AutoGenerateColumns="False" DataSourceID="sdsQLTGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
         RowStyle-CssClass="grid_RowStyle"
-        CellPadding="4" ForeColor="#333333"
+        CellPadding="4" ForeColor="#333333" OnDataBound="gvQLT_DataBound"
         Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvQLT_SelectedIndexChanged" DataKeyNames="QLTID">
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="Edit" />

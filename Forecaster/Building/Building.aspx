@@ -66,13 +66,13 @@
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Office Needed" ControlToValidate="OfficeDropDown" />
                     </td>
                 </tr>
-<%--                <tr>
-                    <td>IssuedDate:
+                <tr>
+                    <td>Issued Date:
                     </td>
                     <td>
-                        <asp:TextBox ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate") %>' />
+                        <asp:TextBox ID="IssuedDateTextBox" runat="server" Text='<%# Bind("IssuedDate") %>' readonly="true" />
                     </td>
-                </tr>--%>
+                </tr>
 <%--                <tr>
                     <td>RevisedDate:
                     </td>
@@ -382,7 +382,7 @@
 			@IssuedByEmail,
 			@IssuedByUsername,
 			@OfficeID,
-			@IssuedDate,
+			getDate(),
 			@RevisedDate,
 			@AdditionalInfo,
 			@CorrectiveAction,
@@ -400,8 +400,7 @@
       ,[IssuedBy] =          @IssuedBy 
       ,[IssuedByEmail] =     @IssuedByEmail
       ,[IssuedByUsername] =  @IssuedByUsername 
-      ,[OfficeID] =          @OfficeID 
-      ,[IssuedDate] =        @IssuedDate 
+      ,[OfficeID] =          @OfficeID
       ,[RevisedDate] =       @RevisedDate
       ,[AdditionalInfo] =    @AdditionalInfo 
       ,[CorrectiveAction] =  @CorrectiveAction
@@ -423,7 +422,7 @@
             <asp:Parameter Name="IssuedByEmail" />
             <asp:SessionParameter Name="IssuedByUsername" SessionField="Username" />
             <asp:Parameter Name="OfficeID" />
-            <asp:SessionParameter Name="IssuedDate" SessionField="IssuedDate" />
+            <asp:Parameter Name="IssuedDate"/>
             <asp:Parameter Name="RevisedDate" />
             <asp:Parameter Name="AdditionalInfo" />
             <asp:Parameter Name="Visible" DefaultValue="true" />
@@ -443,7 +442,6 @@
             <asp:Parameter Name="IssuedByEmail" />
             <asp:SessionParameter Name="IssuedByUsername" SessionField="Username" />
             <asp:Parameter Name="OfficeID" />
-            <asp:Parameter Name="IssuedDate" />
             <asp:SessionParameter Name="RevisedDate" SessionField="RevisedDate" />
             <asp:Parameter Name="AdditionalInfo" />
             <asp:Parameter Name="Visible" DefaultValue="true" />

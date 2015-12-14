@@ -11,17 +11,17 @@ Public Class Expense
 
         If Not Me.IsPostBack Then
             'Get Default Exchange Rate
-            Dim connectionString As String
-            connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
-            Dim SqlConnection As New SqlConnection(connectionString)
-            SqlConnection.Open()
-            Dim sc As New SqlCommand("select exchangerate from tblDefaultExchangeRAte", SqlConnection)
-            Dim reader As SqlDataReader = sc.ExecuteReader()
-            reader.Read()
-            Dim exchangeRate As Double = reader.GetDouble(0)
-            reader.Close()
-            SqlConnection.Close()
-            CType(frmExpense.FindControl("ExchangeRateTextBox"), TextBox).Text = exchangeRate.ToString
+            'Dim connectionString As String
+            'connectionString = "Server=lcl-sql2k5-s;Database=ExpenseReport;Trusted_Connection=true"
+            'Dim SqlConnection As New SqlConnection(connectionString)
+            'SqlConnection.Open()
+            'Dim sc As New SqlCommand("select exchangerate from tblDefaultExchangeRAte", SqlConnection)
+            'Dim reader As SqlDataReader = sc.ExecuteReader()
+            'reader.Read()
+            'Dim exchangeRate As Double = reader.GetDouble(0)
+            'reader.Close()
+            'SqlConnection.Close()
+            'CType(frmExpense.FindControl("ExchangeRateTextBox"), TextBox).Text = exchangeRate.ToString
         End If
 
         'Create datable that is like the ExpenseDetails table for temporary storage until the user commits the whole expense

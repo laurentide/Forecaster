@@ -6,7 +6,7 @@
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>New Expense Report</h2>
+    <h2>Expense Report</h2>
     <asp:ScriptManager ID="ScriptManager" runat="server" />
     <asp:FormView runat="server" ID="frmExpense" DefaultMode="Insert" DataKeyNames="ExpenseReportID" DataSourceID="sdsForm"
         OnItemInserted="frmExpense_ItemInserted"
@@ -379,6 +379,9 @@
             </table>
         </EditItemTemplate>
         <InsertItemTemplate>
+            Expense Reports are now done in IFS. You can view your previously entered expense reports here. 
+        </InsertItemTemplate>
+  <%--       <InsertItemTemplate>
             <table>
                 <tr>
                     <td>Employee Name:
@@ -395,7 +398,7 @@
                         <asp:TextBox ID="EmployeeDomainUserTextBox" runat="server" Text='<%# Bind("EmployeeDomainUser") %>' />
                     </td>
                 </tr>--%>
-                <tr>
+               <%--  <tr>
                     <td>Employee Email:
                     </td>
                     <td>
@@ -409,7 +412,7 @@
                     </td>
                     <td>
                         <%--<asp:TextBox ID="DepartmentIDTextBox" runat="server" Text='<%# Bind("DepartmentID") %>' />--%>
-                        <asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
+                        <%-- %><asp:DropDownList ID="DepartmentDropDown" runat="server" DataSourceID="sdsDepartments" AppendDataBoundItems="true" DataValueField="DepartmentID" DataTextField="DepartmentName" SelectedValue='<%# Bind("DepartmentID")%>'>
                             <asp:ListItem Text="(Select your department)" Value="" />
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your department" ControlToValidate="DepartmentDropDown" />
@@ -424,7 +427,7 @@
                         </asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Select your manager" ControlToValidate="ManagerDropDown" />
                         <%--<asp:TextBox ID="ManagerIDTextBox" runat="server" Text='<%# Bind("ManagerID") %>' />--%>
-                    </td>
+                    <%-- %></td>
                 </tr>
                 <%--                <tr>
                     <td>Payment Type:
@@ -437,7 +440,7 @@
                         <%--<asp:TextBox ID="PaymentTypeIDTextBox" runat="server" Text='<%# Bind("PaymentTypeID") %>' />
                     </td>
                 </tr>--%>
-                <tr>
+               <%-- %> <tr>
                     <td>Expense Report Date:
                     </td>
                     <td>
@@ -455,7 +458,7 @@
                         <asp:TextBox ID="AdvanceAmountTextBox" runat="server" Text='<%# Bind("AdvanceAmount") %>' />
                     </td>
                 </tr>--%>
-                <tr>
+             <%-- %>   <tr>
                     <td>Business Purpose:
                     </td>
                     <td>
@@ -505,7 +508,7 @@
                                                 <asp:DropDownList ID="ddlExpenseTypes" runat="server" AppendDataBoundItems="false" AutoPostBack="true" OnSelectedIndexChanged="ddlExpenseTypes_SelectedIndexChanged">
                                                 </asp:DropDownList>
                                                 <%--<asp:TextBox Text='<%# Bind("ExpenseType") %>' runat="server" ID="ExpenseTypeTextBox" />--%>
-                                            </td>
+                                   <%-- %>         </td>
                                         </tr>
                                         <asp:Panel ID="panKM" runat="server">
                                             <tr>
@@ -557,7 +560,7 @@
                                                 <asp:TextBox Text='<%# Bind("TaxCategory") %>' runat="server" ID="TaxCategoryTextBox" /></td>
                                         </tr>--%>
 
-                                        <asp:Panel ID="panTip" runat="server" Visible="false">
+                            <%-- %>            <asp:Panel ID="panTip" runat="server" Visible="false">
                                             <tr>
                                                 <td>Tip:
                                                 </td>
@@ -608,7 +611,7 @@
                                                     <asp:ListItem Text="(Select your province)" Value="" />
                                                 </asp:DropDownList>
                                                 <%--<asp:TextBox runat="server" ID="ProvinceIDTextBox" Text='<%# Bind("ProvinceID")%>' /></td>--%>
-                                        </tr>
+                                       <%-- </tr>--%>
                                         <%--                                        <tr>
                                             <td>Type of transaction:
                                             </td>
@@ -618,12 +621,12 @@
                                                     <asp:ListItem Text="Paid by company" Value="Paid by company" />
                                                 </asp:DropDownList>
                                         </tr>--%>
-                                        <tr>
+                       <%-- %>                 <tr>
                                             <td>Currency of transaction:
                                             </td>
                                             <td>
                                                 <%--<asp:TextBox runat="server" Text='<%# Bind("Currency") %>' ID="CurrencyTextBox" />--%>
-                                                <asp:DropDownList ID="CurrencyDropDown" runat="server" SelectedValue='<%# Bind("Currency")%>'>
+                              <%-- %>                  <asp:DropDownList ID="CurrencyDropDown" runat="server" SelectedValue='<%# Bind("Currency")%>'>
                                                     <asp:ListItem Text="Canadian Funds" Value="CD$" />
                                                     <asp:ListItem Text="US Currency" Value="US$" />
                                                 </asp:DropDownList>
@@ -643,12 +646,12 @@
                                             <td>
                                                 <asp:Button runat="server" Text="Add expense line" CommandName="Insert" ID="InsertButton" CausesValidation="True" ValidationGroup="InsertDetails" />
                                                 <%--&nbsp;<asp:LinkButton runat="server" Text="Cancel" CommandName="Cancel" ID="InsertCancelButton" CausesValidation="False" />--%>
-                                            </td>
+<%--                                            </td>
                                             <td></td>
                                         </tr>
                                     </table>
-                                </InsertItemTemplate>
-                            </asp:FormView>
+                                </InsertItemTemplate>--%>
+<%--                            </asp:FormView>
                         </asp:Panel>
                     </td>
                 </tr>
@@ -662,7 +665,7 @@
                             <Columns>
                                 <%--<asp:BoundField DataField="ExpenseDetailID" HeaderText="ExpenseDetailID" InsertVisible="False" ReadOnly="True" SortExpression="ExpenseDetailID" />--%>
                                 <%--<asp:BoundField DataField="ExpenseReportID" HeaderText="ExpenseReportID" SortExpression="ExpenseReportID" />--%>
-                                <asp:TemplateField ShowHeader="False">
+                       <%-- %>         <asp:TemplateField ShowHeader="False">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this expense?');" />
                                     </ItemTemplate>
@@ -679,19 +682,19 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <%--<asp:BoundField DataField="ExpenseTypeID" HeaderText="Expense Type" SortExpression="ExpenseTypeID" />--%>
-                                <asp:BoundField DataField="ExpenseItemDescription" HeaderText="Description" SortExpression="ExpenseItemDescription" />
+                       <%-- %>         <asp:BoundField DataField="ExpenseItemDescription" HeaderText="Description" SortExpression="ExpenseItemDescription" />
                                 <asp:BoundField DataField="ExpenseDate" HeaderText="Date" SortExpression="ExpenseDate" />
                                 <%--<asp:BoundField DataField="Tip" HeaderText="Tip" SortExpression="Tip" />
                                 <asp:BoundField DataField="Lodging_Taxes" HeaderText="Lodging_Taxes" SortExpression="Lodging_Taxes" />
                                 <asp:BoundField DataField="NonTaxableExtras" HeaderText="NonTaxableExtras" SortExpression="NonTaxableExtras" />--%>
-                                <asp:TemplateField HeaderText="Province" SortExpression="ProvinceID">
+                   <%-- %>             <asp:TemplateField HeaderText="Province" SortExpression="ProvinceID">
                                     <ItemTemplate>
                                         <asp:Label ID="ProvinceLabel" runat="server" Text='<%# findProvince(Eval("ProvinceID"))%>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <%--<asp:BoundField DataField="TaxCategory" HeaderText="TaxCategory" SortExpression="TaxCategory" />--%>
                                 <%--<asp:BoundField DataField="Transaction" HeaderText="Transaction" SortExpression="Transaction" />--%>
-                                <asp:BoundField DataField="Currency" HeaderText="Currency" SortExpression="Currency" />
+                 <%-- %>               <asp:BoundField DataField="Currency" HeaderText="Currency" SortExpression="Currency" />
                                 <asp:TemplateField HeaderText="Total Amount" SortExpression="ExpenseItemAmount">
                                     <FooterStyle HorizontalAlign="Right" />
                                     <ItemTemplate>
@@ -706,7 +709,7 @@
                                 <asp:BoundField DataField="AQST" HeaderText="AQST" SortExpression="AQST" />--%>
                                 <%--                            <asp:BoundField DataField="Km" HeaderText="Km" SortExpression="Km" />
                                 <asp:BoundField DataField="Km_Rate" HeaderText="Km Rate" SortExpression="Km_Rate" />--%>
-                            </Columns>
+<%--                            </Columns>
                             <EditRowStyle BackColor="#999999" />
                             <EmptyDataTemplate>
                                 No expense entered yet!
@@ -728,11 +731,11 @@
                     <td>
                         <asp:Button ID="InsertButton" runat="server" CausesValidation="True" ValidationGroup="Insert" CommandName="Insert" Text="Save Expense Report" />
                         <%--&nbsp;<asp:Button ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
-                    </td>
+<%--                    </td>
                     <td></td>
                 </tr>
             </table>
-        </InsertItemTemplate>
+        </InsertItemTemplate>--%>
     </asp:FormView>
     <asp:GridView ID="gvExpenseReports" runat="server" AutoGenerateColumns="False" DataKeyNames="ExpenseReportID" DataSourceID="sdsExpenseReportGrid" AllowPaging="True" AllowSorting="True"
         HeaderStyle-CssClass="grid_Header"
@@ -740,11 +743,11 @@
         CellPadding="4" ForeColor="#333333"
         Font-Size="10px" PageSize="50" OnSelectedIndexChanged="gvExpenseReports_SelectedIndexChanged" OnSelectedIndexChanging="gvExpenseReports_SelectedIndexChanging" OnRowCommand="gvExpenseReports_RowCommand">
         <Columns>
-            <asp:TemplateField ShowHeader="False">
+<%--            <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
                     <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this Expense report?');" />
                 </ItemTemplate>
-            </asp:TemplateField>
+            </asp:TemplateField>--%>
             <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
             <asp:TemplateField ShowHeader="false">
                 <ItemTemplate>
