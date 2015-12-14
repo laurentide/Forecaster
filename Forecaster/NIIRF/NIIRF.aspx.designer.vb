@@ -23,13 +23,13 @@ Partial Public Class NIIRF
     Protected WithEvents ScriptManager As Global.System.Web.UI.ScriptManager
 
     '''<summary>
-    '''niirfInsert control.
+    '''frmInsert control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents niirfInsert As Global.System.Web.UI.WebControls.FormView
+    Protected WithEvents frmInsert As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
     '''sdsInsert control.

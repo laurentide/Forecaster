@@ -48,5 +48,8 @@
 			<siteMapNode url="MasterActionItemTool/ViewMyActionItems.aspx" title="View Existing Action Items" description="" />
 			<siteMapNode url="MasterActionItemTool/MASTManager.aspx" title="Action Item Mgmt" description="" />
 		</siteMapNode>
+    <siteMapNode title="NIIRF" roles="*" description="">
+      <siteMapNode url="NIIRF/NIIRF.aspx" title="New Inventory Item Request Form" description="" />
+    </siteMapNode>
 	</siteMapNode>
 </siteMap>

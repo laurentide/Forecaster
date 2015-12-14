@@ -6,10 +6,10 @@
     <h2>New Inventory Item Request Form</h2>
         <asp:ScriptManager ID="ScriptManager" runat="server" />
        <Triggers>
-           <asp:PostBackTrigger ControlID="niirfInsert" />
+           <asp:PostBackTrigger ControlID="frmInsert" />
        </Triggers>
         <ContentTemplate>
-        <asp:FormView ID="niirfInsert" AutoPostBack="True" runat="server" DefaultMode="Insert">
+        <asp:FormView ID="frmInsert" AutoPostBack="True" runat="server" DefaultMode="Insert" DataSourceID="sdsInsert">
         <InsertItemTemplate>
             <table>
                 <tr>
@@ -45,8 +45,8 @@
                 <tr>
                     <td>List Price Currency:</td>
                     <td>
-                        <asp:DropDownList ID="CurrencyDropDownList" runat="server" AutoPostBack="true" AppendDataBoundItems="true">
-                            <asp:ListItem Text="CAN" Value="0" />
+                        <asp:DropDownList ID="CurrencyDropDownList" runat="server" AutoPostBack="true" AppendDataBoundItems="true" SelectedValue='<%# Bind("ListPriceCurrency")%>'>
+                            <asp:ListItem Text="CND" Value="0" />
                             <asp:ListItem Text="USD" Value="1" />
                         </asp:DropDownList>
                     </td>
@@ -70,12 +70,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Original Order & Original P.O.#:</td>
-                    <td>
-                        <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("OriginalOrder")%>' Width="200" /><asp:Label ID="blah" runat="server" Text=" " /><asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("OriginalPO")%>' Width="200" /></td>
-                    </td>
-                </tr>
-                <tr>
                     <td>Date:</td>
                    <td>                                                 
                         <asp:TextBox ID="DateTextbox" runat="server" Text='<%# Bind("Date")%>' />
@@ -93,13 +87,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Set as Reorder?:</td>
-                    <td>
-                        <asp:RadioButton ID="ReorderYes" runat="server" Text="Yes" GroupName="Reorder" AutoPostBack="true" OnCheckedChanged="ReorderYes_CheckedChanged"/>
-                        <asp:RadioButton ID="ReorderNo" runat="server" Text="No" GroupName="Reorder" AutoPostBack="true" OnCheckedChanged="ReorderYes_CheckedChanged" />
-                    </td>
-                </tr>
-                <tr>
                     <td>State:</td>
                     <td>
                         <asp:RadioButton ID="StateNew" runat="server" Text="New" GroupName="State" AutoPostBack="true" OnCheckedChanged="StateNew_CheckedChanged"/>
@@ -107,40 +94,134 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Please explain busniess reason for the additional stock:</td>
+                    <td>Set as Reorder?:</td>
                     <td>
-                        <asp:TextBox ID="BuisnessReasonTextBox" runat="server" Text='<%# Bind("BusinessReason")%>' Width="500" /></td>
+                        <asp:RadioButton ID="ReorderYes" runat="server" Text="Yes" GroupName="Reorder" AutoPostBack="true" OnCheckedChanged="ReorderYes_CheckedChanged"/>
+                        <asp:RadioButton ID="ReorderNo" runat="server" Text="No" GroupName="Reorder" AutoPostBack="true" OnCheckedChanged="ReorderYes_CheckedChanged" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Our stock investment target is "turns" * "margin" = 1.0. Will this stock meet this?:</td>
+                    <td><asp:Label ID="OriginalOrderLabel" runat="server" Text="Original Order & Original P.O.#:" Visible="false" /></td>
                     <td>
-                        <asp:RadioButton ID="StockInvestmentYes" runat="server" Text="Yes" GroupName="StockInvestment" AutoPostBack="true" OnCheckedChanged="StockInvestmentYes_CheckedChanged"/>
-                        <asp:RadioButton ID="StockInvestmentNo" runat="server" Text="No" GroupName="StockInvestment" AutoPostBack="true" OnCheckedChanged="StockInvestmentYes_CheckedChanged" />
+                        <asp:TextBox ID="OriginalOrderTextBox" runat="server" Text='<%# Bind("OriginalOrder")%>' Width="200" Visible="false" /><asp:Label ID="blah" runat="server" Text=" " /><asp:TextBox ID="OriginalPOTextBox" runat="server" Text='<%# Bind("OriginalPO")%>' Width="200" Visible="false"/></td>
                     </td>
                 </tr>
                 <tr>
-                    <td>What is the initial investment?:</td>
+                    <td><asp:Label ID="JustificationLabel" runat="server" text="Justification:" Visible="false" /></td>
                     <td>
-                        <asp:TextBox ID="InitialInvestmentTextBox" runat="server" Text='<%# Bind("InitialInvestment")%>' Width="500" /></td>
+                        <asp:TextBox ID="JustificationTextBox" runat="server" Text='<%# Bind("Justification")%>' Width="500" Visible="false" /></td>
                     </td>
                 </tr>
                 <tr>
-                    <td>Where is this sourced from?:</td>
+                    <td><asp:Label ID="BusinessReasonLabel" runat="server" Text="Please explain the busniess reason for the additional stock:" Visible="false" /></td>
                     <td>
-                        <asp:TextBox ID="SourcedTextBox" runat="server" Text='<%# Bind("SourcedFrom")%>' Width="500" /></td>
+                        <asp:TextBox ID="BuisnessReasonTextBox" runat="server" Text='<%# Bind("BusinessReason")%>' Width="500" Visible="false" /></td>
                     </td>
                 </tr>
                 <tr>
-                    <td>What is the lead time from factory?:</td>
+                    <td><asp:Label ID="StockInvestmentLabel" runat="server" Text="Our stock investment target is &quot;turns&quot; * &quot;margin&quot; = 1.0.<br />Will this stock meet this?:" Visible="false"/></td>
                     <td>
-                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("LeadTime")%>' Width="500" /></td>
+                        <asp:RadioButton ID="StockInvestmentYes" runat="server" Text="Yes" GroupName="StockInvestment" AutoPostBack="true" OnCheckedChanged="StockInvestmentYes_CheckedChanged" Visible="false"/>
+                        <asp:RadioButton ID="StockInvestmentNo" runat="server" Text="No" GroupName="StockInvestment" AutoPostBack="true" OnCheckedChanged="StockInvestmentYes_CheckedChanged" Visible="false"/>
                     </td>
                 </tr>
+                <tr>
+                    <td><asp:Label ID="NoExplainLabel" runat="server" Text="If no, explain:" Visible="false" /></td>
+                    <td>
+                        <asp:TextBox ID="NoExplainTextBox" runat="server" Text='<%# Bind("NoExplain")%>' Width="500" Visible="false" /></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><asp:Label ID="InitialInvestmentLabel" runat="server" Text="What is the initial investment?:" Visible="false" /></td>
+                    <td>
+                        <asp:TextBox ID="InitialInvestmentTextBox" runat="server" Text='<%# Bind("InitialInvestment")%>' Width="500" Visible="false"/></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><asp:Label ID="SourcedFromLabel" runat="server" Text="Where is this sourced from?:" Visible="false" /></td>
+                    <td>
+                        <asp:TextBox ID="SourcedTextBox" runat="server" Text='<%# Bind("SourcedFrom")%>' Width="500" Visible="false"/></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><asp:Label ID="LeadTimeLabel" runat="server" Text="What is the lead time from factory?:" Visible="false" /></td>
+                    <td>
+                        <asp:TextBox ID="LeadTimeTextBox" runat="server" Text='<%# Bind("LeadTime")%>' Width="500" Visible="false"/></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
+                    </td>
+                </tr> 
             </table>
         </InsertItemTemplate>
         </asp:FormView>
     </ContentTemplate>
-    <asp:SqlDataSource ID="sdsInsert" runat="server">
+    <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
+        ConnectionString="<%$ ConnectionStrings:NIIRFConnectionString %>"
+        InsertCommand="INSERT INTO [NIIRF]
+           ([ShortDescription]
+           ,[LongDescription]
+           ,[SupplierDescription]
+           ,[SupplierProductNumber]
+           ,[ListPrice]
+           ,[ListPriceCurrency]
+           ,[ProductCode]
+           ,[Quantity]
+           ,[Cost]
+           ,[Date]
+           ,[Originator]
+           ,[OriginalOrder]
+           ,[OriginalPO]
+           ,[Justification]
+           ,[BusinessReason]
+           ,[NoExplain]
+           ,[InitialInvestment]
+           ,[SourcedFrom]
+           ,[LeadTime])
+     VALUES
+           (@ShortDescription
+           ,@LongDescription
+           ,@SupplierDescription
+           ,@SupplierProductNumber
+           ,@ListPrice
+           ,@ListPriceCurrency
+           ,@ProductCode
+           ,@Quantity
+           ,@Cost
+           ,@Date
+           ,@Originator
+           ,@OriginalOrder
+           ,@OriginalPO
+           ,@Justification
+           ,@BusinessReason
+           ,@NoExplain
+           ,@InitialInvestment
+           ,@SourcedFrom
+           ,@LeadTime)
+        select @ID = @@IDENTITY">
+        <InsertParameters>
+            <asp:Parameter Name="ShortDescription" />
+            <asp:Parameter Name="LongDescription" />
+            <asp:Parameter Name="SupplierDescription" />
+            <asp:Parameter Name="SupplierProductNumber" />
+            <asp:Parameter Name="ListPrice" />
+            <asp:Parameter Name="ListPriceCurrency" />
+            <asp:Parameter Name="ProductCode" />
+            <asp:Parameter Name="Quantity" />
+            <asp:Parameter Name="Cost" />
+            <asp:Parameter Name="Date" />
+            <asp:Parameter Name="Originator" />
+            <asp:Parameter Name="OriginalOrder" />
+            <asp:Parameter Name="OriginalPO" />
+            <asp:Parameter Name="Justification" />
+            <asp:Parameter Name="BusinessReason" />
+            <asp:Parameter Name="NoExplain" />
+            <asp:Parameter Name="InitialInvestment" />
+            <asp:Parameter Name="SourcedFrom" />
+            <asp:Parameter Name="LeadTime" />
+            <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
+        </InsertParameters>
     </asp:SqlDataSource>
 </asp:Content>

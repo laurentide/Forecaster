@@ -795,9 +795,9 @@ ScriptManager control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
-</member><member name="F:Forecaster.NIIRF.niirfInsert">
+</member><member name="F:Forecaster.NIIRF.frmInsert">
 	<summary>
-niirfInsert control.
+frmInsert control.
 </summary>
 	<remarks>
 Auto-generated field.
@@ -930,6 +930,638 @@ To modify move field declaration from designer file to code-behind file.
 </member><member name="F:Forecaster.QLTMgmt.frmInsert">
 	<summary>
 frmInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.IDTextbox">
+	<summary>
+IDTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.EventTypeDropDown">
+	<summary>
+EventTypeDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator1">
+	<summary>
+RequiredFieldValidator1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.OriginDropDown">
+	<summary>
+OriginDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator2">
+	<summary>
+RequiredFieldValidator2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.TypeDropDown">
+	<summary>
+TypeDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator3">
+	<summary>
+RequiredFieldValidator3 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.TypeLabel">
+	<summary>
+TypeLabel control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.TypeTextBox">
+	<summary>
+TypeTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.DateIncidentTextbox">
+	<summary>
+DateIncidentTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.Calendar_scheduleDR">
+	<summary>
+Calendar_scheduleDR control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CalendarExtender2">
+	<summary>
+CalendarExtender2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.meeDateincident">
+	<summary>
+meeDateincident control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.Maskededitvalidator2">
+	<summary>
+Maskededitvalidator2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator6">
+	<summary>
+RequiredFieldValidator6 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.IssuedByTextBox">
+	<summary>
+IssuedByTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.IssuedByEmailTextBox">
+	<summary>
+IssuedByEmailTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ManagerDropDown">
+	<summary>
+ManagerDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator4">
+	<summary>
+RequiredFieldValidator4 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.DepartmentDropDown">
+	<summary>
+DepartmentDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator5">
+	<summary>
+RequiredFieldValidator5 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CustomerTextbox">
+	<summary>
+CustomerTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.AutocompleteExtender1">
+	<summary>
+AutocompleteExtender1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CustomerNameTextBox">
+	<summary>
+CustomerNameTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CustomerContactTelTextBox">
+	<summary>
+CustomerContactTelTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CustomerContactEmailTextBox">
+	<summary>
+CustomerContactEmailTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.SalesOrderTextBox">
+	<summary>
+SalesOrderTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.VendorTextbox">
+	<summary>
+VendorTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.AutocompleteExtender2">
+	<summary>
+AutocompleteExtender2 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.VendorContactNameTextBox">
+	<summary>
+VendorContactNameTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.VendorContactTelTextBox">
+	<summary>
+VendorContactTelTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.VendorContactEmailTextBox">
+	<summary>
+VendorContactEmailTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.PurchaseOrderTextBox">
+	<summary>
+PurchaseOrderTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.DescriptionTextBox">
+	<summary>
+DescriptionTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CorrectiveActionDropDown">
+	<summary>
+CorrectiveActionDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RequiredFieldValidator9">
+	<summary>
+RequiredFieldValidator9 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CorrectiveActionLabel">
+	<summary>
+CorrectiveActionLabel control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CorrectiveActionTakenTextBox">
+	<summary>
+CorrectiveActionTakenTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ClientContactCheckBox">
+	<summary>
+ClientContactCheckBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CauseTextBox">
+	<summary>
+CauseTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ImmediateActionRequiredCheckbox">
+	<summary>
+ImmediateActionRequiredCheckbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ImmediateActionRequiredPanel">
+	<summary>
+ImmediateActionRequiredPanel control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ImmediateActionTextbox">
+	<summary>
+ImmediateActionTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.FilenameTextbox">
+	<summary>
+FilenameTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.PathTextbox">
+	<summary>
+PathTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.QLTMembersDropDown">
+	<summary>
+QLTMembersDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.StatusDropDown">
+	<summary>
+StatusDropDown control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.FollowUpDatePanel">
+	<summary>
+FollowUpDatePanel control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.FollowUpDateTextbox">
+	<summary>
+FollowUpDateTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ISD_Image">
+	<summary>
+ISD_Image control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ISD_CalendarExtender">
+	<summary>
+ISD_CalendarExtender control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ISD_MaskedEditExtender">
+	<summary>
+ISD_MaskedEditExtender control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ISD_Maskededitvalidator">
+	<summary>
+ISD_Maskededitvalidator control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.RootCauseAnalysisTextbox">
+	<summary>
+RootCauseAnalysisTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.AdditionalCorrectiveActionTextBox">
+	<summary>
+AdditionalCorrectiveActionTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.gvAdditionalCorrectiveAction">
+	<summary>
+gvAdditionalCorrectiveAction control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.NextActionDueDateTextbox">
+	<summary>
+NextActionDueDateTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.Image1">
+	<summary>
+Image1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CalendarExtender1">
+	<summary>
+CalendarExtender1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.MaskedEditExtender1">
+	<summary>
+MaskedEditExtender1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.MaskedEditValidator1">
+	<summary>
+MaskedEditValidator1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.PermanentCorrectiveActionTextBox">
+	<summary>
+PermanentCorrectiveActionTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.gvPermanentCorrectiveAction">
+	<summary>
+gvPermanentCorrectiveAction control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.QLTApprovedCheckBox">
+	<summary>
+QLTApprovedCheckBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CostToLaurentideTextbox">
+	<summary>
+CostToLaurentideTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ManagerContactCheckbox">
+	<summary>
+ManagerContactCheckbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ManagerContactedCheckbox">
+	<summary>
+ManagerContactedCheckbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.ManagerNoteTextbox">
+	<summary>
+ManagerNoteTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.LearningOpportunityCheckbox">
+	<summary>
+LearningOpportunityCheckbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.LearningOpportunityPanel">
+	<summary>
+LearningOpportunityPanel control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.LearningOpportunityTextbox">
+	<summary>
+LearningOpportunityTextbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.FeedbackToIssuerTextBox">
+	<summary>
+FeedbackToIssuerTextBox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CasehandlerfuDialog">
+	<summary>
+CasehandlerfuDialog control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CaseHandlerFileName">
+	<summary>
+CaseHandlerFileName control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.CasehandlerPath">
+	<summary>
+CasehandlerPath control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.SendEmailCheckbox">
+	<summary>
+SendEmailCheckbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.SendEmailOriginatorCheckbox">
+	<summary>
+SendEmailOriginatorCheckbox control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.UpdateButton">
+	<summary>
+UpdateButton control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.QLTMgmt.UpdateCancelButton">
+	<summary>
+UpdateCancelButton control.
 </summary>
 	<remarks>
 Auto-generated field.

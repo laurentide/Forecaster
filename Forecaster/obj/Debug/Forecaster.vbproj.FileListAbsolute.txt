@@ -14,3 +14,4 @@ C:\Projects\Forecaster\Forecaster\obj\Debug\RdlCompile.compiled
 C:\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.dll
 C:\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.xml
 C:\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.pdb
+C:\Projects\Forecaster\Forecaster\obj\Debug\Forecaster.vbprojResolveAssemblyReference.cache
