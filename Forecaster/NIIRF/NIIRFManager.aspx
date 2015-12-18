@@ -1,29 +1,34 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="NIIRF.aspx.vb" Inherits="Forecaster.NIIRF" MaintainScrollPositionOnPostback="true"%>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/FunnelSite.Master" CodeBehind="NIIRFManager.aspx.vb" Inherits="Forecaster.NIIRFManager" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <h2>New Inventory Item Request Form</h2>
-        <asp:ScriptManager ID="ScriptManager" runat="server" />
-       <Triggers>
-           <asp:PostBackTrigger ControlID="frmInsert" />
-       </Triggers>
+    <asp:ScriptManager ID="ScriptManager" runat="server" />
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+        <Triggers>
+           <asp:PostBackTrigger ControlID="niirfInsert" />
+          </Triggers>
         <ContentTemplate>
-        <asp:FormView ID="frmInsert" AutoPostBack="True" runat="server" DefaultMode="Insert" DataSourceID="sdsInsert">
-        <InsertItemTemplate>
+        <asp:FormView ID="niirfInsert" runat="server" DefaultMode="Edit" DataKeyNames="NIIRF_ID" DataSourceID="sdsInsert" OnDataBound="niirfInsert_DataBound">
+        <EditItemTemplate>
             <table>
+                <tr>
+                    <td>ID:</td>
+                    <td>
+                        <asp:Label ID="MASTIDLabel" runat="server" Text='<%# Eval("NIIRF_ID")%>' />
+                    </td>
+                </tr>
                 <tr>
                     <td>Short Description:</td>
                     <td>
                         <asp:TextBox ID="ShortDescriptionTextBox" runat="server" Text='<%# Bind("ShortDescription")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Short Description Required" ControlToValidate="ShortDescriptionTextBox" />
                     </td>
                 </tr>
                 <tr>
                     <td>Long Description:</td>
                     <td>
                         <asp:TextBox ID="LongDescriptionTextBox" runat="server" Text='<%# Bind("LongDescription")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Long Description Required" ControlToValidate="LongDescriptionTextBox" />
                     </td>
                 </tr>
                 <tr>
@@ -42,9 +47,6 @@
                     <td>List Price:</td>
                     <td>
                         <asp:TextBox ID="ListPriceTextBox" runat="server" Text='<%# Bind("ListPrice")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="List Price Required" ControlToValidate="ListPriceTextBox" />
-                        <asp:CompareValidator ID="CompareValidator3" runat="server" Operator="DataTypeCheck" Type="Double" ControlToValidate="ListPriceTextBox" 
-                            ErrorMessage="Value must be a decimal number (dollar value)" />
                     </td>
                 </tr>
                 <tr>
@@ -60,25 +62,18 @@
                     <td>Product Code:</td>
                     <td>
                         <asp:TextBox ID="ProductCodeTextBox" runat="server" Text='<%# Bind("ProductCode")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Product Code Required" ControlToValidate="ProductCodeTextBox" />
                     </td>
                 </tr>
                 <tr>
                     <td>Quantity:</td>
                     <td>
                         <asp:TextBox ID="QuantityTextBox" runat="server" Text='<%# Bind("Quantity")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Quantity Required" ControlToValidate="QuantityTextBox" />
-                        <asp:CompareValidator ID="CompareValidator1" runat="server" Operator="DataTypeCheck" Type="Integer" ControlToValidate="QuantityTextBox" 
-                            ErrorMessage="Value must be a number" />
                     </td>
                 </tr>
                 <tr>
                     <td>Cost (CND$):</td>
                     <td>
                         <asp:TextBox ID="CostTextBox" runat="server" Text='<%# Bind("Cost")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Cost Required" ControlToValidate="CostTextBox" />
-                        <asp:CompareValidator ID="CompareValidator2" runat="server" Operator="DataTypeCheck" Type="Double" ControlToValidate="CostTextBox" 
-                            ErrorMessage="Value must be a decimal number (dollar value)" />
                     </td>
                 </tr>
                 <tr>
@@ -89,14 +84,13 @@
                         <asp:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="DateTextbox" PopupButtonID="Calendar_scheduleDR" />
                         <asp:MaskedEditExtender ID="meeDateNeeded" runat="server" MaskType="Date" CultureName="en-US" Mask="99/99/9999" TargetControlID="DateTextbox" PromptCharacter="_" />
                         <asp:MaskedEditValidator ID="Maskededitvalidator2" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="DateTextbox" ControlExtender="meeDateNeeded" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Date Required" ControlToValidate="DateTextbox" />                       
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ValidationGroup="Update" ForeColor="Red" ErrorMessage="Enter a due date" ControlToValidate="DateTextbox" />                       
                     </td>
                 </tr>
                 <tr>
                     <td>Originator:</td>
                     <td>
                         <asp:TextBox ID="OriginatorTextBox" runat="server" Text='<%# Bind("Originator")%>' Width="500" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Originator Required" ControlToValidate="OriginatorTextBox" />     
                     </td>
                 </tr>
                 <tr>
@@ -104,9 +98,7 @@
                     <td><asp:RadioButtonList ID="StateList" runat="server" SelectedValue='<%# Bind("State")%>' RepeatDirection="Horizontal">
                         <asp:ListItem ID="StateNew" runat="server" Value="0" Text="New" GroupName="State" AutoPostBack="true" />
                         <asp:ListItem ID="StateUsed" runat="server" Value="1" Text="Used" GroupName="State" AutoPostBack="true" />
-                    </asp:RadioButtonList>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="State Required" ControlToValidate="StateList" />    
-                    </td>
+                    </asp:RadioButtonList></td>
                 </tr>
                 <tr>
                     <td>Set as Reorder?:</td>
@@ -114,7 +106,7 @@
                         RepeatDirection="Horizontal">
                         <asp:ListItem ID="ReorderYes" runat="server" Value="0" Text="Yes" GroupName="Reorder" AutoPostBack="true"/>
                         <asp:ListItem ID="ReorderNo" runat="server" Value="1" Text="No" GroupName="Reorder" AutoPostBack="true"/>
-                    </asp:RadioButtonList></td><asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ValidationGroup="Insert" ForeColor="Red" ErrorMessage="Reorder Information Required" ControlToValidate="ReorderList" />
+                    </asp:RadioButtonList></td>
                 </tr>
                 <tr>
                     <td><asp:Label ID="OriginalOrderLabel" runat="server" Text="Original Order & Original P.O.#:" Visible="false" /></td>
@@ -136,13 +128,13 @@
                 </tr>
                 <tr>
                     <td><asp:Label ID="StockInvestmentLabel" runat="server" Text="Our stock investment target is &quot;turns&quot; * &quot;margin&quot; = 1.0.<br />Will this stock meet this?:" Visible="false"/></td>
-                    <td><asp:RadioButtonList runat="server" ID="StockInvestmentList" SelectedValue='<%# Bind("StockInvestment")%>' OnSelectedIndexChanged="StockInvestmentList_SelectedIndexChanged" 
-                        Visible="false" AutoPostBack="true" RepeatDirection="Horizontal">                    
+                    <td><asp:RadioButtonList runat="server" ID="StockInvestmentList" OnSelectedIndexChanged="StockInvestmentList_SelectedIndexChanged"
+                        Visible="false" AutoPostBack="true" RepeatDirection="Horizontal" SelectedValue='<%# Bind("StockInvestment")%>'>                    
                         <asp:ListItem ID="StockInvestmentYes" runat="server" Value="0" Text="Yes" GroupName="StockInvestment" AutoPostBack="true"/>
                         <asp:ListItem ID="StockInvestmentNo" runat="server" Value="1" Text="No" GroupName="StockInvestment" AutoPostBack="true"/>
                     </asp:RadioButtonList></td>
                 </tr>
-                <tr>
+               <tr>
                     <td><asp:Label ID="NoExplainLabel" runat="server" Text="If no, explain:" Visible="false" /></td>
                     <td>
                         <asp:TextBox ID="NoExplainTextBox" runat="server" Text='<%# Bind("NoExplain")%>' Width="500" Visible="false" />
@@ -167,66 +159,74 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <asp:Button ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Submit" ValidationGroup="Insert" />
-                    </td>
-                </tr> 
+                        <td>
+                            <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
+                            &nbsp;<asp:Button ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+                        </td>
+                </tr>
             </table>
-        </InsertItemTemplate>
-        </asp:FormView>
-    </ContentTemplate>
-    <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
+        </EditItemTemplate>
+    </asp:FormView>
+            <asp:GridView ID="MASTGridView" runat="server" AutoGenerateColumns="False" AllowSorting="True" AllowPaging="True" DataSourceID="sdsNIIRF" OnSelectedIndexChanged="MASTGridView_SelectedIndexChanged"
+                HeaderStyle-CssClass="grid_Header" DataKeyNames="NIIRF_ID" DefaultMode="Edit" RowStyle-CssClass="grid_RowStyle" CellPadding="4" ForeColor="#333333" Font-Size="10px" PageSize="50">
+                <Columns>
+                    <asp:TemplateField ShowHeader="False">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action item?');" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
+                    <asp:BoundField DataField="NIIRF_ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="NIIRF_ID" />
+                    <asp:BoundField DataField="ShortDescription" HeaderText="Short Description" SortExpression="ShortDescription" />
+                </Columns> 
+                <EditRowStyle BackColor="#999999" />
+                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#646D7E" Font-Bold="True" ForeColor="White" Font-Size="8px" />
+                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#F7F6F3" CssClass="grid_RowStyle" ForeColor="#333333" Font-Size="10px" />
+                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />                
+            </asp:GridView>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+<asp:SqlDataSource ID="sdsNIIRF" runat="server" ConnectionString="<%$ ConnectionStrings:NIIRFConnectionString %>"
+    SelectCommand="SELECT * FROM [NIIRF] WHERE Visible = 1"
+    DeleteCommand="update tblMasterActionItemTool set visible = 0 where NIIRF_ID = @NIIRF_ID">
+</asp:SqlDataSource>
+        <asp:SqlDataSource ID="sdsInsert" runat="server" 
         ConnectionString="<%$ ConnectionStrings:NIIRFConnectionString %>"
-        InsertCommand="INSERT INTO [NIIRF]
-           ([ShortDescription]
-           ,[LongDescription]
-           ,[SupplierDescription]
-           ,[SupplierProductNumber]
-           ,[ListPrice]
-           ,[ListPriceCurrency]
-           ,[ProductCode]
-           ,[Quantity]
-           ,[Cost]
-           ,[Date]
-           ,[Originator]
-           ,[OriginalOrder]
-           ,[OriginalPO]
-           ,[Justification]
-           ,[BusinessReason]
-           ,[StockInvestment]
-           ,[NoExplain]
-           ,[InitialInvestment]
-           ,[SourcedFrom]
-           ,[LeadTime]  
-           ,[Visible]         
-           ,[Reorder]
-           ,[State])
-     VALUES
-           (@ShortDescription
-           ,@LongDescription
-           ,@SupplierDescription
-           ,@SupplierProductNumber
-           ,@ListPrice
-           ,@ListPriceCurrency
-           ,@ProductCode
-           ,@Quantity
-           ,@Cost
-           ,@Date
-           ,@Originator
-           ,@OriginalOrder
-           ,@OriginalPO
-           ,@Justification
-           ,@BusinessReason
-           ,@StockInvestment
-           ,@NoExplain
-           ,@InitialInvestment
-           ,@SourcedFrom
-           ,@LeadTime
-           ,1           
-           ,@Reorder
-           ,@State)
-        select @ID = @@IDENTITY">
-        <InsertParameters>
+        SelectCommand="SELECT * FROM [NIIRF] WHERE [NIIRF_ID] = @ID"
+        UpdateCommand="UPDATE [NIIRF] SET
+            [ShortDescription] = @ShortDescription,
+            [LongDescription] = @LongDescription,
+            [SupplierDescription] = @SupplierDescription,
+            [SupplierProductNumber] = @SupplierProductNumber,
+            [ListPrice] = @ListPrice,
+            [ListPriceCurrency] = @ListPriceCurrency,
+            [ProductCode] = @ProductCode,
+            [Quantity] = @Quantity,
+            [Cost] = @Cost,
+            [Date] = @Date,
+            [Originator] = @Originator,
+            [OriginalOrder] = @OriginalOrder,
+            [OriginalPO] = @OriginalPO,
+            [Justification] = @Justification,
+            [BusinessReason] = @BusinessReason,
+            [StockInvestment] = @StockInvestment,
+            [NoExplain] = @NoExplain,
+            [InitialInvestment] = @InitialInvestment,
+            [SourcedFrom] = @SourcedFrom,
+            [LeadTime] = @LeadTime,
+            [Reorder] = @Reorder,
+            [State] = @State
+            WHERE [NIIRF_ID] = @NIIRF_ID">
+        <SelectParameters>
+            <asp:ControlParameter Name="ID" ControlID="MASTGridView" PropertyName="SelectedValue" />
+        </SelectParameters>
+        <UpdateParameters>
             <asp:Parameter Name="ShortDescription" />
             <asp:Parameter Name="LongDescription" />
             <asp:Parameter Name="SupplierDescription" />
@@ -236,7 +236,7 @@
             <asp:Parameter Name="ProductCode" />
             <asp:Parameter Name="Quantity" />
             <asp:Parameter Name="Cost" />
-            <asp:Parameter Name="Date" />
+            <asp:Parameter Name="Date" Type="DateTime" />
             <asp:Parameter Name="Originator" />
             <asp:Parameter Name="OriginalOrder" />
             <asp:Parameter Name="OriginalPO" />
@@ -246,11 +246,8 @@
             <asp:Parameter Name="NoExplain" />
             <asp:Parameter Name="InitialInvestment" />
             <asp:Parameter Name="SourcedFrom" />
-            <asp:Parameter Name="LeadTime" />
-            <asp:Parameter Name="Visible" />            
             <asp:Parameter Name="Reorder" />
             <asp:Parameter Name="State" />
-            <asp:Parameter Name="ID" Direction="Output" Type="Int32" />
-        </InsertParameters>
-    </asp:SqlDataSource>
+        </UpdateParameters>
+        </asp:SqlDataSource>
 </asp:Content>

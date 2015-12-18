@@ -485,16 +485,16 @@
                                 <asp:MaskedEditValidator ID="ISD_Maskededitvalidator" ValidationGroup="Insert" runat="server" ForeColor="Red" ControlToValidate="ISD_TextBox" ControlExtender="ISD_MaskedEditExtender" InvalidValueMessage="Date is Invalid" IsValidEmpty="True" />
                             </td>
                         </tr>
-<%--                        <tr>
+                      <tr>
                             <td>Definition of Investment (What is the investment that is proposed?):</td>
                             <td>
-                                <asp:TextBox ID="DOF_ID" runat="server" Text='<%# Bind("InvestmentDefinition") %>' TextMode="MultiLine" Rows="5" Width="500" /></td>
+                                <asp:TextBox ID="DOF_ID" runat="server" Text='<%# Bind("InvestmentDefinition")%>' TextMode="MultiLine" Rows="5" Width="500" /></td>
                         </tr>
                         <tr>
                             <td>Benefit to Laurentide (Why should we consider doing this? - both hard and soft benefits):</td>
                             <td>
-                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("InvestmentLaurentideBenefit")%>' TextMode="MultiLine" Rows="5" Width="500" /></td>
-                        </tr>   --%> 
+                                <asp:TextBox ID="BenefitTextBox" runat="server" Text='<%# Bind("InvestmentLaurentideBenefit")%>' TextMode="MultiLine" Rows="5" Width="500" /></td>
+                        </tr>    
                         <tr>
                             <td>Projected ROI (if applicable):</td>
                             <td>
@@ -538,8 +538,7 @@
                                 </InsertItemTemplate>    
                                 </asp:FormView>
                            </td>
-                           </asp:Panel>
-                       </tr>
+                       </tr></asp:Panel>
                        <tr>
                            <td>Projected ROI list:</td>
                            <td>
@@ -823,7 +822,8 @@
                         <tr>
                             <td>Contingency Plan (ie. what will you do if it does not meet objectives?)</td>
                             <td><asp:TextBox ID="ContingencyPlanTextbox" runat="server" Text='<%# Bind("ContingencyPlan") %>' TextMode="MultiLine" Rows="5" Width="500"></asp:TextBox></td>
-                        </tr></asp:Panel>
+                        </tr>
+                </asp:Panel>
                 <tr>
                     <td></td>
                     <td>
@@ -885,6 +885,33 @@
         <SortedDescendingCellStyle BackColor="#FFFDF8" />
         <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
     </asp:GridView>
+    
+<%--       
+           ,[ApprovalType]
+           ,[PMInitials]
+           ,[Customer]
+           ,[ProjectCode]
+           ,[ChangeOrderNotice]
+    
+           ,@ApprovalType
+           ,@PMInitials
+           ,@Customer
+           ,@ProjectCode
+           ,@ChangeOrderNotice
+    --%>
+    
+<%--           ,[InvestmentOwner]
+           ,[InvestmentStartDate]
+           ,[InvestmentDefinition]
+           ,[InvestmentLaurentideBenefit]
+           ,[ContingencyPlan]
+        
+           ,@InvestmentOwner
+           ,@InvestmentStartDate
+           ,@InvestmentDefinition,
+           ,@InvestmentLaurentideBenefit
+           ,@ContingencyPlan--%>
+
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted"
         ConnectionString="<%$ ConnectionStrings:PurchaseRequestConnectionString %>"
         SelectCommand="SELECT * FROM [tblPurchaseRequests] where purchaserequestid=@ID" 
@@ -901,11 +928,6 @@
            ,[Quantity]
            ,[ManagerID]
            ,[TotalPrice]
-           ,[ApprovalType]
-           ,[PMInitials]
-           ,[Customer]
-           ,[ProjectCode]
-           ,[ChangeOrderNotice]
            ,[LCLPurchaseOrder]
            ,[BuyerID]
            ,[DateOrderEntry]
@@ -927,11 +949,6 @@
            ,@Quantity
            ,@ManagerID
            ,@TotalPrice
-           ,@ApprovalType
-           ,@PMInitials
-           ,@Customer
-           ,@ProjectCode
-           ,@ChangeOrderNotice
            ,@LCLPurchaseOrder
            ,@BuyerID
            ,@DateOrderEntry
@@ -982,11 +999,11 @@
             <asp:Parameter Name="Quantity" />
             <asp:Parameter Name="ManagerID" />
             <asp:Parameter Name="TotalPrice" />
-            <asp:Parameter Name="ApprovalType" />
+<%--            <asp:Parameter Name="ApprovalType" />
             <asp:Parameter Name="PMinitials" />
             <asp:Parameter Name="Customer" />
             <asp:Parameter Name="ProjectCode" />
-            <asp:Parameter Name="ChangeOrderNotice" />
+            <asp:Parameter Name="ChangeOrderNotice" />--%>
             <asp:Parameter Name="LCLPurchaseOrder" />
             <asp:Parameter Name="BuyerID" />
             <asp:Parameter Name="DateOrderEntry" />
@@ -995,7 +1012,12 @@
             <asp:Parameter Name="Visible" DefaultValue="true" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
             <asp:Parameter Name="PurchaseCategoryID" />
-             <asp:Parameter Name="ID"  Direction="Output" Type="Int32" />
+<%--            <asp:Parameter Name="InvestmentSheetPanel$InvestmentOwner" />
+            <asp:Parameter Name="InvestmentSheetPanel$InvestmentStartDate" Type="DateTime" />
+            <asp:Parameter Name="InvestmentSheetPanel$InvestmentDefinition" />
+            <asp:Parameter Name="InvestmentSheetPanel$InvestmentLaurentideBenefit" />
+            <asp:Parameter Name="InvestmentSheetPanel$ContingencyPlan" />--%>
+            <asp:Parameter Name="ID"  Direction="Output" Type="Int32" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="RequesterName" />

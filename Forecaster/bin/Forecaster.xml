@@ -1887,6 +1887,54 @@ ScriptManager control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:Forecaster.NIIRFManager.ScriptManager">
+	<summary>
+ScriptManager control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NIIRFManager.UpdatePanel1">
+	<summary>
+UpdatePanel1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NIIRFManager.niirfInsert">
+	<summary>
+niirfInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NIIRFManager.MASTGridView">
+	<summary>
+MASTGridView control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NIIRFManager.sdsNIIRF">
+	<summary>
+sdsNIIRF control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member><member name="F:Forecaster.NIIRFManager.sdsInsert">
+	<summary>
+sdsInsert control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:Forecaster.Admin.ScriptManager">
 	<summary>
 ScriptManager control.

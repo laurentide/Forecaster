@@ -40,7 +40,7 @@ Public Class Purchase
         If ViewState("PROIDatatable") Is Nothing Then
             Dim PROIdt As DataTable = New DataTable
             PROIdt.Columns.Add("ProjectedROI_ID", GetType(Integer))
-            PROIdt.Columns.Add("NERID", GetType(Integer))
+            PROIdt.Columns.Add("PurchaseRequestID", GetType(Integer))
             PROIdt.Columns.Add("Benefit", GetType(String))
             PROIdt.Columns.Add("PROI_Year0", GetType(Double))
             PROIdt.Columns.Add("PROI_Year1", GetType(Double))
@@ -54,7 +54,7 @@ Public Class Purchase
         If ViewState("PCDatatable") Is Nothing Then
             Dim PCdt As DataTable = New DataTable
             PCdt.Columns.Add("ProgramCostID", GetType(Integer))
-            PCdt.Columns.Add("NERID", GetType(Integer))
+            PCdt.Columns.Add("PurchaseRequestID", GetType(Integer))
             PCdt.Columns.Add("ProgramCostDetail", GetType(String))
             PCdt.Columns.Add("PC_Year0", GetType(Double))
             PCdt.Columns.Add("PC_Year1", GetType(Double))
@@ -68,7 +68,7 @@ Public Class Purchase
         If ViewState("SCDatatable") Is Nothing Then
             Dim SCdt As DataTable = New DataTable
             SCdt.Columns.Add("SuccessCriteriaID", GetType(Integer))
-            SCdt.Columns.Add("NERID", GetType(Integer))
+            SCdt.Columns.Add("PurchaseRequestID", GetType(Integer))
             SCdt.Columns.Add("SuccessCriteriaDetail", GetType(String))
             SCdt.Columns.Add("Baseline", GetType(String))
             SCdt.Columns.Add("Q1", GetType(String))
@@ -84,7 +84,7 @@ Public Class Purchase
         If ViewState("FUPDatatable") Is Nothing Then
             Dim FUPdt As DataTable = New DataTable
             FUPdt.Columns.Add("FUPID", GetType(Integer))
-            FUPdt.Columns.Add("NERID", GetType(Integer))
+            FUPdt.Columns.Add("PurchaseRequestID", GetType(Integer))
             FUPdt.Columns.Add("Event", GetType(String))
             FUPdt.Columns.Add("FUPWhen", GetType(String))
             FUPdt.Columns.Add("Compl", GetType(String))
@@ -101,6 +101,171 @@ Public Class Purchase
     ' Sub to send email to managers
     '
     Protected Sub frmInsert_ItemInserted(sender As Object, e As FormViewInsertedEventArgs)
+        Dim row As DataRow
+        'add the projected roi details
+        'get the datatable underlying the gridview
+        Dim dt As New DataTable
+        dt = CType(ViewState("PROIDatatable"), DataTable)
+
+        'populate the expensereportid from the newly added expense report to the details
+        For Each row In dt.Rows
+            row("PurchaseRequestID") = Session("ID")
+        Next
+
+        Console.WriteLine(Session("id"))
+
+        Dim connectionstringproi As String
+        connectionstringproi = "server=lcl-sql2k5-s;database=PurchaseRequest;trusted_connection=true"
+
+        Using destinationconnection As SqlConnection = New SqlConnection(connectionstringproi)
+            destinationconnection.Open()
+
+            Using bulkcopy As SqlBulkCopy = _
+              New SqlBulkCopy(destinationconnection)
+                bulkcopy.DestinationTableName = _
+                "dbo.tblprojectedroi"
+
+                Try
+                    ' write from the source to the destination.
+                    bulkcopy.WriteToServer(dt)
+
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                End Try
+            End Using
+            destinationconnection.Close()
+        End Using
+        'gvexpensereports.databind()
+        dt.Clear()
+        ViewState("PROIDatatable") = dt
+
+        Dim pcrow As DataRow
+        'add the program cost 
+        'get the datatable underlying the gridview
+        Dim pcdt As New DataTable
+        pcdt = CType(ViewState("PCDatatable"), DataTable)
+
+        'populate the expensereportid from the newly added expense report to the details
+        For Each pcrow In pcdt.Rows
+            pcrow("PurchaseRequestID") = Session("ID")
+        Next
+
+        Console.WriteLine(Session("id"))
+
+        Dim pcconnectionstring As String
+        pcconnectionstring = "server=lcl-sql2k5-s;database=PurchaseRequest;trusted_connection=true"
+
+        Using pcdestinationconnection As SqlConnection = New SqlConnection(pcconnectionstring)
+            pcdestinationconnection.Open()
+
+            Using pcbulkcopy As SqlBulkCopy = _
+              New SqlBulkCopy(pcdestinationconnection)
+                pcbulkcopy.DestinationTableName = _
+                "dbo.tblprogramcost"
+
+                Try
+                    ' write from the source to the destination.
+                    pcbulkcopy.WriteToServer(pcdt)
+
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                End Try
+            End Using
+            pcdestinationconnection.Close()
+        End Using
+        'gvexpensereports.databind()
+        pcdt.Clear()
+        ViewState("PCDatatable") = pcdt
+
+        Dim scrow As DataRow
+        'add the successcriteria
+        'get the datatable underlying the gridview
+        Dim scdt As New DataTable
+        scdt = CType(ViewState("SCDatatable"), DataTable)
+
+        'populate the nerid from the newly added expense report to the details
+        For Each scrow In scdt.Rows
+            scrow("PurchaseRequestID") = Session("ID")
+        Next
+
+        Console.WriteLine(Session("ID"))
+
+        Dim scconnectionstring As String
+        scconnectionstring = "server=lcl-sql2k5-s;database=PurchaseRequest;trusted_connection=true"
+
+        Using scdestinationconnection As SqlConnection = New SqlConnection(scconnectionstring)
+            scdestinationconnection.Open()
+
+            Using scbulkcopy As SqlBulkCopy = _
+              New SqlBulkCopy(scdestinationconnection)
+                scbulkcopy.DestinationTableName = _
+                "dbo.tblsuccesscriteria"
+
+                Try
+                    ' write from the source to the destination.
+                    scbulkcopy.WriteToServer(scdt)
+
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                End Try
+            End Using
+            scdestinationconnection.Close()
+        End Using
+        'gvexpensereports.databind()
+        scdt.Clear()
+        ViewState("SCDatatable") = scdt
+
+        Dim fuprow As DataRow
+        'add the implementation/follow-up plan
+        'get the datatable underlying the gridview
+        Dim fupdt As New DataTable
+        fupdt = CType(ViewState("FUPDatatable"), DataTable)
+
+        'populate the nerid from the newly added expense report to the details
+        For Each fuprow In fupdt.Rows
+            fuprow("PurchaseRequestID") = Session("ID")
+        Next
+
+        Console.WriteLine(Session("ID"))
+
+        Dim fupconnectionstring As String
+        fupconnectionstring = "server=lcl-sql2k5-s;database=PurchaseRequest;trusted_connection=true"
+
+        Using fupdestinationconnection As SqlConnection = New SqlConnection(fupconnectionstring)
+            fupdestinationconnection.Open()
+
+            Using fupbulkcopy As SqlBulkCopy = _
+              New SqlBulkCopy(fupdestinationconnection)
+                fupbulkcopy.DestinationTableName = _
+                "dbo.tblfup"
+
+                Try
+                    ' write from the source to the destination.
+                    fupbulkcopy.WriteToServer(fupdt)
+
+                Catch ex As Exception
+                    Debug.Print(ex.Message)
+                End Try
+            End Using
+            fupdestinationconnection.Close()
+        End Using
+        'gvexpensereports.databind()
+        fupdt.Clear()
+        ViewState("FUPDatatable") = fupdt
+
+        Dim ISconnectionString As String
+        ISconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+        Dim ISSqlConnection As New SqlConnection(ISconnectionString)
+        ISSqlConnection.Open()
+        Dim InvestmentOwner As String = CType(frmInsert.FindControl("InvestmentOwnerID"), TextBox).Text
+        Dim InvestmentStartDate As String = CType(frmInsert.FindControl("ISD_TextBox"), TextBox).Text
+        Dim InvestmentDefinition As String = CType(frmInsert.FindControl("DOF_ID"), TextBox).Text
+        Dim InvestmentLaurentideBenefit As String = CType(frmInsert.FindControl("BenefitTextBox"), TextBox).Text
+        Dim ContingencyPlan As String = CType(frmInsert.FindControl("ContingencyPlanTextbox"), TextBox).Text
+        Dim ISupdate As New SqlCommand("update tblPurchaseRequests set InvestmentOwner = '" & InvestmentOwner & "', InvestmentStartDate = '" & InvestmentStartDate & "', InvestmentDefinition = '" & InvestmentDefinition & "', InvestmentLaurentideBenefit = '" & InvestmentLaurentideBenefit & "', ContingencyPlan = '" & ContingencyPlan & "' where PurchaseRequestID = " & Session("ID") & "", ISSqlConnection)
+        ISupdate.ExecuteNonQuery()
+        ISSqlConnection.Close()
+
         Dim connectionString As String
         connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
         Dim SqlConnection As New SqlConnection(connectionString)
@@ -146,6 +311,160 @@ Public Class Purchase
     End Sub
 
     Protected Sub frmInsert_ItemUpdated(sender As Object, e As FormViewUpdatedEventArgs)
+        Dim dt As New DataTable
+        dt = CType(ViewState("PROIDatatable"), DataTable)
+
+        Dim PROIconnectionString As String
+        PROIconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+
+        Using destinationConnection As SqlConnection = New SqlConnection(PROIconnectionString)
+            destinationConnection.Open()
+            Try
+
+                Dim sqlcommand As New SqlCommand("Delete from tblProjectedROI where PurchaseRequestID = " & CType(Me.frmInsert.FindControl("IDLabel"), Label).Text)
+                sqlcommand.Connection = destinationConnection
+                sqlcommand.ExecuteNonQuery()
+                Using bulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(destinationConnection)
+                    bulkCopy.DestinationTableName = _
+                    "dbo.tblProjectedROI"
+                    ' Write from the source to the destination.
+                    bulkCopy.WriteToServer(dt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            destinationConnection.Close()
+        End Using
+        gvPurchaseRequests.DataBind()
+        dt.Clear()
+        ViewState("PROIDatatable") = dt
+
+        Dim PCdt As New DataTable
+        PCdt = CType(ViewState("PCDatatable"), DataTable)
+
+        Dim PCconnectionString As String
+        PCconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+
+        Using PCdestinationConnection As SqlConnection = New SqlConnection(PCconnectionString)
+            PCdestinationConnection.Open()
+            Try
+
+                Dim PCsqlcommand As New SqlCommand("Delete from tblProgramCost where PurchaseRequestID = " & CType(Me.frmInsert.FindControl("IDLabel"), Label).Text)
+                PCsqlcommand.Connection = PCdestinationConnection
+                PCsqlcommand.ExecuteNonQuery()
+                Using PCbulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(PCdestinationConnection)
+                    PCbulkCopy.DestinationTableName = _
+                    "dbo.tblProgramCost"
+                    ' Write from the source to the destination.
+                    PCbulkCopy.WriteToServer(PCdt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            PCdestinationConnection.Close()
+        End Using
+        gvPurchaseRequests.DataBind()
+        PCdt.Clear()
+        ViewState("PCDatatable") = PCdt
+
+        Dim SCdt As New DataTable
+        SCdt = CType(ViewState("SCDatatable"), DataTable)
+
+        Dim SCconnectionString As String
+        SCconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+
+        Using SCdestinationConnection As SqlConnection = New SqlConnection(SCconnectionString)
+            SCdestinationConnection.Open()
+            Try
+
+                Dim SCsqlcommand As New SqlCommand("Delete from tblSuccessCriteria where PurchaseRequestID = " & CType(Me.frmInsert.FindControl("IDLabel"), Label).Text)
+                SCsqlcommand.Connection = SCdestinationConnection
+                SCsqlcommand.ExecuteNonQuery()
+                Using SCbulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(SCdestinationConnection)
+                    SCbulkCopy.DestinationTableName = _
+                    "dbo.tblSuccessCriteria"
+                    ' Write from the source to the destination.
+                    SCbulkCopy.WriteToServer(SCdt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            SCdestinationConnection.Close()
+        End Using
+        gvPurchaseRequests.DataBind()
+        SCdt.Clear()
+        ViewState("SCDatatable") = SCdt
+
+        Dim FUPdt As New DataTable
+        FUPdt = CType(ViewState("FUPDatatable"), DataTable)
+
+        Dim FUPconnectionString As String
+        FUPconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+
+        Using FUPdestinationConnection As SqlConnection = New SqlConnection(FUPconnectionString)
+            FUPdestinationConnection.Open()
+            Try
+
+                Dim FUPsqlcommand As New SqlCommand("Delete from tblFUP where PurchaseRequestID = " & CType(Me.frmInsert.FindControl("IDLabel"), Label).Text)
+                FUPsqlcommand.Connection = FUPdestinationConnection
+                FUPsqlcommand.ExecuteNonQuery()
+                Using FUPbulkCopy As SqlBulkCopy = _
+                  New SqlBulkCopy(FUPdestinationConnection)
+                    FUPbulkCopy.DestinationTableName = _
+                    "dbo.tblFUP"
+                    ' Write from the source to the destination.
+                    FUPbulkCopy.WriteToServer(FUPdt)
+                    'Need to delete and rewrite the lines
+                    'Delete first
+
+                End Using
+
+            Catch ex As Exception
+                Debug.Print(ex.Message)
+
+
+            End Try
+            FUPdestinationConnection.Close()
+        End Using
+        gvPurchaseRequests.DataBind()
+        FUPdt.Clear()
+        ViewState("FUPDatatable") = FUPdt
+        Dim ISconnectionString As String
+        ISconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+        Dim ISSqlConnection As New SqlConnection(ISconnectionString)
+        ISSqlConnection.Open()
+        Dim InvestmentOwner As String = CType(frmInsert.FindControl("InvestmentOwnerID"), TextBox).Text
+        Dim InvestmentStartDate As String = CType(frmInsert.FindControl("ISD_TextBox"), TextBox).Text
+        Dim InvestmentDefinition As String = CType(frmInsert.FindControl("DOF_ID"), TextBox).Text
+        Dim InvestmentLaurentideBenefit As String = CType(frmInsert.FindControl("BenefitTextBox"), TextBox).Text
+        Dim ContingencyPlan As String = CType(frmInsert.FindControl("ContingencyPlanTextbox"), TextBox).Text
+        Dim ISupdate As New SqlCommand("update tblPurchaseRequests set InvestmentOwner = '" & InvestmentOwner & "', InvestmentStartDate = '" & InvestmentStartDate & "', InvestmentDefinition = '" & InvestmentDefinition & "', InvestmentLaurentideBenefit = '" & InvestmentLaurentideBenefit & "', ContingencyPlan = '" & ContingencyPlan & "' where PurchaseRequestID = " & CType(Me.frmInsert.FindControl("IDLabel"), Label).Text & "", ISSqlConnection)
+        ISupdate.ExecuteNonQuery()
+        ISSqlConnection.Close()
+
+
+
         'Sub to send an email to the manager with the requester in CC to alert the manager that he needs to approve something.
         Dim connectionString As String
         connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
@@ -237,6 +556,109 @@ Public Class Purchase
 
                 CType(frmInsert.FindControl("RequesterNameTextBox"), TextBox).Text = Session("IssuedBy")
                 CType(frmInsert.FindControl("RequesterEmailTextBox"), TextBox).Text = Session("Email")
+            End If
+            If frmInsert.CurrentMode = FormViewMode.Edit Then
+                'Fill PROI gridview
+                Dim dt As New DataTable
+                Dim connectionString As String
+                connectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+                Dim SqlConnection As New SqlConnection(connectionString)
+                Dim neridstr As String = CType(frmInsert.FindControl("IDLabel"), Label).Text
+                Dim sc As New SqlCommand("select * from tblProjectedROI where PurchaseRequestID = " & neridstr, SqlConnection)
+                SqlConnection.Open()
+                Dim da As New SqlDataAdapter(sc)
+                da.Fill(dt)
+                ViewState("PROIDatatable") = dt
+                Dim gvPROIDetails As GridView
+                gvPROIDetails = CType(frmInsert.FindControl("gvPROIDetails"), GridView)
+                gvPROIDetails.DataSource = dt
+                gvPROIDetails.DataBind()
+
+                'Populate the footer row with the total value for each year
+                'If Not IsNothing(dt) Then
+                '    For Each gvr As GridViewRow In gvPROIDetails.Rows
+                '        If gvr.RowType = DataControlRowType.DataRow Then
+                '            PROIYear0Total += gvr.Cells(3).Text
+                '            PROIYear1Total += gvr.Cells(4).Text
+                '            PROIYear2Total += gvr.Cells(5).Text
+                '            PROIYear3Total += gvr.Cells(6).Text
+                '            PROIYear4Total += gvr.Cells(7).Text
+                '        End If
+                '    Next
+                '    gvPROIDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
+                '    gvPROIDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PROIYear0Total)
+                '    gvPROIDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PROIYear1Total)
+                '    gvPROIDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PROIYear2Total)
+                '    gvPROIDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PROIYear3Total)
+                '    gvPROIDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PROIYear4Total)
+                'End If
+
+
+                'Fill PC gridview
+                Dim PCdt As New DataTable
+                Dim PCconnectionString As String
+                PCconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+                Dim PCSqlConnection As New SqlConnection(PCconnectionString)
+                Dim PCsc As New SqlCommand("select * from tblProgramCost where PurchaseRequestID = " & CType(frmInsert.FindControl("IDLabel"), Label).Text, PCSqlConnection)
+                PCSqlConnection.Open()
+                Dim PCda As New SqlDataAdapter(PCsc)
+                PCda.Fill(PCdt)
+                ViewState("PCDatatable") = PCdt
+                Dim gvProgramCostsDetails As GridView
+                gvProgramCostsDetails = CType(frmInsert.FindControl("gvProgramCostsDetails"), GridView)
+                gvProgramCostsDetails.DataSource = PCdt
+                gvProgramCostsDetails.DataBind()
+
+                'Populate the footer row with the total value for each year
+                'If Not IsNothing(PCdt) Then
+                '    For Each gvr As GridViewRow In gvProgramCostsDetails.Rows
+                '        If gvr.RowType = DataControlRowType.DataRow Then
+                '            PCYear0Total += gvr.Cells(3).Text
+                '            PCYear1Total += gvr.Cells(4).Text
+                '            PCYear2Total += gvr.Cells(5).Text
+                '            PCYear3Total += gvr.Cells(6).Text
+                '            PCYear4Total += gvr.Cells(7).Text
+                '        End If
+                '    Next
+                '    gvProgramCostsDetails.FooterRow.Cells(2).Text = "Yearly Totals:"
+                '    gvProgramCostsDetails.FooterRow.Cells(3).Text = String.Format("{0:c}", PCYear0Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(4).Text = String.Format("{0:c}", PCYear1Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(5).Text = String.Format("{0:c}", PCYear2Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(6).Text = String.Format("{0:c}", PCYear3Total)
+                '    gvProgramCostsDetails.FooterRow.Cells(7).Text = String.Format("{0:c}", PCYear4Total)
+                'End If
+
+                UpdateNetCashFlow()
+
+                'Fill SC gridview
+                Dim SCdt As New DataTable
+                Dim SCconnectionString As String
+                SCconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+                Dim SCSqlConnection As New SqlConnection(SCconnectionString)
+                Dim SCsc As New SqlCommand("select * from tblSuccessCriteria where PurchaseRequestID = " & CType(frmInsert.FindControl("IDLabel"), Label).Text, SCSqlConnection)
+                SCSqlConnection.Open()
+                Dim SCda As New SqlDataAdapter(SCsc)
+                SCda.Fill(SCdt)
+                ViewState("SCDatatable") = SCdt
+                Dim gvSuccessCriteria As GridView
+                gvSuccessCriteria = CType(frmInsert.FindControl("gvSuccessCriteria"), GridView)
+                gvSuccessCriteria.DataSource = SCdt
+                gvSuccessCriteria.DataBind()
+
+                'Fill FUP gridview
+                Dim FUPdt As New DataTable
+                Dim FUPconnectionString As String
+                FUPconnectionString = "Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true"
+                Dim FUPSqlConnection As New SqlConnection(FUPconnectionString)
+                Dim FUPsc As New SqlCommand("select * from tblFUP where PurchaseRequestID = " & CType(frmInsert.FindControl("IDLabel"), Label).Text, FUPSqlConnection)
+                FUPSqlConnection.Open()
+                Dim FUPda As New SqlDataAdapter(FUPsc)
+                FUPda.Fill(FUPdt)
+                ViewState("FUPDatatable") = FUPdt
+                Dim gvImplementation As GridView
+                gvImplementation = CType(frmInsert.FindControl("gvImplementation"), GridView)
+                gvImplementation.DataSource = FUPdt
+                gvImplementation.DataBind()
             End If
         Catch ex As Exception
 

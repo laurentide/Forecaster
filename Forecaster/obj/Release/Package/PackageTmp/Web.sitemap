@@ -50,6 +50,7 @@
 		</siteMapNode>
     <siteMapNode title="NIIRF" roles="*" description="">
       <siteMapNode url="NIIRF/NIIRF.aspx" title="New Inventory Item Request Form" description="" />
+      <siteMapNode url="NIIRF/NIIRFManager.aspx" title="NIIRF Mgmt Page" description="" />
     </siteMapNode>
 	</siteMapNode>
 </siteMap>

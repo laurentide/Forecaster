@@ -1102,8 +1102,6 @@
             </asp:GridView>
         </ContentTemplate>
     </asp:UpdatePanel>
-<%--               
-               --%>
     <asp:SqlDataSource ID="sdsInsert" runat="server" OnInserted="sdsInsert_Inserted" OnUpdated="sdsInsert_Updated"
         ConnectionString="<%$ ConnectionStrings:NERConnectionString %>"
         SelectCommand="SELECT * FROM [tblNewEmployeeRequest] where NERID=@ID"
