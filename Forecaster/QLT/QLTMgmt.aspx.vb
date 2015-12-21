@@ -174,6 +174,7 @@ System.Web.Services.WebMethod()> _
                 Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                      "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
                                      "Assigned To: " & AssignedToName & vbCrLf & _
+                                     "Feedback To Issuer: " + CType(frmInsert.FindControl("FeedbackToIssuerTextBox"), TextBox).Text & vbCrLf & _
                                      "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
                                      "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
                 Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
@@ -230,6 +231,7 @@ System.Web.Services.WebMethod()> _
                 Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                      "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
                                      "Assigned To: " & AssignedToName & vbCrLf & _
+                                     "Feedback To Issuer: " + CType(frmInsert.FindControl("FeedbackToIssuerTextBox"), TextBox).Text & vbCrLf & _
                                      "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
                                      "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
                 Dim mm As New MailMessage("QLT@Laurentide.com", "QLT@laurentide.com", "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
@@ -286,6 +288,7 @@ System.Web.Services.WebMethod()> _
                 Dim body As String = "Issued By: " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text & vbCrLf & _
                                      "Description: " & CType(frmInsert.FindControl("DescriptionTextBox"), TextBox).Text & vbCrLf & _
                                      "Assigned To: " & AssignedToName & vbCrLf & _
+                                     "Feedback To Issuer: " + CType(frmInsert.FindControl("FeedbackToIssuerTextBox"), TextBox).Text & vbCrLf & _
                                      "Please go to this address: http://lcl-sql2k5-s:81/QLT/QLT.aspx to see it!" & vbCrLf & _
                                      "QLT Team link: http://lcl-sql2k5-s:81/QLT/QLTMgmt.aspx to see it!"
                 Dim mm As New MailMessage("QLT@Laurentide.com", mailaddress.ToString, "Updated Quality case #:" & CType(frmInsert.FindControl("IDTextbox"), Label).Text & " issued by " & CType(frmInsert.FindControl("IssuedByTextBox"), TextBox).Text, body)
@@ -479,18 +482,6 @@ System.Web.Services.WebMethod()> _
     End Sub
 
     Protected Sub DeptFilterDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
-        Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
-        Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
-        Dim DeptID As String = CType(MainContent.FindControl("DeptFilterDropDownList"), DropDownList).SelectedValue
-        If (DeptID IsNot String.Empty) Then
-            gvDS.FilterExpression = "DepartmentID = " & DeptID
-            gvDS.DataBind()
-            gvQLT.DataBind()
-        Else
-            gvDS.FilterExpression = ""
-            gvDS.DataBind()
-            gvQLT.DataBind()
-        End If
         'Dim MainContent As ContentPlaceHolder = Page.Master.FindControl("MainContent")
         'Dim gvDS As SqlDataSource = CType(MainContent.FindControl("sdsQLTGrid"), SqlDataSource)
         'Dim DeptID As String = CType(MainContent.FindControl("DeptFilterDropDownList"), DropDownList).SelectedValue
@@ -504,7 +495,10 @@ System.Web.Services.WebMethod()> _
         '    gvQLT.DataBind()
         'End If
         gvQLT.DataBind()
+    End Sub
 
+    Protected Sub TypeDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
+        gvQLT.DataBind()
     End Sub
 
     Protected Sub AssigneeDropDownList_SelectedIndexChanged(sender As Object, e As EventArgs)
