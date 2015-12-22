@@ -273,7 +273,7 @@
                         <%--&nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />--%>
                     </td>
                 </tr>
-                        <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="true">
+                        <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="false">
                         <tr><td><br /></td></tr>
                         <tr><td><asp:Label Text="Investment" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
                         <tr>

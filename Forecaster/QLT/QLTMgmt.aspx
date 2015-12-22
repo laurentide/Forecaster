@@ -636,8 +636,7 @@
             <asp:Parameter Name="QLTID" />
         </UpdateParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsQLTGrid" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
-        SelectCommand="SELECT *,customerid as CustomerName,vendorid as VendorName,left(description,50) as ShortDescription, 
+<%--            SelectCommand="SELECT *,customerid as CustomerName,vendorid as VendorName,left(description,50) as ShortDescription, 
                         case when tbltypes.type = 'Other' and tblQLT.Type is not null then tblQLT.Type else tblTypes.Type end as category
                          FROM  tblQLT 
                        LEFT JOIN tblEventTypes
@@ -653,12 +652,12 @@
                         LEFT JOIN tblTypes
                             on tblQLT.TypeID = tblTypes.TypeID
                        where  visible = 1 
-                         and (@ManagerDomainUser in (select QLTMemberUserName from tblQLTMembers) or ReassignmentUsername = @ManagerDomainUser)
                          and (tblQLT.AssignedTo = @AssignedTo or @AssignedTo = 0)
                          and (tblQLT.StatusID = @StatusID or @StatusID = 0)
                          and (tblQLT.DepartmentID = @DeptID or @DeptID = 0)
                          and (tblQLT.TypeID = @TypeID or @TypeID = 0)
-                        Order by QLTID Desc"
+                        Order by QLTID Desc"--%>
+    <asp:SqlDataSource ID="sdsQLTGrid" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
         DeleteCommand="Update tblQLT set visible = 0 where QLTID = @QLTID">
         <SelectParameters>
              <asp:SessionParameter SessionField="Username" Name="ManagerDomainUser"  />

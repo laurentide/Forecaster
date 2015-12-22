@@ -63,13 +63,13 @@
             <tr>
                 <td>Issued By:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="IssuedByTextBox" runat="server" Text='<%# Bind("IssuedBy") %>' />
+                    <asp:TextBox class="textboxWidth" ID="IssuedByTextBox" runat="server" Text='<%# Bind("IssuedBy") %>' MaxLength="50" />
                 </td>
             </tr>
             <tr>
                 <td>Email:</td>
                 <td>
-                    <asp:TextBox class="textboxWidth" ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' />
+                    <asp:TextBox class="textboxWidth" ID="IssuedByEmailTextBox" runat="server" Text='<%# Bind("IssuedByEmail") %>' MaxLength="50" />
                 </td>
             </tr>
             <tr>
@@ -104,26 +104,26 @@
             <tr>
                 <td>Customer Contact Name:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="CustomerNameTextBox" runat="server" Text='<%# Bind("CustomerContactName")%>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="CustomerNameTextBox" runat="server" Text='<%# Bind("CustomerContactName")%>' MaxLength="100" />
                 </td>
             </tr>
             <tr>
                 <td>Customer Contact Tel:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="CustomerContactTelTextBox" runat="server" Text='<%# Bind("CustomerContactTel")%>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="CustomerContactTelTextBox" runat="server" Text='<%# Bind("CustomerContactTel")%>' MaxLength="25" />
                 </td>
             </tr>
             <tr>
                 <td>Customer Contact Email:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="CustomerContactEmailTextBox" runat="server" Text='<%# Bind("CustomerContactEmail")%>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="CustomerContactEmailTextBox" runat="server" Text='<%# Bind("CustomerContactEmail")%>' MaxLength="50" />
                 </td>
             </tr>
 
             <tr>
                 <td>Sales Order #:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="SalesOrderTextBox" runat="server" Text='<%# Bind("SalesOrder") %>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="SalesOrderTextBox" runat="server" Text='<%# Bind("SalesOrder") %>' MaxLength="25" />
                 </td>
             </tr>
             <tr>
@@ -140,32 +140,32 @@
             <tr>
                 <td>Supplier Contact Name:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="VendorContactNameTextBox" runat="server" Text='<%# Bind("VendorContactName")%>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="VendorContactNameTextBox" runat="server" Text='<%# Bind("VendorContactName")%>' MaxLength="100" />
                 </td>
             </tr>
             <tr>
                 <td>Supplier Contact Tel:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="VendorContactTelTextBox" runat="server" Text='<%# Bind("VendorContactTel")%>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="VendorContactTelTextBox" runat="server" Text='<%# Bind("VendorContactTel")%>' MaxLength="25" />
                 </td>
             </tr>
             <tr>
                 <td>Vendor Contact Email:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="VendorContactEmailTextBox" runat="server" Text='<%# Bind("VendorContactEmail")%>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="VendorContactEmailTextBox" runat="server" Text='<%# Bind("VendorContactEmail")%>' MaxLength="50" />
                 </td>
             </tr>
 
             <tr>
                 <td>Purchase Order #:</td>
                 <td>
-                    <asp:TextBox class="smallTextboxWidth" ID="PurchaseOrderTextBox" runat="server" Text='<%# Bind("PurchaseOrder") %>' />
+                    <asp:TextBox class="smallTextboxWidth" ID="PurchaseOrderTextBox" runat="server" Text='<%# Bind("PurchaseOrder") %>' MaxLength="25" />
                 </td>
             </tr>
             <tr>
                 <td>Description:</td>
                 <td>
-                    <asp:TextBox width="500px" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' Enabled="false"/>
+                    <asp:TextBox width="500px" ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="8" Text='<%# Bind("Description") %>' CssClass="disabled" ReadOnly="true"/>
                 </td>
             </tr>
             <tr>
@@ -191,7 +191,7 @@
                     <br />
                     cause of this occurence:</td>
                 <td>
-                    <asp:TextBox width="500px" ID="CauseTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("Cause") %>' Enabled="false" />
+                    <asp:TextBox width="500px" ID="CauseTextBox" runat="server" TextMode="MultiLine" Rows="5" Text='<%# Bind("Cause") %>' CssClass="disabled" ReadOnly="true" />
                 </td>
             </tr>
             <tr>
@@ -441,17 +441,8 @@
             <tr><td><br /></td></tr>
           </table>
         </EditItemTemplate>
-    </asp:FormView><table><tr><td>Filter by department: <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department" 
-        AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="DeptFilterDropDownList_SelectedIndexChanged" AutoPostBack="true">
-        <asp:ListItem Text="(Select the department)" Value="" /></asp:DropDownList>
-    <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true"/>
-    <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td></tr>
-<%--    <tr><td>Issued: <asp:Label ID="IssuedCount" runat="server" /> Assigned: <asp:Label ID="AssignedCount" runat="server" />
-        Waiting For QLT Review: <asp:Label ID="QLTReviewCount" runat="server" /> Resolved: <asp:Label ID="ResolvedCount" runat="server" />
-        Waiting For QT Review: <asp:Label ID="QTReviewCount" runat="server" />
-        </td></tr>--%>
     </asp:FormView>
-<%--    <table>
+    <table>
         <tr>
             <td>Filter by department:
                 <asp:DropDownList ID="DeptFilterDropDownList" runat="server" DataSourceID="sdsDepartments" DataValueField="DepartmentID" DataTextField="Department"
@@ -460,19 +451,26 @@
                 </asp:DropDownList>
                 <asp:Button ID="PSSFilterButton" runat="server" Text="View PSS/Service cases only" OnClick="PSSFilterButton_Click" CausesValidation="true" />
                 <asp:Button ID="ResetPSSFilterButton" runat="server" Text="Reset" CausesValidation="true" OnClick="ResetPSSFilterButton_Click" /></td>
-        </tr> --%>
+        </tr>
         <tr>
-            <td>Filter by Assignee
+            <td>Filter by Assignee:
             <asp:DropDownList ID="AssigneeDropDownList" runat="server" DataSourceID="sdsQLTMembers" DataValueField="QLTMemberID" DataTextField="QLTMemberName"
                     AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="AssigneeDropDownList_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem Text="(Select the Assignee)" Value="" />
                 </asp:DropDownList></td>            
         </tr>
          <tr>
-            <td>Filter by Status
+            <td>Filter by Status:
             <asp:DropDownList ID="StatusDropDownList" runat="server" DataSourceID="sdsStatus" DataValueField="statusID" DataTextField="Status"
                     AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="StatusDropDownList_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem Text="(Select the status)" Value="" />
+                </asp:DropDownList></td>            
+        </tr>
+         <tr>
+            <td>Filter by Category:
+            <asp:DropDownList ID="TypeDropDownList" runat="server" DataSourceID="sdsTypes" DataValueField="TypeID" DataTextField="Type"
+                    AppendDataBoundItems="true" CausesValidation="true" OnSelectedIndexChanged="TypeDropDownList_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:ListItem Text="(Select the category)" Value="" />
                 </asp:DropDownList></td>            
         </tr>
         <tr>
@@ -638,8 +636,7 @@
             <asp:Parameter Name="QLTID" />
         </UpdateParameters>
     </asp:SqlDataSource>
-    <asp:SqlDataSource ID="sdsQLTGrid" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
-        SelectCommand="SELECT *,customerid as CustomerName,vendorid as VendorName,left(description,50) as ShortDescription, 
+<%--            SelectCommand="SELECT *,customerid as CustomerName,vendorid as VendorName,left(description,50) as ShortDescription, 
                         case when tbltypes.type = 'Other' and tblQLT.Type is not null then tblQLT.Type else tblTypes.Type end as category
                          FROM  tblQLT 
                        LEFT JOIN tblEventTypes
@@ -655,17 +652,19 @@
                         LEFT JOIN tblTypes
                             on tblQLT.TypeID = tblTypes.TypeID
                        where  visible = 1 
-                         and (@ManagerDomainUser in (select QLTMemberUserName from tblQLTMembers) or ReassignmentUsername = @ManagerDomainUser)
                          and (tblQLT.AssignedTo = @AssignedTo or @AssignedTo = 0)
                          and (tblQLT.StatusID = @StatusID or @StatusID = 0)
                          and (tblQLT.DepartmentID = @DeptID or @DeptID = 0)
-                        Order by QLTID Desc"
+                         and (tblQLT.TypeID = @TypeID or @TypeID = 0)
+                        Order by QLTID Desc"--%>
+    <asp:SqlDataSource ID="sdsQLTGrid" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"
         DeleteCommand="Update tblQLT set visible = 0 where QLTID = @QLTID">
         <SelectParameters>
              <asp:SessionParameter SessionField="Username" Name="ManagerDomainUser"  />
              <asp:ControlParameter Name="AssignedTo" ControlID="AssigneeDropDownList" PropertyName="SelectedValue" DefaultValue="0" />
              <asp:ControlParameter Name="StatusID" ControlID="StatusDropDownList" PropertyName="SelectedValue" DefaultValue="0" />
              <asp:ControlParameter Name="DeptID" ControlID="DeptFilterDropDownList" PropertyName="SelectedValue" DefaultValue="0"  />
+            <asp:ControlParameter Name="TypeID" ControlID="TypeDropDownList" PropertyName="SelectedValue" DefaultValue="0"  />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:SqlDataSource ID="sdsEventTypes" runat="server" ConnectionString="<%$ ConnectionStrings:QLTConnectionString %>"

@@ -659,6 +659,12 @@ Public Class Purchase
                 gvImplementation = CType(frmInsert.FindControl("gvImplementation"), GridView)
                 gvImplementation.DataSource = FUPdt
                 gvImplementation.DataBind()
+
+                If (CType(frmInsert.FindControl("InvestmentCheckedLabel"), Label).Text = "True") Then
+                    CType(frmInsert.FindControl("EditInvestmentSheetPanel"), Panel).Visible = True
+                Else
+                    CType(frmInsert.FindControl("EditInvestmentSheetPanel"), Panel).Visible = False
+                End If
             End If
         Catch ex As Exception
 

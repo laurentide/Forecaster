@@ -235,6 +235,8 @@
                         Path:<asp:Hyperlink ID="PathTextbox" runat="server" NavigateUrl='<%# Page.ResolveUrl(IIf(IsDBNull(Eval("Path")),"",Eval("Path")))%>' Text='<%# IIf(IsDBNull(Eval("Path")),"",Eval("Path"))%>' Target="_blank" />
                     </td>
                 </tr>
+                <tr><td><asp:Label Text='<%# Bind("InvestmentChecked")%>' runat="server" ID="InvestmentCheckedLabel" Visible="false" /></td></tr>
+                <asp:Panel ID="EditInvestmentSheetPanel" runat="server" Visible="false">
                         <tr><td><br /></td></tr>
                         <tr><td><asp:Label Text="Investment" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
                         <tr>
@@ -821,8 +823,8 @@
                     </td>
 
                          </tr>
-                <tr><td>Does this purchase request require an Investment sheet? (beta): </td><td><asp:CheckBox ID="InvestmentSheetCheckbox" runat="server" 
-                    OnCheckedChanged="InvestmentSheetCheckbox_CheckedChanged" CausesValidation="true" AutoPostBack="true"  /></td></tr>
+                <tr><td>Is the price greater than $5000? If yes, check here: </td><td><asp:CheckBox ID="InvestmentSheetCheckbox" runat="server" 
+                    OnCheckedChanged="InvestmentSheetCheckbox_CheckedChanged" CausesValidation="true" AutoPostBack="true" Checked='<%# Bind("InvestmentChecked") %>'  /></td></tr>
                         <asp:Panel ID="InvestmentSheetPanel" runat="server" Visible="false">
                         <tr><td><br /></td></tr>
                         <tr><td><asp:Label Text="Investment" runat="server" ID="InvestmentSheetHeader" style="font-size:200%;" /></td></tr>
@@ -1291,7 +1293,8 @@
            ,[Visible]
            ,[StatusID]
            ,[Link]
-           ,[PurchaseCategoryID])
+           ,[PurchaseCategoryID]
+           ,[InvestmentChecked])
      VALUES
            (@RequesterName
            ,@RequesterUsername
@@ -1312,7 +1315,8 @@
            ,@Visible
            ,@StatusID
            ,@Link
-           ,@PurchaseCategoryID);
+           ,@PurchaseCategoryID
+           ,@InvestmentChecked);
         select @ID = @@IDENTITY"
         UpdateCommand="UPDATE [PurchaseRequest].[dbo].[tblPurchaseRequests]
                    SET [RequesterName] = @RequesterName
@@ -1368,6 +1372,7 @@
             <asp:Parameter Name="Visible" DefaultValue="true" />
             <asp:Parameter Name="StatusID" DefaultValue="1" />
             <asp:Parameter Name="PurchaseCategoryID" />
+            <asp:Parameter Name="InvestmentChecked" />
 <%--            <asp:Parameter Name="InvestmentOwner" />
             <asp:Parameter Name="InvestmentStartDate" Type="DateTime" />
             <asp:Parameter Name="InvestmentDefinition" />

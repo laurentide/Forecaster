@@ -74,4 +74,65 @@ Public Class NIIRF
     Protected Sub StateList_SelectedIndexChanged(sender As Object, e As EventArgs)
 
     End Sub
+
+    Protected Sub gvNIIRF_SelectedIndexChanged(sender As Object, e As EventArgs)
+        'When selecting in gridview, put formview to edit
+        frmInsert.ChangeMode(FormViewMode.Edit)
+    End Sub
+
+    Protected Sub sdsInsert_Updated(sender As Object, e As SqlDataSourceStatusEventArgs)
+
+    End Sub
+
+    Protected Sub frmInsert_DataBound(sender As Object, e As EventArgs)
+        If frmInsert.CurrentMode = FormViewMode.Edit Then
+            'If No
+            If (CType(frmInsert.FindControl("ReorderList"), RadioButtonList).SelectedValue = 1) Then
+                CType(frmInsert.FindControl("JustificationTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("OriginalOrderTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("OriginalPOTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("OriginalOrderLabel"), Label).Visible = True
+                CType(frmInsert.FindControl("JustificationLabel"), Label).Visible = True
+                CType(frmInsert.FindControl("BuisnessReasonTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("StockInvestmentList"), RadioButtonList).Visible = False
+                CType(frmInsert.FindControl("InitialInvestmentTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("SourcedTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("LeadTimeTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("BusinessReasonLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("StockInvestmentLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("InitialInvestmentLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("SourcedFromLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("LeadTimeLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("NoExplainLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("NoExplainTextBox"), TextBox).Visible = False
+            Else 'If Yes
+                CType(frmInsert.FindControl("JustificationTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("OriginalOrderTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("OriginalPOTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("OriginalOrderLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("JustificationLabel"), Label).Visible = False
+                CType(frmInsert.FindControl("BuisnessReasonTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("StockInvestmentList"), RadioButtonList).Visible = True
+                CType(frmInsert.FindControl("InitialInvestmentTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("SourcedTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("LeadTimeTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("BusinessReasonLabel"), Label).Visible = True
+                CType(frmInsert.FindControl("StockInvestmentLabel"), Label).Visible = True
+                CType(frmInsert.FindControl("InitialInvestmentLabel"), Label).Visible = True
+                CType(frmInsert.FindControl("SourcedFromLabel"), Label).Visible = True
+                CType(frmInsert.FindControl("LeadTimeLabel"), Label).Visible = True
+            End If
+            If (CType(frmInsert.FindControl("StockInvestmentList"), RadioButtonList).SelectedValue = 1) Then
+                CType(frmInsert.FindControl("NoExplainTextBox"), TextBox).Visible = True
+                CType(frmInsert.FindControl("NoExplainLabel"), Label).Visible = True
+            Else
+                CType(frmInsert.FindControl("NoExplainTextBox"), TextBox).Visible = False
+                CType(frmInsert.FindControl("NoExplainLabel"), Label).Visible = False
+            End If
+        End If
+    End Sub
+
+    Protected Sub sdsNIIRFGrid_Deleting(sender As Object, e As SqlDataSourceCommandEventArgs)
+        frmInsert.ChangeMode(FormViewMode.Insert)
+    End Sub
 End Class

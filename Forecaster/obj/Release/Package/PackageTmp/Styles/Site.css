@@ -722,3 +722,7 @@ form
 {
     width:250px;
 }
+.disabled
+{
+    background-color:lightgrey;
+}

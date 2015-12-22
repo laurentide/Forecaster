@@ -158,6 +158,15 @@
                         <asp:TextBox ID="LeadTimeTextBox" runat="server" Text='<%# Bind("LeadTime")%>' Width="500" Visible="false"/>
                     </td>
                 </tr>
+               <tr>
+                <td>Status:</td>
+                <td>
+                    <asp:DropDownList ID="StatusDropDown" runat="server"  AppendDataBoundItems="true"  DataSourceID="sdsStatus" DataValueField="StatusID" DataTextField="Status" 
+                        SelectedValue='<%# Bind("StatusID")%>' CausesValidation="true" AutoPostBack="true">
+                        <asp:ListItem Text="(Select the status)" Value="" />
+                    </asp:DropDownList>
+                </td>
+            </tr>
                 <tr>
                         <td>
                             <asp:Button ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="Update" />
@@ -172,7 +181,7 @@
                 <Columns>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this action item?');" />
+                            <asp:LinkButton ID="DeleteButton" ForeColor="Black" runat="server" CommandName="Delete" Text="Delete" OnClientClick="return confirm('Are you sure you want to delete this NIIRF item?');" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:CommandField ShowSelectButton="True" SelectText="Edit" />
@@ -194,11 +203,12 @@
     </asp:UpdatePanel>
 <asp:SqlDataSource ID="sdsNIIRF" runat="server" ConnectionString="<%$ ConnectionStrings:NIIRFConnectionString %>"
     SelectCommand="SELECT * FROM [NIIRF] WHERE Visible = 1"
-    DeleteCommand="update tblMasterActionItemTool set visible = 0 where NIIRF_ID = @NIIRF_ID">
+    DeleteCommand="update NIIRF set visible = 0 where NIIRF_ID = @NIIRF_ID">
 </asp:SqlDataSource>
         <asp:SqlDataSource ID="sdsInsert" runat="server" 
         ConnectionString="<%$ ConnectionStrings:NIIRFConnectionString %>"
-        SelectCommand="SELECT * FROM [NIIRF] WHERE [NIIRF_ID] = @ID"
+        SelectCommand="SELECT * FROM [NIIRF]
+                       WHERE [NIIRF_ID] = @ID"
         UpdateCommand="UPDATE [NIIRF] SET
             [ShortDescription] = @ShortDescription,
             [LongDescription] = @LongDescription,
@@ -221,7 +231,8 @@
             [SourcedFrom] = @SourcedFrom,
             [LeadTime] = @LeadTime,
             [Reorder] = @Reorder,
-            [State] = @State
+            [State] = @State,
+            [StatusID] = @StatusID
             WHERE [NIIRF_ID] = @NIIRF_ID">
         <SelectParameters>
             <asp:ControlParameter Name="ID" ControlID="MASTGridView" PropertyName="SelectedValue" />
@@ -248,6 +259,10 @@
             <asp:Parameter Name="SourcedFrom" />
             <asp:Parameter Name="Reorder" />
             <asp:Parameter Name="State" />
+            <asp:Parameter Name="StatusID"/>
         </UpdateParameters>
         </asp:SqlDataSource>
+       <asp:SqlDataSource ID="sdsStatus" runat="server" ConnectionString="<%$ ConnectionStrings:NIIRFConnectionString %>"
+        SelectCommand="select * from tblStatuses order by Statusid">
+   </asp:SqlDataSource>
 </asp:Content>

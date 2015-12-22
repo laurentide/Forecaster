@@ -10,6 +10,84 @@ Public Class QLTMgmt
         Session("IssuedDate") = Now()
         Session("RevisedDate") = Now()
 
+        'and (@ManagerDomainUser in (select QLTMemberUserName from tblQLTMembers) or ReassignmentUsername = @ManagerDomainUser)
+        'Get user's name based on their username
+        Dim sqlConnection1 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+        Dim cmd As New SqlCommand
+        Dim name As String
+        cmd.CommandText = "SELECT QLTMemberName FROM tblQLTMembers WHERE QLTMemberUsername = '" + Session("Username") + "'"
+        cmd.CommandType = CommandType.Text
+        cmd.Connection = sqlConnection1
+        sqlConnection1.Open()
+        name = cmd.ExecuteScalar()
+        sqlConnection1.Close()
+
+        Dim sqlConnection2 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+        Dim cmd2 As New SqlCommand
+        Dim memberID As String
+        cmd.CommandText = "SELECT QLTMemberID FROM tblQLTMembers WHERE QLTMemberUsername = '" + Session("Username") + "'"
+        cmd.CommandType = CommandType.Text
+        cmd.Connection = sqlConnection1
+        sqlConnection1.Open()
+        memberID = cmd.ExecuteScalar()
+        sqlConnection1.Close()
+
+        Dim sqlConnection3 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+        Dim cmd3 As New SqlCommand
+        Dim reassignmentName As String
+        cmd3.CommandText = "SELECT Reassignment FROM tblQLT WHERE ReassignmentEmail = '" + Session("Username") + "'"
+        cmd3.CommandType = CommandType.Text
+        cmd3.Connection = sqlConnection3
+        sqlConnection3.Open()
+        reassignmentName = cmd3.ExecuteScalar()
+        sqlConnection3.Close()
+
+        Dim sqlConnection4 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+        Dim cmd4 As New SqlCommand
+        Dim managerName As String
+        cmd4.CommandText = "SELECT ManagerName FROM tblManagers WHERE ManagerDomainUser = '" + Session("Username") + "'"
+        cmd4.CommandType = CommandType.Text
+        cmd4.Connection = sqlConnection4
+        sqlConnection4.Open()
+        managerName = cmd4.ExecuteScalar()
+        sqlConnection4.Close()
+
+        Dim sqlConnection5 As New SqlConnection("Server=lcl-sql2k5-s;Database=QLT;Trusted_Connection=true")
+        Dim cmd5 As New SqlCommand
+        Dim managerID As String
+        cmd5.CommandText = "SELECT ManagerID FROM tblManagers WHERE ManagerDomainUser = '" + Session("Username") + "'"
+        cmd5.CommandType = CommandType.Text
+        cmd5.Connection = sqlConnection5
+        sqlConnection5.Open()
+        managerID = cmd5.ExecuteScalar()
+        sqlConnection5.Close()
+
+        If (name = "" Or memberID = "") Then
+            'If (reassignmentName = "") Then
+            'Response.Redirect("~/MasterActionItemTool/AccessDenied.aspx")
+            If (managerName = "" Or managerID = "") Then
+                Response.Redirect("~/MasterActionItemTool/AccessDenied.aspx")
+            End If
+            'End If
+            Session("QLTMember") = False
+        Else
+            Session("QLTMember") = True
+        End If
+        If (managerName = "" Or managerID = "") Then
+            Session("Manager") = False
+        Else
+            Session("Manager") = True
+        End If
+
+        Dim queryString As String = "SELECT *,customerid as CustomerName,vendorid as VendorName,left(description,50) as ShortDescription, case when tbltypes.type = 'Other' and tblQLT.Type is not null then tblQLT.Type else tblTypes.Type end as category FROM tblQLT LEFT JOIN tblEventTypes on  tblQLT.EventTypeID = tblEventTypes.EventTypeID LEFT JOIN tblStatus on tblQLT.StatusID = tblStatus.StatusID LEFT JOIN tblOrigins on tblQLT.OriginID = tblOrigins.OriginID LEFT JOIN tblQLTMembers on tblQLT.AssignedTo = tblQLTMembers.QLTMemberID LEFT JOIN tblManagers on tblQLT.ManagerID = tblManagers.ManagerID LEFT JOIN tblTypes on tblQLT.TypeID = tblTypes.TypeID where Visible = 1 and (tblQLT.AssignedTo = @AssignedTo or @AssignedTo = 0) and (tblQLT.StatusID = @StatusID or @StatusID = 0) and (tblQLT.DepartmentID = @DeptID or @DeptID = 0) and (tblQLT.TypeID = @TypeID or @TypeID = 0) Order by QLTID Desc"
+        Dim connectionString As String = ConfigurationManager.ConnectionStrings("QLTConnectionString").ConnectionString
+        sdsQLTGrid.SelectCommand = queryString
+        sdsQLTGrid.DataBind()
+
+        'If (Not Page.User.IsInRole("LCLMTL\LCL_Manager")) Then
+        '    Response.Redirect("~/MasterActionItemTool/AccessDenied.aspx")
+        'End If
+
         If ViewState("PCA") Is Nothing Then
             Dim PCAdt As DataTable = New DataTable
             PCAdt.Columns.Add("PCAID", GetType(Integer))
@@ -381,6 +459,12 @@ System.Web.Services.WebMethod()> _
                 End If
             End If
             Session("Assigned") = CType(frmInsert.FindControl("QLTMembersDropDown"), DropDownList).SelectedItem.Text.ToString
+
+            If (Session("Manager") = True) Then
+                If (Session("QLTMember") = False) Then
+                    CType(frmInsert.FindControl("UpdateButton"), Button).Enabled = False
+                End If
+            End If
         Catch ex As Exception
 
         End Try

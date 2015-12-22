@@ -32,6 +32,15 @@ Partial Public Class NIIRF
     Protected WithEvents frmInsert As Global.System.Web.UI.WebControls.FormView
 
     '''<summary>
+    '''gvNIIRF control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents gvNIIRF As Global.System.Web.UI.WebControls.GridView
+
+    '''<summary>
     '''sdsInsert control.
     '''</summary>
     '''<remarks>
@@ -39,4 +48,13 @@ Partial Public Class NIIRF
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents sdsInsert As Global.System.Web.UI.WebControls.SqlDataSource
+
+    '''<summary>
+    '''sdsNIIRFGrid control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents sdsNIIRFGrid As Global.System.Web.UI.WebControls.SqlDataSource
 End Class

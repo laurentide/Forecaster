@@ -313,6 +313,21 @@ Public Class PurchaseManager
                 gvImplementation = CType(frmView.FindControl("gvImplementation"), GridView)
                 gvImplementation.DataSource = FUPdt
                 gvImplementation.DataBind()
+
+                Dim sqlConnection1 As New SqlConnection("Server=lcl-sql2k5-s;Database=PurchaseRequest;Trusted_Connection=true")
+                Dim cmd As New SqlCommand
+                Dim returnValue As String
+                cmd.CommandText = "SELECT InvestmentChecked FROM tblPurchaseRequests WHERE PurchaseRequestID = " & CType(frmView.FindControl("PurchaseRequestIDLabel1"), Label).Text
+                cmd.CommandType = CommandType.Text
+                cmd.Connection = sqlConnection1
+                sqlConnection1.Open()
+                returnValue = cmd.ExecuteScalar
+                sqlConnection1.Close()
+                If (returnValue = True) Then
+                    CType(frmView.FindControl("InvestmentSheetPanel"), Panel).Visible = True
+                Else
+                    CType(frmView.FindControl("InvestmentSheetPanel"), Panel).Visible = False
+                End If
             End If
         Catch ex As Exception
 

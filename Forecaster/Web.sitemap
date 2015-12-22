@@ -19,7 +19,7 @@
 		</siteMapNode>
 		<siteMapNode title="Purchase Request" roles="*" description="">
 			<siteMapNode url="Purchase/Purchase.aspx" title="Enter a new Purchase Request" description=""/>
-			<siteMapNode url="Purchase/PurchaseEntry.aspx" title="Purchase Request Nomis Order Entry" description=""/>
+			<siteMapNode url="Purchase/PurchaseEntry.aspx" title="Purchase Request IFS Order Entry" description=""/>
 			<siteMapNode url="Purchase/PurchaseManager.aspx" title="Purchase Request Approval" description=""/>
 			<siteMapNode url="Admin/PurchaseAdmin.aspx" title="Purchase Requests/Purchase Order lookup" description=""/>
 		</siteMapNode>
